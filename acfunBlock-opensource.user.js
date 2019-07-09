@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Acfun屏蔽计划-开源代码
+// @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      2.010
+// @version      2.014
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -36,7 +36,7 @@ function injectStyles(rule) {
 
 function core() {
     'use strict';
-    let version = "2.010";
+    let version = "2.014";
     let empty = (a) => {
         return typeof a === "undefined" ? () => {
         } : a;
@@ -658,7 +658,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
             height: 220px;
             border: 0px solid white;
             margin: 3px;
-            overflow:hidden;
+            overflow-y:scroll;
             display:none;
         }
         div.keywords-input-wrap{
@@ -736,7 +736,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
         panelCloud.append(cloudCheckTime);
 
 
-        let advertisementInfo = $("<div style='border: 1px solid white; margin:3px;padding: 2px; font-size: 11px;background-color:rgb(255, 217, 67); color: black'>喜欢的话 安利哟：<a id='articleRec' target='_blank' style='color:rgb(71, 71, 138); text-decoration: underline' href='/a/ac10271618'>ac10271618</a></div>");
+        let advertisementInfo = $("<div style='border: 1px solid white; margin:3px;padding: 2px; font-size: 11px;background-color:rgb(255, 217, 67); color: black'>喜欢的话 安利哟：<a id='articleRec' target='_blank' style='display:none;color:rgb(71, 71, 138); text-decoration: underline' href='/a/ac10271618'>ac10271618</a><a style='margin-left:8px;text-decoration: underline' href='https://baldhumanity.github.io/AcfunHated/'>插件地址</a></div>");
         let bananaHTML = "<a id='banana_contain' style='white-space:nowrap'>" + banana(0) + banana(1) + banana(2) + banana(3) + banana(4) + "</a>";
         let versionInfo = $("<div style='border: 0px solid white; margin:3px;padding: 2px; font-size: 11px;background-color:rgb(234, 200, 65); color: rgb(50,50,50)'><span style='padding: 3px;margin-right: 10px'>当前版本：" + version + "</span> " + bananaHTML + "</div>");
         let updateReminder = $("<div style='background-color: green; color: white; display: none; margin:3px; padding: 2px;' id='update_info'></div>");
@@ -848,7 +848,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
                 if (!!evalRes && typeof evalRes.articleId !== "undefined") {
                     articleId = evalRes.articleId;
                     //update 安利
-                    advertisementInfo.find("a").attr("href", "/a/ac" + articleId)
+                    advertisementInfo.find("#articleRec").attr("href", "/a/ac" + articleId)
                         .text("ac" + articleId);
                 }
             }
