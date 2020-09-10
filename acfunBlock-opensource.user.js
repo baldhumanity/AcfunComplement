@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      2.014
+// @version      2.023
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -17,7 +17,7 @@
 // @match        https://www.acfun.cn/v/as*
 // @match        http://www.acfun.cn/v/as*
 // @connect      greasyfork.org
-// @require      https://code.jquery.com/jquery-3.4.1.min.js
+// @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM.getValue
@@ -29,6 +29,8 @@
 // ==/UserScript==
 
 function injectStyles(rule) {
+
+
     var div = $("<div />", {
         html: '&shy;<style>' + rule + '</style>'
     }).appendTo("body");
@@ -36,7 +38,7 @@ function injectStyles(rule) {
 
 function core() {
     'use strict';
-    let version = "2.014";
+    let version = "2.023";
     let empty = (a) => {
         return typeof a === "undefined" ? () => {
         } : a;
@@ -117,14 +119,15 @@ function core() {
     }
 
     function addToUpList(id, callback) {
+        id=trimWord(id);
         ups((old) => {
             if (old.indexOf(id) >= 0) {
-                $.info.show("你已经屏蔽过UP主[" + id + "]啦！");
+                emitMsg("global::success","你已经屏蔽过UP主[" + id + "]啦！");
                 return;
             }
-            old.push(id);
+            old.push(trimWord(id));
             GM_set("ACFUN_BLOCK_LIST", old, () => {
-                $.info.show("已将UP主[" + id + "]加入屏蔽列表");
+                emitMsg("global::success","已将UP主[" + id + "]加入屏蔽列表");
                 empty(callback)();
                 setUpdateTime();
             });
@@ -133,13 +136,14 @@ function core() {
 
 
     function removeFromUpList(id, callback) {
+        id=trimWord(id);
         ups((old) => {
             let i = old.indexOf(id);
             if (i >= 0) {
                 old.splice(i, 1);
             }
             GM_set("ACFUN_BLOCK_LIST", old, () => {
-                $.info.show("已将UP主[" + id + "]移出屏蔽列表。");
+                emitMsg("global::success","已将UP主[" + id + "]移出屏蔽列表。");
                 empty(callback)();
                 setUpdateTime();
             });
@@ -147,14 +151,15 @@ function core() {
     }
 
     function addToKeywords(id, callback) {
+        id=trimWord(id);
         keywords((old) => {
             if (old.indexOf(id) >= 0) {
-                $.info.show("你已经添加过关键词[" + id + "]啦！");
+                emitMsg("global::success","你已经添加过关键词[" + id + "]啦！");
                 return;
             }
-            old.push(id);
+            old.push(trimWord(id));
             GM_set("ACFUN_BLOCK_KEYWORDS", old, () => {
-                $.info.show("已将关键词[" + id + "]加入屏蔽列表");
+                emitMsg("global::success","已将关键词[" + id + "]加入屏蔽列表");
                 empty(callback)();
                 setUpdateTime();
             });
@@ -162,13 +167,14 @@ function core() {
     }
 
     function removeFromKeywords(id, callback) {
+        id=trimWord(id);
         keywords((old) => {
             let i = old.indexOf(id);
             if (i >= 0) {
                 old.splice(i, 1);
             }
             GM_set("ACFUN_BLOCK_KEYWORDS", old, () => {
-                $.info.show("已将关键词[" + id + "]移出屏蔽列表。");
+                emitMsg("global::success","已将关键词[" + id + "]移出屏蔽列表。");
                 empty(callback)();
                 setUpdateTime();
             });
@@ -176,14 +182,15 @@ function core() {
     }
 
     function addToRepliers(id, callback) {
+        id=trimWord(id);
         repliers((old) => {
             if (old.indexOf(id) >= 0) {
-                $.info.show("你已经屏蔽过评论者[" + id + "]啦！");
+                emitMsg("global::success","你已经屏蔽过评论者[" + id + "]啦！");
                 return;
             }
-            old.push(id);
+            old.push(trimWord(id));
             GM_set("ACFUN_BLOCK_REPLIERS", old, () => {
-                $.info.show("已将评论者[" + id + "]加入屏蔽列表");
+                emitMsg("global::success","已将评论者[" + id + "]加入屏蔽列表");
                 empty(callback)();
                 setUpdateTime();
             });
@@ -191,13 +198,14 @@ function core() {
     }
 
     function removeFromRepliers(id, callback) {
+        id=trimWord(id);
         repliers((old) => {
             let i = old.indexOf(id);
             if (i >= 0) {
                 old.splice(i, 1);
             }
             GM_set("ACFUN_BLOCK_REPLIERS", old, () => {
-                $.info.show("已将评论者[" + id + "]移出屏蔽列表。");
+                emitMsg("global::success","已将评论者[" + id + "]移出屏蔽列表。");
                 empty(callback)();
                 setUpdateTime();
             });
@@ -213,6 +221,21 @@ function core() {
 
     }
 
+
+    function emitMsg(t, m){
+        if (typeof unsafeWindow.A == "undefined"){
+            unsafeWindow.A = {
+                emit : function(a, m){
+                    console.log(m);
+                }
+            }
+        }
+		unsafeWindow.A.emit(t, m);
+
+
+    }
+
+    unsafeWindow.emitMsg = emitMsg;
 
     function handleSpecialJSONstr(str) {
         let str2 = str.replace("\n", "");
@@ -233,59 +256,67 @@ function core() {
     function getHomeSelection() {
         let res = [];
         //过滤主页视频
-        let selections = $("a[data-info]");
+        let selections = document.querySelectorAll("div.normal-video");
         for (let i = 0; i < selections.length; i++) {
             let tag = selections[i];
-            let info = $(tag).attr("data-info");
-            let json = "";
+            let titletag = tag.querySelector("a.normal-video-title");
             try {
-                let temp = (info);
-                json = JSON.parse(temp);
-                let title = json.title;
-                let username = json.userName;
-                res.push({tag: $(tag).parent()[0], title: title, username: username, type: 1, json: json});
+                let t = titletag.getAttribute("title");
+                let matches = usernameByTitle(t);
+                let titlestr = titleByTitle(t)[0]
+
+                let title = titlestr;
+                let username = trimWord(matches);
+
+                res.push({tag: $(tag).parent()[0], title: title, username: username, type: 1, json: null});
             } catch (e) {
                 console.error(e);
             }
 
             //$(tag)
         }
-
+        //console.log("res=",selections, res);
         //过滤右边排行榜视频
-        let sel = $("ul[data-con]");
+        let sel = document.querySelectorAll("div.ranked-list-content");
 
         //For each rank
         for (let i = 0; i < sel.length; i++) {
             let tag = sel[i];
-            let rows = $(tag).find("li");
+            let rows =tag.querySelectorAll("div.log-item");
             //For each row
             for (let ri = 0; ri < rows.length; ri++) {
                 let rowTag = rows[ri];
-                let aTag = $(rowTag).find("[title]")[0];
-                let title = $(aTag).attr("title");
+                let aTag = rowTag.querySelector("a.video-title");
+                let title = aTag.getAttribute("title");
                 let matches = usernameByTitle(title);
                 let titlestr = titleByTitle(title)[0];
                 if (matches) {
-                    let username = matches[0].substring(3).trim();
+                    let username = trimWord(matches);
                     res.push({tag: rowTag, title: titlestr, username: username, type: 2});
                 }
             }
         }
         //--------------------主页文章区
-        sel = $("div[data-con]");
+        sel = document.querySelectorAll(".tab-main-content");
         for (let i = 0; i < sel.length; i++) {
             let tag = sel[i];
-            let rows = $(tag).find("li");
+            let rows = tag.querySelectorAll("li");
             //For each row
             for (let ri = 0; ri < rows.length; ri++) {
                 let rowTag = rows[ri];
-                let aTag = $(rowTag).find("[title]")[0];
-                let title = $(aTag).attr("title");
+                let aTag = rowTag.querySelector("a");
+
+                let title = aTag.getAttribute("title");
+                if (title==null){
+                    //console.log("rowTag",rowTag);
+                    aTag = rowTag.querySelector("p.block-title");
+                    title = aTag.getAttribute("title");
+                }
                 if (title) {
                     let matches = usernameByTitle(title);
                     let titlestr = titleByTitle(title)[0];
                     if (matches) {
-                        let username = matches[0].substring(3).trim();
+                        let username = trimWord(matches);
                         res.push({tag: rowTag, title: titlestr, username: username, type: 3});
 
                     }
@@ -293,44 +324,130 @@ function core() {
             }
         }
         //香蕉搒
-        var allBananas = $("figure.fl.block-box.block-video.weblog-item").find("> figcaption > em > a");
+        var allBananas =  document.querySelectorAll("div.banana-video");
         for (let i = 0; i < allBananas.length; i++) {
             let sel = allBananas[i];
-            let upname = $(sel).attr("title");
-            let tag = $(sel).parent().parent().parent()[0];
-            let title = $(sel).parent().parent().find('b > a').text();
-            res.push({tag: tag, username: upname, type: 1, title: title});
-        }
-
-        //大版推荐
-        let allBig = $('.module-video-big').find('.text-overflow').find('a[title]');
-        for (let i = 0; i < allBig.length; i++) {
-            try{
-            let title = $(allBig[i]).attr("title");
-            let regx = /UP:(.+)/;
-            let r = regx.exec(title);
-            let username = r[1];
-            let tag = $(allBig[i]).parent().parent();
-            let subtag = tag.prev();
+            let atag = sel.querySelector("a.banana-video-title");
+            let title = atag.getAttribute("title");
+            let matches = usernameByTitle(title);
             let titlestr = titleByTitle(title)[0];
-            res.push({tag: subtag[0], subtag: tag[0], username: username, type: 5, title: titlestr});
-            }catch(e){
-
+            if (matches) {
+                let username = trimWord(matches);
+                res.push({tag: sel, title: titlestr, username: username, type: 1});
             }
 
         }
+        //Top Recommendation
+        var allRecommend =  document.querySelectorAll("a.recommend-video");
+        //console.log("allRecommend",allRecommend);
+        window.r=allRecommend;
+        for (let i = 0; i < allRecommend.length; i++) {
+            let sel = allRecommend[i];
+            let titleTag = sel.querySelector("span.video-title");
+            let title = titleTag.innerHTML;
+            let nameTag = sel.querySelector("p.text-overflow").querySelector("span.text-overflow");
+            let username =trimWord( nameTag.innerHTML.substring(3));
+
+            let titlestr = title;
+            res.push({tag: sel, title: titlestr, username: username, type: 1});
+
+
+        }
+        //猴子搒
+        var allMonkeys =  document.querySelectorAll("div.monkey-video");
+        for (let i = 0; i < allMonkeys.length; i++) {
+            let sel = allMonkeys[i];
+            let atag = sel.querySelector("a.monkey-video-title");
+            let title = atag.getAttribute("title");
+            let matches = usernameByTitle(title);
+            let titlestr = titleByTitle(title)[0];
+            if (matches) {
+                let username = trimWord(matches);
+                res.push({tag: sel, title: titlestr, username: username, type: 1});
+            }
+
+        }
+
+        //大版推荐
+        let allBig = document.querySelectorAll(".big-image");
+        for (let i = 0; i < allBig.length; i++) {
+            try{
+                let title = allBig[i].querySelector("a.title").getAttribute("title");
+                let matches = usernameByTitle(title);
+                let titlestr = titleByTitle(title)[0];
+                let username = trimWord(matches);
+                //console.log("allbig", matches, titlestr);
+                res.push({tag: allBig[i], subtag: null, username: username, type: 5, title: titlestr});
+            }catch(e){
+                console.log(e);
+            }
+
+        }
+
+        //其他板块主页
+        let otherstop = document.querySelectorAll("li.weblog-item");
+        let othersvideos = document.querySelectorAll("figure.block-video");
+        let others1 = [];
+
+        otherstop.forEach(function(d){others1.push(d)});
+        othersvideos.forEach(function(d){others1.push(d)});
+
+
+        for (let i = 0;i<others1.length; i++){
+            try{
+                let data = others1[i].querySelector("a").getAttribute("data-info");
+                if (data!==null){
+                    data = JSON.parse(data);
+                    let title = data.title;
+                    let username = data.userName;
+                    res.push({tag:others1[i], subtag: null, username: username, type: 1, title: title});
+                }else{
+                    //console.log(others1[i]);
+                    let t1 = others1[i].querySelector("figcaption.block-title");
+                    let t2 = t1.querySelector("b").querySelector("a");
+                    let title = t2.getAttribute("title");
+                    let titlestr = titleByTitle(title)[0];
+                    let matches = usernameByTitle(title);
+                    let username = trimWord(matches);
+                    let d= {tag: others1[i], subtag: null, username: username, type: 1, title: titlestr};
+                     res.push(d);
+                    //console.log(d);
+                }
+            }catch(e){
+                console.log(e);
+                console.log(others1[i]);
+            }
+        }
+        //其他板块排行
+        let otherrank = document.querySelectorAll("li.weblog-rank");
+        otherrank.forEach(function(dom){
+            try{
+
+                let a = dom.querySelector("a");
+                let title = a.getAttribute("title");
+                let titlestr = titleByTitle(title)[0];
+                let matches = usernameByTitle(title);
+                let username = trimWord(matches);
+                let d= {tag: dom, subtag: null, username: username, type: 2, title: titlestr};
+                res.push(d);
+            }catch(e){
+                console.log(e);
+            }
+        })
+
+
         // console.log("res",res);
         return res;
     }
 
     function getListSelection() {
-        console.log("list selec");
+        //console.log("list selec");
         let res = [];
         let sel = $("div.weblog-item");
         for (let i = 0; i < sel.length; i++) {
             let row = sel[i];
             let aTag = $(row).find(".atc-up")[0];
-            let username = $(aTag).attr("title");
+            let username = trimWord($(aTag).attr("title"));
             let title = $(row).find('a[title]').attr("title");
             res.push({tag: row, username: username, type: 4, title: title});
 
@@ -343,7 +460,7 @@ function core() {
             let row = sel2[i];
             //console.log(row);
             let title = $(row).find("b.text-over").find('.third-title').text();
-            let username = $(row).find("p.up-name").find('a.third-name').text();
+            let username =trimWord( $(row).find("p.up-name").find('a.third-name').text());
             res.push({tag: row, username: username, type: 4, title: title});
         }
         //console.log(res);
@@ -502,12 +619,12 @@ withCredentials: !0
 }
 }).done(function(e){
 if (e.success>0){
-$.info.success("成功投食了作者"+` + (n + 1) + `+"根香蕉O(∩_∩)O。谢谢支持！", 3e3)
+emitMsg("global::success","成功投食了作者"+` + (n + 1) + `+"根香蕉O(∩_∩)O。谢谢支持！", 3e3)
 }else{
-$.info.warning("投食作者失败了。"+e.info, 3e3);
+emitMsg("global::warning","投食作者失败了。"+e.info, 3e3);
 }
 }).fail(function(){
-$.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作。", 3e3)
+emitMsg("global::warning","投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作。", 3e3)
 })`;
 
             unsafeWindow.eval(command);
@@ -570,7 +687,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
                     }
                 });
             } else {
-                $.info.warning('不能添加过短的关键词。');
+                emitMsg("global::warning",'不能添加过短的关键词。');
             }
         })
     }
@@ -623,7 +740,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
             border-width: 0;
         }
         div.panel-wrap{
-            z-index: 999;
+            z-index: 21;
             position: fixed;
             left: 0;
             top: 0;
@@ -836,7 +953,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
             if (parseFloat(v) > parseFloat(version)) {
                 updateReminder.css("display", "block")
                     .html("<a style='color:white' target='_blank' href='https://greasyfork.org/en/scripts/381476'>可以升级至：" + v + " 👉</a>");
-                $.info.show("屏蔽系统有新版本了~")
+                emitMsg("global::success","屏蔽系统有新版本了~")
             }
         });
 */
@@ -954,7 +1071,8 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
         let mutationObserver = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
                 let target = mutation.target;
-                if ($(target).hasClass("clearfix") && $(target).hasClass("module-video")) {
+                //console.log("target n", target, target.tagName);
+                if (target.classList.contains('normal-module') || target.classList.contains('normal-video-container') || target.tagName === "HTML") {
                     attachBlockButton();
                     HandleHomePage();
                 }
@@ -1000,12 +1118,12 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
         let res = [];
 
         sels.each(function () {
-            let replier = $(this).find("a[data-uid]").text();
+            let replier = trimWord($(this).find("a[data-uid]").text());
             let tag = $(this);
-            let parent = $(this).parent().parent().parent();
+            let parent = $(this).parent().parent()//.parent();
             let avatar = null;
             if (parent.hasClass("main-comment-item")) {
-                avatar = $(parent).find("li.avatar")[0];
+                avatar = $(parent).find(".mci-avatar")[0];
             }
 
             res.push({
@@ -1021,8 +1139,8 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
 
     function filterReplies() {
         let commentMode = unsafeWindow.localStorage.getItem("ac_usp_commMode");
-
-        if (commentMode === "1") {
+        //console.log("comment mode = ", commentMode);
+        if (commentMode === "2") {
             //旧版评论
             filterRepliesOld();
 
@@ -1086,11 +1204,14 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
     }
 
     function filterRepliesOld() {
+
         repliers((list) => {
+            //console.log("blocked repliers", (list));
             let pagelist = getRepliesSelectionOld();
             for (let i = 0; i < pagelist.length; i++) {
                 let item = pagelist[i];
                 let replier = item.replier;
+                //console.log(replier);
                 if (list.indexOf(replier) >= 0) {
                     hideCommentTag(item);
                 } else {
@@ -1112,24 +1233,25 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
 
 
                 //wrap all
-                let wrap = $("<div class='commentWrap' style='display: block'></div>");
-                $(this).parent().append(wrap);
+                let wrap =$(this).parent()//  $("<div class='commentWrap' style='display: block'></div>");
+                wrap.addClass("commentWrap");
+                //$(this).parent().append(wrap);
 
-                let nameTag = $(this).prev().prev();
-                let contentTag = $(this).prev();
-                let toolbarTag = $(this);
+                //let nameTag = $(this).prev().prev();
+                //let contentTag = $(this).prev();
+                //let toolbarTag = $(this);
 
                 let name = $(this).prev().prev().find("a[data-uid]").text();
-                //console.log(name, $(this).find("span.comment-toolbar"));
-                let btn = $("<a style='margin-left:16px'>屏蔽</a>");
-                $(this).find("span.comment-toolbar").append(btn);
+                //console.log(name, $(this).find(".comment-toolbar"));
+                let btn = $("<a style='margin-left:16px;color:#999999'>屏蔽</a>");
+                $(this).find(".comment-toolbar").append(btn);
 
 
-                nameTag = nameTag.detach();
-                contentTag = contentTag.detach();
-                toolbarTag = toolbarTag.detach();
+                //nameTag = nameTag.detach();
+                //contentTag = contentTag.detach();
+                //toolbarTag = toolbarTag.detach();
 
-                wrap.append(nameTag).append(contentTag).append(toolbarTag);
+                //wrap.append(nameTag).append(contentTag).append(toolbarTag);
 
                 btn.on("click", function () {
                     addToRepliers(name, () => {
@@ -1152,13 +1274,14 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
             mutations.forEach(function (mutation) {
                 if (done) return;
                 let target = mutation.target;
-                if ($(target).hasClass("main-comment-item") || $(target).hasClass("quoted-comment-item") || $(target).hasClass("comment-list")) {
+                if ($(target).hasClass("main-comment-item") || $(target).hasClass("quoted-comment-item") || $(target).hasClass("fc-comment-list") || $(target).hasClass("fc-comment-item")) {
 
-                    //console.log("target", target, mutation.type);
+                    //console.log("reply observer target", target, mutation.type);
                     setTimeout(()=>{
                     attach();
+                    //console.log("filtering replies")
                     filterReplies();
-                    },0);
+                    },100);
                     done=true;
                 }
             });
@@ -1259,25 +1382,40 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
 
     function usernameByTitle(title) {
         let regex = /UP:(.+)[\s\v\n]/g;
-        return title.match(regex);
+        let m =  title.match(regex);
+        if (m.length>0){
+            let name = m[0];
+
+            if (name.indexOf("UP:")>=0){
+                name = name.substring(3);
+            }
+            return name;
+        }
+        return null;
     }
 
     function hideArticleTag(tag) {
-        if ($(tag).css("display") !== "none") {
-            //console.log(tag, tag.getBoundingClientRect);
+        if ($(tag).css("display") !== "none" && $(tag).css("visibility")!=="hidden") {
+            //console.log("tag debug",tag, tag.getBoundingClientRect());
             let rect = tag.getBoundingClientRect();
             $(tag).css("transition", "0.5s")
                 .css("-webkit-transition", "0.5s")
-                .css("overflow", "hidden")
+                .css("opacity", "0")
                 .css("height", rect.height + "px");
 
             let d = $(tag).css("display");
             tag["_d"] = d;
-            tag["_h"] = rect.height + "px";
+            let h = $(tag).css("height");
+            tag["_h"] = h ? h:  rect.height + "px";
             //console.log("hide tag",tag["_d"], tag["_h"]);
-            $(tag).css("height", "0px");
+            $(tag).css("height", "1px");
+
+            if (pageType == "list" || pageType=="article"){
+                $(tag).css("overflow", "hidden");
+            }
 
             setTimeout(() => {
+                $(tag).css("visibility", "hidden");
                 $(tag).css("display", "none");
             }, 500);
             let bar = $(tag).next();
@@ -1289,10 +1427,14 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
     }
 
     function showArticleTag(tag) {
-        if ($(tag).css("display") === "none" && typeof tag["_d"] !== "undefined") {
+        if ( $(tag).css("visibility")=="hidden" && typeof tag["_d"] !== "undefined") {
+
             $(tag).css("transition", "0.5s")
                 .css("-webkit-transition", "0.5s")
-                .css("overflow", "hidden");
+                .css("opacity", "1")
+
+
+                //
             if (typeof tag["_d"] !== "undefined") {
                 $(tag).css("display", tag["_d"]);
             } else {
@@ -1304,6 +1446,8 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
                 $(tag).css("height", "auto");
             }
 
+
+                $(tag).css("visibility", "visible");
             //article list page, hide the separator as well
             let bar = $(tag).next();
             if (bar.length > 0 && $(bar).prop("tagName").toUpperCase() === "HR") {
@@ -1315,6 +1459,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
     }
 
     function hideCommentTag(item) {
+        //console.log("hct",item);
         let tag = item.tag;
         if (typeof tag["_t"] === "undefined") {
             //console.log(tag, tag.getBoundingClientRect);
@@ -1327,7 +1472,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
             let d = $(tag).css("display");
             tag["_d"] = d;
             tag["_h"] = rect.height + "px";
-            let hint = $("<div style='padding: 3px'>已屏蔽【" + item.replier + "】的评论</div>");
+            let hint = $("<div style='padding: 3px; font-size: 10px;'>已屏蔽【" + item.replier + "】的评论</div>");
             let removeBlock = $("<a style='margin-left: 5px;color:#2596d2'>[取消屏蔽]</a>");
             hint.append(removeBlock);
 
@@ -1448,11 +1593,13 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
     function HandleHomePage() {
         console.log("home list");
         //屏蔽首页UP，包括视频和右边的文章区
+        pageType = "home";
         FilterHomePage();
     }
 
     function HandleListPage() {
         console.log("debug list");
+        pageType = "list";
         FilterListPage();
     }
 
@@ -1476,7 +1623,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
         let trigger = function () {
             let upname = "";
             if (window.location.href.indexOf("www.acfun.cn/v/ac") >= 0) {
-                upname = $("a.name-wrap").html();
+                upname = $("a.up-name").html();
             } else if (window.location.href.indexOf("www.acfun.cn/a/ac") >= 0) {
                 upname = $("a.upname").html();
             }
@@ -1541,10 +1688,10 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
                     };
                     if (cloudData && cloudData.time === lastUpdateTime && cloudData.version >= data.version) {
                         console.log("No need to update cloud, everything is the same");
-                        if (showinfo) $.info.show("云检查完毕，已经是最新的了！")
+                        if (showinfo) emitMsg("global::success","云检查完毕，已经是最新的了！")
                     } else if (keywordList.length === 0 && upList.length === 0) {
                         console.log("No need to update cloud, lists are empty");
-                        if (showinfo) $.info.show("云检查完毕，没有需要同步的设置（列表都是空的呢）。")
+                        if (showinfo) emitMsg("global::success","云检查完毕，没有需要同步的设置（列表都是空的呢）。")
                     } else {
                         console.log("Update to cloud");
                         let msg = JSON.stringify(data);
@@ -1559,14 +1706,19 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
         })
     }
 
+    //剔除空格换行符
+    function trimWord(d){
+        return d.replace(/(\r\n|\n|\r)/gm, "").trim();
+    }
+
     function updateListByCloudData(data) {
         let keywordsstr = decode(data.keywords);
         let upsstr = decode(data.ups);
         let replierstr = typeof data.repliers == "undefined" ? "" : decode(data.repliers);
         let spliter = upsstr.indexOf(" ") > 0 || keywordsstr.indexOf(" ") > 0 ? " " : ",";
-        let keywords = keywordsstr.split(spliter);
-        let ups = upsstr.split(spliter);
-        let repliers = replierstr.split(spliter);
+        let keywords = keywordsstr.split(spliter).map(trimWord);
+        let ups = upsstr.split(spliter).map(trimWord);
+        let repliers = replierstr.split(spliter).map(trimWord);
         //console.log("spliter", ups, keywords, spliter)
         keywords = keywords.length === 1 && keywords[0] === "" ? [] : keywords;
         ups = ups.length === 1 && ups[0] === "" ? [] : ups;
@@ -1589,7 +1741,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
             console.log("Time Updated", (data.time))
         });
 
-        $.info.show("ACFUN屏蔽系统：下载屏蔽设置成功！")
+        emitMsg("global::success","ACFUN屏蔽系统：下载屏蔽设置成功！")
     }
 
     let defaultUpdateInterval = 30 * 1000;
@@ -1612,12 +1764,12 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
                         let data = JSON.parse(text);
                         //检查版本兼容
                         if (typeof data.version === "undefined" || parseFloat(data.version) < parseFloat(version)) {
-                            $.info.show("旧版同步信息发现，重新同步");
+                            emitMsg("global::success","旧版同步信息发现，重新同步");
                             updateListByCloudData(data);
                             cloudUpdate(data, showinfo);
 
                         } else if (parseFloat(data.version) > parseFloat(version)) {
-                            $.info.show("同步失败：你已经在其他地方使用过更新的版本了。请更新当前屏蔽插件，最新版本：" + data.version);
+                            emitMsg("global::success","同步失败：你已经在其他地方使用过更新的版本了。请更新当前屏蔽插件，最新版本：" + data.version);
 
                         } else {
                             console.log("data time", data.time, decode(data.time), "local", localTime);
@@ -1634,7 +1786,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
                                 cloudUpdate(data, showinfo);
                             } else {
                                 console.log("Check done, no update needed", (localTime - cloudtime) / 1000, data);
-                                if (showinfo) $.info.show("云检查完毕，已经是最新的了！")
+                                if (showinfo) emitMsg("global::success","云检查完毕，已经是最新的了！")
                             }
                             //检查完毕，让同步按钮可用
                             $('#cloudsync').removeClass("disabled").text("手动同步");
@@ -1666,7 +1818,7 @@ $.info.warning("投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作�
     //                 sendChunks(chunks, i + 1);
     //             } else {
     //                 console.log("All info sent");
-    //                 $.info.show("ACFUN屏蔽系统：上传屏蔽设置成功！")
+    //                 emitMsg("global::success","ACFUN屏蔽系统：上传屏蔽设置成功！")
     //             }
     //         });
     //     }
@@ -1690,26 +1842,26 @@ let im = ImSdk;
 let instance = im.instance;
 let cloudServer = ` + cloudServer + `;
 let session = instance.kernel.openSession(0, cloudServer);
-console.log("cloud send", msg)
+//console.log("cloud send", msg)
 
 function sendChunks(chunks, i){
 let m = (i+1)+"/"+chunks.length+" "+ chunks[i];
-console.log("send chunk",chunks, m);
+//console.log("send chunk",chunks, m);
 instance.sendMessage(cloudServer, m, ()=>{
-console.log("Cloud info chunk ", i, "sent")
+//console.log("Cloud info chunk ", i, "sent")
 if (i<chunks.length-1){
 setTimeout(
 ()=>{sendChunks(chunks,i+1);}
 , 200)
 }else{
 console.log("All info sent");
-if (showinfo) $.info.show("Acfun屏蔽设置同步完毕！")
+if (showinfo) emitMsg("global::success","Acfun屏蔽设置同步完毕！")
 }
 });
 }
 
 let chunks = msgChunker(msg);
-console.log("schunk",chunks);
+//console.log("schunk",chunks);
 sendChunks(chunks,0);
 })()`;
         //console.log(evalstr);
@@ -1788,14 +1940,8 @@ sendChunks(chunks,0);
 
     function initLoad() {
 
-        if (typeof $ === "undefined" || typeof unsafeWindow.$ === "undefined" || typeof unsafeWindow.$.info === "undefined") {
-            console.log("Loading..");
-            //$ = unsafeWindow.$;
-            setTimeout(initLoad, 1000);
-            return;
-        }
 
-        $.info = unsafeWindow.$.info;
+        //$.info = unsafeWindow.$.info;
 
         //console.log("Loaded info ", $.info);
 
@@ -1811,13 +1957,24 @@ sendChunks(chunks,0);
         }
 
         function isVideoHome() {
-
+            let list2 = [["67","TV动画"],["180","剧场动画"],["120","国产动画"],["106","动画综合"],["190","短片动画"],["107","MAD·AMV"],["108","MMD·3D"],["207","虚拟偶像"],["159","动画资讯"],["133","COSPLAY·声优"],["99","布袋·特摄"],["206","搞笑"],["87","鬼畜调教"],["188","娱乐圈"],["86","生活日常"],["88","萌宠"],["89","美食"],["204","旅行"],["127","手工·绘画"],["205","美妆·造型"],["136","原创·翻唱"],["137","演奏·乐器"],["103","Vocaloid"],["139","综合音乐·现场"],["185","音乐选集"],["134","宅舞"],["135","综合舞蹈"],["129","偶像"],["84","主机单机"],["186","网络游戏"],["145","电子竞技"],["85","英雄联盟"],["187","手机游戏"],["165","桌游卡牌"],["72","Mugen"],["90","科技制造"],["189","人文科普"],["122","汽车"],["91","数码"],["151","演讲·公开课"],["149","广告"],["192","预告·花絮"],["193","电影杂谈"],["194","剧透社"],["195","综艺Show"],["196","纪实·短片"],["152","综合体育"],["94","足球"],["95","篮球"],["153","搏击健身"],["93","极限竞速"],["183","普法安全"],["92","国防军事"],["131","历史"],["132","新鲜事·正能量"],["201","本区推荐"],["86","生活日常"],["88","萌宠"],["89","美食"],["204","旅行"],["127","手工·绘画"],["205","美妆·造型"]]
             let t = ["list155", "list1", "list58", "list123", "list59", "list60", "list70", "list68", "list69", "list125"];
             let url = window.location.href;
+            for (let i = 0; i < list2.length; i++) {
+                if (url.indexOf("list"+list2[i][0]) >= 0) return true;
+            }
+
             for (let i = 0; i < t.length; i++) {
                 if (url.indexOf(t[i]) >= 0) return true;
             }
             return false;
+        }
+
+        if (typeof $ === "undefined" && typeof unsafeWindow.$ === "undefined"  /*|| typeof unsafeWindow.A == "undefined" */) {
+            console.log("Loading..", $, unsafeWindow.$);
+            //$ = unsafeWindow.$;
+            setTimeout(initLoad, 1000);
+            return;
         }
 
         console.log("DEBUG body Loaded");
@@ -1851,13 +2008,13 @@ sendChunks(chunks,0);
 
         }
         //降低存在感
-        //$.info.success("屏蔽启动！")
+        //emitMsg("global::success","屏蔽启动！")
 
     }
 
     function initLoadPart2() {
 
-        if (typeof $ === "undefined" || typeof unsafeWindow.$ === "undefined") {
+        if (typeof $ === "undefined" && typeof unsafeWindow.$ === "undefined") {
             console.log("Loading.. Part 2");
             setTimeout(initLoadPart2, 1000);
             return;

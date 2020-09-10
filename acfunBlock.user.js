@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Acfun屏蔽计划
 // @namespace    http://tampermonkey.net/
-// @version      2.010
+// @version      2.011
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
 // @match        http://www.acfun.cn/v/list63
@@ -16,7 +16,7 @@
 // @match        https://www.acfun.cn/v/as*
 // @match        http://www.acfun.cn/v/as*
 // @connect      greasyfork.org
-// @require      https://code.jquery.com/jquery-3.4.1.min.js
+// @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM.getValue
@@ -25,6 +25,7 @@
 // @grant        GM.xmlHttpRequest
 // @grant        unsafeWindow
 // @run-at      document-idle
+// @description 帮助你屏蔽不想看的UP主
 // ==/UserScript==
 
 
