@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      2.023
+// @version      3.001
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -17,7 +17,6 @@
 // @match        https://www.acfun.cn/v/as*
 // @match        http://www.acfun.cn/v/as*
 // @connect      greasyfork.org
-// @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM.getValue
@@ -26,2093 +25,2533 @@
 // @grant        GM.xmlHttpRequest
 // @grant        unsafeWindow
 // @run-at      document-idle
+// @license MIT
 // ==/UserScript==
 
-function injectStyles(rule) {
 
-
-    var div = $("<div />", {
-        html: '&shy;<style>' + rule + '</style>'
-    }).appendTo("body");
+if (typeof module !=="undefined" && module !== null) {
+    module.exports = function header() {
+        console.log("AcFun 网页端辅助启动中。。。")
+    }
 }
-
-function core() {
-    'use strict';
-    let version = "2.023";
-    let empty = (a) => {
-        return typeof a === "undefined" ? () => {
-        } : a;
-    };
-
-    let GM_set = typeof GM_setValue === "undefined" ?
-        function (key, value, callback, failcallback) {
-            let p = GM.setValue(key, value);
-            p.then(empty(callback), empty(failcallback));
-
-
+/*! For license information please see acfunhelper.js.LICENSE.txt */
+(() => {
+    var e = {
+        565: (e, n, t) => {
+            e = t.nmd(e);
+            if (true && null !== e) e.exports = function e() {
+                console.log("AcFun 网页端辅助启动中。。。");
+            };
+        },
+        547: (e, n, t) => {
+            "use strict";
+            t.d(n, {
+                Z: () => g
+            });
+            var r = t(81);
+            var i = t.n(r);
+            var o = t(645);
+            var a = t.n(o);
+            var l = t(667);
+            var A = t.n(l);
+            var c = new URL(t(972), t.b);
+            var s = new URL(t(528), t.b);
+            var d = new URL(t(653), t.b);
+            var u = a()(i());
+            var f = A()(c);
+            var p = A()(s);
+            var m = A()(d);
+            u.push([ e.id, "/* Colors */\r\n.c-a {\r\n    background-color: #F7E6DE;\r\n}\r\n\r\n.c-b {\r\n    background-color: #D6C4C1;\r\n}\r\n\r\n.c-c {\r\n    background-color: #eee;\r\n}\r\n\r\n.c-d {\r\n    background-color: #D6C1CB;\r\n}\r\n\r\n.c-e {\r\n    background-color: #F7DEF7;\r\n}\r\n\r\n.ui-hidden {\r\n    /*display: none!important;*/\r\n    width: 0 !important;\r\n}\r\n\r\n.ui-hidden a {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden div {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden span {\r\n\r\n    background-color: transparent;\r\n}\r\n\r\n.helper-wrap {\r\n    user-select: none;\r\n    position: fixed;\r\n    z-index: 99;\r\n    height: 230px;\r\n    min-width: 60px;\r\n    top: 50%;\r\n    left: 0;\r\n\r\n}\r\n\r\n.helper-wrap-inner {\r\n    position: relative;\r\n    height: 100%;\r\n}\r\n\r\n.helper-wrap-inner div {\r\n    float: left;\r\n    vertical-align: top;\r\n}\r\n\r\n.helper-main {\r\n    display: inline-block;\r\n    width: 280px;\r\n    height: 100%;\r\n    border: solid #666;\r\n    border-width: 1px 1px 1px 0;\r\n    position: relative;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n\r\n}\r\n\r\n.ac-girl {\r\n    display: inline-block;\r\n    width: 60px;\r\n    height: 100px;\r\n    background-image: url(" + f + ');\r\n    background-size: contain;\r\n    background-repeat: no-repeat;\r\n    cursor: pointer;\r\n    margin-top: 10px;\r\n}\r\n\r\n.ac-girl-hide {\r\n    transform: translateX(-100%);\r\n}\r\n\r\n.page-wrap {\r\n    height: 100%;\r\n    width: 280px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: inherit;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n}\r\n\r\n.go-back {\r\n    cursor: pointer;\r\n    padding: 3px;\r\n}\r\n\r\n.inactive-page {\r\n    display: none;\r\n}\r\n\r\n.menu-wrap {\r\n    text-align: center;\r\n    width: 80px;\r\n    position: absolute;\r\n    top: 55%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n.sync-time {\r\n    margin-top: 20px;\r\n}\r\n\r\n.plugin-hint {\r\n    z-index: 99;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    cursor: pointer;\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-menu-title {\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-version {\r\n    position: absolute;\r\n    right: 20px;\r\n    bottom: 0;\r\n    pointer-events: none;\r\n}\r\n\r\n.menu-wrap a {\r\n    display: block;\r\n    margin: 10px 0 10px;\r\n    transition: 100ms;\r\n    cursor: pointer;\r\n}\r\n\r\n.menu-wrap a:hover {\r\n    transform: scale(1.2);\r\n}\r\n\r\n.plugin-add-ban-up {\r\n    margin: 10px;\r\n    display: block;\r\n    width: 100%;\r\n}\r\n\r\n.ban-title-input {\r\n    height: 20px;\r\n    background-color: transparent;\r\n    border-radius: 50px 0 0 50px;\r\n    font: 13px "宋体";\r\n    line-height: 13px;\r\n    text-align: center;\r\n    margin: 0 0 0 2px;\r\n    border: 1px solid #b6adad;\r\n    float: left;\r\n}\r\n\r\n.ban-title-input:focus {\r\n    background-color: rgba(255, 255, 255, 0.4);\r\n}\r\n\r\n.ban-item-submit {\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px;\r\n    background: darkred;\r\n    height: 22px;\r\n    color: white;\r\n    width: 40px;\r\n    border-radius: 0 50px 50px 0;\r\n}\r\n\r\n.ban-item-submit:hover {\r\n    background-color: #a84716;\r\n    transition: 50ms;\r\n}\r\n\r\n.ban-item-submit:active {\r\n    background-color: #cd9072;\r\n}\r\n\r\n.banned-items {\r\n    padding: 10px;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    height: 147px;\r\n    line-height: 23px;\r\n    margin: 2px;\r\n\r\n}\r\n\r\n\r\n.banned-items::-webkit-scrollbar {\r\n    width: 10px;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-track {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-thumb {\r\n    background-color: #666666;\r\n}\r\n\r\n.banned-item {\r\n    position: relative;\r\n    display: inline-block;\r\n    height: 16px;\r\n\r\n    margin: 3px 1px 5px 1px;\r\n}\r\n\r\nspan.banned-title {\r\n    height: 16px;\r\n    float: left;\r\n    vertical-align: middle;\r\n    background-color: #e0a040;\r\n    font: 12px "宋体";\r\n    border-radius: 5px;\r\n    padding: 1px 5px 1px 5px;\r\n    line-height: 16px;\r\n}\r\n\r\n.banned-item button {\r\n\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px 5px 1px 5px;\r\n    background: rgba(89, 0, 0, 0.7);\r\n    height: 18px;\r\n    width: 100%;\r\n    color: white;\r\n    border-radius: 5px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    cursor: pointer;\r\n    opacity: 0;\r\n    transition: 80ms ease-in;\r\n\r\n}\r\n\r\n.banned-item button:active {\r\n\r\n    background: rgba(255, 76, 76, 0.7);\r\n}\r\n\r\n.banned-item button:hover {\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.about-page-content {\r\n    width: 100%;\r\n    display: block;\r\n    word-wrap: break-word;\r\n    box-sizing: border-box;\r\n    padding: 20px;\r\n    overflow-y: auto;\r\n    height: 210px;\r\n    float: none!important;\r\n}\r\n\r\n\r\n/* 过滤UI */\r\n.filter-button {\r\n\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: rgba(255, 0, 0, 1);\r\n    padding: 1.5px;\r\n    left: 0;\r\n    top: 0;\r\n    transform: translate(0, 0);\r\n    display: block;\r\n    position: fixed;\r\n    z-index: 98;\r\n    background-size: contain;\r\n    background-image: url(' + p + ");\r\n    border-radius: 11px;\r\n    border: 2px rgb(230, 230, 230) solid;\r\n    cursor: pointer;\r\n}\r\n\r\n.smooth {\r\n    transition: 500ms ease-in-out;\r\n    -moz-transition: 500ms ease-in-out;\r\n    -o-transition: 500ms ease-in-out;\r\n    -webkit-transition: 500ms ease-in-out;\r\n}\r\n\r\n.banned-article {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 0 !important;\r\n    overflow: hidden;\r\n    opacity: 0;\r\n}\r\n\r\n.banned-page-item {\r\n    margin: 0;\r\n    opacity: 0;\r\n    transition: 300ms;\r\n\r\n}\r\n\r\n.banned-page-item:hover {\r\n    opacity: 1;\r\n}\r\n\r\n.remove {\r\n    display: none !important;\r\n}\r\n\r\n.area-comment-block {\r\n    line-height: 14px;\r\n    background: url(" + m + ') no-repeat;\r\n    background-size: 13px 13px;\r\n    background-position: 0 1px;\r\n    padding-left: 17px;\r\n    padding-right: 15px;\r\n    color: #999;\r\n}\r\n\r\n.banned-text {\r\n    font-size: 14px !important;\r\n}\r\n\r\n.unban-replier-btn {\r\n    margin: 0 10px;\r\n}\r\n\r\n.hide-avatar {\r\n    visibility: hidden;\r\n}\r\n\r\n\r\n/*subUI */\r\n.sub-ui-wrap {\r\n    position: fixed;\r\n    left: 0;\r\n    top: 38%;\r\n    height: 80px;\r\n    width: 30px;\r\n    z-index: 99;\r\n}\r\n\r\n.sub-ui-inner {\r\n    height: 80px;\r\n    width: 30px;\r\n    position: relative;\r\n    display: block;\r\n    overflow: hidden;\r\n}\r\n\r\n.sub-ui-banned {\r\n\r\n    background-color: rgba(253, 76, 93, 0.3);\r\n}\r\n\r\n.sub-ui-normal {\r\n\r\n    background-color: rgba(165, 253, 76, 0.3);\r\n}\r\n\r\n.sub-ui-text {\r\n    writing-mode: vertical-rl;\r\n    text-orientation: upright;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    height: 100%;\r\n    width: 100%;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button {\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button:hover {\r\n    transform: translateX(100%);\r\n}\r\n\r\n#banUp {\r\n    color: black;\r\n}\r\n\r\n#unbanUp {\r\n    color: black;\r\n}\r\n\r\n\r\n#banUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "屏蔽ＵＰ主";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #fc7630;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n\r\n#unbanUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "取消屏蔽";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #83ee1a;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n.on-top {\r\n    z-index: 1000;\r\n}\r\n\r\n.user-tags {\r\n    vertical-align: middle;\r\n    display: inline-block;\r\n    margin: 0 20px 0 20px;\r\n    max-width: 50%;\r\n}\r\n\r\n/* TAGGING */\r\n.user-tag {\r\n    margin-top: 2px;\r\n    margin-right: 3px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    border-color: rgba(0, 0, 0, 0.4);\r\n\r\n    user-select: none;\r\n    display: inline-block;\r\n\r\n    height: 15px;\r\n    min-width: 30px;\r\n\r\n    float: left;\r\n\r\n\r\n}\r\n.user-tag-text{\r\n\r\n    text-align: center;\r\n}\r\n\r\n.very-smooth {\r\n\r\n    transition: 200ms;\r\n    -moz-transition: 200ms;\r\n    -o-transition: 200ms;\r\n    -webkit-transition: 200ms;\r\n}\r\n\r\n\r\n.add-new-tag {\r\n\r\n    margin-top: 2px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n\r\n    border: 1px rgba(0, 0, 0, 0.25);\r\n    border-style: dashed;\r\n    user-select: none;\r\n\r\n    display: inline-block;\r\n    float: left;\r\n\r\n}\r\n\r\n.add-new-tag:hover {\r\n    background-color: rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.add-new-tag:active {\r\n    background-color: rgba(255, 255, 255, 0.3);\r\n}\r\n\r\n.tagging-ui-container {\r\n    overflow: hidden;\r\n    position: fixed;\r\n    top: 50%;\r\n    left: 50%;\r\n    height: 200px;\r\n    width: 300px;\r\n    transform: translate(-50%, -50%);\r\n\r\n    box-sizing: border-box;\r\n    padding: 10px;\r\n\r\n    -webkit-box-shadow: 2px 2px 7px 1px #787878;\r\n    box-shadow: 2px 2px 7px 1px #787878;\r\n    border-radius: 10px;\r\n\r\n    background-color: rgb(240,240,240);\r\n}\r\n\r\n.tagging-ui-inner {\r\n    position: relative;\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n}\r\n\r\n.name-to-tag{\r\n    padding: 3px;\r\n\r\n}\r\n\r\n.tags-container {\r\n    width: 280px;\r\n    height: 130px;\r\n    background-color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.tagging-input-wrap{\r\n    background-color: rgb(100,100,100);\r\n    height: 20px;\r\n    vertical-align: top;\r\n    border-bottom: 2px rgb(200,200,200);\r\n    margin-bottom: 2px;\r\n}\r\n\r\n.tagging-input{\r\n    float: left;\r\n    box-sizing: border-box;\r\n    padding: 2px;\r\n    height: 20px;\r\n    width: 235px;\r\n    border: none;\r\n\r\n}\r\n\r\n.tagging-submit{\r\n    float: left;\r\n    height: 20px;\r\n    border: none;\r\n    width: 45px;\r\n    background-color: #ced9c5;\r\n}\r\n\r\n.tagging-submit:hover{\r\n    background-color: #a5f400;\r\n}\r\n\r\n.tagging-submit:active{\r\n    background-color: #d4f400;\r\n}\r\n\r\n.tagging-close-button{\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    background-color: #a84716;\r\n    color: white;\r\n    border-radius: 0 10px 0 10px;\r\n    width: 45px;\r\n    height: 25px;\r\n    vertical-align: middle;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    z-index: 10;\r\n    user-select: none;\r\n}\r\n\r\n.smooth-remove{\r\n    transition: 300ms ease-in-out;\r\n    opacity: 0;\r\n    pointer-events: none;\r\n\r\n}\r\n\r\n\r\n.tagging-close-button:hover{\r\n    background-color: #ffc5c5;\r\n}\r\n\r\n.tagging-close-button:active{\r\n    background-color: #ffedd4;\r\n    padding-top: 2px;\r\n\r\n}\r\n\r\n.tag-item{\r\n    display: inline-block;\r\n    background-color: #e7e1e1;\r\n    margin: 1px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n    border: 1px dashed;\r\n    padding: 2px;\r\n    font-size: 8px;\r\n    user-select: none;\r\n    cursor: pointer;\r\n    height: 19px;\r\n    min-width: 30px;\r\n    position: relative;\r\n    line-height: 15px;\r\n    text-align: center;\r\n}\r\n\r\n\r\n.tag-item:before{\r\n    opacity: 0;\r\n    content: "删除";\r\n    position: absolute;\r\n    width: 100%;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    left: 0;\r\n    height: 100%;\r\n    top: 0;\r\n    line-height: 19px;\r\n}\r\n\r\n.tag-item:hover:before{\r\n    opacity: 1;\r\n    color: white;\r\n    background-color: #a84716;\r\n}\r\n\r\n\r\n/* Comment Recovery UI */\r\n\r\n\r\n\r\n.deleted-comments-container{\r\n    position: absolute;\r\n    display: block;\r\n    width: 300px;\r\n\r\n    min-height: 300px;\r\n    overflow: hidden;\r\n}\r\n\r\n.deleted-comments-inner{\r\n    position: relative;\r\n    display: block;\r\n    width: 100%;\r\n\r\n}\r\n\r\n\r\n\r\n.deleted-comments-title{\r\n    box-sizing: border-box;\r\n    display: block;\r\n    font-size: 16px;\r\n    background-color: #b6adad;\r\n    padding: 3px 10px 3px 10px;\r\n}\r\n\r\n.deleted-comment-list{\r\n    height: 100%;\r\n    width: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}\r\n\r\n.deleted-comment{\r\n    border: 1px solid #e5e5e5;\r\n    background-color: #ffe;\r\n    display: block;\r\n    user-select: none;\r\n}\r\n\r\n.comment-info{\r\n    display: block;\r\n    height: 20px;\r\n    padding: 3px;\r\n}\r\n\r\n.comment-floor{\r\n    font-weight: 700;\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    width: 45px;\r\n    box-sizing: border-box;\r\n    margin-right: 3px;\r\n}\r\n\r\n.comment-query-state{\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.comment-content{\r\n    padding: 3px;\r\n}\r\n\r\n.hide-btn{\r\n    float: right;\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n    user-select: none;\r\n}\r\n\r\n.hide-btn:hover{\r\n    color: red;\r\n}', "" ]);
+            const g = u;
+        },
+        645: e => {
+            "use strict";
+            e.exports = function(e) {
+                var n = [];
+                n.toString = function n() {
+                    return this.map((function(n) {
+                        var t = "";
+                        var r = "undefined" !== typeof n[5];
+                        if (n[4]) t += "@supports (".concat(n[4], ") {");
+                        if (n[2]) t += "@media ".concat(n[2], " {");
+                        if (r) t += "@layer".concat(n[5].length > 0 ? " ".concat(n[5]) : "", " {");
+                        t += e(n);
+                        if (r) t += "}";
+                        if (n[2]) t += "}";
+                        if (n[4]) t += "}";
+                        return t;
+                    })).join("");
+                };
+                n.i = function e(t, r, i, o, a) {
+                    if ("string" === typeof t) t = [ [ null, t, void 0 ] ];
+                    var l = {};
+                    if (i) for (var A = 0; A < this.length; A++) {
+                        var c = this[A][0];
+                        if (null != c) l[c] = true;
+                    }
+                    for (var s = 0; s < t.length; s++) {
+                        var d = [].concat(t[s]);
+                        if (i && l[d[0]]) continue;
+                        if ("undefined" !== typeof a) if ("undefined" === typeof d[5]) d[5] = a; else {
+                            d[1] = "@layer".concat(d[5].length > 0 ? " ".concat(d[5]) : "", " {").concat(d[1], "}");
+                            d[5] = a;
+                        }
+                        if (r) if (!d[2]) d[2] = r; else {
+                            d[1] = "@media ".concat(d[2], " {").concat(d[1], "}");
+                            d[2] = r;
+                        }
+                        if (o) if (!d[4]) d[4] = "".concat(o); else {
+                            d[1] = "@supports (".concat(d[4], ") {").concat(d[1], "}");
+                            d[4] = o;
+                        }
+                        n.push(d);
+                    }
+                };
+                return n;
+            };
+        },
+        667: e => {
+            "use strict";
+            e.exports = function(e, n) {
+                if (!n) n = {};
+                if (!e) return e;
+                e = String(e.__esModule ? e.default : e);
+                if (/^['"].*['"]$/.test(e)) e = e.slice(1, -1);
+                if (n.hash) e += n.hash;
+                if (/["'() \t\n]|(%20)/.test(e) || n.needQuotes) return '"'.concat(e.replace(/"/g, '\\"').replace(/\n/g, "\\n"), '"');
+                return e;
+            };
+        },
+        81: e => {
+            "use strict";
+            e.exports = function(e) {
+                return e[1];
+            };
+        },
+        653: e => {
+            "use strict";
+            e.exports = "data:image/png;base64,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";
+        },
+        528: e => {
+            "use strict";
+            e.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKTWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVN3WJP3Fj7f92UPVkLY8LGXbIEAIiOsCMgQWaIQkgBhhBASQMWFiApWFBURnEhVxILVCkidiOKgKLhnQYqIWotVXDjuH9yntX167+3t+9f7vOec5/zOec8PgBESJpHmomoAOVKFPDrYH49PSMTJvYACFUjgBCAQ5svCZwXFAADwA3l4fnSwP/wBr28AAgBw1S4kEsfh/4O6UCZXACCRAOAiEucLAZBSAMguVMgUAMgYALBTs2QKAJQAAGx5fEIiAKoNAOz0ST4FANipk9wXANiiHKkIAI0BAJkoRyQCQLsAYFWBUiwCwMIAoKxAIi4EwK4BgFm2MkcCgL0FAHaOWJAPQGAAgJlCLMwAIDgCAEMeE80DIEwDoDDSv+CpX3CFuEgBAMDLlc2XS9IzFLiV0Bp38vDg4iHiwmyxQmEXKRBmCeQinJebIxNI5wNMzgwAABr50cH+OD+Q5+bk4eZm52zv9MWi/mvwbyI+IfHf/ryMAgQAEE7P79pf5eXWA3DHAbB1v2upWwDaVgBo3/ldM9sJoFoK0Hr5i3k4/EAenqFQyDwdHAoLC+0lYqG9MOOLPv8z4W/gi372/EAe/tt68ABxmkCZrcCjg/1xYW52rlKO58sEQjFu9+cj/seFf/2OKdHiNLFcLBWK8ViJuFAiTcd5uVKRRCHJleIS6X8y8R+W/QmTdw0ArIZPwE62B7XLbMB+7gECiw5Y0nYAQH7zLYwaC5EAEGc0Mnn3AACTv/mPQCsBAM2XpOMAALzoGFyolBdMxggAAESggSqwQQcMwRSswA6cwR28wBcCYQZEQAwkwDwQQgbkgBwKoRiWQRlUwDrYBLWwAxqgEZrhELTBMTgN5+ASXIHrcBcGYBiewhi8hgkEQcgIE2EhOogRYo7YIs4IF5mOBCJhSDSSgKQg6YgUUSLFyHKkAqlCapFdSCPyLXIUOY1cQPqQ28ggMor8irxHMZSBslED1AJ1QLmoHxqKxqBz0XQ0D12AlqJr0Rq0Hj2AtqKn0UvodXQAfYqOY4DRMQ5mjNlhXIyHRWCJWBomxxZj5Vg1Vo81Yx1YN3YVG8CeYe8IJAKLgBPsCF6EEMJsgpCQR1hMWEOoJewjtBK6CFcJg4Qxwicik6hPtCV6EvnEeGI6sZBYRqwm7iEeIZ4lXicOE1+TSCQOyZLkTgohJZAySQtJa0jbSC2kU6Q+0hBpnEwm65Btyd7kCLKArCCXkbeQD5BPkvvJw+S3FDrFiOJMCaIkUqSUEko1ZT/lBKWfMkKZoKpRzame1AiqiDqfWkltoHZQL1OHqRM0dZolzZsWQ8ukLaPV0JppZ2n3aC/pdLoJ3YMeRZfQl9Jr6Afp5+mD9HcMDYYNg8dIYigZaxl7GacYtxkvmUymBdOXmchUMNcyG5lnmA+Yb1VYKvYqfBWRyhKVOpVWlX6V56pUVXNVP9V5qgtUq1UPq15WfaZGVbNQ46kJ1Bar1akdVbupNq7OUndSj1DPUV+jvl/9gvpjDbKGhUaghkijVGO3xhmNIRbGMmXxWELWclYD6yxrmE1iW7L57Ex2Bfsbdi97TFNDc6pmrGaRZp3mcc0BDsax4PA52ZxKziHODc57LQMtPy2x1mqtZq1+rTfaetq+2mLtcu0W7eva73VwnUCdLJ31Om0693UJuja6UbqFutt1z+o+02PreekJ9cr1Dund0Uf1bfSj9Rfq79bv0R83MDQINpAZbDE4Y/DMkGPoa5hpuNHwhOGoEctoupHEaKPRSaMnuCbuh2fjNXgXPmasbxxirDTeZdxrPGFiaTLbpMSkxeS+Kc2Ua5pmutG003TMzMgs3KzYrMnsjjnVnGueYb7ZvNv8jYWlRZzFSos2i8eW2pZ8ywWWTZb3rJhWPlZ5VvVW16xJ1lzrLOtt1ldsUBtXmwybOpvLtqitm63Edptt3xTiFI8p0in1U27aMez87ArsmuwG7Tn2YfYl9m32zx3MHBId1jt0O3xydHXMdmxwvOuk4TTDqcSpw+lXZxtnoXOd8zUXpkuQyxKXdpcXU22niqdun3rLleUa7rrStdP1o5u7m9yt2W3U3cw9xX2r+00umxvJXcM970H08PdY4nHM452nm6fC85DnL152Xlle+70eT7OcJp7WMG3I28Rb4L3Le2A6Pj1l+s7pAz7GPgKfep+Hvqa+It89viN+1n6Zfgf8nvs7+sv9j/i/4XnyFvFOBWABwQHlAb2BGoGzA2sDHwSZBKUHNQWNBbsGLww+FUIMCQ1ZH3KTb8AX8hv5YzPcZyya0RXKCJ0VWhv6MMwmTB7WEY6GzwjfEH5vpvlM6cy2CIjgR2yIuB9pGZkX+X0UKSoyqi7qUbRTdHF09yzWrORZ+2e9jvGPqYy5O9tqtnJ2Z6xqbFJsY+ybuIC4qriBeIf4RfGXEnQTJAntieTE2MQ9ieNzAudsmjOc5JpUlnRjruXcorkX5unOy553PFk1WZB8OIWYEpeyP+WDIEJQLxhP5aduTR0T8oSbhU9FvqKNolGxt7hKPJLmnVaV9jjdO31D+miGT0Z1xjMJT1IreZEZkrkj801WRNberM/ZcdktOZSclJyjUg1plrQr1zC3KLdPZisrkw3keeZtyhuTh8r35CP5c/PbFWyFTNGjtFKuUA4WTC+oK3hbGFt4uEi9SFrUM99m/ur5IwuCFny9kLBQuLCz2Lh4WfHgIr9FuxYji1MXdy4xXVK6ZHhp8NJ9y2jLspb9UOJYUlXyannc8o5Sg9KlpUMrglc0lamUycturvRauWMVYZVkVe9ql9VbVn8qF5VfrHCsqK74sEa45uJXTl/VfPV5bdra3kq3yu3rSOuk626s91m/r0q9akHV0IbwDa0b8Y3lG19tSt50oXpq9Y7NtM3KzQM1YTXtW8y2rNvyoTaj9nqdf13LVv2tq7e+2Sba1r/dd3vzDoMdFTve75TsvLUreFdrvUV99W7S7oLdjxpiG7q/5n7duEd3T8Wej3ulewf2Re/ranRvbNyvv7+yCW1SNo0eSDpw5ZuAb9qb7Zp3tXBaKg7CQeXBJ9+mfHvjUOihzsPcw83fmX+39QjrSHkr0jq/dawto22gPaG97+iMo50dXh1Hvrf/fu8x42N1xzWPV56gnSg98fnkgpPjp2Snnp1OPz3Umdx590z8mWtdUV29Z0PPnj8XdO5Mt1/3yfPe549d8Lxw9CL3Ytslt0utPa49R35w/eFIr1tv62X3y+1XPK509E3rO9Hv03/6asDVc9f41y5dn3m978bsG7duJt0cuCW69fh29u0XdwruTNxdeo94r/y+2v3qB/oP6n+0/rFlwG3g+GDAYM/DWQ/vDgmHnv6U/9OH4dJHzEfVI0YjjY+dHx8bDRq98mTOk+GnsqcTz8p+Vv9563Or59/94vtLz1j82PAL+YvPv655qfNy76uprzrHI8cfvM55PfGm/K3O233vuO+638e9H5ko/ED+UPPR+mPHp9BP9z7nfP78L/eE8/sl0p8zAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAQvSURBVHjazJpbaBZHFIC//HiPN2KIGrG1gkEUgijVYME+CkpfBFFa+2DVikFavIFoTFtbwYoPgvXZ91LUh0YMtlBssRHbKiKKlz54Q1sv8Yrmor8POQvLeGZ2dv/Z/T0w/PDvzDnzzezMnHNmawgndUAL8D4wE5gCNACjgMFAH/AU+B+4BlwATgNdwN2sRsvlcjCAIcAK4AjwGChnKM+ADmAlUJsFJipZZQzQDtzMCGAr/wHfAfVFwawD7gWGMMsj4Ms8Yd4DfknZqQfAv8BF4CpwP2X7P4DpoWGWAM89jP8OfAMsBqYpa2AEMBVYCLQBv3rofAl8EgpmU4KxO8DOpBF0yFRgu+xwLjs7KoX5yqG8V0a3NtDOOEgG7onD5p6sMBstCvuAgzKiechE4LADqD0tzGKHsufAZPIX11ux3BemwXOXai4AaJWjD+/6wJzy3DZfFAS00mL/fBLMqpTnwAvxxfKW7Rb7G2wwQ4EepcGPwFzHOfNKHMy8pcNif7QGs8NSuUGeN8tM2GYpb6DhFvt7TZiSxettMxS6gIqYoVbLeTcsDrPM4uxpMkc6Xi2g24rd1XGYY0qFbx0KWxxAeb9yGzSHNIIZKae6WaExQWm1gEaL82naqwdYpDw45am4pUqvXKdib1nJYrDDU2kXMF+UmVID/JkT0FHlv3kAhxTKhSmVJ71ycwLDzFdsdAL8rTyYksGAC6gnsOszTlnn5wGuK07kkIxGXEChfTmz37cAuo0/r1RopCigM4bu7pJEeHHpqdBIl/hymp6hkvibFwCmV4lU35iZy4FGLm9fzpyZhwA3jD/vSTo1b6BKz6Fr2po5oxgKGRY3yysRcobU3awkhKY0BYQ5B3xgOVgBTmYAalLW+u1StD8bMjfwIXc6wVNIC6RFtxcAPlKm/kROPlUoX07z8j+OvNB+mxf6FgKNsvR3fFThuPJwW44xSSXhwxdK/a54cLZCqXCXfCVphmZZ2t1S6rfGYQYzcIP1RiqnikCa67NGqdcP1JrZmV2WZMHItwRouGXA92upplrLwuosICfWYgmF40A/WJ7X2TKarZYGXxcANDvBl9PK1qRc81lLw88KAGpOAXQ1KdeM+GXlKgM98oBp8oEBWOpQ0lYAUD0DH0AkDqrvzVmbQ9lPsRx0aKkD9qIn8cvA9/HKae409ziAHsppHDqX7PrG4IDZIO1tc7vHQtwMTMoI0CiH86UEO7u1xlm+A/jUY0H2SvJwM/AhAxetJUNPCZgALGDgAvhnx+sUL5/bOpb1C40ZkqH0PQP6JCQ/B/wlvzcSok6z/CPnD6FhItmSsNOEKD2+XnuIr5omyObwIDDEY2Af8I5vR0LARDIWWCvxUF9GgFfAb8D6LAFhHKYm4LY6SRIX0ZeAjZJFGSEhRr94vd0Sk1yU3MBJS1LFGyaS1wMA3txnQ2WvO6oAAAAASUVORK5CYII=";
+        },
+        972: e => {
+            "use strict";
+            e.exports = "data:image/png;base64,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";
         }
-        : function (key, value, callback) {
-            let res = GM_setValue(key, value);
-            callback();
+    };
+    var n = {};
+    function t(r) {
+        var i = n[r];
+        if (void 0 !== i) return i.exports;
+        var o = n[r] = {
+            id: r,
+            loaded: false,
+            exports: {}
         };
-
-
-    let GM_get = typeof GM_getValue === "undefined" ?
-        function (key, value, callback) {
-            let p = GM.getValue(key, value);
-            p.then((debug) => {
-                empty(callback)(debug);
-            }, () => {
-                callback(value);
+        e[r](o, o.exports, t);
+        o.loaded = true;
+        return o.exports;
+    }
+    t.m = e;
+    (() => {
+        t.n = e => {
+            var n = e && e.__esModule ? () => e["default"] : () => e;
+            t.d(n, {
+                a: n
             });
-            //console.log("empty", empty(callback));
-        }
-        : function (key, value, callback, failcallback) {
-            let res = GM_getValue(key, value);
-            callback(res);
+            return n;
         };
-
-    //清空列表。DEBUG用
-    function cleanList() {
-
-        GM_set("ACFUN_BLOCK_LIST", []);
-        GM_set("ACFUN_BLOCK_KEYWORDS", []);
-    }
-
-    let ups = function (callback) {
-        GM_get("ACFUN_BLOCK_LIST", [], callback);
-    };
-
-    let keywords = function (callback) {
-        GM_get("ACFUN_BLOCK_KEYWORDS", [], callback);
-    };
-
-    let repliers = function (callback) {
-        GM_get("ACFUN_BLOCK_REPLIERS", [], callback);
-    };
-
-    let setUp = function (d, callback) {
-        GM_set("ACFUN_BLOCK_LIST", d, callback);
-    };
-
-    let setKeywords = function (d, callback) {
-        GM_set("ACFUN_BLOCK_KEYWORDS", d, callback);
-    };
-
-    let setRepliers = function (d, callback) {
-        GM_set("ACFUN_BLOCK_REPLIERS", d, callback);
-    };
-
-    function setUpdateTime(time, callback) {
-        let t = typeof time === "undefined" ? +new Date() : time;
-        GM_set("UPDATE_TIME", t, () => {
-            empty(callback)(t);
-        });
-    }
-
-    function getUpdateTime(callback) {
-        let time = 0;
-        GM_get("UPDATE_TIME", time, (d) => {
-            console.log("get update time", d, parseInt(d));
-            callback(parseInt(d));
-        });
-    }
-
-    function addToUpList(id, callback) {
-        id=trimWord(id);
-        ups((old) => {
-            if (old.indexOf(id) >= 0) {
-                emitMsg("global::success","你已经屏蔽过UP主[" + id + "]啦！");
-                return;
-            }
-            old.push(trimWord(id));
-            GM_set("ACFUN_BLOCK_LIST", old, () => {
-                emitMsg("global::success","已将UP主[" + id + "]加入屏蔽列表");
-                empty(callback)();
-                setUpdateTime();
+    })();
+    (() => {
+        t.d = (e, n) => {
+            for (var r in n) if (t.o(n, r) && !t.o(e, r)) Object.defineProperty(e, r, {
+                enumerable: true,
+                get: n[r]
             });
-        });
-    }
-
-
-    function removeFromUpList(id, callback) {
-        id=trimWord(id);
-        ups((old) => {
-            let i = old.indexOf(id);
-            if (i >= 0) {
-                old.splice(i, 1);
-            }
-            GM_set("ACFUN_BLOCK_LIST", old, () => {
-                emitMsg("global::success","已将UP主[" + id + "]移出屏蔽列表。");
-                empty(callback)();
-                setUpdateTime();
-            });
-        });
-    }
-
-    function addToKeywords(id, callback) {
-        id=trimWord(id);
-        keywords((old) => {
-            if (old.indexOf(id) >= 0) {
-                emitMsg("global::success","你已经添加过关键词[" + id + "]啦！");
-                return;
-            }
-            old.push(trimWord(id));
-            GM_set("ACFUN_BLOCK_KEYWORDS", old, () => {
-                emitMsg("global::success","已将关键词[" + id + "]加入屏蔽列表");
-                empty(callback)();
-                setUpdateTime();
-            });
-        });
-    }
-
-    function removeFromKeywords(id, callback) {
-        id=trimWord(id);
-        keywords((old) => {
-            let i = old.indexOf(id);
-            if (i >= 0) {
-                old.splice(i, 1);
-            }
-            GM_set("ACFUN_BLOCK_KEYWORDS", old, () => {
-                emitMsg("global::success","已将关键词[" + id + "]移出屏蔽列表。");
-                empty(callback)();
-                setUpdateTime();
-            });
-        });
-    }
-
-    function addToRepliers(id, callback) {
-        id=trimWord(id);
-        repliers((old) => {
-            if (old.indexOf(id) >= 0) {
-                emitMsg("global::success","你已经屏蔽过评论者[" + id + "]啦！");
-                return;
-            }
-            old.push(trimWord(id));
-            GM_set("ACFUN_BLOCK_REPLIERS", old, () => {
-                emitMsg("global::success","已将评论者[" + id + "]加入屏蔽列表");
-                empty(callback)();
-                setUpdateTime();
-            });
-        });
-    }
-
-    function removeFromRepliers(id, callback) {
-        id=trimWord(id);
-        repliers((old) => {
-            let i = old.indexOf(id);
-            if (i >= 0) {
-                old.splice(i, 1);
-            }
-            GM_set("ACFUN_BLOCK_REPLIERS", old, () => {
-                emitMsg("global::success","已将评论者[" + id + "]移出屏蔽列表。");
-                empty(callback)();
-                setUpdateTime();
-            });
-        });
-    }
-
-    let filterButton = document.createElement("div");
-
-    function initButton() {
-        document.body.appendChild(filterButton);
-
-        $(filterButton).attr("class", "filter-button")
-
-    }
-
-
-    function emitMsg(t, m){
-        if (typeof unsafeWindow.A == "undefined"){
-            unsafeWindow.A = {
-                emit : function(a, m){
-                    console.log(m);
-                }
-            }
-        }
-		unsafeWindow.A.emit(t, m);
-
-
-    }
-
-    unsafeWindow.emitMsg = emitMsg;
-
-    function handleSpecialJSONstr(str) {
-        let str2 = str.replace("\n", "");
-        let matches = str2.match(/\"title\"\:\"(.{0,55})\"\,"[a-zA-Z]{1,15}":/);
-
-        if (matches !== null && matches.length > 0) {
-            let title = matches[1];
-            let res = str.replace(title, "");
-
-            return [res, title];
-        } else {
-            return [str2, "无标题"];
-        }
-
-    }
-
-    //获得所有主页的UP的DOM TAG
-    function getHomeSelection() {
-        let res = [];
-        //过滤主页视频
-        let selections = document.querySelectorAll("div.normal-video");
-        for (let i = 0; i < selections.length; i++) {
-            let tag = selections[i];
-            let titletag = tag.querySelector("a.normal-video-title");
+        };
+    })();
+    (() => {
+        t.g = function() {
+            if ("object" === typeof globalThis) return globalThis;
             try {
-                let t = titletag.getAttribute("title");
-                let matches = usernameByTitle(t);
-                let titlestr = titleByTitle(t)[0]
-
-                let title = titlestr;
-                let username = trimWord(matches);
-
-                res.push({tag: $(tag).parent()[0], title: title, username: username, type: 1, json: null});
+                return this || new Function("return this")();
             } catch (e) {
-                console.error(e);
+                if ("object" === typeof window) return window;
             }
-
-            //$(tag)
+        }();
+    })();
+    (() => {
+        t.o = (e, n) => Object.prototype.hasOwnProperty.call(e, n);
+    })();
+    (() => {
+        t.nmd = e => {
+            e.paths = [];
+            if (!e.children) e.children = [];
+            return e;
+        };
+    })();
+    (() => {
+        t.b = document.baseURI || self.location.href;
+        var e = {
+            179: 0
+        };
+    })();
+    var r = {};
+    (() => {
+        "use strict";
+        var e = t(565);
+        var n = t.n(e);
+        function r() {
+            let e = unsafeWindow.location.href;
+            let n = {
+                "www.acfun.cn/v/list1/index.htm": "动画",
+                "www.acfun.cn/v/list60/index.htm": "娱乐",
+                "www.acfun.cn/v/list201/index.htm": "生活",
+                "www.acfun.cn/v/list58/index.htm": "音乐",
+                "www.acfun.cn/v/list123/index.htm": "舞蹈·偶像",
+                "www.acfun.cn/v/list59/index.htm": "游戏",
+                "www.acfun.cn/v/list70/index.htm": "科技",
+                "www.acfun.cn/v/list68/index.htm": "影视",
+                "www.acfun.cn/v/list69/index.htm": "体育",
+                "www.acfun.cn/v/list125/index.htm": "鱼塘"
+            };
+            let t = {
+                "www.acfun.cn/u/3216851": "中国日报",
+                "www.acfun.cn/u/9755346": "环球时报",
+                "www.acfun.cn/u/14194071": "中国网",
+                "www.acfun.cn/u/16591709": "法治进行时",
+                "www.acfun.cn/u/14706221": "浙样红TV",
+                "www.acfun.cn/u/12786860": "新青年工作室",
+                "www.acfun.cn/u/16141705": "新华社现场云",
+                "www.acfun.cn/u/20143211": "快手",
+                "www.acfun.cn/u/13423227": "小央视频",
+                "www.acfun.cn/u/30169313": "人民资讯",
+                "www.acfun.cn/v/list178/index.htm": "AC正义展览区",
+                "www.acfun.cn/bangumilist": "番剧列表",
+                "www.acfun.cn/v/list67/index.htm": "TV动画",
+                "www.acfun.cn/v/list180/index.htm": "剧场动画",
+                "www.acfun.cn/v/list120/index.htm": "国产动画",
+                "www.acfun.cn/v/list106/index.htm": "动画综合",
+                "www.acfun.cn/v/list190/index.htm": "短片·手书·配音",
+                "www.acfun.cn/v/list107/index.htm": "MAD·AMV",
+                "www.acfun.cn/v/list108/index.htm": "MMD·3D",
+                "www.acfun.cn/v/list207/index.htm": "虚拟偶像",
+                "www.acfun.cn/v/list159/index.htm": "动画资讯",
+                "www.acfun.cn/v/list133/index.htm": "COSPLAY·声优",
+                "www.acfun.cn/v/list99/index.htm": "特摄",
+                "www.acfun.cn/v/list212/index.htm": "番剧二创",
+                "www.acfun.cn/v/list206/index.htm": "搞笑",
+                "www.acfun.cn/v/list87/index.htm": "鬼畜",
+                "www.acfun.cn/v/list188/index.htm": "明星",
+                "www.acfun.cn/v/list86/index.htm": "生活日常",
+                "www.acfun.cn/v/list88/index.htm": "萌宠",
+                "www.acfun.cn/v/list89/index.htm": "美食",
+                "www.acfun.cn/v/list204/index.htm": "旅行",
+                "www.acfun.cn/v/list127/index.htm": "手工·绘画",
+                "www.acfun.cn/v/list205/index.htm": "美妆·造型",
+                "www.acfun.cn/v/list215/index.htm": "治愈系",
+                "www.acfun.cn/v/list136/index.htm": "原创·翻唱",
+                "www.acfun.cn/v/list137/index.htm": "演奏·乐器",
+                "www.acfun.cn/v/list103/index.htm": "Vocaloid",
+                "www.acfun.cn/v/list139/index.htm": "综合音乐",
+                "www.acfun.cn/v/list185/index.htm": "音乐选集·电台",
+                "www.acfun.cn/v/list218/index.htm": "颜值",
+                "www.acfun.cn/v/list134/index.htm": "宅舞",
+                "www.acfun.cn/v/list135/index.htm": "综合舞蹈",
+                "www.acfun.cn/v/list129/index.htm": "偶像",
+                "www.acfun.cn/v/list208/index.htm": "中国舞",
+                "www.acfun.cn/v/list214/index.htm": "王者荣耀",
+                "www.acfun.cn/v/list210/index.htm": "我的世界",
+                "www.acfun.cn/v/list216/index.htm": "和平精英",
+                "www.acfun.cn/v/list217/index.htm": "第五人格",
+                "www.acfun.cn/v/list85/index.htm": "英雄联盟",
+                "www.acfun.cn/v/list145/index.htm": "电子竞技",
+                "www.acfun.cn/v/list186/index.htm": "网络游戏",
+                "www.acfun.cn/v/list84/index.htm": "主机单机",
+                "www.acfun.cn/v/list187/index.htm": "手机游戏",
+                "www.acfun.cn/v/list165/index.htm": "桌游卡牌",
+                "www.acfun.cn/v/list209/index.htm": "手办模玩",
+                "www.acfun.cn/v/list90/index.htm": "科技制造",
+                "www.acfun.cn/v/list189/index.htm": "人文科普",
+                "www.acfun.cn/v/list122/index.htm": "汽车",
+                "www.acfun.cn/v/list91/index.htm": "数码家电",
+                "www.acfun.cn/v/list151/index.htm": "演讲·公开课",
+                "www.acfun.cn/v/list149/index.htm": "广告",
+                "hd.acfun.cn/s/QpdpZsjR": "放映厅",
+                "www.acfun.cn/v/list219/index.htm": "影视混剪",
+                "www.acfun.cn/v/list192/index.htm": "预告·花絮",
+                "www.acfun.cn/v/list193/index.htm": "电影杂谈",
+                "www.acfun.cn/v/list194/index.htm": "追剧社",
+                "www.acfun.cn/v/list195/index.htm": "综艺show",
+                "www.acfun.cn/v/list196/index.htm": "纪录片·短片",
+                "www.acfun.cn/v/list152/index.htm": "综合体育",
+                "www.acfun.cn/v/list94/index.htm": "足球",
+                "www.acfun.cn/v/list95/index.htm": "篮球",
+                "www.acfun.cn/v/list153/index.htm": "搏击健身",
+                "www.acfun.cn/v/list93/index.htm": "极限竞速",
+                "www.acfun.cn/v/list183/index.htm": "普法安全",
+                "www.acfun.cn/v/list92/index.htm": "国防军事",
+                "www.acfun.cn/v/list131/index.htm": "历史",
+                "www.acfun.cn/v/list132/index.htm": "新鲜事·正能量",
+                "www.acfun.cn/v/list184/index.htm": "二次元画师",
+                "www.acfun.cn/v/list110/index.htm": "综合",
+                "www.acfun.cn/v/list73/index.htm": "生活情感",
+                "www.acfun.cn/v/list164/index.htm": "游戏",
+                "www.acfun.cn/v/list74/index.htm": "动漫文化",
+                "www.acfun.cn/v/list75/index.htm": "漫画·文学",
+                "www.acfun.cn/v/list63/index.htm": "文章"
+            };
+            let r = [ "动画综合", "短片·手书·配音", "MAD·AMV", "MMD·3D", "虚拟偶像", "动画资讯", "COSPLAY·声优", "特摄", "番剧二创", "搞笑", "鬼畜", "明星", "生活日常", "萌宠", "美食", "旅行", "手工·绘画", "美妆·造型", "治愈系", "原创·翻唱", "演奏·乐器", "Vocaloid", "综合音乐", "音乐选集·电台", "颜值", "宅舞", "综合舞蹈", "偶像", "中国舞", "王者荣耀", "我的世界", "和平精英", "第五人格", "英雄联盟", "电子竞技", "网络游戏", "主机单机", "手机游戏", "桌游卡牌", "手办模玩", "科技制造", "人文科普", "汽车", "数码家电", "演讲·公开课", "广告", "放映厅", "影视混剪", "预告·花絮", "电影杂谈", "追剧社", "综艺show", "纪录片·短片", "综合体育", "足球", "篮球", "搏击健身", "极限竞速", "普法安全", "国防军事", "历史", "新鲜事·正能量", "二次元画师" ];
+            let i = [ "二次元画师", "综合", "生活情感", "游戏", "动漫文化", "漫画·文学", "文章" ];
+            let o = e;
+            if ("http://www.acfun.cn/" === o || "https://www.acfun.cn/" === o) return "HOME";
+            let a = /https?:\/\/www\.acfun\.cn\/([av])\/ac\d+/;
+            let l = /www\.acfun\.cn\/.*/;
+            let A = a.exec(o);
+            let c = l.exec(o);
+            if (null !== A) {
+                if ("a" === A[1]) return "ARTICLE";
+                if ("v" === A[1]) return "VIDEO";
+            }
+            let s = c[0];
+            let d = n[s];
+            if ("undefined" !== typeof d && null !== d) return "VIDEO_HOME";
+            d = t[s];
+            if ("undefined" !== typeof d && null !== d) {
+                if (r.indexOf(d) >= 0) return "VIDEO_HOME";
+                if (i.indexOf(d) >= 0) return "ARTICLE_HOME";
+                return "OTHER";
+            } else return "OTHER";
         }
-        //console.log("res=",selections, res);
-        //过滤右边排行榜视频
-        let sel = document.querySelectorAll("div.ranked-list-content");
-
-        //For each rank
-        for (let i = 0; i < sel.length; i++) {
-            let tag = sel[i];
-            let rows =tag.querySelectorAll("div.log-item");
-            //For each row
-            for (let ri = 0; ri < rows.length; ri++) {
-                let rowTag = rows[ri];
-                let aTag = rowTag.querySelector("a.video-title");
-                let title = aTag.getAttribute("title");
-                let matches = usernameByTitle(title);
-                let titlestr = titleByTitle(title)[0];
-                if (matches) {
-                    let username = trimWord(matches);
-                    res.push({tag: rowTag, title: titlestr, username: username, type: 2});
+        var i = t(547);
+        const o = "3.001";
+        function a(e) {
+            return e.replace(/(\r\n|\n|\r)/gm, "").trim();
+        }
+        let l = e => "undefined" === typeof e || null === e ? () => {} : e;
+        let A = "undefined" === typeof GM_setValue ? function(e, n, t, r) {
+            let i = GM.setValue(e, n);
+            i.then(l(t), l(r));
+        } : function(e, n, t) {
+            GM_setValue(e, n);
+            l(t)();
+        };
+        let c = "undefined" === typeof GM_getValue ? function(e, n, t) {
+            let r = GM.getValue(e, n);
+            r.then((e => {
+                l(t)(e);
+            }), (() => {
+                l(t)(n);
+            }));
+        } : function(e, n, t, r) {
+            let i = GM_getValue(e, n);
+            l(t)(i);
+        };
+        let s = "undefined" !== typeof GM_deleteValue ? function(e, n, t) {
+            try {
+                GM_deleteValue(e);
+                n();
+            } catch (e) {
+                t(e);
+            }
+        } : "undefined" === typeof GM.deleteValue ? function(e, n, t) {
+            A(e, null, n, t);
+        } : function(e, n, t) {
+            GM.deleteValue(e).then((() => {
+                l(n)();
+            })).catch((e => {
+                l(t)(e);
+            }));
+        };
+        function d() {
+            A("ACFUN_BLOCK_LIST", []);
+        }
+        function u() {
+            A("ACFUN_BLOCK_KEYWORDS", []);
+        }
+        function f(e) {
+            c("USE_NEW_CLOUD", false, e);
+        }
+        function p(e) {
+            A("USE_NEW_CLOUD", true);
+        }
+        function m(e) {
+            c("ACFUN_BLOCK_LIST", [], e);
+        }
+        function g(e) {
+            c("ACFUN_BLOCK_KEYWORDS", [], e);
+        }
+        function w(e) {
+            c("ACFUN_BLOCK_REPLIERS", [], e);
+        }
+        function h(e, n) {
+            A("ACFUN_BLOCK_LIST", e, n);
+        }
+        function v(e, n) {
+            A("ACFUN_BLOCK_KEYWORDS", e, n);
+        }
+        function b(e, n) {
+            A("ACFUN_BLOCK_REPLIERS", e, n);
+        }
+        t.g["usernameCache"] = null;
+        function x(e) {
+            function n() {
+                setTimeout((() => {
+                    x(e);
+                }), 1e3);
+            }
+            if (t.g["usernameCache"]) {
+                l(e)(t.g["usernameCache"]);
+                return;
+            }
+            if ("undefined" !== typeof unsafeWindow.user) {
+                let r = unsafeWindow.user.name;
+                if ("用户" !== r && "未知用户" !== r) {
+                    t.g["usernameCache"] = r;
+                    l(e)(r);
+                } else n();
+            } else {
+                let r = unsafeWindow.document.querySelector("a.fl.user-name");
+                if (r) {
+                    let i = r.innerText.trim();
+                    if ("未知用户" !== i) {
+                        t.g["usernameCache"] = i;
+                        l(e)(i);
+                    } else n();
+                } else n();
+            }
+        }
+        function y(e) {
+            if ("undefined" === typeof t.g["cachedUserTags"]) c("ALL_TAGS", {}, (n => {
+                t.g["cachedUserTags"] = n;
+                let r = t.g["cachedUserTags"];
+                l(e)(r);
+            })); else l(e)(t.g["cachedUserTags"]);
+        }
+        function E(e) {
+            t.g["cachedUserTags"] = t.g["cachedUserTags"] ? t.g["cachedUserTags"] : {};
+            A("ALL_TAGS", t.g["cachedUserTags"], (() => {
+                e();
+            }));
+        }
+        function C(e, n) {
+            D((t => {
+                console.log(typeof e);
+                if (t.indexOf(e) < 0) {
+                    t.push(e);
+                    t.sort(((e, n) => e - n));
                 }
-            }
+                A("COMMENT_CACHE_INDEX", t, (() => {
+                    n();
+                }));
+            }));
         }
-        //--------------------主页文章区
-        sel = document.querySelectorAll(".tab-main-content");
-        for (let i = 0; i < sel.length; i++) {
-            let tag = sel[i];
-            let rows = tag.querySelectorAll("li");
-            //For each row
-            for (let ri = 0; ri < rows.length; ri++) {
-                let rowTag = rows[ri];
-                let aTag = rowTag.querySelector("a");
-
-                let title = aTag.getAttribute("title");
-                if (title==null){
-                    //console.log("rowTag",rowTag);
-                    aTag = rowTag.querySelector("p.block-title");
-                    title = aTag.getAttribute("title");
+        function T(e, n) {
+            D((t => {
+                if (t.indexOf(e) >= 0) {
+                    let r = t.indexOf(e);
+                    t.splice(r, 1);
+                    A("COMMENT_CACHE_INDEX", t, (() => {
+                        n();
+                    }));
                 }
-                if (title) {
-                    let matches = usernameByTitle(title);
-                    let titlestr = titleByTitle(title)[0];
-                    if (matches) {
-                        let username = trimWord(matches);
-                        res.push({tag: rowTag, title: titlestr, username: username, type: 3});
-
-                    }
-                }
-            }
+            }));
         }
-        //香蕉搒
-        var allBananas =  document.querySelectorAll("div.banana-video");
-        for (let i = 0; i < allBananas.length; i++) {
-            let sel = allBananas[i];
-            let atag = sel.querySelector("a.banana-video-title");
-            let title = atag.getAttribute("title");
-            let matches = usernameByTitle(title);
-            let titlestr = titleByTitle(title)[0];
-            if (matches) {
-                let username = trimWord(matches);
-                res.push({tag: sel, title: titlestr, username: username, type: 1});
-            }
-
+        function D(e) {
+            c("COMMENT_CACHE_INDEX", [], (n => {
+                l(e)(n);
+            }));
         }
-        //Top Recommendation
-        var allRecommend =  document.querySelectorAll("a.recommend-video");
-        //console.log("allRecommend",allRecommend);
-        window.r=allRecommend;
-        for (let i = 0; i < allRecommend.length; i++) {
-            let sel = allRecommend[i];
-            let titleTag = sel.querySelector("span.video-title");
-            let title = titleTag.innerHTML;
-            let nameTag = sel.querySelector("p.text-overflow").querySelector("span.text-overflow");
-            let username =trimWord( nameTag.innerHTML.substring(3));
-
-            let titlestr = title;
-            res.push({tag: sel, title: titlestr, username: username, type: 1});
-
-
+        function I(e, n) {
+            let t = `COMMENT_CACHE_${e}`;
+            c(t, null, (e => {
+                l(n)(e);
+            }), (() => {
+                l(n)(null);
+            }));
         }
-        //猴子搒
-        var allMonkeys =  document.querySelectorAll("div.monkey-video");
-        for (let i = 0; i < allMonkeys.length; i++) {
-            let sel = allMonkeys[i];
-            let atag = sel.querySelector("a.monkey-video-title");
-            let title = atag.getAttribute("title");
-            let matches = usernameByTitle(title);
-            let titlestr = titleByTitle(title)[0];
-            if (matches) {
-                let username = trimWord(matches);
-                res.push({tag: sel, title: titlestr, username: username, type: 1});
-            }
-
+        function B(e, n, t) {
+            let r = `COMMENT_CACHE_${e}`;
+            A(r, n, (() => {
+                C(e, (() => {
+                    l(t)();
+                }));
+            }), (() => {
+                console.error("缓存评论失败！");
+            }));
         }
-
-        //大版推荐
-        let allBig = document.querySelectorAll(".big-image");
-        for (let i = 0; i < allBig.length; i++) {
-            try{
-                let title = allBig[i].querySelector("a.title").getAttribute("title");
-                let matches = usernameByTitle(title);
-                let titlestr = titleByTitle(title)[0];
-                let username = trimWord(matches);
-                //console.log("allbig", matches, titlestr);
-                res.push({tag: allBig[i], subtag: null, username: username, type: 5, title: titlestr});
-            }catch(e){
-                console.log(e);
-            }
-
+        function L(e, n) {
+            let t = `COMMENT_CACHE_${e}`;
+            s(t, (() => {
+                T(e, (() => {
+                    l(n)();
+                }));
+            }), (() => {
+                console.log("DEBUG 删除缓存失败");
+            }));
         }
-
-        //其他板块主页
-        let otherstop = document.querySelectorAll("li.weblog-item");
-        let othersvideos = document.querySelectorAll("figure.block-video");
-        let others1 = [];
-
-        otherstop.forEach(function(d){others1.push(d)});
-        othersvideos.forEach(function(d){others1.push(d)});
-
-
-        for (let i = 0;i<others1.length; i++){
-            try{
-                let data = others1[i].querySelector("a").getAttribute("data-info");
-                if (data!==null){
-                    data = JSON.parse(data);
-                    let title = data.title;
-                    let username = data.userName;
-                    res.push({tag:others1[i], subtag: null, username: username, type: 1, title: title});
-                }else{
-                    //console.log(others1[i]);
-                    let t1 = others1[i].querySelector("figcaption.block-title");
-                    let t2 = t1.querySelector("b").querySelector("a");
-                    let title = t2.getAttribute("title");
-                    let titlestr = titleByTitle(title)[0];
-                    let matches = usernameByTitle(title);
-                    let username = trimWord(matches);
-                    let d= {tag: others1[i], subtag: null, username: username, type: 1, title: titlestr};
-                     res.push(d);
-                    //console.log(d);
-                }
-            }catch(e){
-                console.log(e);
-                console.log(others1[i]);
-            }
-        }
-        //其他板块排行
-        let otherrank = document.querySelectorAll("li.weblog-rank");
-        otherrank.forEach(function(dom){
-            try{
-
-                let a = dom.querySelector("a");
-                let title = a.getAttribute("title");
-                let titlestr = titleByTitle(title)[0];
-                let matches = usernameByTitle(title);
-                let username = trimWord(matches);
-                let d= {tag: dom, subtag: null, username: username, type: 2, title: titlestr};
-                res.push(d);
-            }catch(e){
-                console.log(e);
-            }
-        })
-
-
-        // console.log("res",res);
-        return res;
-    }
-
-    function getListSelection() {
-        //console.log("list selec");
-        let res = [];
-        let sel = $("div.weblog-item");
-        for (let i = 0; i < sel.length; i++) {
-            let row = sel[i];
-            let aTag = $(row).find(".atc-up")[0];
-            let username = trimWord($(aTag).attr("title"));
-            let title = $(row).find('a[title]').attr("title");
-            res.push({tag: row, username: username, type: 4, title: title});
-
-        }
-        //Video List
-        let sel2 = $("li.weblog-item");
-        //console.log(sel2);
-        for (let i = 0; i < sel2.length; i++) {
-
-            let row = sel2[i];
-            //console.log(row);
-            let title = $(row).find("b.text-over").find('.third-title').text();
-            let username =trimWord( $(row).find("p.up-name").find('a.third-name').text());
-            res.push({tag: row, username: username, type: 4, title: title});
-        }
-        //console.log(res);
-        return res;
-    }
-
-    let pageType = "home";
-
-    //显示/刷新屏蔽的UP主
-    function displayUpList() {
-
-
-        ups((data) => {
-            //console.log("up",data);
-            $("#upnameList").empty();
-            for (let i = 0; i < data.length; i++) {
-
-                let style2 = "";
-                let b = $("<div class='blockname'><span>" + data[i] + "</span></div>");
-                let del = $("<button class='blockdel' >×</button>");
-                b.append(del);
-                let str = data[i];
-                del.on("click", function () {
-                    removeFromUpList(str, () => {
-                        displayUpList();
-                        if (pageType === "home") {
-                            FilterHomePage();
-                        } else if (pageType === "list") {
-                            FilterListPage();
-                        }
-                    });
-
-                });
-                $("#upnameList").append(b);
-            }
-
-        });
-    }
-
-
-    //显示屏蔽的关键词
-    function displayKeywords() {
-        keywords((data) => {
-            $("#keywords_list").empty();
-            for (let i = 0; i < data.length; i++) {
-                let b = $("<div class='blockname'><span>" + data[i] + "</span></div>");
-                let del = $("<button class='blockdel' >×</button>");
-                b.append(del);
-                let str = data[i];
-                del.on("click", function () {
-                    removeFromKeywords(str, () => {
-                        displayKeywords();
-                        if (pageType === "home") {
-                            FilterHomePage();
-                        } else if (pageType === "list") {
-                            FilterListPage();
-                        }
-                    });
-
-                });
-                $("#keywords_list").append(b);
-            }
-        })
-    }
-
-    //显示屏蔽的评论者
-    function displayRepliers() {
-        repliers((data) => {
-            $("#repliersList").empty();
-            for (let i = 0; i < data.length; i++) {
-                let b = $("<div class='blockname'><span>" + data[i] + "</span></div>");
-                let del = $("<button class='blockdel' >×</button>");
-                b.append(del);
-                let str = data[i];
-                del.on("click", function () {
-                    removeFromRepliers(str, () => {
-                        displayRepliers();
-                        filterReplies();
-                    });
-
-                });
-                $("#repliersList").append(b);
-            }
-        })
-    }
-
-
-    //检查公告
-    function checkAnnouncement(callback) {
-        let xhttp = typeof GM_xmlhttpRequest !== "undefined" ? GM_xmlhttpRequest : GM.xmlHttpRequest;
-        xhttp({
-            method: "GET",
-            url: "https://greasyfork.org/scripts/384697-acfunblockerannoucement/code/AcfunBlockerAnnoucement.js",
-            onload: function (response) {
-                let text = response.responseText;
-                callback(text);
+        const M = {
+            version: o,
+            updateBanList: h,
+            updateKeywords: v,
+            updateReplyBanList: b,
+            loadBanList: m,
+            loadReplyBanList: w,
+            loadKeywords: g,
+            isUsingNewCloud: f,
+            setUsingNewCloud: p,
+            getUsername: x,
+            getAllCacheIndices: D,
+            getLocalCommentCache: I,
+            saveCommentCache: B,
+            deleteCommentCache: L,
+            getActiveHelpTime: function(e) {
+                let n = 0;
+                c("ACTIVE_HELP_TIME", n, (n => {
+                    if ("undefined" === typeof n || null === n) n = 0;
+                    let t = parseInt(n);
+                    if (isNaN(t)) t = 0;
+                    l(e)(t);
+                }));
             },
-            onerror(evt) {
-                callback(null);
-            }
-        });
-    }
-
-    //检查更新
-    function checkUpdate(callback) {
-        let xhttp = typeof GM_xmlhttpRequest !== "undefined" ? GM_xmlhttpRequest : GM.xmlHttpRequest;
-        xhttp({
-            method: "GET",
-            url: "https://greasyfork.org/scripts/381476-acfun%E8%BF%87%E6%BB%A4up%E8%AE%A1%E5%88%92/code/Acfun%E8%BF%87%E6%BB%A4UP%E8%AE%A1%E5%88%92.user.js",
-            onload: function (response) {
-                let text = response.responseText;
-                let p = /@version +(\d+\.\d+)/;
-                let arr = p.exec(text);
-                let latest = arr[1];
-                callback(latest);
-            }
-        });
-    }
-
-    let show = false;
-    let dragging = false;
-
-    function banana(i) {
-        let banana_0 = "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAcCAYAAACdz7SqAAACaUlEQVR4Ab2WA7AcTRSF88e2XYptFGOzFNu2bdu2bdu2bTvje3LeTviMnn+qvt19PdN9rudFUn1Bu/sfxFoOyFPylb8PcS2+ciF/oolgPOlCukK/3xr6486wPgwHjfFOVKx8EPMiHP0QxWZDnBcAFnrrKZCRdCPHIfYzADNI5Ej/xwXnW3WIcRLAZC91/Oe2GKz3UxniMfydzOvwRgFkOoxnvSjW3Ifxojsgub0UHQKxbkJ/2O6XKL2dAeAWIHG8EEwHyCe2SzdX8C/c/A5UL2p/qgr781JXyB/G894AnrPAoqsuniqkeZC4IU+vMrTR4Wh7gxd90Bbmq7IqRfND7CfBinJCAVinUFQ60tODIYhOA7BRpadHwUODFbU/LwEwT1UBpeOBy6DdaxmCp9MhVhP/1maG2H5jqzqsd10AbAFkImkNsYpxPY6/5xPA+e5XsY1I81CS7NfmSuQkeQfn63q30h514Oyc7Os7RzsA+8sqN0QfZwJ4TF4QHWKc43qLEMXMl4N4xrRfoYkK/XFzejaJ5Tw4xM18McN42p2ztSe0+61C7aE7kbr/NUk+t4f5erj7gHrozBAAr0nCv3PTh7nZ6Zmo62Vz/z1WHOI8/5Ub5egPKgP4L7A+Owvr7VilYs63zSwevzMDH/KsyrS82RjsNQWetfFNJ+AqIClCavKUEOsk87vLfSOEO4dnAawniUI7zlKQRYB8Zng2htoz68Ms2J8W8u/aTFO+8P7/mo4hasBDajL0c/j3bTj6YZ8h9td1vqJjNLh+F4BGDgNOPa5HUTXME5CSpCUZSkZyYhWmQDZ3XeKG5bwfy2sngYJT7nMAAAAASUVORK5CYII=)";
-        let res = "<div id='banana_" + i + "'class='bbanana' style='cursor: pointer;display:inline-block;height:20px; width:20px; background-image:" + banana_0 + ";background-position: center; background-repeat:no-repeat; background-size:contain'></div>";
-        return res
-    }
-
-    let articleId = 10271618;
-
-    function feedBanana(n) {
-        try {
-            //let a = btoa(Math.random().toString(36).substr(2))
-            //let str = '$.cookie("stochastic","'+a+'",{path:"/"});';
-            //console.log(str);
-            //unsafeWindow.eval();
-            //let cookie = unsafeWindow.eval('(()=>{return })();');
-            let command = `
-let a = btoa(Math.random().toString(36).substr(2));
-$.cookie("stochastic",a ,{path:"/"});
-let c = $.cookie("_did");
-$.ajax({
-type:"post",
-url: "/nd/pst?locationPath=throwBanana&certified="+a,
-beforeSend: function(e) {
-e.setRequestHeader("udid", c)
-},
-data: {
-contentId: "` + articleId + `",
-count: ` + (n + 1) + `,
-userId: $.user.uid,
-},
-dataType: "json",
-xhrFields: {
-withCredentials: !0
-}
-}).done(function(e){
-if (e.success>0){
-emitMsg("global::success","成功投食了作者"+` + (n + 1) + `+"根香蕉O(∩_∩)O。谢谢支持！", 3e3)
-}else{
-emitMsg("global::warning","投食作者失败了。"+e.info, 3e3);
-}
-}).fail(function(){
-emitMsg("global::warning","投食作者失败了 /(ㄒoㄒ)/~~。请于稍后重新操作。", 3e3)
-})`;
-
-            unsafeWindow.eval(command);
-
-        } catch (e) {
-            console.log("投食DEBUG", e);
-        }
-
-    }
-
-    let banana_n = -1;
-
-    function attachBananaEvent() {
-
-        let banana_0 = "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAcCAYAAACdz7SqAAACaUlEQVR4Ab2WA7AcTRSF88e2XYptFGOzFNu2bdu2bdu2bTvje3LeTviMnn+qvt19PdN9rudFUn1Bu/sfxFoOyFPylb8PcS2+ciF/oolgPOlCukK/3xr6486wPgwHjfFOVKx8EPMiHP0QxWZDnBcAFnrrKZCRdCPHIfYzADNI5Ej/xwXnW3WIcRLAZC91/Oe2GKz3UxniMfydzOvwRgFkOoxnvSjW3Ifxojsgub0UHQKxbkJ/2O6XKL2dAeAWIHG8EEwHyCe2SzdX8C/c/A5UL2p/qgr781JXyB/G894AnrPAoqsuniqkeZC4IU+vMrTR4Wh7gxd90Bbmq7IqRfND7CfBinJCAVinUFQ60tODIYhOA7BRpadHwUODFbU/LwEwT1UBpeOBy6DdaxmCp9MhVhP/1maG2H5jqzqsd10AbAFkImkNsYpxPY6/5xPA+e5XsY1I81CS7NfmSuQkeQfn63q30h514Oyc7Os7RzsA+8sqN0QfZwJ4TF4QHWKc43qLEMXMl4N4xrRfoYkK/XFzejaJ5Tw4xM18McN42p2ztSe0+61C7aE7kbr/NUk+t4f5erj7gHrozBAAr0nCv3PTh7nZ6Zmo62Vz/z1WHOI8/5Ub5egPKgP4L7A+Owvr7VilYs63zSwevzMDH/KsyrS82RjsNQWetfFNJ+AqIClCavKUEOsk87vLfSOEO4dnAawniUI7zlKQRYB8Zng2htoz68Ms2J8W8u/aTFO+8P7/mo4hasBDajL0c/j3bTj6YZ8h9td1vqJjNLh+F4BGDgNOPa5HUTXME5CSpCUZSkZyYhWmQDZ3XeKG5bwfy2sngYJT7nMAAAAASUVORK5CYII=)";
-        let banana_1 = "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAcCAYAAACdz7SqAAAEQklEQVR4Ab2WA5hkuRbHe2ZRN7mFNqvWtvH2rW2Mbdtt27Zt2zbGtm116Ww6rTtW1Z7v+8fJL040VG3eMwTv+80W9ATNF+7wmyXYYzeKzdRQt3lPF2yWb5fAvnIxdKWaQIGHgdRtkmCJWqG+s0QHtuSK4XynBA5Xi+FMiwk4jGGL1Ao1+5V/PHyJ8PjeUhOothGC9V/87cu/Yl5QK3T+xzxtAvmlwl9P3maPwfYPPE3jv7CV3zATW6L1pDvDhOA5Hm8hHcFqBdqPYpfEr9U8tbNQDLDNBA4EIQiYhPYT8Ai1AG3/Zn/Nstc62xIrBtlWCcAuovWGsN6RBxEzUI461nKE2yT+totdEtiQLqbAIZWLIG4WI/f4m2esUuia79EP1UG6V3rSxKDYTmHD6jGEA75ktDNRvkqhjmPYnEtdJrAlhzNKrlJ4EDIVnVEp1H0yf4tyJ7mJyu4ATWUgeApfSpYBqWo9+ZHLRUfPtErg+ubbADsMAJJ5EDVTqCRl31QJdN2PaFRbrJ70yoYByIHvAHY/2x/eSZTLUmjYdM0+6DsqgTqNY8u35XKm9di84XCDDgVKExjwHq+pINCnb54mtPo79Ds54KvNf8Hzlvyf+ZKk6d8NaPk7/tNvjt7lg5UD0APfAhydOXRGIYWh0B5HPvhNElwl7Y0cONR4FAF5kM1woCtRX36o0gh2FxlCc5SeLNlC8wR5H3e7jGfbyIhS7f5hzcx/xZOs/8TzSbzId5buxaO1A6Pa9xHAGY/+8BZjgAxEgX3KW6YJ/pPxfgpc9S16PWKp8MTGDCOyCW7aef3rMqS+I7G/3Ah25BvQTl3dwCl/6B+Ak1Yk/AwBmgBk4SHgmTAEuUsF4DkBu1Go3d84aluarrKH3CJH62+CSvdQ/47a/QLA4XEAx5cAHPypP22jEUAmBQ6pap0IomahvqkVDq7jkymLUG9vgQgur5eAfPudIJwp3P8pgfxGRvcHwJ6Xh/Pa9Ol55AJ3erLQYYfBawLO1uBa2Ex8hhYqFcH+YmOQbbsD8A6i61cipBCuToUi2OrGB98J6CIdJdeiFvFXXImhBel1tSNCGy40GN4TRndnuYjWuRl4mqzjXh8W8lYimeM/eNztbpSRKYvxdW6l3d4sbPYSgLJEBFCnDdCo069abTojN68bVxciEd08jTZI4T4eB2jcyQJmsH/VWiIFt/K1WAY67AXQ5SCAqyRM0u5bFeZI7jIGR977+zgJB6YtZOTX425soDeeoYe73kII1WZCqCN+g6UQOkmHtrnz4VjQ8KgvRfEgag6+7DmZ/fH+n6i/0Gfke3GsZCWjPBd+/yO7EMmDglVIFreE70xvnYcxj1HM/0Ono7bw6eh85hJG1mbD0If4dChRGA+OhSLY7I2hxJyVhs/Cp5OXsUspTIVfEd1lXzDf2o1iLcnH2Zc82FEOo1lXs1/wBJKn+aDt/QuVqtkurjj8qQAAAABJRU5ErkJggg==)";
-        $(".bbanana").on("mouseover", function () {
-            let id = $(this).attr("id");
-            let n = parseInt(id.split("_")[1]);
-            banana_n = n;
-            let all = $(".bbanana");
-            for (let i = 0; i < all.length; i++) {
-                let tid = $(all[i]).attr("id");
-                let tn = parseInt(tid.split("_")[1]);
-                if (tn <= n) {
-                    $(all[i]).css("background-image", banana_1)
-                } else {
-                    $(all[i]).css("background-image", banana_0)
-                }
-            }
-
-        })
-            .on("click", function () {
-
-                let id = $(this).attr("id");
-                let n = parseInt(id.split("_")[1]);
-                feedBanana(n);
-            });
-        $("#banana_contain").on("mouseleave", function () {
-            $(".bbanana").css("background-image", banana_0)
-        })
-    }
-
-    function bindKeywordInputs() {
-        $('#keyword').keypress(function (e) {
-            if (e.keyCode === 13)
-                $('#enterKeyword').click();
-        });
-
-        $('#enterKeyword').on("click", function () {
-            let val = $("#keyword").val();
-            if (val.length > 1) {
-                $("#keyword").val('');
-                addToKeywords(val, () => {
-                    displayKeywords();
-                    if (pageType === "home") {
-                        FilterHomePage();
-                    } else if (pageType === "list") {
-                        FilterListPage();
+            setActiveHelpTime(e, n) {
+                let t = "undefined" === typeof e ? +new Date : e;
+                A("ACTIVE_HELP_TIME", t, (() => {
+                    l(n)(t);
+                }));
+            },
+            setUpdateTime(e, n) {
+                let t = "undefined" === typeof e ? +new Date : e;
+                A("UPDATE_TIME", t, (() => {
+                    l(n)(t);
+                }));
+            },
+            getUpdateTime(e) {
+                let n = 0;
+                c("UPDATE_TIME", n, (n => {
+                    if ("undefined" === typeof n || null === n) n = 0;
+                    let t = parseInt(n);
+                    if (isNaN(t)) t = 0;
+                    l(e)(parseInt(t));
+                }));
+            },
+            banUser(e, n) {
+                e = e.trim();
+                m((t => {
+                    if (t.indexOf(e) < 0) {
+                        t.push(e);
+                        h(t, (() => {
+                            l(n)(t);
+                        }));
+                    } else l(n)(t);
+                }));
+            },
+            unbanUser(e, n) {
+                e = e.trim();
+                m((t => {
+                    let r = t.indexOf(e);
+                    if (r >= 0) {
+                        t.splice(r, 1);
+                        h(t, (() => {
+                            l(n)(t);
+                        }));
+                    } else l(n)(t);
+                }));
+            },
+            banKeyword(e, n) {
+                e = e.trim();
+                g((t => {
+                    if (t.indexOf(e) < 0) {
+                        t.push(e);
+                        v(t, (() => {
+                            l(n)(t);
+                        }));
+                    } else l(n)(t);
+                }));
+            },
+            unbanKeyword(e, n) {
+                e = e.trim();
+                g((t => {
+                    let r = t.indexOf(e);
+                    if (r >= 0) {
+                        t.splice(r, 1);
+                        v(t, (() => {
+                            l(n)(t);
+                        }));
+                    } else l(n)(t);
+                }));
+            },
+            banReplier(e, n) {
+                e = e.trim();
+                w((t => {
+                    if (t.indexOf(e) < 0) {
+                        t.push(e);
+                        b(t, (() => {
+                            l(n)(t);
+                        }));
+                    } else l(n)(t);
+                }));
+            },
+            unbanReplier(e, n) {
+                e = e.trim();
+                w((t => {
+                    let r = t.indexOf(e);
+                    if (r >= 0) {
+                        t.splice(r, 1);
+                        b(t, (() => {
+                            l(n)(t);
+                        }));
+                    } else l(n)(t);
+                }));
+            },
+            getTags(e, n) {
+                e = e.trim();
+                y((t => {
+                    let r = t[e];
+                    l(n)(r ? r : []);
+                }));
+            },
+            removeTagForUser(e, n, r) {
+                e = e.trim();
+                y((i => {
+                    let o = i[e];
+                    o = o ? o : [];
+                    let a = o.indexOf(n);
+                    if (a >= 0) {
+                        o.splice(a, 1);
+                        i[e] = o;
                     }
-                });
-            } else {
-                emitMsg("global::warning",'不能添加过短的关键词。');
-            }
-        })
-    }
-
-    function checkBananaFed() {
-        let url = 'https://www.acfun.cn/member/collect_up_exist.aspx?contentId=' + articleId;
-        $.ajax({url: url})
-            .done(function (d) {
-                //console.log(d);
-                if (d.result && d.result === "请先登录") {
-                    $("#banana_contain").text("登录投蕉吧！")
-                } else {
-                    if (d.data && d.data.banana) {
-                        if (d.data.banana > 0) {
-                            $("#banana_contain").text("感谢" + d.data.banana + "蕉支持！");
-                        }
+                    t.g["cachedUserTags"] = i;
+                    E(r);
+                }));
+            },
+            addTagToUser(e, n, r) {
+                e = e.trim();
+                y((i => {
+                    let o = e in i ? i[e] : [];
+                    if (o.indexOf(n) < 0) {
+                        console.log(n, "add to ", e);
+                        o.push(n);
+                        i[e] = o;
                     }
-                }
-
-            })
-
-    }
-
-    function addPanel() {
-
-
-        let dx = 0;
-        let dy = 0;
-        let sx = 0;
-        let sy = 0;
-        let ox = 0;
-        let oy = 0;
-
-
-        injectStyles(`
-
-        div.panel-drag-image{
-            height: 92px;
-            left: 22px;
-            width: 66px;
-            background-image:  url(data:image/png;base64,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);
-            background-size:contain;
-            background-repeat: no-repeat;
-            position:absolute
-        }
-        button.panel-toggle{
-            height: 92px;
-            width: 23px;
-            background-color: rgb(255,193,193);
-            border-width: 0;
-        }
-        div.panel-wrap{
-            z-index: 21;
-            position: fixed;
-            left: 0;
-            top: 0;
-            text-orientation: upright;
-        }
-        div.panel-toggle-wrap{
-            position: relative;
-            height: 92px;
-            width: 23px
-        }
-        div.panel-content-container{
-            width: 280px;
-            display:none;
-            padding: 0px;
-            z-index:998;
-            position:fixed;
-            background-color:rgb(255, 196, 196);
-            left:23px;
-            top: 0px;
-        }
-        div.upnames-list{
-            height: 220px; border: 0px solid white; margin: 3px;overflow-y:scroll
-        }
-        div.keywords-list{
-            height: 220px;
-            border: 0px solid white;
-            margin: 3px;
-            overflow:hidden;
-            display:none;
-        }
-        div.repliers-list{
-            height: 220px;
-            border: 0px solid white;
-            margin: 3px;
-            overflow-y:scroll;
-            display:none;
-        }
-        div.keywords-input-wrap{
-            height: 22px;
-            background-color:
-            rgb(220,220,220);
-        }
-        input.keyword-input{
-            height: 18px;width: 120px; border: 0 solid black; padding: 0; margin: 1px;
-        }
-        input.keyword-submit{
-            line-height:18px; height: 18px;width: 60px; border: 1px solid grey; margin: 1px; padding: 0; background-color: rgb(179, 255, 179)
-        }
-        div.announcement{
-            background-color:black; color: white;height: 220px; border: 0px solid white; margin: 3px;overflow-y:scroll; display:none;
-        }
-        div.cloud-panel{
-            color: black; height: 220px; border: 0px solid white; margin: 3px; display:none;
-        }
-
-        `);
-
-        let panelWrap = $("<div id='blockbuttoncontainer' class='panel-wrap'></div>");
-        let panelToggleWrap = $("<div class='panel-toggle-wrap'></div>");
-        panelWrap.append(panelToggleWrap);
-
-        let panelToggleButton = $("<button id='blockbutton' class='panel-toggle'>屏蔽设置</button>");
-        let panelDragImage = $("<div class='panel-drag-image'></div>");
-        //panel container
-        panelToggleWrap.append(panelDragImage);
-
-        let panelContentContainer = $("<div id='blockpanel' class='panel-content-container'></div>");
-
-        let ptabs = $("<div id='tabs' class='ctabs'></div>");
-        let tab_1 = $("<a class='ctab ctab-focus'>ＵＰ主</a>");
-        let tab_2 = $("<a class='ctab'>评论者</a>");
-        let tab_3 = $("<a class='ctab'>关键字</a>");
-        let tab_4 = $("<a class='ctab' >云备份</a>");
-        let tab_5 = $("<a class='ctab'>公告</a>");
-
-
-        let panelUpNames = $("<div id='upnameList'  class='upnames-list panel-background-color'></div>"); //1
-        let panelRepliers = $("<div id='repliersList'  class='repliers-list panel-background-color'></div>"); //2
-        let panelKeywords = $(`<div id='keywordsList'  class='keywords-list panel-background-color'>
-                <div class="keywords-input-wrap">
-                    <input class="keyword-input" id='keyword' type='text' autocomplete="off" />
-                    <input class="keyword-submit" id='enterKeyword' type='submit' value='添加↵'/>
-                </div>
-                <div id='keywords_list' style='height: 198px;overflow-y: scroll; '></div>
-            </div>`); //3
-        let panelCloud = $("<div id='cloudpanel' class='cloud-panel panel-background-color'></div>"); //4
-        let panelAnnouncement = $("<div id='announcement' class='announcement'>正在加载公告....</div>");//5
-
-//bind tabs
-
-        tab_1[0]["tabBind"] = panelUpNames;
-        tab_2[0]["tabBind"] = panelRepliers;
-        tab_3[0]["tabBind"] = panelKeywords;
-        tab_4[0]["tabBind"] = panelCloud;
-        tab_5[0]["tabBind"] = panelAnnouncement;
-
-
-        ptabs.append(tab_1);
-        ptabs.append(tab_2);
-        ptabs.append(tab_3);
-        ptabs.append(tab_4);
-        ptabs.append(tab_5);
-
-
-        let cloudInfo = $("<div style='padding:8px;'>本插件利用Acfun的私信系统实现云备份屏蔽设置。登陆后即可随时同步你的屏蔽设置。每次Acfun页面打开时将会自动检查和同步哟！</div>");
-        let cloudCheckTime = $("<div id='checktime' style='display: none'></div>");
-        let cloudSyncButton = $("<div style='padding: 8px;'><button id='cloudsync' class='disabled' style='padding: 5px; font-size: 23px; width: 150px'>正在同步...</button></div>");
-        panelCloud.append(cloudInfo);
-        panelCloud.append(cloudSyncButton);
-        panelCloud.append(cloudCheckTime);
-
-
-        let advertisementInfo = $("<div style='border: 1px solid white; margin:3px;padding: 2px; font-size: 11px;background-color:rgb(255, 217, 67); color: black'>喜欢的话 安利哟：<a id='articleRec' target='_blank' style='display:none;color:rgb(71, 71, 138); text-decoration: underline' href='/a/ac10271618'>ac10271618</a><a style='margin-left:8px;text-decoration: underline' href='https://baldhumanity.github.io/AcfunHated/'>插件地址</a></div>");
-        let bananaHTML = "<a id='banana_contain' style='white-space:nowrap'>" + banana(0) + banana(1) + banana(2) + banana(3) + banana(4) + "</a>";
-        let versionInfo = $("<div style='border: 0px solid white; margin:3px;padding: 2px; font-size: 11px;background-color:rgb(234, 200, 65); color: rgb(50,50,50)'><span style='padding: 3px;margin-right: 10px'>当前版本：" + version + "</span> " + bananaHTML + "</div>");
-        let updateReminder = $("<div style='background-color: green; color: white; display: none; margin:3px; padding: 2px;' id='update_info'></div>");
-
-
-        GM_get("ACFUN_BLOCK_POS", "{ox:0, oy:0}", (d) => {
-            ox = parseInt(d.ox);
-            oy = parseInt(d.oy);
-            ox = isNaN(ox) ? 0 : ox;
-            oy = isNaN(oy) ? 300 : oy;
-            panelContentContainer.css("transform", "translate(" + (ox) + "px," + (oy) + "px)");
-            panelToggleWrap.css("transform", "translate(" + (ox) + "px," + (oy) + "px)");
-        });
-
-
-        $(document.body).append(panelWrap);
-        panelToggleWrap.append(panelToggleButton);
-
-        panelContentContainer.append(ptabs);
-
-        panelContentContainer.append(panelUpNames);
-        panelContentContainer.append(panelRepliers);
-        panelContentContainer.append(panelKeywords);
-        panelContentContainer.append(panelAnnouncement);
-        panelContentContainer.append(panelCloud);
-
-        panelContentContainer.append(advertisementInfo);
-        panelContentContainer.append(versionInfo);
-        panelContentContainer.append(updateReminder);
-
-        $(document.body).append(panelContentContainer);
-
-
-        $("a.ctab").on("click", function () {
-            $("a.ctab").removeClass("ctab-focus");
-            $("a.ctab").each(function () {
-                $(this)[0]["tabBind"].css("display", "none");
-            });
-            $(this).addClass("ctab-focus");
-            $(this)[0]["tabBind"].css("display", "block")
-
-        });
-
-        bindKeywordInputs();
-        attachBananaEvent();
-
-        panelToggleButton.on("click", function () {
-            show = !show;
-            panelContentContainer.css("display", show ? "block" : "none");
-            if (show) {
-
-                displayUpList();
-                displayKeywords();
-                displayRepliers();
-                panelDragImage.css("left", "302px")
-            } else {
-                panelDragImage.css("left", "22px")
-            }
-        });
-        panelDragImage.on("mousedown", (event) => {
-            sx = event.pageX;
-            sy = event.pageY;
-            dragging = true;
-        });
-        $(document).on("mouseup", () => {
-            if (dragging) {
-                ox = dx + ox;
-                oy = dy + oy;
-                dx = 0;
-                dy = 0;
-                let maxHeight = $(window.top).height() - 123;
-                let maxWidth = 240;
-                ox = ox > maxWidth ? maxWidth : ox;
-                ox = ox < 0 ? 0 : ox;
-                oy = oy < 0 ? 0 : oy;
-                oy = oy > maxHeight ? maxHeight : oy;
-                panelContentContainer.css("transform", "translate(" + (ox) + "px," + (oy) + "px)");
-                panelToggleWrap.css("transform", "translate(" + (ox) + "px," + (oy) + "px)");
-                GM_set("ACFUN_BLOCK_POS", {ox: ox, oy: oy}, (d) => {
-                    //console.log("DEBUG", "POSITION SET", ox, oy);
-                });
-            }
-            dragging = false;
-        });
-        $(document).on("mousemove", (event) => {
-            if (dragging) {
-                dx = event.pageX - sx;
-                dy = event.pageY - sy;
-                panelToggleWrap.css("transform", "translate(" + (dx + ox) + "px," + (dy + oy) + "px)");
-                panelContentContainer.css("transform", "translate(" + (dx + ox) + "px," + (dy + oy) + "px)");
-            }
-        });
-
-/*    不再检查更新
-        checkUpdate((v) => {
-            console.log("new Version", v, "Local Version", version);
-            if (parseFloat(v) > parseFloat(version)) {
-                updateReminder.css("display", "block")
-                    .html("<a style='color:white' target='_blank' href='https://greasyfork.org/en/scripts/381476'>可以升级至：" + v + " 👉</a>");
-                emitMsg("global::success","屏蔽系统有新版本了~")
-            }
-        });
-*/
-
-        checkAnnouncement((text) => {
-            if (text !== null) {
-                let evalRes = unsafeWindow.eval(text);
-                //console.log("Info:", evalRes);
-                if (!!evalRes && typeof evalRes.articleId !== "undefined") {
-                    articleId = evalRes.articleId;
-                    //update 安利
-                    advertisementInfo.find("#articleRec").attr("href", "/a/ac" + articleId)
-                        .text("ac" + articleId);
-                }
-            }
-            tryCloudSync();
-            checkBananaFed();
-        });
-
-        cloudSyncButton.find("button").on("click", function () {
-            tryCloudSync(true);
-        });
-
-    }
-
-
-    function attachBlockButton() {
-        let attach = function (list) {
-            //console.log("attach list", list);
-            for (let i = 0; i < list.length; i++) {
-                let item = list[i];
-                let tag = item.tag;
-                if ($(tag).hasClass("event-attached")) continue;
-
-                let tagType = item.type;
-                $(tag).addClass("event-attached");
-
-                $(tag).on("mouseover", function () {
-                    if (window.currentTag === tag) return;
-                    let button = $(filterButton).detach();
-                    const HOME_PAGE_ARTICLE = 3;
-                    if (tagType === HOME_PAGE_ARTICLE) {
-
-                        $(tag).parent()
-                            .css("transform", "translate(-15px,0)")
-                            .css("padding-left", "15px")
-                            .css("overflow", "hidden")
-                            .css("width", "260px");
-
-                        $(tag).css("white-space", "nowrap");
-                        $(tag)
-                            .css("overflow", "visible")
-                            //.css("overflow-y", "hidden")
-                            .css(" text-overflow", "ellipsis")
-                        ;
-                    } else {
-
-                    }
-                    $(tag)
-                        .css("position", "relative")
-                        .append(button);
-
-                    window.currentTag = tag;
-                    window.currentUser = item.username;
-                    $(filterButton).css("display", "block").off("click");
-                    if (pageType !== "home") {
-                        $(filterButton)
-                            .css("right", "0")
-                            .css("top", "0")
-                            .css("transform", "translate(0,0)")
-                    } else {
-
-                        $(filterButton).css("transform", "translate(" + (tagType === HOME_PAGE_ARTICLE ? "-80%" : 0) + ",0)")
-                    }
-
-                    $(filterButton).on("click", function (e) {
-                        e.preventDefault();
-                        if (typeof window.currentTag !== "undefined" && window.currentTag !== null) {
-                            console.log("un", window.currentUser, item, i);
-                            addToUpList(window.currentUser, () => {
-                                displayUpList();
-                                if (pageType === "home") {
-                                    FilterHomePage();
-                                } else if (pageType === "list") {
-                                    FilterListPage();
-                                }
-                            });
-
-
-                        }
-                    })
-                        .show();
-                });
-                $(tag).on("mouseleave", function () {
-                    $(filterButton).detach();
-                    window.currentTag = null;
-                    window.currentUser = null;
-                    $(filterButton).off("click").hide()
-                })
+                    t.g["cachedUserTags"] = i;
+                    console.log(t.g["cachedUserTags"]);
+                    E(r);
+                }));
+            },
+            AddTagsToUser(e, n, r) {
+                e = e.trim();
+                y().then((i => {
+                    let o = i[e];
+                    o = o ? o : [];
+                    n.forEach((e => {
+                        if (o.indexOf(e) < 0) o.push[e];
+                    }));
+                    i[e] = o;
+                    t.g["cachedUserTags"] = i;
+                    E(r);
+                }));
+            },
+            getAlltags(e) {
+                y((n => {
+                    e(n);
+                }));
             }
         };
-        if (pageType === "home") {
-            let list = getHomeSelection();
-            attach(list);
-        } else {
-            let list = getListSelection();
-            attach(list);
+        function W(...e) {
+            var n = console.log;
+            let t = [ "插件DEBUG:" ];
+            e.forEach((e => {
+                t.push(e);
+            }));
+            n(...t);
         }
-
-    }
-
-    let pannelAdded = false;
-
-    function watchHomepage() {
-        let mutationObserver = new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutation) {
-                let target = mutation.target;
-                //console.log("target n", target, target.tagName);
-                if (target.classList.contains('normal-module') || target.classList.contains('normal-video-container') || target.tagName === "HTML") {
-                    attachBlockButton();
-                    HandleHomePage();
+        const O = "https://baldhumanity.top";
+        function P(e) {
+            return e;
+        }
+        function S(e) {
+            return e;
+        }
+        function q() {
+            if ("undefined" === typeof unsafeWindow.A) unsafeWindow.A = (e, n) => {
+                W(e, n);
+            };
+        }
+        function U(e, n) {
+            let t = new unsafeWindow.XMLHttpRequest;
+            let r = O + "/api";
+            let i = JSON.stringify(e);
+            i = P(i);
+            t.open("POST", r, true);
+            t.setRequestHeader("Content-Type", "text/plain");
+            t.send(i);
+            t.onload = function() {
+                let e = {};
+                try {
+                    e = JSON.parse(this.responseText);
+                } catch (e) {
+                    console.trace("ERROR failed parsing JSON string:", this.responseText);
+                } finally {
+                    if (n) n(e);
                 }
-            });
-        });
-
-        mutationObserver.observe(unsafeWindow.document, {subtree: true, childList: true});
-    }
-
-    function watchList() {
-        let mutationObserver = new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutation) {
-                let target = mutation.target;
-                if ($(target).hasClass("article-list") || $(target).attr("id") === "list-video") {
-                    attachBlockButton();
-                    //屏蔽文章页，
-                    FilterListPage();
-
-                }
-            });
-        });
-
-        mutationObserver.observe(unsafeWindow.document, {subtree: true, childList: true});
-
-
-    }
-
-    function addUI() {
-        console.log("Ad UI");
-        if (!pannelAdded) {
-            addPanel();
-            pannelAdded = true;
-            if (pageType === "home") {
-                watchHomepage();
-            } else if (pageType === "list") {
-                watchList();
-            }
+            };
         }
-    }
-
-    function getRepliesSelectionOld() {
-        let sels = $("div.commentWrap");
-        let res = [];
-
-        sels.each(function () {
-            let replier = trimWord($(this).find("a[data-uid]").text());
-            let tag = $(this);
-            let parent = $(this).parent().parent()//.parent();
-            let avatar = null;
-            if (parent.hasClass("main-comment-item")) {
-                avatar = $(parent).find(".mci-avatar")[0];
-            }
-
-            res.push({
-                tag: tag[0],
-                replier: replier,
-                avatar: avatar,
-            })
-        });
-
-        return res;
-    }
-
-
-    function filterReplies() {
-        let commentMode = unsafeWindow.localStorage.getItem("ac_usp_commMode");
-        //console.log("comment mode = ", commentMode);
-        if (commentMode === "2") {
-            //旧版评论
-            filterRepliesOld();
-
-        } else {
-            //新版评论
-            filterRepliesNew();
-        }
-    }
-
-
-    function getRepliesSelectionNew() {
-        let sels = $(".clearfix.area-comment-first");
-        let res = [];
-
-        sels.each(function () {
-            let nametag = $(this).find("a.name")[0];
-            let replier = $(nametag).text();
-            let tag = $(this);
-            let avatar = null;
-
-            res.push({
-                tag: tag[0],
-                replier: replier,
-                avatar: avatar,
-            })
-        });
-        let sels2 = $(".clearfix.area-comment-sec");
-
-        sels2.each(function () {
-            let nametag = $(this).find("a.name")[0];
-            let replier = $(nametag).text();
-            let tag = $(this);
-            let avatar = null;
-
-            res.push({
-                tag: tag[0],
-                replier: replier,
-                avatar: avatar,
-            })
-        });
-
-        return res;
-    }
-
-    function filterRepliesNew() {
-        // console.log("FilterRepNew");
-        repliers((list) => {
-            // console.log("Repliers", list);
-            let pagelist = getRepliesSelectionNew();
-            for (let i = 0; i < pagelist.length; i++) {
-                let item = pagelist[i];
-                let replier = item.replier;
-                if (list.indexOf(replier) >= 0) {
-                    hideCommentTag(item);
-                } else {
-                    showCommentTag(item);
-                }
-            }
-        })
-
-    }
-
-    function filterRepliesOld() {
-
-        repliers((list) => {
-            //console.log("blocked repliers", (list));
-            let pagelist = getRepliesSelectionOld();
-            for (let i = 0; i < pagelist.length; i++) {
-                let item = pagelist[i];
-                let replier = item.replier;
-                //console.log(replier);
-                if (list.indexOf(replier) >= 0) {
-                    hideCommentTag(item);
-                } else {
-                    showCommentTag(item);
-                }
-            }
-        })
-    }
-
-    function attachBlockReplierButtonOld() {
-        function attach() {
-            //console.log("attach block replier");
-            let sels = $(".comment-item-footer");
-
-            sels.each(function () {
-                if ($(this).hasClass("event-attached")) {
-                    return;
-                }
-
-
-                //wrap all
-                let wrap =$(this).parent()//  $("<div class='commentWrap' style='display: block'></div>");
-                wrap.addClass("commentWrap");
-                //$(this).parent().append(wrap);
-
-                //let nameTag = $(this).prev().prev();
-                //let contentTag = $(this).prev();
-                //let toolbarTag = $(this);
-
-                let name = $(this).prev().prev().find("a[data-uid]").text();
-                //console.log(name, $(this).find(".comment-toolbar"));
-                let btn = $("<a style='margin-left:16px;color:#999999'>屏蔽</a>");
-                $(this).find(".comment-toolbar").append(btn);
-
-
-                //nameTag = nameTag.detach();
-                //contentTag = contentTag.detach();
-                //toolbarTag = toolbarTag.detach();
-
-                //wrap.append(nameTag).append(contentTag).append(toolbarTag);
-
-                btn.on("click", function () {
-                    addToRepliers(name, () => {
-                        displayRepliers();
-                        setTimeout(() => {
-                            filterRepliesOld();
-                        })
-
-                    })
-                });
-                $(this).addClass("event-attached")
-
-
-            })
-        }
-
-        let mutationObserver = new MutationObserver(function (mutations) {
-
-            let done = false;
-            mutations.forEach(function (mutation) {
-                if (done) return;
-                let target = mutation.target;
-                if ($(target).hasClass("main-comment-item") || $(target).hasClass("quoted-comment-item") || $(target).hasClass("fc-comment-list") || $(target).hasClass("fc-comment-item")) {
-
-                    //console.log("reply observer target", target, mutation.type);
-                    setTimeout(()=>{
-                    attach();
-                    //console.log("filtering replies")
-                    filterReplies();
-                    },100);
-                    done=true;
-                }
-            });
-        });
-
-        mutationObserver.observe(unsafeWindow.document, {subtree: true, childList: true});
-
-        attach();
-        filterReplies();
-    }
-
-    function attachBlockReplierButtonNew() {
-
-
-        injectStyles(`
-            .area-comment-block {
-    background: url(data:image/png;base64,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) no-repeat;
-    background-size: 13px 13px;
-    background-position: 0 1px;
-    padding-left: 17px;
-    padding-right: 15px;
-    color: #999;
-}
-        `);
-
-        function attach() {
-            //console.log("attach block replier NEW");
-            let sels = $("div.area-comment-tool");
-            //console.log("New sels", sels)
-            sels.each(function () {
-                if ($(this).hasClass("event-attached")) {
-                    return;
-                }
-
-
-                let name = $(this).prev().prev().find("a.name").text();
-                let replyBtn = $(this).find(".area-comment-reply");
-                let btn = $("<a class='area-comment-block'>屏蔽</a>");
-
-                btn.insertAfter(replyBtn);
-
-
-                btn.on("click", function () {
-                    addToRepliers(name, () => {
-                        displayRepliers();
-                        setTimeout(() => {
-                            filterRepliesNew();
-                        })
-
-                    })
-                });
-                $(this).addClass("event-attached")
-
-
-            })
-        }
-
-        let mutationObserver = new MutationObserver(function (mutations) {
-            let done=false;
-            mutations.forEach(function (mutation) {
-                let target = mutation.target;
-                //console.log(target)
-                if (done) return;
-                if ($(target).hasClass("area-hot-close") || $(target).hasClass("area-sec-close")|| $(target).hasClass("edui-body-container") || ($(target).hasClass("area-comment-top"))) {
-                    //console.log("target", target, mutation.type);
-
-                    //console.log("target", target, mutation.type);
-                    setTimeout(()=>{
-                    attach();
-                    filterReplies();
-                    },0);
-                    done=true;
-
-                }
-            });
-        });
-
-        mutationObserver.observe(unsafeWindow.document, {subtree: true, childList: true});
-        attach();
-        filterReplies();
-
-    }
-
-
-    function addArticlePageUI() {
-        let commentMode = unsafeWindow.localStorage.getItem("ac_usp_commMode");
-
-        attachBlockReplierButtonOld();
-
-        attachBlockReplierButtonNew();
-
-    }
-
-    function titleByTitle(t) {
-        let regex = /.+/;
-        return t.match(regex);
-    }
-
-    function usernameByTitle(title) {
-        let regex = /UP:(.+)[\s\v\n]/g;
-        let m =  title.match(regex);
-        if (m.length>0){
-            let name = m[0];
-
-            if (name.indexOf("UP:")>=0){
-                name = name.substring(3);
-            }
-            return name;
-        }
-        return null;
-    }
-
-    function hideArticleTag(tag) {
-        if ($(tag).css("display") !== "none" && $(tag).css("visibility")!=="hidden") {
-            //console.log("tag debug",tag, tag.getBoundingClientRect());
-            let rect = tag.getBoundingClientRect();
-            $(tag).css("transition", "0.5s")
-                .css("-webkit-transition", "0.5s")
-                .css("opacity", "0")
-                .css("height", rect.height + "px");
-
-            let d = $(tag).css("display");
-            tag["_d"] = d;
-            let h = $(tag).css("height");
-            tag["_h"] = h ? h:  rect.height + "px";
-            //console.log("hide tag",tag["_d"], tag["_h"]);
-            $(tag).css("height", "1px");
-
-            if (pageType == "list" || pageType=="article"){
-                $(tag).css("overflow", "hidden");
-            }
-
-            setTimeout(() => {
-                $(tag).css("visibility", "hidden");
-                $(tag).css("display", "none");
-            }, 500);
-            let bar = $(tag).next();
-            //console.log(bar);
-            if (bar.length > 0 && $(bar).prop("tagName").toUpperCase() === "HR") {
-                $(bar).css("display", "none");
-            }
-        }
-    }
-
-    function showArticleTag(tag) {
-        if ( $(tag).css("visibility")=="hidden" && typeof tag["_d"] !== "undefined") {
-
-            $(tag).css("transition", "0.5s")
-                .css("-webkit-transition", "0.5s")
-                .css("opacity", "1")
-
-
-                //
-            if (typeof tag["_d"] !== "undefined") {
-                $(tag).css("display", tag["_d"]);
-            } else {
-                $(tag).css("display", "block");
-            }
-            if (typeof tag["_h"] !== "undefined") {
-                $(tag).css("height", tag["_h"]);
-            } else {
-                $(tag).css("height", "auto");
-            }
-
-
-                $(tag).css("visibility", "visible");
-            //article list page, hide the separator as well
-            let bar = $(tag).next();
-            if (bar.length > 0 && $(bar).prop("tagName").toUpperCase() === "HR") {
-                $(bar).css("display", "block");
-            }
-
-
-        }
-    }
-
-    function hideCommentTag(item) {
-        //console.log("hct",item);
-        let tag = item.tag;
-        if (typeof tag["_t"] === "undefined") {
-            //console.log(tag, tag.getBoundingClientRect);
-            let rect = tag.getBoundingClientRect();
-            $(tag).css("transition", "0.5s")
-                .css("-webkit-transition", "0.5s")
-                .css("overflow", "hidden")
-                .css("height", rect.height + "px");
-
-            let d = $(tag).css("display");
-            tag["_d"] = d;
-            tag["_h"] = rect.height + "px";
-            let hint = $("<div style='padding: 3px; font-size: 10px;'>已屏蔽【" + item.replier + "】的评论</div>");
-            let removeBlock = $("<a style='margin-left: 5px;color:#2596d2'>[取消屏蔽]</a>");
-            hint.append(removeBlock);
-
-
-            removeBlock.on("click", function () {
-                removeFromRepliers(item.replier, () => {
-                    filterReplies();
-                    displayRepliers();
-                })
-            });
-            //console.log("hide tag",tag["_d"], tag["_h"]);
-            tag["_t"] = hint;
-            hint.insertBefore(tag);
-            $(tag).css("height", "0px");
-
-            setTimeout(() => {
-                $(tag).css("display", "none");
-            }, 500);
-
-            if (item.avatar) {
-                $(item.avatar).css("visibility", "hidden");
-            }
-
-        }
-    }
-
-    function showCommentTag(item) {
-        let tag = item.tag;
-        if ($(tag).css("display") === "none" && typeof tag["_d"] !== "undefined") {
-            $(tag).css("transition", "0.5s")
-                .css("-webkit-transition", "0.5s")
-                .css("overflow", "hidden");
-            if (typeof tag["_d"] !== "undefined") {
-                $(tag).css("display", tag["_d"]);
-            } else {
-                $(tag).css("display", "block");
-            }
-            // if (typeof tag["_h"] !== "undefined") {
-            //     $(tag).css("height", tag["_h"]);
-            // } else {
-            $(tag).css("height", "auto");
-            //  }
-            if (typeof tag["_t"] !== "undefined") {
-                //console.log("remove hint", tag["_t"]);
-                let hint = tag["_t"];
-                hint.remove();
-                delete tag["_t"];
-            }
-
-
-            if (item.avatar) {
-                $(item.avatar).css("visibility", "visible");
-            }
-        }
-
-    }
-
-    function FilterHomePage() {
-        keywords((keywordList) => {
-            ups((upList) => {
-                //过滤主页视频
-                let selections = getHomeSelection("FILTER", false, false);
-                for (let i = 0; i < selections.length; i++) {
-                    let tag = selections[i].tag;
-                    let tagType = selections[i].type;
-                    let username = selections[i].username;
-                    let title = selections[i].title;
-                    if (upList.indexOf(username) >= 0 || containsKeyword(keywordList, title)) {
-                        hideArticleTag(tag);
-                        if (tagType === 5) {
-                            hideArticleTag(selections[i].subtag);
-                        }
-                    } else {
-                        showArticleTag(tag);
-                        if (tagType === 5) {
-                            showArticleTag(selections[i].subtag);
-                        }
-                    }
-                }
-            })
-        })
-
-    }
-
-
-    function containsKeyword(list, title) {
-        for (let i = 0; i < list.length; i++) {
-            let w = list[i];
-            if (title.indexOf(w) >= 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //过滤文章列表页
-    function FilterListPage() {
-        keywords((keywordList) => {
-            ups(((upList) => {
-                let sel = getListSelection();
-                for (let i = 0; i < sel.length; i++) {
-                    let row = sel[i].tag;
-                    let username = sel[i].username;
-                    let title = sel[i].title;
-                    if (upList.indexOf(username) >= 0 || containsKeyword(keywordList, title)) {
-                        //console.log("过滤文脏区",username);
-                        //屏蔽
-                        hideArticleTag(row);
-                    } else {
-                        showArticleTag(row);
-                    }
-                }
-                window.scrollTo(window.scrollX, window.scrollY + 1);
-            }))
-        })
-    }
-
-    function HandleHomePage() {
-        console.log("home list");
-        //屏蔽首页UP，包括视频和右边的文章区
-        pageType = "home";
-        FilterHomePage();
-    }
-
-    function HandleListPage() {
-        console.log("debug list");
-        pageType = "list";
-        FilterListPage();
-    }
-
-    function HandleArticlePage() {
-        //对于单独的文章页或者视频，添加一个按钮屏蔽当前UP主
-        let sidebuttonContainer = $("<div style='z-index: 9999;position:fixed; left:0px; top: 150px;  width:30px; padding: 5px; background-color: rgba(255,50,50,0.3);user-select:none;-webkit-user-select:none;  cursor: pointer;'></div>");
-        let sidebutton = $("<button style='width:30px;background-color:rgb(241, 157, 157);border: solid 1px white'>屏蔽ＵＰ</button>");
-        let confirm= $("<button style='width:30px;height:30px; background-color: rgb(50,255,100); border: 1px solid white;'>√</button>").css("display","none")
-        let cancel= $("<button style='width:30px;height:30px; background-color: rgb(255,100,100); border: 1px solid white;'>×</button>").css("display","none")
-
-        sidebuttonContainer.append(sidebutton);
-        sidebuttonContainer.append(confirm);
-        sidebuttonContainer.append(cancel);
-
-        $(document.body).append(sidebuttonContainer);
-
-        let button = $("<a style='margin-left: 5px; display: inline-block; vertical-align: middle; width: 30px; height: 18px; line-height: 18px; color: #4a8eff; cursor: pointer; font-size: 13px'>屏蔽</a>");
-        $("div.up-abstract").css("width", "auto");
-        $("div.action-up").append(button).css("width", "125px");
-
-        let trigger = function () {
-            let upname = "";
-            if (window.location.href.indexOf("www.acfun.cn/v/ac") >= 0) {
-                upname = $("a.up-name").html();
-            } else if (window.location.href.indexOf("www.acfun.cn/a/ac") >= 0) {
-                upname = $("a.upname").html();
-            }
-            addToUpList(upname, () => {
-                displayUpList();
-            });
+        const k = {
+            getCommentType() {
+                let e = unsafeWindow.localStorage.getItem("ac_usp_commMode");
+                return "1" === e ? "NEW" : "OLD";
+            },
+            success(e) {
+                q();
+                unsafeWindow.A.emit("global::success", e, 3e3);
+            },
+            warn(e) {
+                q();
+                unsafeWindow.A.emit("global::warning", e, 3e3);
+            },
+            apiRequest: U
         };
-
-        let c2 =function(){
-            sidebutton.css("display","block");
-            confirm.css("display", "none");
-            cancel.css("display", "none");
+        var N = '<div id="helperUI" class="helper-wrap" style="pointer-events:none"> <div class="helper-wrap-inner"> <div style="pointer-events:all" class="helper-main c-a ui-hidden smooth"> <div class="plugin-hint" id="hide_hint">隐藏插件--\x3e</div> <div class="page-wrap"> <div class="plugin-menu-title">插件设置</div> <div class="menu-wrap"> <a id="bannedAuthours">Ｕ Ｐ 主</a> <a id="bannedRepliers">回 复 者</a> <a id="bannedKeywords">关 键 词</a> <a id="cloudsync">云 同 步</a> <a id="commentRecovery">评论恢复</a> <a id="aboutme">关于插件</a> </div> <div class="plugin-version">0.00</div> </div> <div class="page-wrap inactive-page" id="ban_up_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入UP主ID..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_replier_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入评论者ID..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_keyword_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入屏蔽关键词..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">LOL</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="cloudsync_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class="sync-time"></div> </div> </div> <div class="page-wrap inactive-page" id="recovery_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div> 2.100版本新功能：已删除评论恢复！<br/> 当你打开投稿，插件会第一时间在本地备份所有看到的评论，当未来某个时间，有评论被删除，插件将会为你恢复。同时本地备份将会在云服务器上共享。只要有一个用户备份过一次被删除的评论，所有用户都会得到分享。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div> <b></b><span class="cache-info"></span> </div> <div> <button>删除缓存</button> </div> </div> </div> <div class="page-wrap inactive-page" id="about_page"> <a class="go-back">返回</a> <div class="about-page-content"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style="pointer-events:all" class="ac-girl ac-girl-hide smooth"> </div> </div> </div>';
+        const R = N;
+        function Y() {
+            if ("undefined" === typeof t.g["eventStorage"]) t.g["eventStorage"] = {};
+            return t.g["eventStorage"];
         }
-        let c=function(){
-            sidebutton.css("display","none");
-            confirm.css("display", "block");
-            cancel.css("display", "block");
+        function Q() {
+            if ("undefined" === typeof t.g["eventCount"]) t.g["eventCount"] = 0;
+            t.g["eventCount"]++;
+            return t.g["eventCount"];
         }
-
-
-        button.on("click", trigger);
-        sidebutton.on("click", c);
-        confirm.on("click", ()=>{
-            trigger();
-            c2();
-        })
-        cancel.on("click", c2);
-
-        //添加屏蔽评论的UI
-        addArticlePageUI()
-    }
-
-    let cloudServer = 16731600;
-
-    function msgChunker(msg) {
-        return msg.match(/.{1,800}/g);
-    }
-
-
-    let lastUpdateTime = 0;
-
-    function encode(a) {
-        return btoa(escape(a))
-    }
-
-    function decode(a) {
-        return unescape(atob(a))
-    }
-
-    function cloudUpdate(cloudData, showinfo) {
-        let splitter = ",";
-        keywords((keywordList) => {
-            ups((upList) => {
-                repliers((repList) => {
-                    let t = +new Date();
-                    let data = {
-                        keywords: encode(keywordList.join(splitter)),
-                        ups: encode(upList.join(splitter)),
-                        repliers: encode(repList.join(splitter)),
-                        time: encode(t),
-                        version: version,
-                    };
-                    if (cloudData && cloudData.time === lastUpdateTime && cloudData.version >= data.version) {
-                        console.log("No need to update cloud, everything is the same");
-                        if (showinfo) emitMsg("global::success","云检查完毕，已经是最新的了！")
-                    } else if (keywordList.length === 0 && upList.length === 0) {
-                        console.log("No need to update cloud, lists are empty");
-                        if (showinfo) emitMsg("global::success","云检查完毕，没有需要同步的设置（列表都是空的呢）。")
-                    } else {
-                        console.log("Update to cloud");
-                        let msg = JSON.stringify(data);
-                        cloudSend(msg, showinfo);
-                        setUpdateTime(t, () => {
-
-                        });
-                    }
+        const F = {
+            on: function(e, n) {
+                let t = Y();
+                if (!(e in t)) t[e] = [];
+                let r = Q();
+                t[e].push({
+                    id: r,
+                    callback: n
                 });
-
-            })
-        })
-    }
-
-    //剔除空格换行符
-    function trimWord(d){
-        return d.replace(/(\r\n|\n|\r)/gm, "").trim();
-    }
-
-    function updateListByCloudData(data) {
-        let keywordsstr = decode(data.keywords);
-        let upsstr = decode(data.ups);
-        let replierstr = typeof data.repliers == "undefined" ? "" : decode(data.repliers);
-        let spliter = upsstr.indexOf(" ") > 0 || keywordsstr.indexOf(" ") > 0 ? " " : ",";
-        let keywords = keywordsstr.split(spliter).map(trimWord);
-        let ups = upsstr.split(spliter).map(trimWord);
-        let repliers = replierstr.split(spliter).map(trimWord);
-        //console.log("spliter", ups, keywords, spliter)
-        keywords = keywords.length === 1 && keywords[0] === "" ? [] : keywords;
-        ups = ups.length === 1 && ups[0] === "" ? [] : ups;
-        repliers = repliers.length === 1 && repliers[0] === "" ? [] : repliers;
-
-        //console.log(ups, keywords);
-        setUp(ups, () => {
-            console.log("Uplist updated!", ups);
-            displayUpList()
-        });
-        setKeywords(keywords, () => {
-            console.log("Keywordlist Updated", keywords);
-            displayKeywords();
-        });
-        setRepliers(repliers, () => {
-            console.log("Replierlist updated");
-            displayRepliers();
-        });
-        setUpdateTime(data.time, () => {
-            console.log("Time Updated", (data.time))
-        });
-
-        emitMsg("global::success","ACFUN屏蔽系统：下载屏蔽设置成功！")
-    }
-
-    let defaultUpdateInterval = 30 * 1000;
-
-    function cloudCheck(showinfo) {
-        $('#cloudsync').addClass("disabled").text("正在同步...");
-        if (typeof showinfo === "undefined") {
-            showinfo = false;
+            },
+            emit: function(e, n) {
+                let t = Y();
+                if (e in t) {
+                    let r = t[e];
+                    r.forEach((e => {
+                        e.callback(n);
+                    }));
+                }
+            },
+            emit1: function(e, n) {
+                console.log("emit event", e);
+                let t = unsafeWindow.document;
+                let r = new CustomEvent(e, {
+                    detail: {
+                        data: n
+                    },
+                    bubbles: true,
+                    cancelable: false,
+                    composed: false
+                });
+                setTimeout((() => {
+                    t.dispatchEvent(r);
+                }));
+            },
+            on1: function(e, n) {
+                let t = unsafeWindow.document;
+                t.addEventListener(e, (e => {
+                    n(e.detail.data);
+                }));
+            },
+            onSpecific: function(e, n, t) {
+                e.addEventListener(n, (e => {
+                    t(e.detail.data);
+                }));
+            }
+        };
+        function H(e, n) {
+            let t = {
+                up: [ "#ban_up_page", M.loadBanList, K, M.banUser, "UP_BAN_UPDATE" ],
+                replier: [ "#ban_replier_page", M.loadReplyBanList, j, M.banReplier, "REPLY_BAN_UPDATE" ],
+                keyword: [ "#ban_keyword_page", M.loadKeywords, Z, M.banKeyword, "KEYWORD_BAN_UPDATE" ]
+            };
+            let r = t[n];
+            r[1]((n => {
+                let t = e.querySelector(r[0]);
+                let i = t.querySelector(".ban-item-submit");
+                i.addEventListener("click", (() => {
+                    let e = t.querySelector(".ban-title-input");
+                    let n = e.value;
+                    if (0 === n.length) {
+                        e.focus();
+                        return;
+                    }
+                    e.value = "";
+                    r[3](n, (() => {
+                        F.emit(r[4], null);
+                    }));
+                }));
+                let o = t.querySelector(".banned-items");
+                let a = [];
+                let l = o.querySelectorAll(".banned-item");
+                l.forEach((e => {
+                    let t = e.querySelector(".banned-title").innerText;
+                    if (n.indexOf(t) >= 0) a.push(t); else e.remove();
+                }));
+                let A = unsafeWindow.document;
+                n.forEach((e => {
+                    if (a.indexOf(e) < 0) {
+                        let n = A.createElement("div");
+                        n.classList.add("banned-item");
+                        let t = A.createElement("span");
+                        t.classList.add("banned-title");
+                        t.innerText = e;
+                        let i = A.createElement("button");
+                        i.innerText = "×";
+                        n.append(t, i);
+                        i.addEventListener("click", (n => {
+                            r[2](e);
+                        }));
+                        o.append(n);
+                    }
+                }));
+            }));
         }
-
-        getUpdateTime((localTime) => {
-            lastUpdateTime = localTime;
-            cloudGet((text) => {
-                if (text === null) {
-                    //nothing found, just upload data
-                    console.log("Update by null");
-                    cloudUpdate();
-                } else {
-                    try {
-                        let data = JSON.parse(text);
-                        //检查版本兼容
-                        if (typeof data.version === "undefined" || parseFloat(data.version) < parseFloat(version)) {
-                            emitMsg("global::success","旧版同步信息发现，重新同步");
-                            updateListByCloudData(data);
-                            cloudUpdate(data, showinfo);
-
-                        } else if (parseFloat(data.version) > parseFloat(version)) {
-                            emitMsg("global::success","同步失败：你已经在其他地方使用过更新的版本了。请更新当前屏蔽插件，最新版本：" + data.version);
-
-                        } else {
-                            console.log("data time", data.time, decode(data.time), "local", localTime);
-                            data.time = parseInt(decode(data.time));
-                            let cloudtime = data.time;
-                            if (cloudtime > localTime || version !== data.version) {
-                                //如果云时间更新，则使用云上的
-                                console.log("Update list");
-                                updateListByCloudData(data);
-
-                            } else if (localTime > (cloudtime)) {
-                                //本地更新，尝试更新
-                                console.log("Update ");
-                                cloudUpdate(data, showinfo);
-                            } else {
-                                console.log("Check done, no update needed", (localTime - cloudtime) / 1000, data);
-                                if (showinfo) emitMsg("global::success","云检查完毕，已经是最新的了！")
+        function G(e) {
+            if ("undefined" === typeof e) {
+                let n = unsafeWindow.document;
+                e = n.body.querySelector("#helperUI");
+            }
+            H(e, "up");
+        }
+        function V(e) {
+            if ("undefined" === typeof e) {
+                let n = unsafeWindow.document;
+                e = n.body.querySelector("#helperUI");
+            }
+            H(e, "replier");
+        }
+        function X(e) {
+            if ("undefined" === typeof e) {
+                let n = unsafeWindow.document;
+                e = n.body.querySelector("#helperUI");
+            }
+            H(e, "keyword");
+        }
+        function K(e) {
+            M.unbanUser(e, (e => {
+                F.emit("UP_BAN_UPDATE", e);
+            }));
+        }
+        function j(e) {
+            M.unbanReplier(e, (e => {
+                F.emit("REPLY_BAN_UPDATE", e);
+            }));
+        }
+        function Z(e) {
+            M.unbanKeyword(e, (e => {
+                F.emit("KEYWORD_BAN_UPDATE", e);
+            }));
+        }
+        function z(e) {
+            let n = {
+                bannedAuthours: [ "#ban_up_page" ],
+                bannedRepliers: [ "#ban_replier_page" ],
+                bannedKeywords: [ "#ban_keyword_page" ],
+                cloudsync: [ "#cloudsync_page" ],
+                commentRecovery: [ "#recovery_page" ],
+                aboutme: [ "#about_page" ]
+            };
+            let t = [];
+            Object.keys(n).forEach((r => {
+                t.push(r);
+                e.querySelector("#" + r).addEventListener("click", (() => {
+                    let t = n[r][0];
+                    e.querySelector(t).classList.remove("inactive-page");
+                }));
+            }));
+            for (let t in n) {
+                let r = n[t][0];
+                e.querySelector(r).querySelector("a.go-back").addEventListener("click", (() => {
+                    e.querySelector(r).classList.add("inactive-page");
+                }));
+            }
+            let r = e.querySelector(".helper-main");
+            let i = e.querySelector(".ac-girl");
+            i.addEventListener("click", (() => {
+                if (!r.classList.contains("ui-hidden")) r.classList.add("ui-hidden"); else r.classList.remove("ui-hidden");
+            }));
+            let o = e.querySelector("#hide_hint");
+            o.addEventListener("click", (() => {
+                r.classList.add("ui-hidden");
+            }));
+        }
+        function J(e) {
+            function n(e) {
+                let n = new Date(1e3 * e);
+                let t = [ "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月" ];
+                let r = n.getFullYear();
+                let i = t[n.getMonth()];
+                let o = n.getDate();
+                let a = n.getHours();
+                let l = n.getMinutes();
+                let A = n.getSeconds();
+                let c = r + "年" + i + o + "日 " + a + ":" + l + ":" + A;
+                return c;
+            }
+            M.getUpdateTime((t => {
+                e.querySelector(".sync-time").innerText = "上次同步时间：" + n(t);
+            }));
+        }
+        function _(e) {
+            M.getAllCacheIndices((n => {
+                let t = n.length;
+                e.querySelector(".cache-info").innerText = `已缓存${t}篇投稿评论`;
+            }));
+        }
+        function $(e) {
+            F.on("UP_BAN_UPDATE", (() => {
+                G();
+            }));
+            F.on("REPLY_BAN_UPDATE", (() => {
+                V();
+            }));
+            F.on("KEYWORD_BAN_UPDATE", (() => {
+                X();
+            }));
+            F.on("SYNC_TIME_UPDATE", (() => {
+                J(e);
+            }));
+            F.on("COMMENT_CACHE_UPDATE", (() => {
+                _(e);
+            }));
+        }
+        function ee(e) {
+            e.querySelector(".ac-girl").classList.remove("ac-girl-hide");
+        }
+        function ne(e) {
+            e.querySelector(".plugin-version").innerText = "版本：" + M.version;
+        }
+        function te(e) {
+            _(e);
+        }
+        function re(e) {
+            $(e);
+            G(e);
+            V(e);
+            X(e);
+            z(e);
+            ne(e);
+            te(e);
+            ee(e);
+        }
+        const ie = {
+            state: "MENU",
+            showSettingUI() {
+                let e = unsafeWindow.document;
+                e.body.insertAdjacentHTML("beforeend", R);
+                let n = e.body.querySelector("#helperUI");
+                re(n);
+            }
+        };
+        var oe = '<div class="sub-ui-wrap"> <div class="sub-ui-inner sub-ui-normal"> <div class="sub-ui-text"> 正 常 </div> <div id="banUp" class="sub-ui-button sub-ui-text smooth"> </div> <div id="unbanUp" class="sub-ui-button sub-ui-text remove smooth"> </div> </div> </div>';
+        const ae = oe;
+        function le() {
+            F.on("UP_BAN_UPDATE", (() => {
+                se();
+            }));
+            let e = unsafeWindow.document;
+            let n = e.querySelector(".sub-ui-inner");
+            let t = n.querySelector("#banUp");
+            let r = n.querySelector("#unbanUp");
+            t.addEventListener("click", (() => {
+                M.banUser(de(e));
+                F.emit("UP_BAN_UPDATE", null);
+            }));
+            r.addEventListener("click", (() => {
+                M.unbanUser(de(e));
+                F.emit("UP_BAN_UPDATE", null);
+            }));
+        }
+        function Ae() {
+            let e = unsafeWindow.document;
+            let n = e.querySelector(".sub-ui-inner");
+            n.classList.remove("sub-ui-normal");
+            n.classList.add("sub-ui-banned");
+            let t = n.querySelector(".sub-ui-text");
+            t.innerText = "已屏蔽";
+            let r = n.querySelector("#banUp");
+            let i = n.querySelector("#unbanUp");
+            r.classList.add("remove");
+            i.classList.remove("remove");
+        }
+        function ce() {
+            let e = unsafeWindow.document;
+            let n = e.querySelector(".sub-ui-inner");
+            n.classList.add("sub-ui-normal");
+            n.classList.remove("sub-ui-banned");
+            let t = n.querySelector(".sub-ui-text");
+            t.innerText = "正  常";
+            let r = n.querySelector("#banUp");
+            let i = n.querySelector("#unbanUp");
+            r.classList.remove("remove");
+            i.classList.add("remove");
+        }
+        function se() {
+            let e = unsafeWindow.document;
+            let n = de(e);
+            M.loadBanList((e => {
+                if (e.indexOf(n) >= 0) Ae(); else ce();
+            }));
+        }
+        function de(e) {
+            let n = e.querySelector(".up-name");
+            if ("div" === n.tagName.toLowerCase()) n = n.firstChild;
+            return n.innerText;
+        }
+        function ue() {
+            let e = unsafeWindow.document;
+            e.body.insertAdjacentHTML("beforeend", ae);
+            let n = e.querySelector(".container-video");
+            if (n) n.classList.add("on-top");
+        }
+        const fe = {
+            loadUI() {
+                ue();
+                le();
+            }
+        };
+        function pe(e) {
+            if ("contentData" in e.dom) e = e.dom["contentData"];
+            if (!("originalHeight" in e)) {
+                let n = e.dom.getBoundingClientRect();
+                e["originalHeight"] = n.height;
+            }
+            e.dom.style.height = e.originalHeight + "px";
+            e.dom.classList.add("smooth");
+            setTimeout((() => {
+                e.dom.classList.add("banned-article");
+            }));
+            setTimeout((() => {}), 500);
+            e["hidden"] = true;
+        }
+        function me(e) {
+            e.dom.classList.add("smooth");
+            e.dom.classList.add("banned-page-item");
+            e["hidden"] = true;
+        }
+        function ge(e) {
+            e.dom.classList.remove("banned-page-item");
+            e["hidden"] = false;
+        }
+        function we(e) {
+            e.dom.classList.remove("banned-article");
+            e.dom.classList.remove("remove");
+            e["hidden"] = false;
+        }
+        function he(e) {
+            if ("contentData" in e.dom) e = e.dom["contentData"];
+            if ("ARTICLE" === e.type) pe(e); else me(e);
+        }
+        function ve(e) {
+            if ("contentData" in e.dom) e = e.dom["contentData"];
+            if ("ARTICLE" === e.type) we(e); else ge(e);
+        }
+        function be(e) {
+            M.unbanReplier(e, (e => {
+                F.emit("REPLY_BAN_UPDATE");
+            }));
+        }
+        function xe(e) {
+            let n = k.getCommentType();
+            let t = unsafeWindow.document.createElement("div");
+            t.append(...e.dom.childNodes);
+            t.classList.add("remove");
+            t.classList.add("block-mark");
+            let r = unsafeWindow.document.createElement("div");
+            r.classList.add("banned-text");
+            r.innerText = "已屏蔽[" + e.username + "]的发言。";
+            let i = unsafeWindow.document.createElement("a");
+            i.classList.add("unban-replier-btn");
+            i.innerText = "取消屏蔽";
+            i.addEventListener("click", (() => {
+                be(e.username);
+            }));
+            r.appendChild(i);
+            e.dom.appendChild(t);
+            e.dom.appendChild(r);
+            e["container"] = t;
+            e.dom["bannedData"] = e;
+            e.hidden = true;
+        }
+        function ye(e) {
+            if (!e.dom.hasOwnProperty("bannedData")) return;
+            let n = e.dom["bannedData"];
+            if (!n.hidden) return;
+            e.dom.append(...n.container.childNodes);
+            e.dom.querySelector(".banned-text").remove();
+            n.container.remove();
+            n.hidden = false;
+        }
+        function Ee(e) {
+            M.loadReplyBanList((n => {
+                if (null !== n) e.forEach((e => {
+                    if (n.indexOf(e.username) >= 0) if (e.dom.hasOwnProperty("bannedData")) {
+                        if (!e.dom["bannedData"].hidden) xe(e);
+                    } else xe(e); else ye(e);
+                }));
+            }));
+        }
+        function Ce(e) {
+            M.loadBanList((n => {
+                M.loadKeywords((t => {
+                    e.forEach((e => {
+                        let r = false;
+                        if (n.indexOf(e.username) >= 0) {
+                            he(e);
+                            r = true;
+                        }
+                        t.forEach((n => {
+                            if (e.title.indexOf(n) >= 0) {
+                                he(e);
+                                r = true;
                             }
-                            //检查完毕，让同步按钮可用
-                            $('#cloudsync').removeClass("disabled").text("手动同步");
-                            $('#checktime').css("display", "block").text("上次检查时间：" + (new Date()).toLocaleString())
-                        }
-                    } catch (ex) {
-                        //如果数据出错，直接尝试上传云
-                        console.error("Update By err", ex);
-                        setTimeout(cloudUpdate, 0);
+                        }));
+                        if (!r) ve(e);
+                    }));
+                }));
+            }));
+        }
+        function Te(e) {}
+        function De(e) {
+            M.banReplier(e, (e => {
+                F.emit("REPLY_BAN_UPDATE", null);
+            }));
+        }
+        function Ie(e, n) {
+            let t = unsafeWindow.document.createElement("span");
+            t.innerText = "屏蔽";
+            t.classList.add("area-comment-block");
+            t.addEventListener("click", (() => {
+                n(e);
+            }));
+            e.banButtonAnchor.insertAdjacentElement("afterend", t);
+        }
+        function Be(e, n) {
+            let t = unsafeWindow.document.createElement("a");
+            t.innerText = "屏蔽";
+            t.addEventListener("click", (() => {
+                n(e);
+            }));
+            e.banButtonAnchor.insertAdjacentElement("afterend", t);
+        }
+        function Le() {
+            let e = unsafeWindow.document;
+            let n = e.createElement("div");
+            n.classList.add("filter-button");
+            e.body.appendChild(n);
+            n.style.visibility = "hidden";
+            n.addEventListener("click", (e => {
+                let n = unsafeWindow["banButton"].activeData;
+                let t = n.username;
+                M.banUser(t, (e => {
+                    F.emit("UP_BAN_UPDATE", null);
+                }));
+            }));
+            unsafeWindow["banButton"] = {
+                dom: n,
+                activeDom: null,
+                activeData: null
+            };
+            let t = () => {
+                unsafeWindow["banButton"].dom.style.visibility = "hidden";
+                unsafeWindow["banButton"].activeDom = null;
+                unsafeWindow["banButton"].activeData = null;
+                unsafeWindow["banButton"].active = false;
+            };
+            e.addEventListener("pointermove", (e => {
+                if (null !== unsafeWindow["banButton"].activeDom && unsafeWindow["banButton"].active) {
+                    let n = unsafeWindow["banButton"].activeDom.getBoundingClientRect();
+                    if (e.clientX < n.left || e.clientX > n.right || e.clientY < n.top || e.clientY > n.bottom) t();
+                }
+            }));
+            e.addEventListener("scroll", (e => {
+                t();
+            }));
+        }
+        function Me() {
+            let e = unsafeWindow.document;
+            let n = "<style>" + i.Z[0][1] + "</style>";
+            e.head.insertAdjacentHTML("beforeend", n);
+        }
+        function We() {
+            Le();
+            ie.showSettingUI();
+        }
+        function Oe() {
+            fe.loadUI();
+            ie.showSettingUI();
+        }
+        function Pe() {
+            F.on("FILTER_COMMENTS", (e => {
+                Ee(e);
+            }));
+            F.on("FILTER_PAGE_CONTENTS", (e => {
+                Ce(e);
+            }));
+            F.on("SHOW_COMMENT_TAGS", (e => {
+                Te(e);
+            }));
+        }
+        const Se = {
+            loadUI(e) {
+                Pe();
+                Me();
+                if ("HOME" === e || "VIDEO_HOME" === e || "ARTICLE_HOME" === e) We(); else if ("VIDEO" === e || "ARTICLE" === e) Oe();
+            },
+            attachBanButton(e) {
+                let n = unsafeWindow["banButton"];
+                e.addEventListener("pointermove", (t => {
+                    if (n.activeDom !== e && !n.active) {
+                        if (e["contentData"]["hidden"]) return;
+                        n.activeDom = e;
+                        let t = e.getBoundingClientRect();
+                        n.dom.style.left = t.right - 20 + "px";
+                        n.dom.style.top = t.top + "px";
+                        n.dom.style.visibility = "visible";
+                        n.activeData = e["contentData"];
+                        n.active = true;
                     }
+                }));
+            },
+            attachBanCommentButton(e) {
+                let n = k.getCommentType();
+                if ("NEW" === n) Ie(e, (() => {
+                    De(e.username);
+                })); else Be(e, (() => {
+                    De(e.username);
+                }));
+            }
+        };
+        function qe(e) {
+            let n = e.querySelectorAll(".monkey-video");
+            let t = [];
+            n.forEach((e => {
+                let n = e.getAttribute("data-title");
+                let r = e.querySelector(".monkey-up-name");
+                let i = r.innerText.substring(3).trim();
+                t.push({
+                    title: n,
+                    username: i,
+                    dom: e,
+                    type: "VIDEO"
+                });
+            }));
+            return t;
+        }
+        function Ue(e) {
+            let n = e.querySelectorAll(".recommend-video");
+            let t = [];
+            n.forEach((e => {
+                let n = e.querySelector(".video-title").innerText;
+                let r = e.querySelector(".normal-mask-title");
+                let i = r.nextElementSibling;
+                let o = i.innerText.substring(3).trim();
+                t.push({
+                    title: n,
+                    username: o,
+                    dom: e,
+                    type: "VIDEO"
+                });
+            }));
+            return t;
+        }
+        function ke(e) {
+            let n = e.querySelectorAll(".banana-video");
+            let t = [];
+            n.forEach((e => {
+                let n = e.querySelector(".banana-video-title");
+                let r = n.innerText;
+                let i = e.querySelector(".banana-up-name");
+                let o = i.getAttribute("title");
+                t.push({
+                    title: r,
+                    username: o,
+                    dom: e,
+                    type: "VIDEO"
+                });
+            }));
+            return t;
+        }
+        function Ne(e) {
+            let n = e.querySelectorAll(".live-video");
+            let t = [];
+            n.forEach((e => {
+                let n = e.getAttribute("data-title");
+                let r = e.querySelector(".live-video-up-name");
+                let i = r.innerText.substring(3).trim();
+                t.push({
+                    title: n,
+                    username: i,
+                    dom: e,
+                    type: "VIDEO"
+                });
+            }));
+            return t;
+        }
+        function Re(e) {
+            let n = e.querySelectorAll(".normal-video");
+            let t = [];
+            n.forEach((e => {
+                let n = e.querySelector(".normal-video-title");
+                let r = n.innerText;
+                let i = n.getAttribute("title");
+                let o = /UP:(.+)/;
+                let a = o.exec(i)[1].trim();
+                t.push({
+                    title: r,
+                    username: a,
+                    dom: e,
+                    type: "VIDEO"
+                });
+            }));
+            return t;
+        }
+        function Ye(e) {
+            let n = e.querySelectorAll(".list-content-videos .log-item");
+            let t = [];
+            n.forEach((e => {
+                let n = e.querySelector(".video-title");
+                let r = n.innerText;
+                let i = n.getAttribute("title");
+                let o = /UP:(.+)/;
+                let a = o.exec(i)[1].trim();
+                t.push({
+                    title: r,
+                    username: a,
+                    dom: e,
+                    type: "VIDEO"
+                });
+            }));
+            return t;
+        }
+        function Qe(e) {
+            let n = e.querySelectorAll(".slider-small-item");
+            let t = [];
+            n.forEach((e => {
+                let n = e.querySelector(".slider-title").firstChild;
+                let r = n.innerText;
+                let i = n.nextElementSibling.firstChild;
+                let o = i.innerText.substring(3).trim();
+                t.push({
+                    title: r,
+                    username: o,
+                    dom: e,
+                    type: "VIDEO"
+                });
+            }));
+            return t;
+        }
+        function Fe(e) {
+            let n = e.querySelectorAll("figure.video-item");
+            let t = [];
+            n.forEach((e => {
+                let n = e.querySelector("a[title]");
+                let r = n.innerText;
+                let i = n.getAttribute("title");
+                let o = /UP:(.+)/;
+                let a = o.exec(i)[1].trim();
+                t.push({
+                    title: r,
+                    username: a,
+                    dom: e,
+                    type: "VIDEO"
+                });
+            }));
+            return t;
+        }
+        function He(e) {
+            let n = e.querySelectorAll(".list-content-item");
+            let t = [];
+            n.forEach((e => {
+                let n = e.querySelector(".list-content-title");
+                let r = n.innerText;
+                let i = n.getAttribute("title");
+                let o = e.querySelector(".list-content-uplink");
+                let a = o.innerText.substring(3).trim();
+                t.push({
+                    title: r,
+                    username: a,
+                    dom: e,
+                    type: "VIDEO"
+                });
+            }));
+            return t;
+        }
+        function Ge(e) {
+            let n = e.querySelectorAll(".rank-list li");
+            let t = [];
+            n.forEach((e => {
+                let n = e.querySelector("b.title a");
+                let r = n.innerText;
+                let i = n.getAttribute("title");
+                let o = /UP:(.+)/;
+                let a = o.exec(i)[1].trim();
+                t.push({
+                    title: r,
+                    username: a,
+                    dom: e,
+                    type: "VIDEO"
+                });
+            }));
+            return t;
+        }
+        function Ve(e) {
+            let n = e.querySelector(".article-tab");
+            if (null == n) return [];
+            let t = n.querySelectorAll("li[data-atomid]");
+            let r = [];
+            t.forEach((e => {
+                var n, t;
+                var i;
+                let o = e.querySelector(".main-content-block");
+                if (null != o) i = o.querySelector("p.block-title"); else i = e.querySelector("a.main-content-item");
+                t = i.innerText;
+                let a = i.getAttribute("title");
+                let l = /UP:(.+)/;
+                n = l.exec(a)[1].trim();
+                r.push({
+                    title: t,
+                    username: n,
+                    dom: e,
+                    type: "ARTICLE"
+                });
+            }));
+            return r;
+        }
+        function Xe(e) {
+            let n = e.querySelectorAll(".article-item");
+            let t = [];
+            n.forEach((e => {
+                let n = e.querySelector("a[title]");
+                let r = n.innerText;
+                let i = e.querySelector("span.up a");
+                let o = i.innerText.substring(3).trim();
+                t.push({
+                    title: r,
+                    username: o,
+                    dom: e,
+                    type: "ARTICLE"
+                });
+            }));
+            return t;
+        }
+        function Ke(e) {
+            function n(e) {
+                M.loadBanList(e);
+            }
+            function t(e) {
+                M.loadKeywords(e);
+            }
+            function r(e, n) {
+                let t = [ qe, Ne, Ye, Ue, Re, Ve, ke ];
+                let r = [ Fe, He, Ge, Qe ];
+                let i = [ Xe ];
+                let o = [];
+                if ("HOME" === e) o = t; else if ("VIDEO_HOME" === e) o = r; else if ("ARTICLE_HOME" === e) o = i;
+                let a = [];
+                o.forEach((e => {
+                    let t = e(n);
+                    a = a.concat(t);
+                }));
+                return a;
+            }
+            function i(n) {
+                if ("undefined" === typeof n || null == n) n = unsafeWindow.document;
+                let t = r(e, n);
+                a(t);
+                F.emit("FILTER_PAGE_CONTENTS", t);
+            }
+            function o() {
+                let e = new MutationObserver((function(e) {
+                    e.forEach((function(e) {
+                        let n = e.target;
+                        if ("DIV" === n.tagName) setTimeout((() => {
+                            i(n);
+                        }), 500);
+                    }));
+                }));
+                e.observe(unsafeWindow.document, {
+                    subtree: true,
+                    childList: true
+                });
+            }
+            function a(e) {
+                e.forEach((e => {
+                    if (!("contentData" in e.dom)) {
+                        e.dom["contentData"] = e;
+                        Se.attachBanButton(e.dom);
+                    }
+                }));
+            }
+            function l() {
+                F.on("UP_BAN_UPDATE", (() => {
+                    i();
+                }));
+                F.on("KEYWORD_BAN_UPDATE", (() => {
+                    i();
+                }));
+            }
+            o();
+            l();
+            setTimeout(i, 2e3);
+        }
+        var je = '<div class="tagging-ui-container smooth-remove"> <div class="tagging-close-button very-smooth">×</div> <div class="tagging-ui-inner"> <div class="name-to-tag">XXX的标签</div> <div class="tagging-input-wrap"> <input placeholder="...多个标签用空格分开,最多10字" maxlength="10" class="tagging-input"> <button class="tagging-submit very-smooth">添加</button> </div> <div class="tags-container"> </div> </div> </div>';
+        const Ze = je;
+        function ze(e) {
+            let n = unsafeWindow.document;
+            let t = n.createElement("div");
+            t.classList.add("user-tag");
+            let r = n.createElement("div");
+            r.classList.add("user-tag-text");
+            r.innerText = e;
+            t.appendChild(r);
+            return t;
+        }
+        function Je() {
+            let e = unsafeWindow.document;
+            let n = e.createElement("div");
+            n.innerText = "＋标签";
+            n.classList.add("add-new-tag");
+            n.classList.add("very-smooth");
+            return n;
+        }
+        function _e(e, n) {
+            let t = ze(n);
+            e.appendChild(t);
+        }
+        function $e(e, n) {}
+        function en(e) {
+            let n = unsafeWindow.document;
+            let r = t.g["taggingUI"].querySelector(".tags-container");
+            r.innerHTML = "";
+            M.getTags(e, (t => {
+                t.forEach((t => {
+                    let i = n.createElement("span");
+                    i.classList.add("tag-item");
+                    i.innerText = t;
+                    i.onclick = () => {
+                        un(e, t, (() => {
+                            F.emit("TAGS_UPDATE", e);
+                            en(e);
+                        }));
+                    };
+                    r.append(i);
+                }));
+            }));
+        }
+        function nn(e) {
+            let n = t.g["taggingUI"];
+            n.classList.remove("smooth-remove");
+            n.querySelector(".name-to-tag").innerText = "[" + e + "]的标签";
+            let r = t.g["taggingUI"].querySelector(".tags-container");
+            while (r.firstChild) r.firstChild.remove();
+            en(e);
+            n.querySelector(".tagging-submit").onclick = () => {
+                let t = n.querySelector(".tagging-input");
+                let r = t.value.trim();
+                t.value = "";
+                if (r.length > 0) dn(e, r, (() => {
+                    F.emit("TAGS_UPDATE", e);
+                    en(e);
+                }));
+            };
+        }
+        function tn(e, n) {
+            let t = unsafeWindow.document;
+            let r = t.createElement("div");
+            r.classList.add("user-tags");
+            let i = Je();
+            M.getTags(e, (t => {
+                t.forEach((e => {
+                    let n = ze(e);
+                    r.appendChild(n);
+                }));
+                n.insertAdjacentElement("afterend", r);
+                i.addEventListener("click", (() => {
+                    nn(e);
+                }));
+                r.appendChild(i);
+            }));
+        }
+        function rn(e, n) {
+            let t = n.parentElement.querySelector(".user-tags");
+            t.querySelectorAll(".user-tag").forEach((e => {
+                e.remove();
+            }));
+            let r = t.querySelector(".add-new-tag");
+            M.getTags(e, (e => {
+                e.forEach((e => {
+                    let n = ze(e);
+                    t.insertBefore(n, r);
+                }));
+            }));
+        }
+        function on(e) {
+            e.forEach((e => {
+                let n = e.nameAnchor;
+                if ("undefined" === typeof n["tagShown"]) {
+                    n["tagShown"] = true;
+                    tn(e.username, n);
+                } else rn(e.username, n);
+            }));
+        }
+        function an() {
+            let e = unsafeWindow.document;
+            let n = e.querySelector("a.up-name");
+            if (!n) n = e.querySelector("a.upname");
+            if (!n) W("UP name not found!");
+            let r = n.innerText;
+            n = n.nextSibling;
+            if (t.g["authorTagAdded"]) rn(r, n.parentElement); else tn(r, n.parentElement);
+            t.g["authorTagAdded"] = true;
+        }
+        function ln(e) {
+            on(e);
+            an();
+        }
+        function An() {
+            F.on("SHOW_COMMENT_TAGS", on);
+            F.on("REFRESH_TAGS", ln);
+        }
+        function cn() {
+            t.g["taggingUI"].classList.add("smooth-remove");
+        }
+        function sn() {
+            unsafeWindow.document.body.insertAdjacentHTML("beforeend", Ze);
+            let e = unsafeWindow.document.body.lastChild;
+            t.g["taggingUI"] = e;
+            let n = e.querySelector(".tagging-close-button");
+            n.addEventListener("click", cn);
+        }
+        function dn(e, n, t) {
+            M.addTagToUser(e, n, (() => {
+                if (t) t();
+            }));
+        }
+        function un(e, n, t) {
+            M.removeTagForUser(e, n, (() => {
+                F.emit("REMOVE_TAG", [ e, n ]);
+                if (t) t();
+            }));
+        }
+        const fn = {
+            addTags(e, n, t) {
+                M.addTagToUser(e, n, (() => {
+                    F.emit("ADD_TAGS", [ e, n ]);
+                    if (t) t();
+                }));
+            },
+            addTag(e, n, t) {
+                dn(e, n, t);
+            },
+            delteTag(e, n, t) {
+                un(e, n, t);
+            },
+            getTags(e, n) {
+                M.getTags(e, n);
+            },
+            getAllTags(e) {
+                M.getAlltags(e);
+            },
+            init() {
+                sn();
+                An();
+                an();
+                t.g["taggedComments"] = {};
+            }
+        };
+        var pn = '<div class="deleted-comments-container remove"> <div class="deleted-comments-inner"> <div class="deleted-comments-title">被删除楼层<div class="hide-btn">隐藏未收录</div></div> <div class="deleted-comment-list"> </div> </div> </div>';
+        const mn = pn;
+        var gn = '<div class="comment-info"> <div class="comment-floor">35</div> <div class="comment-query-state">查询中……</div> <div class="comment-username remove"></div> </div> <div class="comment-content remove"> <div class="comment-text">评论已删除</div> <div class="comment-time">2021-10-18 12:21:01</div> </div>';
+        const wn = gn;
+        var hn = function(e) {
+            var n = 0, t = 0;
+            do {
+                n += e.offsetTop || 0;
+                t += e.offsetLeft || 0;
+                e = e.offsetParent;
+            } while (e);
+            return {
+                top: n,
+                left: t
+            };
+        };
+        function vn() {
+            let e = new MutationObserver((function(e) {
+                e.forEach((function(e) {
+                    let n = e.target;
+                    if ("DIV" === n.tagName) setTimeout((() => {
+                        bn();
+                    }), 0);
+                }));
+            }));
+            e.observe(unsafeWindow.document, {
+                subtree: true,
+                childList: true
+            });
+        }
+        function bn() {
+            let e = unsafeWindow.document;
+            let n = e.querySelector("#main");
+            let t = n.querySelector(".ac-comment-list");
+            if (!t) return;
+            let r = t.getBoundingClientRect();
+            let i = hn(t);
+            let o = e.body.querySelector(".deleted-comments-container");
+            o.style.top = i.top + "px";
+            o.style.left = i.left + r.width + 30 + "px";
+            let a = Math.max(t.scrollHeight, t.offsetHeight);
+            o.style.height = `${a - 100}px`;
+        }
+        function xn(e) {
+            let n = !unsafeWindow["hideUnrecovered"];
+            unsafeWindow["hideUnrecovered"] = n;
+            if (n) e.querySelector(".deleted-comment-list").classList.add("remove"); else e.querySelector(".deleted-comment-list").classList.remove("remove");
+        }
+        function yn(e) {
+            let n = unsafeWindow.document;
+            let t = n.body.querySelector(".deleted-comments-container");
+            unsafeWindow["deletedCommentsUI"] = t;
+            t.classList.remove("remove");
+            e.deletedFloors.forEach((e => {
+                let r = n.createElement("DIV");
+                r.classList.add("deleted-comment");
+                r.insertAdjacentHTML("afterbegin", wn);
+                r.querySelector(".comment-floor").innerText = "#" + e;
+                r["floor"] = e;
+                t.querySelector(".deleted-comment-list").appendChild(r);
+            }));
+            let r = n.querySelector(".area.recommendation");
+            if (r) {
+                r.style.maxHeight = "800px";
+                r.style.overflowX = "hidden";
+                r.style.overflowY = "scroll";
+            }
+            t.querySelector(".hide-btn").addEventListener("click", (() => {
+                xn(t);
+            }));
+        }
+        function En(e) {
+            let n = unsafeWindow.document;
+            let t = n.body.querySelector(".deleted-comments-container");
+            let r = t.querySelectorAll(".deleted-comment");
+            r.forEach((n => {
+                if (n["floor"] === e.floor) {
+                    let t = n.querySelector(".comment-username");
+                    t.innerText = e.username;
+                    t.classList.remove("remove");
+                    n.querySelector(".comment-text").innerText = e.content;
+                    n.querySelector(".comment-query-state").classList.add("remove");
+                    let r = new Date(e.replyTime);
+                    n.querySelector(".comment-time").innerText = r.toLocaleString();
+                    n.querySelector(".comment-content").classList.remove("remove");
                 }
-            })
-        })
-    }
-
-    // function cloudSend2(msg) {
-    //
-    //     let im = unsafeWindow.ImSdk;
-    //     let instance = im.instance;
-    //     let session = instance.kernel.openSession(0, cloudServer);
-    //     console.log("cloud send", msg);
-    //
-    //     function sendChunks(chunks, i) {
-    //         let m = (i + 1) + "/" + chunks.length + " " + chunks[i];
-    //         console.log("send chunk", chunks, m);
-    //         instance.sendMessage(cloudServer, m, () => {
-    //             console.log("Cloud info chunk ", i, "sent");
-    //             if (i < chunks.length - 1) {
-    //                 sendChunks(chunks, i + 1);
-    //             } else {
-    //                 console.log("All info sent");
-    //                 emitMsg("global::success","ACFUN屏蔽系统：上传屏蔽设置成功！")
-    //             }
-    //         });
-    //     }
-    //
-    //     let chunks = msgChunker(msg);
-    //     console.log("schunk", chunks);
-    //     sendChunks(chunks, 0);
-    // }
-
-    function cloudSend(msg, showinfo) {
-        let evalstr = `
-(function(){
-function msgChunker(msg){
-let chunks = msg.match(/.{1,950}/g);
-return chunks;
-}
-
-let showinfo = ` + showinfo + `;
-let msg = '` + msg + `';
-let im = ImSdk;
-let instance = im.instance;
-let cloudServer = ` + cloudServer + `;
-let session = instance.kernel.openSession(0, cloudServer);
-//console.log("cloud send", msg)
-
-function sendChunks(chunks, i){
-let m = (i+1)+"/"+chunks.length+" "+ chunks[i];
-//console.log("send chunk",chunks, m);
-instance.sendMessage(cloudServer, m, ()=>{
-//console.log("Cloud info chunk ", i, "sent")
-if (i<chunks.length-1){
-setTimeout(
-()=>{sendChunks(chunks,i+1);}
-, 200)
-}else{
-console.log("All info sent");
-if (showinfo) emitMsg("global::success","Acfun屏蔽设置同步完毕！")
-}
-});
-}
-
-let chunks = msgChunker(msg);
-//console.log("schunk",chunks);
-sendChunks(chunks,0);
-})()`;
-        //console.log(evalstr);
-        unsafeWindow.eval(evalstr);
-    }
-
-    function deleteOldCloudSaves(msgIds) {
-        function del(list, i) {
-
+            }));
         }
-    }
-
-    //获得最新的云备份
-    function cloudGet(callback) {
-        let im = unsafeWindow.ImSdk;
-        let instance = im.instance;
-        let id = "0_" + cloudServer;
-        //console.log(id, instance.chatMap);
-        let sess = instance.kernel.openSession(0, cloudServer);
-
-        let msgs = instance.kernel.getMessages(sess);
-        //console.log("msgs", msgs);
-
-        if (typeof msgs === "undefined" || msgs.length === 0) {
-            callback(null);
-            return
+        function Cn(e) {
+            let n = unsafeWindow.document;
+            let t = n.body.querySelector(".deleted-comments-container");
+            let r = t.querySelectorAll(".deleted-comment");
+            r.forEach((n => {
+                if (n["floor"] === e) n.querySelector(".comment-query-state").innerText = "服务器未收录";
+            }));
         }
-        let lastmsg = msgs[msgs.length - 1].text;
-        //console.log(lastmsg);
-
-        try {
-            let info = lastmsg.split(" ");
-            let chunkinfo = info[0].split("/");
-            let chunksize = chunkinfo[1];
-            let texts = [];
-
-            if (chunksize) {
-                chunksize = parseInt(chunksize);
-                for (let i = 0; i < chunksize; i++) {
-                    let m = msgs[msgs.length - i - 1].text;
-                    let minfo = m.split(" ");
-                    let mchunkinfo = minfo[0].split("/");
-                    let chunk_i = parseInt(mchunkinfo[0]) - 1;
-                    texts[chunk_i] = minfo.slice(1).join(" ");
-
+        function Tn() {
+            F.on("SHOW_DELETED_COMMENT_UI", (e => {
+                yn(e);
+            }));
+            F.on("FLOOR_RECOVER", (e => {
+                En(e);
+            }));
+            F.on("NO_SERVER_CACHE", (e => {
+                Cn(e);
+            }));
+        }
+        function Dn() {
+            let e = unsafeWindow.document;
+            e.body.insertAdjacentHTML("beforeend", mn);
+            unsafeWindow.onresize = bn;
+            bn();
+            vn();
+        }
+        const In = {
+            init() {
+                Dn();
+                Tn();
+            }
+        };
+        const Bn = 1e3;
+        const Ln = 60 * Bn;
+        const Mn = 60 * Ln;
+        const Wn = 24 * Mn;
+        let On = 1 * Mn;
+        function Pn(e, n, t) {
+            M.saveCommentCache(e, n, (e => {
+                t(e);
+                F.emit("COMMENT_CACHE_UPDATE", n);
+            }));
+        }
+        function Sn(e, n) {
+            let t = new unsafeWindow.XMLHttpRequest;
+            t.open("GET", e, true);
+            t.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            t.onload = function() {
+                try {
+                    let e = JSON.parse(this.responseText);
+                    if (n) n(e);
+                } catch (e) {
+                    console.error(e);
+                    if (n) n(null);
                 }
-            }
-            let text = texts.join("");
-            //console.log("msgtext", text);
-            callback(text);
-
-        } catch (e) {
-            console.error(e);
-            callback(null)
+            };
+            t.send();
         }
-    }
-
-    let trySyncCount = 0;
-
-    function tryCloudSync(showinfo) {
-        trySyncCount++;
-        if (trySyncCount > 30) return;
-        let im = unsafeWindow.ImSdk;
-        if (typeof im === "undefined" || typeof im.instance === "undefined" || im.instance == null || !im.instance.connected || typeof im.instance.kernel.cache === "undefined") {
-            console.log("载入信息。。");
-            setTimeout(() => {
-                tryCloudSync(showinfo);
-            }, 1000);
-        } else {
-            setTimeout(() => {
-                cloudCheck(showinfo)
-            }, 100);
-        }
-    }
-
-
-    function initLoad() {
-
-
-        //$.info = unsafeWindow.$.info;
-
-        //console.log("Loaded info ", $.info);
-
-        function isArtileListPage() {
-            if (window.location.href.indexOf("www.acfun.cn/v/as") > 0) return true;
-
-            let t = ["list63", "list110", "list73", "list164", "list184", "list74", "list75"];
-            let url = window.location.href;
-            for (let i = 0; i < t.length; i++) {
-                if (url.indexOf(t[i]) >= 0) return true;
-            }
-            return false;
-        }
-
-        function isVideoHome() {
-            let list2 = [["67","TV动画"],["180","剧场动画"],["120","国产动画"],["106","动画综合"],["190","短片动画"],["107","MAD·AMV"],["108","MMD·3D"],["207","虚拟偶像"],["159","动画资讯"],["133","COSPLAY·声优"],["99","布袋·特摄"],["206","搞笑"],["87","鬼畜调教"],["188","娱乐圈"],["86","生活日常"],["88","萌宠"],["89","美食"],["204","旅行"],["127","手工·绘画"],["205","美妆·造型"],["136","原创·翻唱"],["137","演奏·乐器"],["103","Vocaloid"],["139","综合音乐·现场"],["185","音乐选集"],["134","宅舞"],["135","综合舞蹈"],["129","偶像"],["84","主机单机"],["186","网络游戏"],["145","电子竞技"],["85","英雄联盟"],["187","手机游戏"],["165","桌游卡牌"],["72","Mugen"],["90","科技制造"],["189","人文科普"],["122","汽车"],["91","数码"],["151","演讲·公开课"],["149","广告"],["192","预告·花絮"],["193","电影杂谈"],["194","剧透社"],["195","综艺Show"],["196","纪实·短片"],["152","综合体育"],["94","足球"],["95","篮球"],["153","搏击健身"],["93","极限竞速"],["183","普法安全"],["92","国防军事"],["131","历史"],["132","新鲜事·正能量"],["201","本区推荐"],["86","生活日常"],["88","萌宠"],["89","美食"],["204","旅行"],["127","手工·绘画"],["205","美妆·造型"]]
-            let t = ["list155", "list1", "list58", "list123", "list59", "list60", "list70", "list68", "list69", "list125"];
-            let url = window.location.href;
-            for (let i = 0; i < list2.length; i++) {
-                if (url.indexOf("list"+list2[i][0]) >= 0) return true;
-            }
-
-            for (let i = 0; i < t.length; i++) {
-                if (url.indexOf(t[i]) >= 0) return true;
-            }
-            return false;
-        }
-
-        if (typeof $ === "undefined" && typeof unsafeWindow.$ === "undefined"  /*|| typeof unsafeWindow.A == "undefined" */) {
-            console.log("Loading..", $, unsafeWindow.$);
-            //$ = unsafeWindow.$;
-            setTimeout(initLoad, 1000);
-            return;
-        }
-
-        console.log("DEBUG body Loaded");
-        if (window.location.href === "http://www.acfun.cn/" || window.location.href === "https://www.acfun.cn/") {
-            pageType = "home";
-            initButton();
-            addUI();
-            attachBlockButton();
-            HandleHomePage();
-
-        }
-        if (window.location.href.indexOf("www.acfun.cn/v/list") >= 0 || window.location.href.indexOf("www.acfun.cn/v/as") > 0) {
-            //可能是文章列表
-            if (isArtileListPage()) {
-                pageType = "list";
-                initButton();
-                addUI();
-                HandleListPage();
-            } else if (isVideoHome()) {
-                pageType = "home";
-                initButton();
-                addUI();
-                attachBlockButton();
-                HandleHomePage();
+        function qn() {
+            let e = r();
+            let n = null;
+            if ("VIDEO" === e) {
+                let e = unsafeWindow.videoInfo;
+                n = e["dougaId"];
             } else {
-                pageType = "list";
-                initButton();
-                addUI();
-                HandleListPage();
+                let e = unsafeWindow.articleInfo;
+                n = e["articleId"];
             }
-
+            return n;
         }
-        //降低存在感
-        //emitMsg("global::success","屏蔽启动！")
-
-    }
-
-    function initLoadPart2() {
-
-        if (typeof $ === "undefined" && typeof unsafeWindow.$ === "undefined") {
-            console.log("Loading.. Part 2");
-            setTimeout(initLoadPart2, 1000);
-            return;
+        function Un(e, n, t, r) {
+            let i = `https://www.acfun.cn/rest/pc-direct/comment/listByFloor?sourceId=${e}&sourceType=3&page=${n}&pivotCommentId=0&newPivotCommentId=0&t=1638284078529&supportZtEmot=true`;
+            Sn(i, (i => {
+                if (i) {
+                    let o = i.commentIds;
+                    o.forEach((e => {
+                        e = "c" + e;
+                        let n = i.commentsMap[e];
+                        if (n.isDelete) return;
+                        let t = {
+                            username: n.userName,
+                            content: n.content,
+                            replyTime: n.timestamp,
+                            cId: n.cid,
+                            floor: n.floor
+                        };
+                        r[parseInt(n.floor)] = t;
+                    }));
+                    r["totalCount"] = i.totalCount;
+                    let a = i.totalPage;
+                    if (n < a) setTimeout((() => {
+                        Un(e, n + 1, t, r);
+                    }), 500); else t(r);
+                }
+            }));
         }
-
-        if (window.location.href.indexOf("www.acfun.cn/v/ac") >= 0 || window.location.href.indexOf("www.acfun.cn/a/ac") >= 0) {
-            HandleArticlePage();
-            pageType = "article";
-            addUI();
+        function kn(e, n) {
+            let t = 1;
+            let r = `https://www.acfun.cn/rest/pc-direct/comment/listByFloor?sourceId=${e}&sourceType=3&page=${t}&pivotCommentId=0&newPivotCommentId=0&t=1638284078529&supportZtEmot=true`;
+            Sn(r, (e => {
+                if (e) {
+                    let t = "c" + e.commentIds[0];
+                    let r = e.commentsMap[t];
+                    let i = e.totalCount;
+                    n(r, i);
+                }
+            }));
         }
-    }
-
-    initLoad();
-    initLoadPart2();
-}
-
-injectStyles(`
-div.panel-background-color{
-    background-color: rgb(255, 241, 242);
-}
-
-div.ctabs{
-    position:relative;
-    height: 28px;
-    /* border-bottom: solid white 1px; */
-    font-size: 13px
-}
-a.ctab{
-    white-space:nowrap;
-    user-select:none;
-    padding: 1px;
-    margin: 1px 1px 0px 1px;
-    position:relative;
-    display: inline-block;
-    width: 50px;
-    height: 25px;
-    font-size: 15px;
-    z-index: 9999;
-    background-color: #f0b0b0;
-    color: #4f2e10;
-    border-style:solid;
-    border-color: white;
-    text-align:center;
-}
-a.ctab-focus{
-    background-color: #ececec;
-    transform: translate(0, 3px);
-}
-
-
-`);
-injectStyles(`
-.blockname{
-    font-size:13px;
-    display:inline-block;
-    margin:2px;
-    height:18px;
-    background-color:white;
-}
-.blockdel{
-    width:18px;
-    height:18px;
-    line-height:18px;
-    padding: 2px;
-    background-color: rgb(255,120,120);
-    border-width:0;
-    font-size:15px;
-    margin-left: 4px;
-}
-`);
-
-injectStyles(`
-button.disabled{
-    cursor: not-allowed;
-    pointer-events: none;
-    /*Button disabled - CSS color class*/
-    color: #c0c0c0;
-    background-color: #ffffff;
-}`);
-
-injectStyles(`
-        .filter-button{
-           width: 15px;
-           height: 15px;
-           background-color: rgba(255,0,0,1);
-           padding: 1.5px;
-           left :0;
-           top:0;
-           transform: translate(0,0);
-           display: none;
-           position: absolute;
-           z-index: 99999;
-           background-size: contain;
-           background-image: url(data:image/png;base64,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);
-           border-radius: 11px;
-           border: 2px rgb(230,230,230) solid;
-           cursor: pointer;
+        function Nn(e, n) {
+            W(`采集评论，投稿id=${e}`);
+            function t(t) {
+                let r = {
+                    id: e,
+                    floors: t,
+                    deletedFloors: [],
+                    recoveredFloors: [],
+                    lastReplyTime: 0,
+                    lastCheckTime: +new Date,
+                    createTime: 0,
+                    floorCount: 0,
+                    reportedRecovery: [],
+                    queriedFloors: []
+                };
+                let i = 0;
+                Object.keys(r.floors).forEach((e => {
+                    let n = r.floors[e].floor;
+                    if (n > i) i = n;
+                }));
+                r.floorCount = t["totalCount"];
+                W(`已采集本投稿评论至${i}楼。`);
+                for (let e = 1; e <= i; e++) if (!(e in t)) r.deletedFloors.push(e); else {
+                    let n = t[e].replyTime;
+                    if (n > r.lastReplyTime) r.lastReplyTime = n;
+                }
+                n(r);
+            }
+            Un(e, 1, t, {});
         }
-        `);
-
-core();
+        function Rn(e) {
+            let n = {
+                id: e.id,
+                recoveredFloors: [],
+                floors: {}
+            };
+            let t = 0;
+            e.recoveredFloors.forEach((r => {
+                r = parseInt(r);
+                if (e.reportedRecovery.indexOf(r) < 0) {
+                    n.recoveredFloors.push(r);
+                    let i = e.floors[r];
+                    let o = {
+                        username: i.username,
+                        replyTime: i.replyTime,
+                        floor: parseInt(i.floor),
+                        cId: parseInt(i.cId),
+                        content: i.content
+                    };
+                    n.floors[r] = o;
+                    t++;
+                }
+            }));
+            let r = {
+                query: "report_cache",
+                cache: n
+            };
+            if (t > 0) k.apiRequest(r, (n => {
+                e.reportedRecovery = e.recoveredFloors.map((e => e));
+                Pn(e.id, e);
+            }));
+        }
+        function Yn(e, n, t) {
+            Nn(e, (r => {
+                let i = Object.keys(r.floors).map((e => parseInt(e)));
+                let o = Math.max(...i);
+                for (let e = 1; e <= o; e++) if (e in r.floors && e in n.floors) ; else if (e in r.floors && !(e in n.floors)) ; else if (!(e in r.floors) && e in n.floors) {
+                    r.floors[e] = n.floors[e];
+                    r.recoveredFloors.push(e);
+                }
+                if (!n.reportedRecovery) n.reportedRecovery = [];
+                r.reportedRecovery = n.reportedRecovery.map((e => e));
+                let a = r.deletedFloors.length;
+                let l = r.recoveredFloors.length;
+                Pn(e, r, (() => {
+                    W(r.lastReplyTime);
+                    W(`投稿${e}重新缓存完成。${a}个被删除，${l}个被恢复`);
+                    t(r);
+                    Rn(r);
+                }));
+            }));
+        }
+        function Qn(e, n) {
+            M.getLocalCommentCache(e, (t => {
+                if (!t) Nn(e, (t => {
+                    Pn(e, t, (() => {
+                        W("首次收集投稿" + e + `评论完成。发现${t.deletedFloors.length}个评论被删除。`);
+                        n(t);
+                    }));
+                })); else {
+                    W("对比评论缓存是否需要更新。");
+                    kn(e, ((r, i) => {
+                        let o = parseInt(r.timestamp);
+                        let a = parseInt(t.lastReplyTime);
+                        if (o !== a || t.floorCount !== i) {
+                            W(e + " 投稿缓存需要更新");
+                            Yn(e, t, n);
+                        } else {
+                            W("已经缓存到最新评论了。");
+                            n(t);
+                        }
+                    }));
+                }
+            }));
+        }
+        function Fn(e) {
+            if (!e) e = () => 0;
+            let n = qn();
+            Qn(n, e);
+        }
+        function Hn(e) {
+            F.emit("SHOW_DELETED_COMMENT_UI", e);
+        }
+        function Gn(e, n) {
+            W(`本地可恢复楼层：${e.recoveredFloors.join(" ")}`);
+            e.recoveredFloors.forEach((n => {
+                let t = e.floors[n];
+                F.emit("FLOOR_RECOVER", t);
+            }));
+            n();
+        }
+        function Vn(e, n) {
+            if (0 === e.cached.length) {
+                W("服务器没有其他缓存，已同步服务器缓存");
+                return;
+            }
+            e.cached.forEach((e => {
+                if (n.recoveredFloors.indexOf(e.floor) < 0) {
+                    n.floors[e.floor] = e;
+                    n.recoveredFloors.push(e.floor);
+                    n.reportedRecovery.push(e.floor);
+                }
+            }));
+            Pn(n.id, n, (() => {
+                W("已从服务器更新本投稿缓存。");
+            }));
+        }
+        function Xn(e) {
+            let n = {
+                query: "query_floors",
+                id: e.id,
+                floors: e.deletedFloors.filter((n => e.recoveredFloors.indexOf(n) < 0))
+            };
+            if (n.floors.length > 0) {
+                W("向服务器发出恢复评论的请求");
+                k.apiRequest(n, (t => {
+                    let r = [];
+                    t.cached.forEach((e => {
+                        F.emit("FLOOR_RECOVER", e);
+                        r.push(e.floor);
+                    }));
+                    n.floors.forEach((e => {
+                        if (r.indexOf(e) < 0) F.emit("NO_SERVER_CACHE", e);
+                    }));
+                    Vn(t, e);
+                }));
+            }
+        }
+        function Kn(e) {
+            Gn(e, (() => {
+                Xn(e);
+            }));
+        }
+        function jn() {
+            M.getAllCacheIndices((e => {
+                let n = {
+                    query: "active_recover",
+                    ids: e
+                };
+                k.apiRequest(n, (e => {
+                    W(`收到服务器恢复需求。${e.result.length}个投稿需要本地数据`, e);
+                    let n = e.result;
+                    let t = 0;
+                    let r = 0;
+                    n.forEach(((e, i) => {
+                        M.getLocalCommentCache(e._id, (o => {
+                            let a = {
+                                id: o.id,
+                                recoveredFloors: [],
+                                floors: {}
+                            };
+                            let l = 0;
+                            e.floors.forEach((e => {
+                                if (e in o.floors) {
+                                    l++;
+                                    let n = o.floors[e];
+                                    let t = {
+                                        username: n.username,
+                                        replyTime: n.replyTime,
+                                        floor: parseInt(n.floor),
+                                        cId: parseInt(n.cId),
+                                        content: n.content
+                                    };
+                                    a.recoveredFloors.push(e);
+                                    a.floors[e] = t;
+                                }
+                            }));
+                            let A = {
+                                query: "report_cache",
+                                cache: a
+                            };
+                            if (l > 0) {
+                                W("主动恢复评论数据", a);
+                                k.apiRequest(A, (e => {
+                                    W("恢复结果", e);
+                                    o.reportedRecovery = o.recoveredFloors.map((e => e));
+                                    Pn(o.id, o);
+                                }));
+                                t++;
+                                r += l;
+                            }
+                            if (i === n.length - 1) W(`帮助服务器恢复共${t}个投稿和${r}个评论。`);
+                        }));
+                    }));
+                }));
+            }));
+        }
+        function Zn() {
+            W("主动帮助");
+            let e = +new Date;
+            M.getActiveHelpTime((n => {
+                if (e - On > n) {
+                    let t = Math.round((e - n) / 1e3);
+                    W(`距离上次主动帮助已经${t}秒了`);
+                    jn();
+                    M.setActiveHelpTime(e);
+                } else W(`距离上次主动帮助还未足够。`);
+            }));
+        }
+        function zn(e) {
+            M.deleteCommentCache(e, (() => {
+                W(`删除缓存成功，id=${e}`);
+            }));
+        }
+        function Jn() {
+            M.getAllCacheIndices((e => {
+                e.forEach((e => {
+                    zn(e);
+                }));
+            }));
+        }
+        const _n = {
+            init() {
+                In.init();
+                let e = r();
+                if (!("VIDEO" === e || "ARTICLE" === e)) return;
+                unsafeWindow["deleteCache"] = M.deleteCommentCache;
+                unsafeWindow["clearCache"] = Jn;
+                Fn((e => {
+                    setTimeout((() => {
+                        Hn(e);
+                        Kn(e);
+                    }), 1e3);
+                }));
+                Zn();
+            }
+        };
+        function $n(e) {
+            let n = [];
+            let t = e.querySelectorAll(".fc-comment-item");
+            t.forEach((e => {
+                let t = e.querySelector("a.name");
+                let r = t.innerText;
+                let i = e.querySelector("a.btn-report");
+                if (null !== i) n.push({
+                    username: r,
+                    nameAnchor: t.parentNode,
+                    banButtonAnchor: i,
+                    dom: e
+                });
+            }));
+            return n;
+        }
+        function et(e) {
+            let n = [];
+            let t = e.querySelectorAll(".area-comment-first");
+            t.forEach((e => {
+                let t = e.querySelector("a.name");
+                let r = t.innerText;
+                let i = e.querySelector("a.area-comment-reply");
+                if (null !== i) n.push({
+                    username: r,
+                    nameAnchor: t,
+                    banButtonAnchor: i,
+                    dom: e
+                });
+            }));
+            return n;
+        }
+        function nt(e) {
+            let n = "NEW" === k.getCommentType() ? et(e) : $n(e);
+            return n;
+        }
+        function tt() {
+            function e() {
+                F.on("TAGS_UPDATE", (e => {
+                    let t = n(unsafeWindow.document);
+                    t = t.filter((n => n.username === e));
+                    F.emit("REFRESH_TAGS", t);
+                }));
+                F.on("REPLY_BAN_UPDATE", (() => {
+                    r();
+                }));
+            }
+            function n(e) {
+                return nt(e);
+            }
+            function t(e) {
+                e.forEach((e => {
+                    if (!e.dom.hasOwnProperty("commentData")) {
+                        Se.attachBanCommentButton(e);
+                        e.dom["commentData"] = e;
+                    }
+                }));
+            }
+            function r() {
+                let e = n(unsafeWindow.document);
+                F.emit("FILTER_COMMENTS", e);
+            }
+            function i() {
+                let e = new MutationObserver((function(e) {
+                    e.forEach((function(e) {
+                        if ("childList" === e.type) {
+                            let r = e.addedNodes;
+                            r.forEach((e => {
+                                if ("DIV" === e.tagName && (e.classList.contains("fc-comment-list") || e.classList.contains("ac-comment-hot-list") || e.classList.contains("ac-comment-root-list") || e.hasChildNodes() && "undefined" !== typeof e.firstChild.classList && (e.firstChild.classList.contains("area-comment-top") || e.firstChild.classList.contains("area-comment-sec")))) {
+                                    let r = n(e);
+                                    F.emit("SHOW_COMMENT_TAGS", r);
+                                    t(r);
+                                    F.emit("FILTER_COMMENTS", r);
+                                    setTimeout((() => {}), 0);
+                                }
+                            }));
+                        }
+                    }));
+                }));
+                e.observe(unsafeWindow.document, {
+                    subtree: true,
+                    childList: true
+                });
+            }
+            e();
+            i();
+            fn.init();
+            _n.init();
+        }
+        function rt(e) {
+            Ke(e);
+        }
+        function it() {
+            tt();
+        }
+        function ot(e) {
+            if ("HOME" === e || "VIDEO_HOME" === e || "ARTICLE_HOME" === e) rt(e); else if ("VIDEO" === e || "ARTICLE" === e) it();
+        }
+        const at = 16731600;
+        let lt = 0;
+        function At(e) {
+            let n = unsafeWindow.ImSdk;
+            let t = n.instance;
+            let r = "0_" + at;
+            let i = t.kernel.openSession(0, at);
+            i.then((n => {
+                let t = n.cachedSession.messages;
+                if ("undefined" === typeof t || 0 === t.length) {
+                    e(null);
+                    return;
+                }
+                let r = t[t.length - 1].title;
+                try {
+                    let n = r.split(" ");
+                    let i = n[0].split("/");
+                    let o = i[1];
+                    let a = [];
+                    if (o) {
+                        o = parseInt(o);
+                        for (let e = 0; e < o; e++) {
+                            let n = t[t.length - e - 1].title;
+                            let r = n.split(" ");
+                            let i = r[0].split("/");
+                            let o = parseInt(i[0]) - 1;
+                            a[o] = r.slice(1).join(" ");
+                        }
+                    }
+                    let l = a.join("");
+                    e(l);
+                } catch (n) {
+                    console.error(n);
+                    e(null);
+                }
+            }));
+        }
+        function ct(e) {
+            if (!"trySyncCount" in unsafeWindow) unsafeWindow["trySyncCount"] = 0;
+            unsafeWindow["trySyncCount"]++;
+            if (unsafeWindow["trySyncCount"] > 30) return;
+            let n = unsafeWindow.ImSdk;
+            let t = false;
+            try {
+                let e = "undefined" === typeof n || "undefined" === typeof n.instance || null == n.instance || !n.instance.connected || "undefined" === typeof n.instance.kernel.cache;
+                t = e;
+            } catch (e) {
+                t = true;
+            }
+            if (t) {
+                W("载入信息。。");
+                setTimeout((() => {
+                    ct(e);
+                }), 1e3);
+            } else setTimeout((() => {
+                ut(e);
+            }), 0);
+        }
+        function st(e) {
+            function n(e) {
+                return e.replace(/(\r\n|\n|\r)/gm, "").trim();
+            }
+            let t = decode(e.keywords);
+            let r = decode(e.ups);
+            let i = "undefined" == typeof e.repliers ? "" : decode(e.repliers);
+            let o = r.indexOf(" ") > 0 || t.indexOf(" ") > 0 ? " " : ",";
+            let a = t.split(o).map(n);
+            let l = r.split(o).map(n);
+            let A = i.split(o).map(n);
+            a = 1 === a.length && "" === a[0] ? [] : a;
+            l = 1 === l.length && "" === l[0] ? [] : l;
+            A = 1 === A.length && "" === A[0] ? [] : A;
+            M.updateBanList(l, (() => {
+                F.emit("UP_BAN_UPDATE", null);
+            }));
+            M.updateKeywords(a, (() => {
+                F.emit("KEYWORD_BAN_UPDATE", null);
+            }));
+            M.updateReplyBanList(A, (() => {
+                F.emit("REPLY_BAN_UPDATE", null);
+            }));
+            M.setUpdateTime(e.time, (() => {}));
+        }
+        let dt = null && 30 * 1e3;
+        function ut(e) {
+            M.getUpdateTime((e => {
+                lt = e;
+                At((n => {
+                    if (null === n) ; else {
+                        W(n);
+                        try {
+                            let t = JSON.parse(n);
+                            if ("undefined" === typeof t.version || parseFloat(t.version) < parseFloat(M.version)) {
+                                W("旧版同步信息发现，重新同步");
+                                st(t);
+                            } else if (parseFloat(t.version) > parseFloat(M.version)) W("同步失败：你已经在其他地方使用过更新的版本了。请更新当前屏蔽插件，最新版本：" + t.version); else {
+                                t.time = parseInt(decode(t.time));
+                                let n = t.time;
+                                if (n > e || M.version !== t.version) {
+                                    W("Update list");
+                                    st(t);
+                                } else if (e > n) W("ImSdk is no longer available. Will try new cloud."); else W("Check done, no update needed", (e - n) / 1e3, t);
+                            }
+                        } catch (e) {}
+                    }
+                    M.setUsingNewCloud((() => {
+                        W("切换到新服务器。");
+                    }));
+                    setTimeout(ht, 5e3);
+                }));
+            }));
+        }
+        function ft() {
+            F.on("SYNC_TIME_UPDATE", (e => {
+                if (e && "number" === typeof e && e > 0) M.setUpdateTime(e, (() => {
+                    W("更新同步时间", e);
+                }));
+            }));
+            F.on("TAGS_UPDATE", (() => {
+                let e = Math.floor(+new Date / 1e3);
+                M.setUpdateTime(e, null);
+            }));
+            F.on("UP_BAN_UPDATE", (() => {
+                let e = Math.floor(+new Date / 1e3);
+                M.setUpdateTime(e, null);
+            }));
+            F.on("REPLY_BAN_UPDATE", (() => {
+                let e = Math.floor(+new Date / 1e3);
+                M.setUpdateTime(e, null);
+            }));
+            F.on("KEYWORD_BAN_UPDATE", (() => {
+                let e = Math.floor(+new Date / 1e3);
+                M.setUpdateTime(e, null);
+            }));
+        }
+        function pt(e, n) {
+            k.apiRequest(e, n);
+        }
+        function mt(e, n) {
+            let t = {
+                name: e,
+                query: "checktime"
+            };
+            pt(t, n);
+        }
+        function gt(e) {
+            W("syncFromServer");
+            pt({
+                name: e,
+                query: "sync"
+            }, (e => {
+                W("list from new Cloud", e);
+                if (e.success) {
+                    M.updateBanList(e.uplist);
+                    M.updateReplyBanList(e.replylist);
+                    M.updateKeywords(e.keywords);
+                    F.emit("SYNC_TIME_UPDATE", e.lastsync);
+                    F.emit("UP_BAN_UPDATE", null);
+                    F.emit("REPLY_BAN_UPDATE", null);
+                    F.emit("KEYWORD_BAN_UPDATE", null);
+                }
+            }));
+        }
+        let wt = e => {
+            W("成功", e);
+        };
+        function ht() {
+            W("检查新服务器");
+            M.getUsername((e => {
+                W("username=" + e);
+                mt(e, (n => {
+                    M.getUpdateTime((t => {
+                        if (n["synctime"] > 0 && t > 500 * n["synctime"]) t /= 1e3;
+                        if (n["synctime"] > t) gt(e); else if (n["synctime"] < t) vt((e => {
+                            console.log("response", e);
+                            if (e.success) {
+                                W("同步成功");
+                                wt(e);
+                                F.emit("SYNC_TIME_UPDATE", e.synctime);
+                            }
+                        })); else {
+                            W("已经与服务器同步。");
+                            F.emit("SYNC_TIME_UPDATE", null);
+                        }
+                    }));
+                }));
+            }));
+        }
+        function vt(e) {
+            M.getUsername((n => {
+                M.loadBanList((t => {
+                    M.loadReplyBanList((r => {
+                        M.loadKeywords((i => {
+                            M.getAlltags((o => {
+                                console.log("username update = ", n);
+                                let a = {
+                                    name: n,
+                                    uplist: t,
+                                    replylist: r,
+                                    keywords: i,
+                                    userTags: o,
+                                    query: "update"
+                                };
+                                pt(a, e);
+                            }));
+                        }));
+                    }));
+                }));
+            }));
+        }
+        function bt() {
+            W("检查同步状态");
+            M.isUsingNewCloud((e => {
+                W("是否已经使用新服务器", e);
+                if (!e) {
+                    W("并未使用新服务器");
+                    M.getUpdateTime((e => {
+                        W("检查本地同步时间 time=", e);
+                        if (0 === e || isNaN(e)) {
+                            W("没有发现本地记录,首先检查旧服务");
+                            ct();
+                        } else {
+                            W("发现本地记录，未曾使用新服务器，尝试同步本地信息到新服务器");
+                            vt((e => {
+                                if (e.success) {
+                                    W("同步成功");
+                                    M.setUpdateTime(e.lastsync, wt);
+                                    F.emit("SYNC_TIME_UPDATE", e.lastsync);
+                                    M.setUsingNewCloud((() => {}));
+                                }
+                            }));
+                        }
+                    }));
+                } else {
+                    W("正常使用新服务器同步");
+                    ht();
+                }
+            }));
+        }
+        function xt() {
+            if ("undefined" === typeof unsafeWindow.user) {
+                setTimeout(xt, 1e3);
+                return;
+            }
+            if ("用户" === unsafeWindow.user.name) return;
+            bt();
+        }
+        const yt = {
+            init: () => {
+                ft();
+            },
+            SyncWithCloud: xt
+        };
+        function Et(e, n, t) {
+            let r = new Date;
+            r.setTime(r.getTime() + 24 * t * 60 * 60 * 1e3);
+            const i = "expires=" + r.toUTCString();
+            unsafeWindow.document.cookie = e + "=" + n + "; " + i + "; path=/";
+        }
+        let Ct = {};
+        Ct.x = function() {
+            if ("undefined" !== typeof XMLHttpRequest) return new XMLHttpRequest;
+            let e = [ "MSXML2.XmlHttp.6.0", "MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp" ];
+            let n;
+            for (let t = 0; t < e.length; t++) try {
+                n = new ActiveXObject(e[t]);
+                break;
+            } catch (e) {}
+            return n;
+        };
+        Ct.send = function(e, n, t, r, i, o) {
+            if ("undefined" == typeof o) o = true;
+            let a = Ct.x();
+            a.open(t, e, o);
+            a.onreadystatechange = function() {
+                if (4 === a.readyState) n(a.responseText);
+            };
+            if ("POST" === t) a.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            if ("undefined" !== typeof i) for (let e in i) a.setRequestHeader(e, i[e]);
+            a.send(r);
+        };
+        Ct.get = function(e, n, t, r, i) {
+            let o = [];
+            for (let e in n) o.push(encodeURIComponent(e) + "=" + encodeURIComponent(n[e]));
+            Ct.send(e + (o.length ? "?" + o.join("&") : ""), t, "GET", null, r, i);
+        };
+        Ct.post = function(e, n, t, r, i) {
+            let o = [];
+            for (let e in n) o.push(encodeURIComponent(e) + "=" + encodeURIComponent(n[e]));
+            Ct.send(e, t, "POST", o.join("&"), r, i);
+        };
+        function Tt() {
+            let e = unsafeWindow.document.cookie;
+            let n = /_did=(\w+);/;
+            let t = n.exec(e);
+            return t[1];
+        }
+        const Dt = {
+            getUDID: Tt,
+            feedBanana(e, n, t) {
+                let r = Tt();
+                if ("undefined" == typeof r) {
+                    W("未登陆，无法投蕉！");
+                    return;
+                }
+                let i = btoa(Math.random().toString(36).substr(2));
+                Et("stochastic", i, 1);
+                let o = {
+                    resourceId: parseInt(e),
+                    resourceType: t,
+                    count: n
+                };
+                let a = "https://www.acfun.cn/rest/pc-direct/banana/throwBanana";
+                Ct.post(a, o, (e => {
+                    console.log(e);
+                }), {
+                    udid: r
+                });
+            }
+        };
+        n()();
+        let It = r();
+        W(It);
+        Se.loadUI(It);
+        ot(It);
+        yt.init();
+        yt.SyncWithCloud();
+        unsafeWindow.sendBanana = Dt.feedBanana;
+        unsafeWindow.getUDID = Dt.getUDID;
+    })();
+})();

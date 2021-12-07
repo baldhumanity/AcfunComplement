@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Acfun屏蔽计划
 // @namespace    http://tampermonkey.net/
-// @version      2.011
+// @version      3.002
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
 // @match        http://www.acfun.cn/v/list63
@@ -16,21 +16,26 @@
 // @match        https://www.acfun.cn/v/as*
 // @match        http://www.acfun.cn/v/as*
 // @connect      greasyfork.org
-// @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM.getValue
 // @grant        GM.setValue
+// @grant        GM_deleteValue
+// @grant        GM.deleteValue
 // @grant        GM_xmlhttpRequest
 // @grant        GM.xmlHttpRequest
 // @grant        unsafeWindow
 // @run-at      document-idle
 // @description 帮助你屏蔽不想看的UP主
+// @license     MIT
 // ==/UserScript==
 
 
 //这只是个代码下载器，用来下载正式的代码，具体想了解代码的人可以自己去看看。
 (function(){
+
+
+    let dev = false;
 
     let empty = (a) => {
         return typeof a === "undefined" ? () => {
@@ -75,11 +80,17 @@
         let url1 =  "https://greasyfork.org/scripts/387296-acfun%E5%B1%8F%E8%94%BD%E8%AE%A1%E5%88%92-%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81/code/Acfun%E5%B1%8F%E8%94%BD%E8%AE%A1%E5%88%92-%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81.user.js";
         //备用开源地址
         let url2 =  "https://github.com/baldhumanity/AcfunComplement/raw/master/acfunBlock-opensource.user.js";
+        //debug url
+        let url3 = "http://localhost:8080/acfunhelper.build.js?time="+(+new Date());
+
+        let fallbackurl = dev ? url3 : url2;
+
         let fallback = ()=>{
             console.log("下载失败，启用备用链接");
             xhttp({
+                nocache:true,
                 method: "GET",
-                url:url2,
+                url:fallbackurl,
                 onload: function (response) {
                     let text = response.responseText;
                     callback(text);
@@ -91,10 +102,12 @@
 
         }
         xhttp({
+            nocache:true,
             method: "GET",
             url:url1,
             onload: function (response) {
                 let text = response.responseText;
+
                 callback(text);
             },
             onerror(evt) {
@@ -104,12 +117,17 @@
     }
 
     function getVersion(s){
-        if (s==null || s==="") return 0;
-        let p = /@version +(\d+\.\d+)/;
-        let arr = p.exec(s);
-        let latest = arr[1];
-        return parseFloat(latest);
+        try{
+            if (typeof s === "undefined" || s==null || s==="undefined" || s==="") return 0;
+            let p = /@version +(\d+\.\d+)/;
+            let arr = p.exec(s);
+            let latest = arr[1];
+            return parseFloat(latest);
+        }catch(e){
+            return 0;
+        }
     }
+
 
     function Initialise(){
         //Check if script is downloaded;
@@ -117,24 +135,29 @@
             let currentVersion = getVersion(s);
             console.log("Current Version = "+currentVersion);
             //如果已经有可用版本，先使用
-            if (currentVersion>0){
-                eval(s);
+            if (currentVersion>0 && !dev){
+                   var code = s;
+
+                   setTimeout(()=>{
+                                eval(code);
+                   })
             }
             //检查更新
             downloadScript(
                 (s)=>{
-                    if (s==null) {
+                    if (typeof s === "undefined" || s==null || s==="undefined") {
                         console.log("ACFUN屏蔽计划载入失败，请不要联系A站插件作者：人文情怀。")
                     }
                     let onlineVersion = getVersion(s);
                     console.log("online Version = "+onlineVersion);
                     //如果有更新
-                    if (onlineVersion> currentVersion){
+                    if (onlineVersion> currentVersion || dev){
                         //Update code
                         GM_set("ACFUN_BLOCK_CODE", s, ()=>{
                             //Updated, if this is the firsttime running:
-                            if (currentVersion==0){
+                            if (currentVersion==0 || dev){
                                 //如果没有可用版本，直接运行
+                                console.log("直接运行");
                                setTimeout(()=>{
                                 eval(s);
                               })
