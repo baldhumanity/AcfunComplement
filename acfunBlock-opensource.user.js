@@ -21,6 +21,8 @@
 // @grant        GM_setValue
 // @grant        GM.getValue
 // @grant        GM.setValue
+// @grant        GM_deleteValue
+// @grant        GM.deleteValue
 // @grant        GM_xmlhttpRequest
 // @grant        GM.xmlHttpRequest
 // @grant        unsafeWindow
@@ -34,7 +36,6 @@ if (typeof module !=="undefined" && module !== null) {
         console.log("AcFun 网页端辅助启动中。。。")
     }
 }
-/*! For license information please see acfunhelper.js.LICENSE.txt */
 (() => {
     var e = {
         565: (e, n, t) => {
