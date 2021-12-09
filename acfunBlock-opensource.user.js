@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.002
+// @version      3.003
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -63,7 +63,7 @@ if (typeof module !=="undefined" && module !== null) {
             var f = A()(c);
             var p = A()(s);
             var m = A()(d);
-            u.push([ e.id, "/* Colors */\r\n.c-a {\r\n    background-color: #F7E6DE;\r\n}\r\n\r\n.c-b {\r\n    background-color: #D6C4C1;\r\n}\r\n\r\n.c-c {\r\n    background-color: #eee;\r\n}\r\n\r\n.c-d {\r\n    background-color: #D6C1CB;\r\n}\r\n\r\n.c-e {\r\n    background-color: #F7DEF7;\r\n}\r\n\r\n.ui-hidden {\r\n    /*display: none!important;*/\r\n    width: 0 !important;\r\n    border-width: 0!important;\r\n}\r\n\r\n.ui-hidden a {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden div {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden span {\r\n\r\n    background-color: transparent;\r\n}\r\n\r\n.helper-wrap {\r\n    user-select: none;\r\n    position: fixed;\r\n    z-index: 99;\r\n    height: 230px;\r\n    min-width: 60px;\r\n    top: 500px;\r\n    left: 0px;\r\n\r\n}\r\n\r\n.helper-wrap-inner {\r\n    position: relative;\r\n    height: 100%;\r\n}\r\n\r\n.helper-wrap-inner div {\r\n    float: left;\r\n    vertical-align: top;\r\n}\r\n\r\n.helper-main {\r\n    display: inline-block;\r\n    width: 280px;\r\n    height: 100%;\r\n    border: solid #666;\r\n    border-width: 1px 1px 1px 0;\r\n    position: relative;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n\r\n}\r\n\r\n.ac-girl {\r\n    display: inline-block;\r\n    width: 48px;\r\n    height: 80px;\r\n    background-image: url(" + f + ');\r\n    background-size: contain;\r\n    background-repeat: no-repeat;\r\n    cursor: pointer;\r\n    margin-top: 10px;\r\n}\r\n\r\n.ac-girl-hide {\r\n    transform: translateX(-100%);\r\n}\r\n\r\n.page-wrap {\r\n    height: 100%;\r\n    width: 280px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: inherit;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n}\r\n\r\n.go-back {\r\n    cursor: pointer;\r\n    padding: 3px;\r\n}\r\n\r\n.inactive-page {\r\n    display: none;\r\n}\r\n\r\n.menu-wrap {\r\n    text-align: center;\r\n    width: 80px;\r\n    position: absolute;\r\n    top: 55%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n.sync-time {\r\n    margin-top: 20px;\r\n}\r\n\r\n.plugin-hint {\r\n    z-index: 99;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    cursor: pointer;\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-menu-title {\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-version {\r\n    position: absolute;\r\n    right: 20px;\r\n    bottom: 0;\r\n    pointer-events: none;\r\n}\r\n\r\n.menu-wrap a {\r\n    display: block;\r\n    margin: 10px 0 10px;\r\n    transition: 100ms;\r\n    cursor: pointer;\r\n}\r\n\r\n.menu-wrap a:hover {\r\n    transform: scale(1.2);\r\n}\r\n\r\n.plugin-add-ban-up {\r\n    margin: 10px;\r\n    display: block;\r\n    width: 100%;\r\n}\r\n\r\n.ban-title-input {\r\n    height: 20px;\r\n    background-color: transparent;\r\n    border-radius: 50px 0 0 50px;\r\n    font: 13px "宋体";\r\n    line-height: 13px;\r\n    text-align: center;\r\n    margin: 0 0 0 2px;\r\n    border: 1px solid #b6adad;\r\n    float: left;\r\n}\r\n\r\n.ban-title-input:focus {\r\n    background-color: rgba(255, 255, 255, 0.4);\r\n}\r\n\r\n.ban-item-submit {\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px;\r\n    background: darkred;\r\n    height: 22px;\r\n    color: white;\r\n    width: 40px;\r\n    border-radius: 0 50px 50px 0;\r\n}\r\n\r\n.ban-item-submit:hover {\r\n    background-color: #a84716;\r\n    transition: 50ms;\r\n}\r\n\r\n.ban-item-submit:active {\r\n    background-color: #cd9072;\r\n}\r\n\r\n.banned-items {\r\n    padding: 10px;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    height: 147px;\r\n    line-height: 23px;\r\n    margin: 2px;\r\n\r\n}\r\n\r\n\r\n.banned-items::-webkit-scrollbar {\r\n    width: 10px;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-track {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-thumb {\r\n    background-color: #666666;\r\n}\r\n\r\n.banned-item {\r\n    position: relative;\r\n    display: inline-block;\r\n    height: 16px;\r\n\r\n    margin: 3px 1px 5px 1px;\r\n}\r\n\r\nspan.banned-title {\r\n    height: 16px;\r\n    float: left;\r\n    vertical-align: middle;\r\n    background-color: #e0a040;\r\n    font: 12px "宋体";\r\n    border-radius: 5px;\r\n    padding: 1px 5px 1px 5px;\r\n    line-height: 16px;\r\n}\r\n\r\n.banned-item button {\r\n\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px 5px 1px 5px;\r\n    background: rgba(89, 0, 0, 0.7);\r\n    height: 18px;\r\n    width: 100%;\r\n    color: white;\r\n    border-radius: 5px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    cursor: pointer;\r\n    opacity: 0;\r\n    transition: 80ms ease-in;\r\n\r\n}\r\n\r\n.banned-item button:active {\r\n\r\n    background: rgba(255, 76, 76, 0.7);\r\n}\r\n\r\n.banned-item button:hover {\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.about-page-content {\r\n    width: 100%;\r\n    display: block;\r\n    word-wrap: break-word;\r\n    box-sizing: border-box;\r\n    padding: 20px;\r\n    overflow-y: auto;\r\n    height: 210px;\r\n    float: none!important;\r\n}\r\n\r\n\r\n/* 过滤UI */\r\n.filter-button {\r\n\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: rgba(255, 0, 0, 1);\r\n    padding: 1.5px;\r\n    left: 0;\r\n    top: 0;\r\n    transform: translate(0, 0);\r\n    display: block;\r\n    position: fixed;\r\n    z-index: 98;\r\n    background-size: contain;\r\n    background-image: url(' + p + ");\r\n    border-radius: 11px;\r\n    border: 2px rgb(230, 230, 230) solid;\r\n    cursor: pointer;\r\n}\r\n\r\n.smooth {\r\n    transition: 500ms ease-in-out;\r\n    -moz-transition: 500ms ease-in-out;\r\n    -o-transition: 500ms ease-in-out;\r\n    -webkit-transition: 500ms ease-in-out;\r\n}\r\n\r\n.banned-article {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 0 !important;\r\n    overflow: hidden;\r\n    opacity: 0;\r\n}\r\n\r\n.banned-page-item {\r\n    margin: 0;\r\n    opacity: 0;\r\n    transition: 300ms;\r\n\r\n}\r\n\r\n.banned-page-item:hover {\r\n    opacity: 1;\r\n}\r\n\r\n.remove {\r\n    display: none !important;\r\n}\r\n\r\n.area-comment-block {\r\n    line-height: 14px;\r\n    background: url(" + m + ') no-repeat;\r\n    background-size: 13px 13px;\r\n    background-position: 0 1px;\r\n    padding-left: 17px;\r\n    padding-right: 15px;\r\n    color: #999;\r\n}\r\n\r\n.banned-text {\r\n    font-size: 14px !important;\r\n}\r\n\r\n.unban-replier-btn {\r\n    margin: 0 10px;\r\n}\r\n\r\n.hide-avatar {\r\n    visibility: hidden;\r\n}\r\n\r\n\r\n/*subUI */\r\n.sub-ui-wrap {\r\n    position: fixed;\r\n    left: 0;\r\n    top: 38%;\r\n    height: 80px;\r\n    width: 30px;\r\n    z-index: 99;\r\n}\r\n\r\n.sub-ui-inner {\r\n    height: 80px;\r\n    width: 30px;\r\n    position: relative;\r\n    display: block;\r\n    overflow: hidden;\r\n}\r\n\r\n.sub-ui-banned {\r\n\r\n    background-color: rgba(253, 76, 93, 0.3);\r\n}\r\n\r\n.sub-ui-normal {\r\n\r\n    background-color: rgba(165, 253, 76, 0.3);\r\n}\r\n\r\n.sub-ui-text {\r\n    writing-mode: vertical-rl;\r\n    text-orientation: upright;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    height: 100%;\r\n    width: 100%;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button {\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button:hover {\r\n    transform: translateX(100%);\r\n}\r\n\r\n#banUp {\r\n    color: black;\r\n}\r\n\r\n#unbanUp {\r\n    color: black;\r\n}\r\n\r\n\r\n#banUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "屏蔽ＵＰ主";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #fc7630;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n\r\n#unbanUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "取消屏蔽";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #83ee1a;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n.on-top {\r\n    z-index: 1000;\r\n}\r\n\r\n.user-tags {\r\n    vertical-align: middle;\r\n    display: inline-block;\r\n    margin: 0 20px 0 20px;\r\n    max-width: 50%;\r\n}\r\n\r\n/* TAGGING */\r\n.user-tag {\r\n    margin-top: 2px;\r\n    margin-right: 3px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    border-color: rgba(0, 0, 0, 0.4);\r\n\r\n    user-select: none;\r\n    display: inline-block;\r\n\r\n    height: 15px;\r\n    min-width: 30px;\r\n\r\n    float: left;\r\n\r\n\r\n}\r\n.user-tag-text{\r\n\r\n    text-align: center;\r\n}\r\n\r\n.very-smooth {\r\n\r\n    transition: 200ms;\r\n    -moz-transition: 200ms;\r\n    -o-transition: 200ms;\r\n    -webkit-transition: 200ms;\r\n}\r\n\r\n\r\n.add-new-tag {\r\n\r\n    margin-top: 2px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n\r\n    border: 1px rgba(0, 0, 0, 0.25);\r\n    border-style: dashed;\r\n    user-select: none;\r\n\r\n    display: inline-block;\r\n    float: left;\r\n\r\n}\r\n\r\n.add-new-tag:hover {\r\n    background-color: rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.add-new-tag:active {\r\n    background-color: rgba(255, 255, 255, 0.3);\r\n}\r\n\r\n.tagging-ui-container {\r\n    overflow: hidden;\r\n    position: fixed;\r\n    top: 50%;\r\n    left: 50%;\r\n    height: 200px;\r\n    width: 300px;\r\n    transform: translate(-50%, -50%);\r\n\r\n    box-sizing: border-box;\r\n    padding: 10px;\r\n\r\n    -webkit-box-shadow: 2px 2px 7px 1px #787878;\r\n    box-shadow: 2px 2px 7px 1px #787878;\r\n    border-radius: 10px;\r\n\r\n    background-color: rgb(240,240,240);\r\n}\r\n\r\n.tagging-ui-inner {\r\n    position: relative;\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n}\r\n\r\n.name-to-tag{\r\n    padding: 3px;\r\n\r\n}\r\n\r\n.tags-container {\r\n    width: 280px;\r\n    height: 130px;\r\n    background-color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.tagging-input-wrap{\r\n    background-color: rgb(100,100,100);\r\n    height: 20px;\r\n    vertical-align: top;\r\n    border-bottom: 2px rgb(200,200,200);\r\n    margin-bottom: 2px;\r\n}\r\n\r\n.tagging-input{\r\n    float: left;\r\n    box-sizing: border-box;\r\n    padding: 2px;\r\n    height: 20px;\r\n    width: 235px;\r\n    border: none;\r\n\r\n}\r\n\r\n.tagging-submit{\r\n    float: left;\r\n    height: 20px;\r\n    border: none;\r\n    width: 45px;\r\n    background-color: #ced9c5;\r\n}\r\n\r\n.tagging-submit:hover{\r\n    background-color: #a5f400;\r\n}\r\n\r\n.tagging-submit:active{\r\n    background-color: #d4f400;\r\n}\r\n\r\n.tagging-close-button{\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    background-color: #a84716;\r\n    color: white;\r\n    border-radius: 0 10px 0 10px;\r\n    width: 45px;\r\n    height: 25px;\r\n    vertical-align: middle;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    z-index: 10;\r\n    user-select: none;\r\n}\r\n\r\n.smooth-remove{\r\n    transition: 300ms ease-in-out;\r\n    opacity: 0;\r\n    pointer-events: none;\r\n\r\n}\r\n\r\n\r\n.tagging-close-button:hover{\r\n    background-color: #ffc5c5;\r\n}\r\n\r\n.tagging-close-button:active{\r\n    background-color: #ffedd4;\r\n    padding-top: 2px;\r\n\r\n}\r\n\r\n.tag-item{\r\n    display: inline-block;\r\n    background-color: #e7e1e1;\r\n    margin: 1px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n    border: 1px dashed;\r\n    padding: 2px;\r\n    font-size: 8px;\r\n    user-select: none;\r\n    cursor: pointer;\r\n    height: 19px;\r\n    min-width: 30px;\r\n    position: relative;\r\n    line-height: 15px;\r\n    text-align: center;\r\n}\r\n\r\n\r\n.tag-item:before{\r\n    opacity: 0;\r\n    content: "删除";\r\n    position: absolute;\r\n    width: 100%;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    left: 0;\r\n    height: 100%;\r\n    top: 0;\r\n    line-height: 19px;\r\n}\r\n\r\n.tag-item:hover:before{\r\n    opacity: 1;\r\n    color: white;\r\n    background-color: #a84716;\r\n}\r\n\r\n\r\n/* Comment Recovery UI */\r\n\r\n\r\n\r\n.deleted-comments-container{\r\n    position: absolute;\r\n    display: block;\r\n    width: 300px;\r\n\r\n    min-height: 300px;\r\n    overflow: hidden;\r\n}\r\n\r\n.deleted-comments-inner{\r\n    position: relative;\r\n    display: block;\r\n    width: 100%;\r\n\r\n}\r\n\r\n\r\n\r\n.deleted-comments-title{\r\n    box-sizing: border-box;\r\n    display: block;\r\n    font-size: 16px;\r\n    background-color: #b6adad;\r\n    padding: 3px 10px 3px 10px;\r\n}\r\n\r\n.deleted-comment-list{\r\n    height: 100%;\r\n    width: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}\r\n\r\n.deleted-comment{\r\n    border: 1px solid #e5e5e5;\r\n    background-color: #ffe;\r\n    display: block;\r\n    user-select: none;\r\n}\r\n\r\n.comment-info{\r\n    display: block;\r\n    height: 20px;\r\n    padding: 3px;\r\n}\r\n\r\n.comment-floor{\r\n    font-weight: 700;\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    width: 45px;\r\n    box-sizing: border-box;\r\n    margin-right: 3px;\r\n}\r\n\r\n.comment-query-state{\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.comment-content{\r\n    padding: 3px;\r\n}\r\n\r\n.hide-btn{\r\n    float: right;\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n    user-select: none;\r\n}\r\n\r\n.hide-btn:hover{\r\n    color: red;\r\n}', "" ]);
+            u.push([ e.id, "/* Colors */\r\n.c-a {\r\n    background-color: #F7E6DE;\r\n}\r\n\r\n.c-b {\r\n    background-color: #D6C4C1;\r\n}\r\n\r\n.c-c {\r\n    background-color: #eee;\r\n}\r\n\r\n.c-d {\r\n    background-color: #D6C1CB;\r\n}\r\n\r\n.c-e {\r\n    background-color: #F7DEF7;\r\n}\r\n\r\n.ui-hidden {\r\n    /*display: none!important;*/\r\n    width: 0 !important;\r\n    border-width: 0!important;\r\n}\r\n\r\n.ui-hidden a {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden div {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden span {\r\n\r\n    background-color: transparent;\r\n}\r\n\r\n.helper-wrap {\r\n    user-select: none;\r\n    position: fixed;\r\n    z-index: 99;\r\n    height: 230px;\r\n    min-width: 60px;\r\n    top: 500px;\r\n    left: 0px;\r\n\r\n}\r\n\r\n.helper-wrap-inner {\r\n    position: relative;\r\n    height: 100%;\r\n}\r\n\r\n.helper-wrap-inner div {\r\n    float: left;\r\n    vertical-align: top;\r\n}\r\n\r\n.helper-main {\r\n    display: inline-block;\r\n    width: 280px;\r\n    height: 100%;\r\n    border: solid #666;\r\n    border-width: 1px 1px 1px 0;\r\n    position: relative;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n\r\n}\r\n\r\n.ac-girl {\r\n    display: inline-block;\r\n    width: 48px;\r\n    height: 80px;\r\n    background-image: url(" + f + ');\r\n    background-size: contain;\r\n    background-repeat: no-repeat;\r\n    cursor: pointer;\r\n    margin-top: 10px;\r\n}\r\n\r\n.ac-girl-hide {\r\n    transform: translateX(-100%);\r\n}\r\n\r\n.page-wrap {\r\n    height: 100%;\r\n    width: 280px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: inherit;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n}\r\n\r\n.go-back {\r\n    cursor: pointer;\r\n    padding: 3px;\r\n}\r\n\r\n.inactive-page {\r\n    display: none;\r\n}\r\n\r\n.menu-wrap {\r\n    text-align: center;\r\n    width: 80px;\r\n    position: absolute;\r\n    top: 55%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n.sync-time {\r\n    margin-top: 20px;\r\n}\r\n\r\n.plugin-hint {\r\n    z-index: 99;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    cursor: pointer;\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-menu-title {\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-version {\r\n    position: absolute;\r\n    right: 20px;\r\n    bottom: 0;\r\n    pointer-events: none;\r\n}\r\n\r\n.menu-wrap a {\r\n    display: block;\r\n    margin: 10px 0 10px;\r\n    transition: 100ms;\r\n    cursor: pointer;\r\n}\r\n\r\n.menu-wrap a:hover {\r\n    transform: scale(1.2);\r\n}\r\n\r\n.plugin-add-ban-up {\r\n    margin: 10px;\r\n    display: block;\r\n    width: 100%;\r\n}\r\n\r\n.ban-title-input {\r\n    height: 20px;\r\n    background-color: transparent;\r\n    border-radius: 50px 0 0 50px;\r\n    font: 13px "宋体";\r\n    line-height: 13px;\r\n    text-align: center;\r\n    margin: 0 0 0 2px;\r\n    border: 1px solid #b6adad;\r\n    float: left;\r\n}\r\n\r\n.ban-title-input:focus {\r\n    background-color: rgba(255, 255, 255, 0.4);\r\n}\r\n\r\n.ban-item-submit {\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px;\r\n    background: darkred;\r\n    height: 22px;\r\n    color: white;\r\n    width: 40px;\r\n    border-radius: 0 50px 50px 0;\r\n}\r\n\r\n.ban-item-submit:hover {\r\n    background-color: #a84716;\r\n    transition: 50ms;\r\n}\r\n\r\n.ban-item-submit:active {\r\n    background-color: #cd9072;\r\n}\r\n\r\n.banned-items {\r\n    padding: 10px;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    height: 147px;\r\n    line-height: 23px;\r\n    margin: 2px;\r\n\r\n}\r\n\r\n\r\n.banned-items::-webkit-scrollbar {\r\n    width: 10px;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-track {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-thumb {\r\n    background-color: #666666;\r\n}\r\n\r\n.banned-item {\r\n    position: relative;\r\n    display: inline-block;\r\n    height: 16px;\r\n\r\n    margin: 3px 1px 5px 1px;\r\n}\r\n\r\nspan.banned-title {\r\n    height: 16px;\r\n    float: left;\r\n    vertical-align: middle;\r\n    background-color: #e0a040;\r\n    font: 12px "宋体";\r\n    border-radius: 5px;\r\n    padding: 1px 5px 1px 5px;\r\n    line-height: 16px;\r\n}\r\n\r\n.banned-item button {\r\n\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px 5px 1px 5px;\r\n    background: rgba(89, 0, 0, 0.7);\r\n    height: 18px;\r\n    width: 100%;\r\n    color: white;\r\n    border-radius: 5px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    cursor: pointer;\r\n    opacity: 0;\r\n    transition: 80ms ease-in;\r\n\r\n}\r\n\r\n.banned-item button:active {\r\n\r\n    background: rgba(255, 76, 76, 0.7);\r\n}\r\n\r\n.banned-item button:hover {\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.about-page-content {\r\n    width: 100%;\r\n    display: block;\r\n    word-wrap: break-word;\r\n    box-sizing: border-box;\r\n    padding: 20px;\r\n    overflow-y: auto;\r\n    height: 210px;\r\n    float: none!important;\r\n}\r\n\r\n\r\n/* 过滤UI */\r\n.filter-button {\r\n\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: rgba(255, 0, 0, 1);\r\n    padding: 1.5px;\r\n    left: 0;\r\n    top: 0;\r\n    transform: translate(0, 0);\r\n    display: block;\r\n    position: fixed;\r\n    z-index: 98;\r\n    background-size: contain;\r\n    background-image: url(' + p + ");\r\n    border-radius: 11px;\r\n    border: 2px rgb(230, 230, 230) solid;\r\n    cursor: pointer;\r\n}\r\n\r\n.smooth {\r\n    transition: 500ms ease-in-out;\r\n    -moz-transition: 500ms ease-in-out;\r\n    -o-transition: 500ms ease-in-out;\r\n    -webkit-transition: 500ms ease-in-out;\r\n}\r\n\r\n.banned-article {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 0 !important;\r\n    overflow: hidden;\r\n    opacity: 0;\r\n}\r\n\r\n.banned-page-item {\r\n    margin: 0;\r\n    opacity: 0;\r\n    transition: 300ms;\r\n\r\n}\r\n\r\n.banned-page-item:hover {\r\n    opacity: 1;\r\n}\r\n\r\n.remove {\r\n    display: none !important;\r\n}\r\n\r\n.area-comment-block {\r\n    line-height: 14px;\r\n    background: url(" + m + ') no-repeat;\r\n    background-size: 13px 13px;\r\n    background-position: 0 1px;\r\n    padding-left: 17px;\r\n    padding-right: 15px;\r\n    color: #999;\r\n}\r\n\r\n.banned-text {\r\n    font-size: 14px !important;\r\n}\r\n\r\n.unban-replier-btn {\r\n    margin: 0 10px;\r\n}\r\n\r\n.hide-avatar {\r\n    visibility: hidden;\r\n}\r\n\r\n\r\n/*subUI */\r\n.sub-ui-wrap {\r\n    position: fixed;\r\n    left: 0;\r\n    top: 38%;\r\n    height: 80px;\r\n    width: 30px;\r\n    z-index: 99;\r\n}\r\n\r\n.sub-ui-inner {\r\n    height: 80px;\r\n    width: 30px;\r\n    position: relative;\r\n    display: block;\r\n    overflow: hidden;\r\n}\r\n\r\n.sub-ui-banned {\r\n\r\n    background-color: rgba(253, 76, 93, 0.3);\r\n}\r\n\r\n.sub-ui-normal {\r\n\r\n    background-color: rgba(165, 253, 76, 0.3);\r\n}\r\n\r\n.sub-ui-text {\r\n    writing-mode: vertical-rl;\r\n    text-orientation: upright;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    height: 100%;\r\n    width: 100%;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button {\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button:hover {\r\n    transform: translateX(100%);\r\n}\r\n\r\n#banUp {\r\n    color: black;\r\n}\r\n\r\n#unbanUp {\r\n    color: black;\r\n}\r\n\r\n\r\n#banUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "屏蔽ＵＰ主";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #fc7630;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n\r\n#unbanUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "取消屏蔽";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #83ee1a;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n.on-top {\r\n    z-index: 1000;\r\n}\r\n\r\n.user-tags {\r\n    vertical-align: middle;\r\n    display: inline-block;\r\n    margin: 0 20px 0 20px;\r\n    max-width: 50%;\r\n}\r\n\r\n/* TAGGING */\r\n.user-tag {\r\n    margin-top: 2px;\r\n    margin-right: 3px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    border-color: rgba(0, 0, 0, 0.4);\r\n\r\n    user-select: none;\r\n    display: inline-block;\r\n\r\n    height: 15px;\r\n    min-width: 30px;\r\n\r\n    float: left;\r\n\r\n\r\n}\r\n.user-tag-text{\r\n\r\n    text-align: center;\r\n}\r\n\r\n.very-smooth {\r\n\r\n    transition: 200ms;\r\n    -moz-transition: 200ms;\r\n    -o-transition: 200ms;\r\n    -webkit-transition: 200ms;\r\n}\r\n\r\n\r\n.add-new-tag {\r\n\r\n    margin-top: 2px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n\r\n    border: 1px rgba(0, 0, 0, 0.25);\r\n    border-style: dashed;\r\n    user-select: none;\r\n\r\n    display: inline-block;\r\n    float: left;\r\n\r\n}\r\n\r\n.add-new-tag:hover {\r\n    background-color: rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.add-new-tag:active {\r\n    background-color: rgba(255, 255, 255, 0.3);\r\n}\r\n\r\n.tagging-ui-container {\r\n    overflow: hidden;\r\n    position: fixed;\r\n    top: 50%;\r\n    left: 50%;\r\n    height: 200px;\r\n    width: 300px;\r\n    transform: translate(-50%, -50%);\r\n\r\n    box-sizing: border-box;\r\n    padding: 10px;\r\n\r\n    -webkit-box-shadow: 2px 2px 7px 1px #787878;\r\n    box-shadow: 2px 2px 7px 1px #787878;\r\n    border-radius: 10px;\r\n\r\n    background-color: rgb(240,240,240);\r\n}\r\n\r\n.tagging-ui-inner {\r\n    position: relative;\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n}\r\n\r\n.name-to-tag{\r\n    padding: 3px;\r\n\r\n}\r\n\r\n.tags-container {\r\n    width: 280px;\r\n    height: 130px;\r\n    background-color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.tagging-input-wrap{\r\n    background-color: rgb(100,100,100);\r\n    height: 20px;\r\n    vertical-align: top;\r\n    border-bottom: 2px rgb(200,200,200);\r\n    margin-bottom: 2px;\r\n}\r\n\r\n.tagging-input{\r\n    float: left;\r\n    box-sizing: border-box;\r\n    padding: 2px;\r\n    height: 20px;\r\n    width: 235px;\r\n    border: none;\r\n\r\n}\r\n\r\n.tagging-submit{\r\n    float: left;\r\n    height: 20px;\r\n    border: none;\r\n    width: 45px;\r\n    background-color: #ced9c5;\r\n}\r\n\r\n.tagging-submit:hover{\r\n    background-color: #a5f400;\r\n}\r\n\r\n.tagging-submit:active{\r\n    background-color: #d4f400;\r\n}\r\n\r\n.tagging-close-button{\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    background-color: #a84716;\r\n    color: white;\r\n    border-radius: 0 10px 0 10px;\r\n    width: 45px;\r\n    height: 25px;\r\n    vertical-align: middle;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    z-index: 10;\r\n    user-select: none;\r\n}\r\n\r\n.smooth-remove{\r\n    transition: 300ms ease-in-out;\r\n    opacity: 0;\r\n    pointer-events: none;\r\n\r\n}\r\n\r\n\r\n.tagging-close-button:hover{\r\n    background-color: #ffc5c5;\r\n}\r\n\r\n.tagging-close-button:active{\r\n    background-color: #ffedd4;\r\n    padding-top: 2px;\r\n\r\n}\r\n\r\n.tag-item{\r\n    display: inline-block;\r\n    background-color: #e7e1e1;\r\n    margin: 1px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n    border: 1px dashed;\r\n    padding: 2px;\r\n    font-size: 8px;\r\n    user-select: none;\r\n    cursor: pointer;\r\n    height: 19px;\r\n    min-width: 30px;\r\n    position: relative;\r\n    line-height: 15px;\r\n    text-align: center;\r\n}\r\n\r\n\r\n.tag-item:before{\r\n    opacity: 0;\r\n    content: "删除";\r\n    position: absolute;\r\n    width: 100%;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    left: 0;\r\n    height: 100%;\r\n    top: 0;\r\n    line-height: 19px;\r\n}\r\n\r\n.tag-item:hover:before{\r\n    opacity: 1;\r\n    color: white;\r\n    background-color: #a84716;\r\n}\r\n\r\n\r\n/* Comment Recovery UI */\r\n\r\n\r\n\r\n.deleted-comments-container{\r\n    position: absolute;\r\n    display: block;\r\n    width: 300px;\r\n\r\n    min-height: 300px;\r\n    overflow: hidden;\r\n}\r\n\r\n.deleted-comments-inner{\r\n    position: relative;\r\n    display: block;\r\n    width: 100%;\r\n\r\n}\r\n\r\n\r\n\r\n.deleted-comments-title{\r\n    box-sizing: border-box;\r\n    display: block;\r\n    font-size: 16px;\r\n    background-color: #b6adad;\r\n    padding: 3px 10px 3px 10px;\r\n}\r\n\r\n.deleted-comment-list{\r\n    height: 100%;\r\n    width: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}\r\n\r\n.deleted-comment{\r\n    border: 1px solid #e5e5e5;\r\n    background-color: #ffe;\r\n    display: block;\r\n}\r\n\r\n.deleted-comment img{\r\n    width: 100%;\r\n}\r\n\r\n.comment-info{\r\n    display: block;\r\n    height: 20px;\r\n    padding: 3px;\r\n}\r\n\r\n.comment-floor{\r\n    font-weight: 700;\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    width: 45px;\r\n    box-sizing: border-box;\r\n    margin-right: 3px;\r\n}\r\n\r\n.comment-query-state{\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.comment-content{\r\n    padding: 3px;\r\n}\r\n\r\n.hide-btn{\r\n    float: right;\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n    user-select: none;\r\n}\r\n\r\n.hide-btn:hover{\r\n    color: red;\r\n}', "" ]);
             const g = u;
         },
         645: e => {
@@ -328,7 +328,7 @@ if (typeof module !=="undefined" && module !== null) {
             } else return "OTHER";
         }
         var i = t(547);
-        const o = "3.002";
+        const o = "3.003";
         function a(e) {
             return e.replace(/(\r\n|\n|\r)/gm, "").trim();
         }
@@ -474,7 +474,7 @@ if (typeof module !=="undefined" && module !== null) {
                 l(n)(null);
             }));
         }
-        function B(e, n, t) {
+        function L(e, n, t) {
             let r = `COMMENT_CACHE_${e}`;
             A(r, n, (() => {
                 C(e, (() => {
@@ -484,7 +484,7 @@ if (typeof module !=="undefined" && module !== null) {
                 console.error("缓存评论失败！");
             }));
         }
-        function L(e, n) {
+        function B(e, n) {
             let t = `COMMENT_CACHE_${e}`;
             s(t, (() => {
                 T(e, (() => {
@@ -523,8 +523,8 @@ if (typeof module !=="undefined" && module !== null) {
             saveUIPosition: M,
             getAllCacheIndices: D,
             getLocalCommentCache: I,
-            saveCommentCache: B,
-            deleteCommentCache: L,
+            saveCommentCache: L,
+            deleteCommentCache: B,
             getActiveHelpTime: function(e) {
                 let n = 0;
                 c("ACTIVE_HELP_TIME", n, (n => {
@@ -687,10 +687,10 @@ if (typeof module !=="undefined" && module !== null) {
             n(...t);
         }
         const S = "https://baldhumanity.top";
-        function U(e) {
+        function q(e) {
             return e;
         }
-        function q(e) {
+        function U(e) {
             return e;
         }
         function k() {
@@ -702,7 +702,7 @@ if (typeof module !=="undefined" && module !== null) {
             let t = new unsafeWindow.XMLHttpRequest;
             let r = S + "/api";
             let i = JSON.stringify(e);
-            i = U(i);
+            i = q(i);
             t.open("POST", r, true);
             t.setRequestHeader("Content-Type", "text/plain");
             t.send(i);
@@ -789,7 +789,7 @@ if (typeof module !=="undefined" && module !== null) {
                 }));
             }
         };
-        function V(e, n, r = true, i = true) {
+        function X(e, n, r = true, i = true) {
             let o = unsafeWindow.document;
             let a = o.body;
             let l = -1;
@@ -819,7 +819,7 @@ if (typeof module !=="undefined" && module !== null) {
                 O.saveUIPosition(e.left, e.y);
             }));
         }
-        function X(e, n) {
+        function V(e, n) {
             let t = {
                 up: [ "#ban_up_page", O.loadBanList, z, O.banUser, "UP_BAN_UPDATE" ],
                 replier: [ "#ban_replier_page", O.loadReplyBanList, J, O.banReplier, "REPLY_BAN_UPDATE" ],
@@ -872,21 +872,21 @@ if (typeof module !=="undefined" && module !== null) {
                 let n = unsafeWindow.document;
                 e = n.body.querySelector("#helperUI");
             }
-            X(e, "up");
+            V(e, "up");
         }
         function j(e) {
             if ("undefined" === typeof e) {
                 let n = unsafeWindow.document;
                 e = n.body.querySelector("#helperUI");
             }
-            X(e, "replier");
+            V(e, "replier");
         }
         function Z(e) {
             if ("undefined" === typeof e) {
                 let n = unsafeWindow.document;
                 e = n.body.querySelector("#helperUI");
             }
-            X(e, "keyword");
+            V(e, "keyword");
         }
         function z(e) {
             O.unbanUser(e, (e => {
@@ -980,7 +980,7 @@ if (typeof module !=="undefined" && module !== null) {
             let n = e.querySelector(".ac-girl");
             n.classList.remove("ac-girl-hide");
             let t = unsafeWindow.document.body.querySelector("#helperUI");
-            V(n, t, false);
+            X(n, t, false);
         }
         function ie(e) {
             e.querySelector(".plugin-version").innerText = "版本：" + O.version;
@@ -990,7 +990,6 @@ if (typeof module !=="undefined" && module !== null) {
         }
         function ae(e) {
             O.loadUIPosition((n => {
-                P("SET UI POS", n);
                 e.style.top = n.y + "px";
                 e.style.left = n.x + "px";
             }));
@@ -1180,8 +1179,8 @@ if (typeof module !=="undefined" && module !== null) {
                 }));
             }));
         }
-        function Be(e) {}
-        function Le(e) {
+        function Le(e) {}
+        function Be(e) {
             O.banReplier(e, (e => {
                 G.emit("REPLY_BAN_UPDATE", null);
             }));
@@ -1246,11 +1245,11 @@ if (typeof module !=="undefined" && module !== null) {
             Oe();
             le.showSettingUI();
         }
-        function Ue() {
+        function qe() {
             ge.loadUI();
             le.showSettingUI();
         }
-        function qe() {
+        function Ue() {
             G.on("FILTER_COMMENTS", (e => {
                 De(e);
             }));
@@ -1258,14 +1257,14 @@ if (typeof module !=="undefined" && module !== null) {
                 Ie(e);
             }));
             G.on("SHOW_COMMENT_TAGS", (e => {
-                Be(e);
+                Le(e);
             }));
         }
         const ke = {
             loadUI(e) {
-                qe();
+                Ue();
                 Pe();
-                if ("HOME" === e || "VIDEO_HOME" === e || "ARTICLE_HOME" === e) Se(); else if ("VIDEO" === e || "ARTICLE" === e) Ue();
+                if ("HOME" === e || "VIDEO_HOME" === e || "ARTICLE_HOME" === e) Se(); else if ("VIDEO" === e || "ARTICLE" === e) qe();
             },
             attachBanButton(e) {
                 let n = unsafeWindow["banButton"];
@@ -1285,9 +1284,9 @@ if (typeof module !=="undefined" && module !== null) {
             attachBanCommentButton(e) {
                 let n = R.getCommentType();
                 if ("NEW" === n) Me(e, (() => {
-                    Le(e.username);
+                    Be(e.username);
                 })); else We(e, (() => {
-                    Le(e.username);
+                    Be(e.username);
                 }));
             }
         };
@@ -1410,7 +1409,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Ve(e) {
+        function Xe(e) {
             let n = e.querySelectorAll("figure.video-item");
             let t = [];
             n.forEach((e => {
@@ -1428,7 +1427,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Xe(e) {
+        function Ve(e) {
             let n = e.querySelectorAll(".list-content-item");
             let t = [];
             n.forEach((e => {
@@ -1513,7 +1512,7 @@ if (typeof module !=="undefined" && module !== null) {
             }
             function r(e, n) {
                 let t = [ Ne, Qe, He, Re, Fe, je, Ye ];
-                let r = [ Ve, Xe, Ke, Ge ];
+                let r = [ Xe, Ve, Ke, Ge ];
                 let i = [ Ze ];
                 let o = [];
                 if ("HOME" === e) o = t; else if ("VIDEO_HOME" === e) o = r; else if ("ARTICLE_HOME" === e) o = i;
@@ -1796,11 +1795,29 @@ if (typeof module !=="undefined" && module !== null) {
                 r.style.overflowX = "hidden";
                 r.style.overflowY = "scroll";
             }
+            let i = n.querySelector(".content.wp.clearfix.area .fr");
+            P("fr =", i);
+            if (i) {
+                i.style.maxHeight = "800px";
+                i.style.overflowX = "hidden";
+                i.style.overflowY = "scroll";
+            }
             t.querySelector(".hide-btn").addEventListener("click", (() => {
                 Cn(t);
             }));
         }
         function Dn(e) {
+            let n = /\[img=图片\](https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))\[\/img\]/;
+            let t = n.exec(e);
+            if (t && t.length > 1) {
+                let n = t[0];
+                let r = t[1];
+                let i = `<img src="${r}">`;
+                e = e.replace(n, i);
+                return Dn(e);
+            } else return e;
+        }
+        function In(e) {
             let n = unsafeWindow.document;
             let t = n.body.querySelector(".deleted-comments-container");
             let r = t.querySelectorAll(".deleted-comment");
@@ -1809,7 +1826,7 @@ if (typeof module !=="undefined" && module !== null) {
                     let t = n.querySelector(".comment-username");
                     t.innerText = e.username;
                     t.classList.remove("remove");
-                    n.querySelector(".comment-text").innerText = e.content;
+                    n.querySelector(".comment-text").innerHTML = Dn(e.content);
                     n.querySelector(".comment-query-state").classList.add("remove");
                     let r = new Date(e.replyTime);
                     n.querySelector(".comment-time").innerText = r.toLocaleString();
@@ -1817,7 +1834,7 @@ if (typeof module !=="undefined" && module !== null) {
                 }
             }));
         }
-        function In(e) {
+        function Ln(e) {
             let n = unsafeWindow.document;
             let t = n.body.querySelector(".deleted-comments-container");
             let r = t.querySelectorAll(".deleted-comment");
@@ -1830,37 +1847,37 @@ if (typeof module !=="undefined" && module !== null) {
                 Tn(e);
             }));
             G.on("FLOOR_RECOVER", (e => {
-                Dn(e);
-            }));
-            G.on("NO_SERVER_CACHE", (e => {
                 In(e);
             }));
+            G.on("NO_SERVER_CACHE", (e => {
+                Ln(e);
+            }));
         }
-        function Ln() {
+        function Mn() {
             let e = unsafeWindow.document;
             e.body.insertAdjacentHTML("beforeend", hn);
             unsafeWindow.onresize = En;
             En();
             yn();
         }
-        const Mn = {
+        const Wn = {
             init() {
-                Ln();
+                Mn();
                 Bn();
             }
         };
-        const Wn = 1e3;
-        const On = 60 * Wn;
+        const On = 1e3;
         const Pn = 60 * On;
-        const Sn = 24 * Pn;
-        let Un = 1 * Pn;
-        function qn(e, n, t) {
+        const Sn = 60 * Pn;
+        const qn = 24 * Sn;
+        let Un = 1 * Sn;
+        function kn(e, n, t) {
             O.saveCommentCache(e, n, (e => {
                 if (t) t(e);
                 G.emit("COMMENT_CACHE_UPDATE", n);
             }));
         }
-        function kn(e, n) {
+        function Nn(e, n) {
             let t = new unsafeWindow.XMLHttpRequest;
             t.open("GET", e, true);
             t.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -1875,7 +1892,7 @@ if (typeof module !=="undefined" && module !== null) {
             };
             t.send();
         }
-        function Nn() {
+        function Rn() {
             let e = r();
             let n = null;
             if ("VIDEO" === e) {
@@ -1887,9 +1904,9 @@ if (typeof module !=="undefined" && module !== null) {
             }
             return n;
         }
-        function Rn(e, n, t, r) {
+        function Yn(e, n, t, r) {
             let i = `https://www.acfun.cn/rest/pc-direct/comment/listByFloor?sourceId=${e}&sourceType=3&page=${n}&pivotCommentId=0&newPivotCommentId=0&t=1638284078529&supportZtEmot=true`;
-            kn(i, (i => {
+            Nn(i, (i => {
                 if (i) {
                     let o = i.commentIds;
                     o.forEach((e => {
@@ -1908,15 +1925,15 @@ if (typeof module !=="undefined" && module !== null) {
                     r["totalCount"] = i.totalCount;
                     let a = i.totalPage;
                     if (n < a) setTimeout((() => {
-                        Rn(e, n + 1, t, r);
+                        Yn(e, n + 1, t, r);
                     }), 500); else t(r);
                 }
             }));
         }
-        function Yn(e, n) {
+        function Qn(e, n) {
             let t = 1;
             let r = `https://www.acfun.cn/rest/pc-direct/comment/listByFloor?sourceId=${e}&sourceType=3&page=${t}&pivotCommentId=0&newPivotCommentId=0&t=1638284078529&supportZtEmot=true`;
-            kn(r, (e => {
+            Nn(r, (e => {
                 if (e) {
                     let t = "c" + e.commentIds[0];
                     let r = e.commentsMap[t];
@@ -1925,7 +1942,7 @@ if (typeof module !=="undefined" && module !== null) {
                 }
             }));
         }
-        function Qn(e, n) {
+        function Fn(e, n) {
             P(`采集评论，投稿id=${e}`);
             function t(t) {
                 let r = {
@@ -1953,9 +1970,9 @@ if (typeof module !=="undefined" && module !== null) {
                 }
                 n(r);
             }
-            Rn(e, 1, t, {});
+            Yn(e, 1, t, {});
         }
-        function Fn(e) {
+        function Hn(e) {
             let n = {
                 id: e.id,
                 recoveredFloors: [],
@@ -1984,11 +2001,11 @@ if (typeof module !=="undefined" && module !== null) {
             };
             if (t > 0) R.apiRequest(r, (n => {
                 e.reportedRecovery = e.recoveredFloors.map((e => e));
-                qn(e.id, e);
+                kn(e.id, e);
             }));
         }
-        function Hn(e, n, t) {
-            Qn(e, (r => {
+        function Gn(e, n, t) {
+            Fn(e, (r => {
                 let i = Object.keys(r.floors).map((e => parseInt(e)));
                 let o = Math.max(...i);
                 for (let e = 1; e <= o; e++) if (e in r.floors && e in n.floors) ; else if (e in r.floors && !(e in n.floors)) ; else if (!(e in r.floors) && e in n.floors) {
@@ -1999,29 +2016,29 @@ if (typeof module !=="undefined" && module !== null) {
                 r.reportedRecovery = n.reportedRecovery.map((e => e));
                 let a = r.deletedFloors.length;
                 let l = r.recoveredFloors.length;
-                qn(e, r, (() => {
+                kn(e, r, (() => {
                     P(r.lastReplyTime);
                     P(`投稿${e}重新缓存完成。${a}个被删除，${l}个被恢复`);
                     t(r);
-                    Fn(r);
+                    Hn(r);
                 }));
             }));
         }
-        function Gn(e, n) {
+        function Xn(e, n) {
             O.getLocalCommentCache(e, (t => {
-                if (!t) Qn(e, (t => {
-                    qn(e, t, (() => {
+                if (!t) Fn(e, (t => {
+                    kn(e, t, (() => {
                         P("首次收集投稿" + e + `评论完成。发现${t.deletedFloors.length}个评论被删除。`);
                         n(t);
                     }));
                 })); else {
                     P("对比评论缓存是否需要更新。");
-                    Yn(e, ((r, i) => {
+                    Qn(e, ((r, i) => {
                         let o = parseInt(r.timestamp);
                         let a = parseInt(t.lastReplyTime);
                         if (o !== a || t.floorCount !== i) {
                             P(e + " 投稿缓存需要更新");
-                            Hn(e, t, n);
+                            Gn(e, t, n);
                         } else {
                             P("已经缓存到最新评论了。");
                             n(t);
@@ -2032,13 +2049,13 @@ if (typeof module !=="undefined" && module !== null) {
         }
         function Vn(e) {
             if (!e) e = () => 0;
-            let n = Nn();
-            Gn(n, e);
+            let n = Rn();
+            Xn(n, e);
         }
-        function Xn(e) {
+        function Kn(e) {
             G.emit("SHOW_DELETED_COMMENT_UI", e);
         }
-        function Kn(e, n) {
+        function jn(e, n) {
             P(`本地可恢复楼层：${e.recoveredFloors.join(" ")}`);
             e.recoveredFloors.forEach((n => {
                 let t = e.floors[n];
@@ -2046,7 +2063,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             n();
         }
-        function jn(e, n) {
+        function Zn(e, n) {
             if (0 === e.cached.length) {
                 P("服务器没有其他缓存，已同步服务器缓存");
                 return;
@@ -2058,11 +2075,11 @@ if (typeof module !=="undefined" && module !== null) {
                     n.reportedRecovery.push(e.floor);
                 }
             }));
-            qn(n.id, n, (() => {
+            kn(n.id, n, (() => {
                 P("已从服务器更新本投稿缓存。");
             }));
         }
-        function Zn(e) {
+        function zn(e) {
             let n = {
                 query: "query_floors",
                 id: e.id,
@@ -2079,16 +2096,16 @@ if (typeof module !=="undefined" && module !== null) {
                     n.floors.forEach((e => {
                         if (r.indexOf(e) < 0) G.emit("NO_SERVER_CACHE", e);
                     }));
-                    jn(t, e);
+                    Zn(t, e);
                 }));
             }
         }
-        function zn(e) {
-            Kn(e, (() => {
-                Zn(e);
+        function Jn(e) {
+            jn(e, (() => {
+                zn(e);
             }));
         }
-        function Jn() {
+        function _n() {
             O.getAllCacheIndices((e => {
                 let n = {
                     query: "active_recover",
@@ -2131,7 +2148,7 @@ if (typeof module !=="undefined" && module !== null) {
                                 R.apiRequest(A, (e => {
                                     P("恢复结果", e);
                                     o.reportedRecovery = o.recoveredFloors.map((e => e));
-                                    qn(o.id, o);
+                                    kn(o.id, o);
                                 }));
                                 t++;
                                 r += l;
@@ -2142,47 +2159,47 @@ if (typeof module !=="undefined" && module !== null) {
                 }));
             }));
         }
-        function _n() {
+        function $n() {
             P("主动帮助");
             let e = +new Date;
             O.getActiveHelpTime((n => {
                 if (e - Un > n) {
                     let t = Math.round((e - n) / 1e3);
                     P(`距离上次主动帮助已经${t}秒了`);
-                    Jn();
+                    _n();
                     O.setActiveHelpTime(e);
                 } else P(`距离上次主动帮助还未足够。`);
             }));
         }
-        function $n(e) {
+        function et(e) {
             O.deleteCommentCache(e, (() => {
                 P(`删除缓存成功，id=${e}`);
             }));
         }
-        function et() {
+        function nt() {
             O.getAllCacheIndices((e => {
                 e.forEach((e => {
-                    $n(e);
+                    et(e);
                 }));
             }));
         }
-        const nt = {
+        const tt = {
             init() {
-                Mn.init();
+                Wn.init();
                 let e = r();
                 if (!("VIDEO" === e || "ARTICLE" === e)) return;
                 unsafeWindow["deleteCache"] = O.deleteCommentCache;
-                unsafeWindow["clearCache"] = et;
+                unsafeWindow["clearCache"] = nt;
                 Vn((e => {
                     setTimeout((() => {
-                        Xn(e);
-                        zn(e);
+                        Kn(e);
+                        Jn(e);
                     }), 1e3);
                 }));
-                _n();
+                $n();
             }
         };
-        function tt(e) {
+        function rt(e) {
             let n = [];
             let t = e.querySelectorAll(".fc-comment-item");
             t.forEach((e => {
@@ -2198,7 +2215,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return n;
         }
-        function rt(e) {
+        function it(e) {
             let n = [];
             let t = e.querySelectorAll(".area-comment-first");
             t.forEach((e => {
@@ -2214,11 +2231,11 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return n;
         }
-        function it(e) {
-            let n = "NEW" === R.getCommentType() ? rt(e) : tt(e);
+        function ot(e) {
+            let n = "NEW" === R.getCommentType() ? it(e) : rt(e);
             return n;
         }
-        function ot() {
+        function at() {
             function e() {
                 G.on("TAGS_UPDATE", (e => {
                     let t = n(unsafeWindow.document);
@@ -2230,7 +2247,7 @@ if (typeof module !=="undefined" && module !== null) {
                 }));
             }
             function n(e) {
-                return it(e);
+                return ot(e);
             }
             function t(e) {
                 e.forEach((e => {
@@ -2269,24 +2286,24 @@ if (typeof module !=="undefined" && module !== null) {
             e();
             i();
             gn.init();
-            nt.init();
+            tt.init();
         }
-        function at(e) {
+        function lt(e) {
             ze(e);
         }
-        function lt() {
-            ot();
+        function At() {
+            at();
         }
-        function At(e) {
-            if ("HOME" === e || "VIDEO_HOME" === e || "ARTICLE_HOME" === e) at(e); else if ("VIDEO" === e || "ARTICLE" === e) lt();
+        function ct(e) {
+            if ("HOME" === e || "VIDEO_HOME" === e || "ARTICLE_HOME" === e) lt(e); else if ("VIDEO" === e || "ARTICLE" === e) At();
         }
-        const ct = 16731600;
-        let st = 0;
-        function dt(e) {
+        const st = 16731600;
+        let dt = 0;
+        function ut(e) {
             let n = unsafeWindow.ImSdk;
             let t = n.instance;
-            let r = "0_" + ct;
-            let i = t.kernel.openSession(0, ct);
+            let r = "0_" + st;
+            let i = t.kernel.openSession(0, st);
             i.then((n => {
                 let t = n.cachedSession.messages;
                 if ("undefined" === typeof t || 0 === t.length) {
@@ -2317,7 +2334,7 @@ if (typeof module !=="undefined" && module !== null) {
                 }
             }));
         }
-        function ut(e) {
+        function ft(e) {
             if (!"trySyncCount" in unsafeWindow) unsafeWindow["trySyncCount"] = 0;
             unsafeWindow["trySyncCount"]++;
             if (unsafeWindow["trySyncCount"] > 30) return;
@@ -2332,13 +2349,13 @@ if (typeof module !=="undefined" && module !== null) {
             if (t) {
                 P("载入信息。。");
                 setTimeout((() => {
-                    ut(e);
+                    ft(e);
                 }), 1e3);
             } else setTimeout((() => {
-                mt(e);
+                gt(e);
             }), 0);
         }
-        function ft(e) {
+        function pt(e) {
             function n(e) {
                 return e.replace(/(\r\n|\n|\r)/gm, "").trim();
             }
@@ -2363,24 +2380,24 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             O.setUpdateTime(e.time, (() => {}));
         }
-        let pt = null && 30 * 1e3;
-        function mt(e) {
+        let mt = null && 30 * 1e3;
+        function gt(e) {
             O.getUpdateTime((e => {
-                st = e;
-                dt((n => {
+                dt = e;
+                ut((n => {
                     if (null === n) ; else {
                         P(n);
                         try {
                             let t = JSON.parse(n);
                             if ("undefined" === typeof t.version || parseFloat(t.version) < parseFloat(O.version)) {
                                 P("旧版同步信息发现，重新同步");
-                                ft(t);
+                                pt(t);
                             } else if (parseFloat(t.version) > parseFloat(O.version)) P("同步失败：你已经在其他地方使用过更新的版本了。请更新当前屏蔽插件，最新版本：" + t.version); else {
                                 t.time = parseInt(decode(t.time));
                                 let n = t.time;
                                 if (n > e || O.version !== t.version) {
                                     P("Update list");
-                                    ft(t);
+                                    pt(t);
                                 } else if (e > n) P("ImSdk is no longer available. Will try new cloud."); else P("Check done, no update needed", (e - n) / 1e3, t);
                             }
                         } catch (e) {}
@@ -2388,11 +2405,11 @@ if (typeof module !=="undefined" && module !== null) {
                     O.setUsingNewCloud((() => {
                         P("切换到新服务器。");
                     }));
-                    setTimeout(xt, 5e3);
+                    setTimeout(yt, 5e3);
                 }));
             }));
         }
-        function gt() {
+        function wt() {
             G.on("SYNC_TIME_UPDATE", (e => {
                 if (e && "number" === typeof e && e > 0) O.setUpdateTime(e, (() => {
                     P("更新同步时间", e);
@@ -2415,19 +2432,19 @@ if (typeof module !=="undefined" && module !== null) {
                 O.setUpdateTime(e, null);
             }));
         }
-        function wt(e, n) {
+        function ht(e, n) {
             R.apiRequest(e, n);
         }
-        function ht(e, n) {
+        function vt(e, n) {
             let t = {
                 name: e,
                 query: "checktime"
             };
-            wt(t, n);
+            ht(t, n);
         }
-        function vt(e) {
+        function bt(e) {
             P("syncFromServer");
-            wt({
+            ht({
                 name: e,
                 query: "sync"
             }, (e => {
@@ -2443,21 +2460,21 @@ if (typeof module !=="undefined" && module !== null) {
                 }
             }));
         }
-        let bt = e => {
+        let xt = e => {
             P("成功", e);
         };
-        function xt() {
+        function yt() {
             P("检查新服务器");
             O.getUsername((e => {
                 P("username=" + e);
-                ht(e, (n => {
+                vt(e, (n => {
                     O.getUpdateTime((t => {
                         if (n["synctime"] > 0 && t > 500 * n["synctime"]) t /= 1e3;
-                        if (n["synctime"] > t) vt(e); else if (n["synctime"] < t) yt((e => {
+                        if (n["synctime"] > t) bt(e); else if (n["synctime"] < t) Et((e => {
                             console.log("response", e);
                             if (e.success) {
                                 P("同步成功");
-                                bt(e);
+                                xt(e);
                                 G.emit("SYNC_TIME_UPDATE", e.synctime);
                             }
                         })); else {
@@ -2468,7 +2485,7 @@ if (typeof module !=="undefined" && module !== null) {
                 }));
             }));
         }
-        function yt(e) {
+        function Et(e) {
             O.getUsername((n => {
                 O.loadBanList((t => {
                     O.loadReplyBanList((r => {
@@ -2483,14 +2500,14 @@ if (typeof module !=="undefined" && module !== null) {
                                     userTags: o,
                                     query: "update"
                                 };
-                                wt(a, e);
+                                ht(a, e);
                             }));
                         }));
                     }));
                 }));
             }));
         }
-        function Et() {
+        function Ct() {
             P("检查同步状态");
             O.isUsingNewCloud((e => {
                 P("是否已经使用新服务器", e);
@@ -2500,13 +2517,13 @@ if (typeof module !=="undefined" && module !== null) {
                         P("检查本地同步时间 time=", e);
                         if (0 === e || isNaN(e)) {
                             P("没有发现本地记录,首先检查旧服务");
-                            ut();
+                            ft();
                         } else {
                             P("发现本地记录，未曾使用新服务器，尝试同步本地信息到新服务器");
-                            yt((e => {
+                            Et((e => {
                                 if (e.success) {
                                     P("同步成功");
-                                    O.setUpdateTime(e.lastsync, bt);
+                                    O.setUpdateTime(e.lastsync, xt);
                                     G.emit("SYNC_TIME_UPDATE", e.lastsync);
                                     O.setUsingNewCloud((() => {}));
                                 }
@@ -2515,32 +2532,32 @@ if (typeof module !=="undefined" && module !== null) {
                     }));
                 } else {
                     P("正常使用新服务器同步");
-                    xt();
+                    yt();
                 }
             }));
         }
-        function Ct() {
+        function Tt() {
             if ("undefined" === typeof unsafeWindow.user) {
-                setTimeout(Ct, 1e3);
+                setTimeout(Tt, 1e3);
                 return;
             }
             if ("用户" === unsafeWindow.user.name) return;
-            Et();
+            Ct();
         }
-        const Tt = {
+        const Dt = {
             init: () => {
-                gt();
+                wt();
             },
-            SyncWithCloud: Ct
+            SyncWithCloud: Tt
         };
-        function Dt(e, n, t) {
+        function It(e, n, t) {
             let r = new Date;
             r.setTime(r.getTime() + 24 * t * 60 * 60 * 1e3);
             const i = "expires=" + r.toUTCString();
             unsafeWindow.document.cookie = e + "=" + n + "; " + i + "; path=/";
         }
-        let It = {};
-        It.x = function() {
+        let Lt = {};
+        Lt.x = function() {
             if ("undefined" !== typeof XMLHttpRequest) return new XMLHttpRequest;
             let e = [ "MSXML2.XmlHttp.6.0", "MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp" ];
             let n;
@@ -2550,9 +2567,9 @@ if (typeof module !=="undefined" && module !== null) {
             } catch (e) {}
             return n;
         };
-        It.send = function(e, n, t, r, i, o) {
+        Lt.send = function(e, n, t, r, i, o) {
             if ("undefined" == typeof o) o = true;
-            let a = It.x();
+            let a = Lt.x();
             a.open(t, e, o);
             a.onreadystatechange = function() {
                 if (4 === a.readyState) n(a.responseText);
@@ -2561,15 +2578,15 @@ if (typeof module !=="undefined" && module !== null) {
             if ("undefined" !== typeof i) for (let e in i) a.setRequestHeader(e, i[e]);
             a.send(r);
         };
-        It.get = function(e, n, t, r, i) {
+        Lt.get = function(e, n, t, r, i) {
             let o = [];
             for (let e in n) o.push(encodeURIComponent(e) + "=" + encodeURIComponent(n[e]));
-            It.send(e + (o.length ? "?" + o.join("&") : ""), t, "GET", null, r, i);
+            Lt.send(e + (o.length ? "?" + o.join("&") : ""), t, "GET", null, r, i);
         };
-        It.post = function(e, n, t, r, i) {
+        Lt.post = function(e, n, t, r, i) {
             let o = [];
             for (let e in n) o.push(encodeURIComponent(e) + "=" + encodeURIComponent(n[e]));
-            It.send(e, t, "POST", o.join("&"), r, i);
+            Lt.send(e, t, "POST", o.join("&"), r, i);
         };
         function Bt() {
             let e = unsafeWindow.document.cookie;
@@ -2577,7 +2594,7 @@ if (typeof module !=="undefined" && module !== null) {
             let t = n.exec(e);
             return t[1];
         }
-        const Lt = {
+        const Mt = {
             getUDID: Bt,
             feedBanana(e, n, t) {
                 let r = Bt();
@@ -2586,14 +2603,14 @@ if (typeof module !=="undefined" && module !== null) {
                     return;
                 }
                 let i = btoa(Math.random().toString(36).substr(2));
-                Dt("stochastic", i, 1);
+                It("stochastic", i, 1);
                 let o = {
                     resourceId: parseInt(e),
                     resourceType: t,
                     count: n
                 };
                 let a = "https://www.acfun.cn/rest/pc-direct/banana/throwBanana";
-                It.post(a, o, (e => {
+                Lt.post(a, o, (e => {
                     console.log(e);
                 }), {
                     udid: r
@@ -2601,13 +2618,13 @@ if (typeof module !=="undefined" && module !== null) {
             }
         };
         n()();
-        let Mt = r();
-        P(Mt);
-        ke.loadUI(Mt);
-        At(Mt);
-        Tt.init();
-        Tt.SyncWithCloud();
-        unsafeWindow.sendBanana = Lt.feedBanana;
-        unsafeWindow.getUDID = Lt.getUDID;
+        let Wt = r();
+        P(Wt);
+        ke.loadUI(Wt);
+        ct(Wt);
+        Dt.init();
+        Dt.SyncWithCloud();
+        unsafeWindow.sendBanana = Mt.feedBanana;
+        unsafeWindow.getUDID = Mt.getUDID;
     })();
 })();
