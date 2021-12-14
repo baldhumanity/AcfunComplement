@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.008
+// @version      3.009
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -63,7 +63,7 @@ if (typeof module !=="undefined" && module !== null) {
             var f = c()(A);
             var p = c()(s);
             var m = c()(d);
-            u.push([ e.id, "/* Colors */\r\n.c-a {\r\n    background-color: #F7E6DE;\r\n}\r\n\r\n.c-b {\r\n    background-color: #D6C4C1;\r\n}\r\n\r\n.c-c {\r\n    background-color: #eee;\r\n}\r\n\r\n.c-d {\r\n    background-color: #D6C1CB;\r\n}\r\n\r\n.c-e {\r\n    background-color: #F7DEF7;\r\n}\r\n\r\n.ui-hidden {\r\n    /*display: none!important;*/\r\n    width: 0 !important;\r\n    border-width: 0!important;\r\n}\r\n\r\n.ui-hidden a {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden div {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden span {\r\n\r\n    background-color: transparent;\r\n}\r\n\r\n.helper-wrap {\r\n    user-select: none;\r\n    position: fixed;\r\n    z-index: 99;\r\n    height: 230px;\r\n    min-width: 60px;\r\n    top: 500px;\r\n    left: 0px;\r\n\r\n}\r\n\r\n.helper-wrap-inner {\r\n    position: relative;\r\n    height: 100%;\r\n}\r\n\r\n.helper-wrap-inner div {\r\n    float: left;\r\n    vertical-align: top;\r\n}\r\n\r\n.helper-main {\r\n    display: inline-block;\r\n    width: 280px;\r\n    height: 100%;\r\n    border: solid #666;\r\n    border-width: 1px 1px 1px 0;\r\n    position: relative;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n\r\n}\r\n\r\n.ac-girl {\r\n    display: inline-block;\r\n    width: 48px;\r\n    height: 80px;\r\n    background-image: url(" + f + ');\r\n    background-size: contain;\r\n    background-repeat: no-repeat;\r\n    cursor: pointer;\r\n    margin-top: 10px;\r\n}\r\n\r\n.ac-girl-hide {\r\n    transform: translateX(-100%);\r\n}\r\n\r\n.page-wrap {\r\n    height: 100%;\r\n    width: 280px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: inherit;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n}\r\n\r\n.go-back {\r\n    cursor: pointer;\r\n    padding: 3px;\r\n}\r\n\r\n.inactive-page {\r\n    display: none;\r\n}\r\n\r\n.menu-wrap {\r\n    text-align: center;\r\n    width: 80px;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n.sync-time {\r\n    margin-top: 20px;\r\n}\r\n\r\n.plugin-hint {\r\n    z-index: 99;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    cursor: pointer;\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-menu-title {\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-author{\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n}\r\n\r\n.plugin-version {\r\n    position: absolute;\r\n    right: 20px;\r\n    bottom: 0;\r\n    pointer-events: none;\r\n}\r\n\r\n.menu-wrap a {\r\n    display: block;\r\n    margin: 3px 0 0px;\r\n    transition: 100ms;\r\n    cursor: pointer;\r\n}\r\n\r\n.menu-wrap a:hover {\r\n    transform: scale(1.2);\r\n}\r\n\r\n.plugin-add-ban-up {\r\n    margin: 10px;\r\n    display: block;\r\n    width: 100%;\r\n}\r\n\r\n.ban-title-input {\r\n    height: 20px;\r\n    background-color: transparent;\r\n    border-radius: 50px 0 0 50px;\r\n    font: 13px "宋体";\r\n    line-height: 13px;\r\n    text-align: center;\r\n    margin: 0 0 0 2px;\r\n    border: 1px solid #b6adad;\r\n    float: left;\r\n}\r\n\r\n.ban-title-input:focus {\r\n    background-color: rgba(255, 255, 255, 0.4);\r\n}\r\n\r\n.ban-item-submit {\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px;\r\n    background: darkred;\r\n    height: 22px;\r\n    color: white;\r\n    width: 40px;\r\n    border-radius: 0 50px 50px 0;\r\n}\r\n\r\n.ban-item-submit:hover {\r\n    background-color: #a84716;\r\n    transition: 50ms;\r\n}\r\n\r\n.ban-item-submit:active {\r\n    background-color: #cd9072;\r\n}\r\n\r\n.banned-items {\r\n    padding: 10px;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    height: 147px;\r\n    line-height: 23px;\r\n    margin: 2px;\r\n\r\n}\r\n\r\n\r\n.banned-items::-webkit-scrollbar {\r\n    width: 10px;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-track {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-thumb {\r\n    background-color: #666666;\r\n}\r\n\r\n.banned-item {\r\n    position: relative;\r\n    display: inline-block;\r\n    height: 16px;\r\n\r\n    margin: 3px 1px 5px 1px;\r\n}\r\n\r\nspan.banned-title {\r\n    height: 16px;\r\n    float: left;\r\n    vertical-align: middle;\r\n    background-color: #e0a040;\r\n    font: 12px "宋体";\r\n    border-radius: 5px;\r\n    padding: 1px 5px 1px 5px;\r\n    line-height: 16px;\r\n}\r\n\r\n.banned-item button {\r\n\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px 5px 1px 5px;\r\n    background: rgba(89, 0, 0, 0.7);\r\n    height: 18px;\r\n    width: 100%;\r\n    color: white;\r\n    border-radius: 5px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    cursor: pointer;\r\n    opacity: 0;\r\n    transition: 80ms ease-in;\r\n\r\n}\r\n\r\n.banned-item button:active {\r\n\r\n    background: rgba(255, 76, 76, 0.7);\r\n}\r\n\r\n.banned-item button:hover {\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.about-page-content {\r\n    width: 100%;\r\n    display: block;\r\n    word-wrap: break-word;\r\n    box-sizing: border-box;\r\n    padding: 20px;\r\n    overflow-y: auto;\r\n    height: 210px;\r\n    float: none!important;\r\n}\r\n\r\n\r\n/* 过滤UI */\r\n.filter-button {\r\n\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: rgba(255, 0, 0, 1);\r\n    padding: 1.5px;\r\n    left: 0;\r\n    top: 0;\r\n    transform: translate(0, 0);\r\n    display: block;\r\n    position: fixed;\r\n    z-index: 98;\r\n    background-size: contain;\r\n    background-image: url(' + p + ");\r\n    border-radius: 11px;\r\n    border: 2px rgb(230, 230, 230) solid;\r\n    cursor: pointer;\r\n}\r\n\r\n.smooth {\r\n    transition: 500ms ease-in-out;\r\n    -moz-transition: 500ms ease-in-out;\r\n    -o-transition: 500ms ease-in-out;\r\n    -webkit-transition: 500ms ease-in-out;\r\n}\r\n\r\n.banned-article {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 0 !important;\r\n    overflow: hidden;\r\n    opacity: 0;\r\n}\r\n\r\n.banned-page-item {\r\n    margin: 0;\r\n    opacity: 0;\r\n    transition: 300ms;\r\n\r\n}\r\n\r\n.banned-page-item:hover {\r\n\r\n}\r\n\r\n.hover-show:hover{\r\n    opacity: 1;\r\n}\r\n\r\n.remove {\r\n    display: none !important;\r\n}\r\n\r\n.area-comment-block {\r\n    line-height: 14px;\r\n    background: url(" + m + ') no-repeat;\r\n    background-size: 13px 13px;\r\n    background-position: 0 1px;\r\n    padding-left: 17px;\r\n    padding-right: 15px;\r\n    color: #999;\r\n}\r\n\r\n.banned-text {\r\n    font-size: 14px !important;\r\n}\r\n\r\n.unban-replier-btn {\r\n    margin: 0 10px;\r\n}\r\n\r\n.hide-avatar {\r\n    visibility: hidden;\r\n}\r\n\r\n\r\n/*subUI */\r\n.sub-ui-wrap {\r\n    position: fixed;\r\n    left: 0;\r\n    top: 38%;\r\n    height: 80px;\r\n    width: 30px;\r\n    z-index: 99;\r\n}\r\n\r\n.sub-ui-inner {\r\n    height: 80px;\r\n    width: 30px;\r\n    position: relative;\r\n    display: block;\r\n    overflow: hidden;\r\n}\r\n\r\n.sub-ui-banned {\r\n\r\n    background-color: rgba(253, 76, 93, 0.3);\r\n}\r\n\r\n.sub-ui-normal {\r\n\r\n    background-color: rgba(165, 253, 76, 0.3);\r\n}\r\n\r\n.sub-ui-text {\r\n    writing-mode: vertical-rl;\r\n    text-orientation: upright;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    height: 100%;\r\n    width: 100%;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button {\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button:hover {\r\n    transform: translateX(100%);\r\n}\r\n\r\n#banUp {\r\n    color: black;\r\n}\r\n\r\n#unbanUp {\r\n    color: black;\r\n}\r\n\r\n\r\n#banUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "屏蔽ＵＰ主";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #fc7630;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n\r\n#unbanUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "取消屏蔽";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #83ee1a;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n.on-top {\r\n    z-index: 1000;\r\n}\r\n\r\n.user-tags {\r\n    vertical-align: middle;\r\n    display: inline-block;\r\n    margin: 0 20px 0 20px;\r\n    max-width: 50%;\r\n}\r\n\r\n/* TAGGING */\r\n.user-tag {\r\n    margin-top: 2px;\r\n    margin-right: 3px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    border-color: rgba(0, 0, 0, 0.4);\r\n\r\n    user-select: none;\r\n    display: inline-block;\r\n\r\n    height: 15px;\r\n    min-width: 30px;\r\n\r\n    float: left;\r\n\r\n\r\n}\r\n.user-tag-text{\r\n\r\n    text-align: center;\r\n}\r\n\r\n.very-smooth {\r\n\r\n    transition: 200ms;\r\n    -moz-transition: 200ms;\r\n    -o-transition: 200ms;\r\n    -webkit-transition: 200ms;\r\n}\r\n\r\n\r\n.add-new-tag {\r\n\r\n    margin-top: 2px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n\r\n    border: 1px rgba(0, 0, 0, 0.25);\r\n    border-style: dashed;\r\n    user-select: none;\r\n\r\n    display: inline-block;\r\n    float: left;\r\n\r\n}\r\n\r\n.add-new-tag:hover {\r\n    background-color: rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.add-new-tag:active {\r\n    background-color: rgba(255, 255, 255, 0.3);\r\n}\r\n\r\n.tagging-ui-container {\r\n    overflow: hidden;\r\n    position: fixed;\r\n    top: 50%;\r\n    left: 50%;\r\n    height: 200px;\r\n    width: 300px;\r\n    transform: translate(-50%, -50%);\r\n\r\n    box-sizing: border-box;\r\n    padding: 10px;\r\n\r\n    -webkit-box-shadow: 2px 2px 7px 1px #787878;\r\n    box-shadow: 2px 2px 7px 1px #787878;\r\n    border-radius: 10px;\r\n\r\n    background-color: rgb(240,240,240);\r\n}\r\n\r\n.tagging-ui-inner {\r\n    position: relative;\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n}\r\n\r\n.name-to-tag{\r\n    padding: 3px;\r\n\r\n}\r\n\r\n.tags-container {\r\n    width: 280px;\r\n    height: 130px;\r\n    background-color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.tagging-input-wrap{\r\n    background-color: rgb(100,100,100);\r\n    height: 20px;\r\n    vertical-align: top;\r\n    border-bottom: 2px rgb(200,200,200);\r\n    margin-bottom: 2px;\r\n}\r\n\r\n.tagging-input{\r\n    float: left;\r\n    box-sizing: border-box;\r\n    padding: 2px;\r\n    height: 20px;\r\n    width: 235px;\r\n    border: none;\r\n\r\n}\r\n\r\n.tagging-submit{\r\n    float: left;\r\n    height: 20px;\r\n    border: none;\r\n    width: 45px;\r\n    background-color: #ced9c5;\r\n}\r\n\r\n.tagging-submit:hover{\r\n    background-color: #a5f400;\r\n}\r\n\r\n.tagging-submit:active{\r\n    background-color: #d4f400;\r\n}\r\n\r\n.tagging-close-button{\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    background-color: #a84716;\r\n    color: white;\r\n    border-radius: 0 10px 0 10px;\r\n    width: 45px;\r\n    height: 25px;\r\n    vertical-align: middle;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    z-index: 10;\r\n    user-select: none;\r\n}\r\n\r\n.smooth-remove{\r\n    transition: 300ms ease-in-out;\r\n    opacity: 0;\r\n    pointer-events: none;\r\n\r\n}\r\n\r\n\r\n.tagging-close-button:hover{\r\n    background-color: #ffc5c5;\r\n}\r\n\r\n.tagging-close-button:active{\r\n    background-color: #ffedd4;\r\n    padding-top: 2px;\r\n\r\n}\r\n\r\n.tag-item{\r\n    display: inline-block;\r\n    background-color: #e7e1e1;\r\n    margin: 1px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n    border: 1px dashed;\r\n    padding: 2px;\r\n    font-size: 8px;\r\n    user-select: none;\r\n    cursor: pointer;\r\n    height: 19px;\r\n    min-width: 30px;\r\n    position: relative;\r\n    line-height: 15px;\r\n    text-align: center;\r\n}\r\n\r\n\r\n.tag-item:before{\r\n    opacity: 0;\r\n    content: "删除";\r\n    position: absolute;\r\n    width: 100%;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    left: 0;\r\n    height: 100%;\r\n    top: 0;\r\n    line-height: 19px;\r\n}\r\n\r\n.tag-item:hover:before{\r\n    opacity: 1;\r\n    color: white;\r\n    background-color: #a84716;\r\n}\r\n\r\n\r\n/* Comment Recovery UI */\r\n\r\n\r\n\r\n.deleted-comments-container{\r\n    position: absolute;\r\n    display: block;\r\n    width: 300px;\r\n\r\n    min-height: 300px;\r\n    overflow: hidden;\r\n}\r\n\r\n.deleted-comments-inner{\r\n    position: relative;\r\n    display: block;\r\n    width: 100%;\r\n\r\n}\r\n\r\n\r\n\r\n.deleted-comments-title{\r\n    box-sizing: border-box;\r\n    display: block;\r\n    font-size: 16px;\r\n    background-color: #b6adad;\r\n    padding: 3px 10px 3px 10px;\r\n}\r\n\r\n.deleted-comment-list{\r\n    height: 100%;\r\n    width: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}\r\n\r\n.deleted-comment{\r\n    border: 1px solid #e5e5e5;\r\n    background-color: #ffe;\r\n    display: block;\r\n}\r\n\r\n.deleted-comment img{\r\n    width: 100%;\r\n}\r\n\r\n.comment-info{\r\n    display: block;\r\n    height: 20px;\r\n    padding: 3px;\r\n}\r\n\r\n.comment-floor{\r\n    font-weight: 700;\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    width: 45px;\r\n    box-sizing: border-box;\r\n    margin-right: 3px;\r\n}\r\n\r\n.comment-query-state{\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.comment-content{\r\n    padding: 3px;\r\n}\r\n\r\n.hide-btn{\r\n    float: right;\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n    user-select: none;\r\n}\r\n\r\n.hide-btn:hover{\r\n    color: red;\r\n}\r\n\r\n\r\n/* setting ui  check box */\r\n/* Customize the label (the container) */\r\n.cc-container {\r\n    display: block;\r\n    position: relative;\r\n    padding-left: 22px;\r\n    margin-bottom: 12px;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n    line-height: 12px;\r\n}\r\n\r\n/* Hide the browser\'s default checkbox */\r\n.cc-container input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    cursor: pointer;\r\n    height: 0;\r\n    width: 0;\r\n}\r\n\r\n/* Create a custom checkbox */\r\n.checkmark {\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    height: 12px;\r\n    width: 12px;\r\n    background-color: #848484;\r\n}\r\n\r\n/* On mouse-over, add a grey background color */\r\n.cc-container:hover input ~ .checkmark {\r\n    background-color: #ccc;\r\n}\r\n\r\n/* When the checkbox is checked, add a blue background */\r\n.cc-container input:checked ~ .checkmark {\r\n    background-color: #2196F3;\r\n}\r\n\r\n/* Create the checkmark/indicator (hidden when not checked) */\r\n.checkmark:after {\r\n    content: "";\r\n    position: absolute;\r\n    display: none;\r\n}\r\n\r\n/* Show the checkmark when checked */\r\n.cc-container input:checked ~ .checkmark:after {\r\n    display: block;\r\n}\r\n\r\n/* Style the checkmark/indicator */\r\n.cc-container .checkmark:after {\r\n    left: 4px;\r\n    top: 2px;\r\n    width: 3px;\r\n    height: 6px;\r\n    border: solid white;\r\n    border-width: 0 2px 2px 0;\r\n    -webkit-transform: rotate(45deg);\r\n    -ms-transform: rotate(45deg);\r\n    transform: rotate(45deg);\r\n}', "" ]);
+            u.push([ e.id, "/* Colors */\r\n.c-a {\r\n    background-color: #F7E6DE;\r\n}\r\n\r\n.c-b {\r\n    background-color: #D6C4C1;\r\n}\r\n\r\n.c-c {\r\n    background-color: #eee;\r\n}\r\n\r\n.c-d {\r\n    background-color: #D6C1CB;\r\n}\r\n\r\n.c-e {\r\n    background-color: #F7DEF7;\r\n}\r\n\r\n.ui-hidden {\r\n    /*display: none!important;*/\r\n    width: 0 !important;\r\n    border-width: 0!important;\r\n}\r\n\r\n.ui-hidden a {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden div {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden span {\r\n\r\n    background-color: transparent;\r\n}\r\n\r\n.helper-wrap {\r\n    user-select: none;\r\n    position: fixed;\r\n    z-index: 99;\r\n    height: 230px;\r\n    min-width: 60px;\r\n    top: 500px;\r\n    left: 0px;\r\n\r\n}\r\n\r\n.helper-wrap-inner {\r\n    position: relative;\r\n    height: 100%;\r\n}\r\n\r\n.helper-wrap-inner div {\r\n    float: left;\r\n    vertical-align: top;\r\n}\r\n\r\n.helper-main {\r\n    display: inline-block;\r\n    width: 280px;\r\n    height: 100%;\r\n    border: solid #666;\r\n    border-width: 1px 1px 1px 0;\r\n    position: relative;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n\r\n}\r\n\r\n.ac-girl {\r\n    display: inline-block;\r\n    width: 48px;\r\n    height: 80px;\r\n    background-image: url(" + f + ');\r\n    background-size: contain;\r\n    background-repeat: no-repeat;\r\n    cursor: pointer;\r\n    margin-top: 10px;\r\n}\r\n\r\n.ac-girl-hide {\r\n    transform: translateX(-100%);\r\n}\r\n\r\n.page-wrap {\r\n    height: 100%;\r\n    width: 280px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: inherit;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n}\r\n\r\n.go-back {\r\n    cursor: pointer;\r\n    padding: 3px;\r\n}\r\n\r\n.inactive-page {\r\n    display: none;\r\n}\r\n\r\n.menu-wrap {\r\n    text-align: center;\r\n    width: 80px;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n.sync-time {\r\n    margin-top: 20px;\r\n}\r\n\r\n.plugin-hint {\r\n    z-index: 99;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    cursor: pointer;\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-menu-title {\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-author{\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n}\r\n\r\n.plugin-version {\r\n    position: absolute;\r\n    right: 20px;\r\n    bottom: 0;\r\n    pointer-events: none;\r\n}\r\n\r\n.menu-wrap a {\r\n    display: block;\r\n    margin: 3px 0 0px;\r\n    transition: 100ms;\r\n    cursor: pointer;\r\n}\r\n\r\n.menu-wrap a:hover {\r\n    transform: scale(1.2);\r\n}\r\n\r\n.plugin-add-ban-up {\r\n    margin: 10px;\r\n    display: block;\r\n    width: 100%;\r\n}\r\n\r\n.ban-title-input {\r\n    height: 20px;\r\n    background-color: transparent;\r\n    border-radius: 50px 0 0 50px;\r\n    font: 13px "宋体";\r\n    line-height: 13px;\r\n    text-align: center;\r\n    margin: 0 0 0 2px;\r\n    border: 1px solid #b6adad;\r\n    float: left;\r\n}\r\n\r\n.ban-title-input:focus {\r\n    background-color: rgba(255, 255, 255, 0.4);\r\n}\r\n\r\n.ban-item-submit {\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px;\r\n    background: darkred;\r\n    height: 22px;\r\n    color: white;\r\n    width: 40px;\r\n    border-radius: 0 50px 50px 0;\r\n}\r\n\r\n.ban-item-submit:hover {\r\n    background-color: #a84716;\r\n    transition: 50ms;\r\n}\r\n\r\n.ban-item-submit:active {\r\n    background-color: #cd9072;\r\n}\r\n\r\n.banned-items {\r\n    padding: 10px;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    height: 147px;\r\n    line-height: 23px;\r\n    margin: 2px;\r\n\r\n}\r\n\r\n\r\n.banned-items::-webkit-scrollbar {\r\n    width: 10px;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-track {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-thumb {\r\n    background-color: #666666;\r\n}\r\n\r\n.banned-item {\r\n    position: relative;\r\n    display: inline-block;\r\n    height: 16px;\r\n\r\n    margin: 3px 1px 5px 1px;\r\n}\r\n\r\nspan.banned-title {\r\n    height: 16px;\r\n    float: left;\r\n    vertical-align: middle;\r\n    background-color: #e0a040;\r\n    font: 12px "宋体";\r\n    border-radius: 5px;\r\n    padding: 1px 5px 1px 5px;\r\n    line-height: 16px;\r\n}\r\n\r\n.banned-item button {\r\n\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px 5px 1px 5px;\r\n    background: rgba(89, 0, 0, 0.7);\r\n    height: 18px;\r\n    width: 100%;\r\n    color: white;\r\n    border-radius: 5px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    cursor: pointer;\r\n    opacity: 0;\r\n    transition: 80ms ease-in;\r\n\r\n}\r\n\r\n.banned-item button:active {\r\n\r\n    background: rgba(255, 76, 76, 0.7);\r\n}\r\n\r\n.banned-item button:hover {\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.about-page-content {\r\n    width: 100%;\r\n    display: block;\r\n    word-wrap: break-word;\r\n    box-sizing: border-box;\r\n    padding: 20px;\r\n    overflow-y: auto;\r\n    height: 210px;\r\n    float: none!important;\r\n}\r\n\r\n\r\n/* 过滤UI */\r\n.filter-button {\r\n\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: rgba(255, 0, 0, 1);\r\n    padding: 1.5px;\r\n    left: 0;\r\n    top: 0;\r\n    transform: translate(0, 0);\r\n    display: block;\r\n    position: fixed;\r\n    z-index: 98;\r\n    background-size: contain;\r\n    background-image: url(' + p + ");\r\n    border-radius: 11px;\r\n    border: 2px rgb(230, 230, 230) solid;\r\n    cursor: pointer;\r\n}\r\n\r\n.smooth {\r\n    transition: 500ms ease-in-out;\r\n    -moz-transition: 500ms ease-in-out;\r\n    -o-transition: 500ms ease-in-out;\r\n    -webkit-transition: 500ms ease-in-out;\r\n}\r\n\r\n.banned-article {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 0 !important;\r\n    overflow: hidden;\r\n    opacity: 0;\r\n}\r\n\r\n.banned-page-item {\r\n    margin: 0;\r\n    opacity: 0;\r\n    transition: 300ms;\r\n\r\n}\r\n\r\n.banned-page-item:hover {\r\n\r\n}\r\n\r\n.hover-show:hover{\r\n    opacity: 1;\r\n}\r\n\r\n.remove {\r\n    display: none !important;\r\n}\r\n\r\n.remove-2{\r\n    display: none !important;\r\n}\r\n\r\n.area-comment-block {\r\n    line-height: 14px;\r\n    background: url(" + m + ') no-repeat;\r\n    background-size: 13px 13px;\r\n    background-position: 0 1px;\r\n    padding-left: 17px;\r\n    padding-right: 15px;\r\n    color: #999;\r\n}\r\n\r\n.banned-text {\r\n    font-size: 14px !important;\r\n}\r\n\r\n.unban-replier-btn {\r\n    margin: 0 10px;\r\n}\r\n\r\n.hide-avatar {\r\n    visibility: hidden;\r\n}\r\n\r\n\r\n/*subUI */\r\n.sub-ui-wrap {\r\n    position: fixed;\r\n    left: 0;\r\n    top: 38%;\r\n    height: 80px;\r\n    width: 30px;\r\n    z-index: 99;\r\n}\r\n\r\n.sub-ui-inner {\r\n    height: 80px;\r\n    width: 30px;\r\n    position: relative;\r\n    display: block;\r\n    overflow: hidden;\r\n}\r\n\r\n.sub-ui-banned {\r\n\r\n    background-color: rgba(253, 76, 93, 0.3);\r\n}\r\n\r\n.sub-ui-normal {\r\n\r\n    background-color: rgba(165, 253, 76, 0.3);\r\n}\r\n\r\n.sub-ui-text {\r\n    writing-mode: vertical-rl;\r\n    text-orientation: upright;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    height: 100%;\r\n    width: 100%;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button {\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button:hover {\r\n    transform: translateX(100%);\r\n}\r\n\r\n#banUp {\r\n    color: black;\r\n}\r\n\r\n#unbanUp {\r\n    color: black;\r\n}\r\n\r\n\r\n#banUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "屏蔽ＵＰ主";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #fc7630;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n\r\n#unbanUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "取消屏蔽";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #83ee1a;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n.on-top {\r\n    z-index: 1000;\r\n}\r\n\r\n.user-tags {\r\n    vertical-align: middle;\r\n    display: inline-block;\r\n    margin: 0 20px 0 20px;\r\n    max-width: 50%;\r\n}\r\n\r\n/* TAGGING */\r\n.user-tag {\r\n    margin-top: 2px;\r\n    margin-right: 3px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    border-color: rgba(0, 0, 0, 0.4);\r\n\r\n    user-select: none;\r\n    display: inline-block;\r\n\r\n    height: 15px;\r\n    min-width: 30px;\r\n\r\n    float: left;\r\n\r\n\r\n}\r\n.user-tag-text{\r\n\r\n    text-align: center;\r\n}\r\n\r\n.very-smooth {\r\n\r\n    transition: 200ms;\r\n    -moz-transition: 200ms;\r\n    -o-transition: 200ms;\r\n    -webkit-transition: 200ms;\r\n}\r\n\r\n\r\n.add-new-tag {\r\n\r\n    margin-top: 2px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n\r\n    border: 1px rgba(0, 0, 0, 0.25);\r\n    border-style: dashed;\r\n    user-select: none;\r\n\r\n    display: inline-block;\r\n    float: left;\r\n\r\n}\r\n\r\n.add-new-tag:hover {\r\n    background-color: rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.add-new-tag:active {\r\n    background-color: rgba(255, 255, 255, 0.3);\r\n}\r\n\r\n.tagging-ui-container {\r\n    overflow: hidden;\r\n    position: fixed;\r\n    top: 50%;\r\n    left: 50%;\r\n    height: 200px;\r\n    width: 300px;\r\n    transform: translate(-50%, -50%);\r\n\r\n    box-sizing: border-box;\r\n    padding: 10px;\r\n\r\n    -webkit-box-shadow: 2px 2px 7px 1px #787878;\r\n    box-shadow: 2px 2px 7px 1px #787878;\r\n    border-radius: 10px;\r\n\r\n    background-color: rgb(240,240,240);\r\n}\r\n\r\n.tagging-ui-inner {\r\n    position: relative;\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n}\r\n\r\n.name-to-tag{\r\n    padding: 3px;\r\n\r\n}\r\n\r\n.tags-container {\r\n    width: 280px;\r\n    height: 130px;\r\n    background-color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.tagging-input-wrap{\r\n    background-color: rgb(100,100,100);\r\n    height: 20px;\r\n    vertical-align: top;\r\n    border-bottom: 2px rgb(200,200,200);\r\n    margin-bottom: 2px;\r\n}\r\n\r\n.tagging-input{\r\n    float: left;\r\n    box-sizing: border-box;\r\n    padding: 2px;\r\n    height: 20px;\r\n    width: 235px;\r\n    border: none;\r\n\r\n}\r\n\r\n.tagging-submit{\r\n    float: left;\r\n    height: 20px;\r\n    border: none;\r\n    width: 45px;\r\n    background-color: #ced9c5;\r\n}\r\n\r\n.tagging-submit:hover{\r\n    background-color: #a5f400;\r\n}\r\n\r\n.tagging-submit:active{\r\n    background-color: #d4f400;\r\n}\r\n\r\n.tagging-close-button{\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    background-color: #a84716;\r\n    color: white;\r\n    border-radius: 0 10px 0 10px;\r\n    width: 45px;\r\n    height: 25px;\r\n    vertical-align: middle;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    z-index: 10;\r\n    user-select: none;\r\n}\r\n\r\n.smooth-remove{\r\n    transition: 300ms ease-in-out;\r\n    opacity: 0;\r\n    pointer-events: none;\r\n\r\n}\r\n\r\n\r\n.tagging-close-button:hover{\r\n    background-color: #ffc5c5;\r\n}\r\n\r\n.tagging-close-button:active{\r\n    background-color: #ffedd4;\r\n    padding-top: 2px;\r\n\r\n}\r\n\r\n.tag-item{\r\n    display: inline-block;\r\n    background-color: #e7e1e1;\r\n    margin: 1px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n    border: 1px dashed;\r\n    padding: 2px;\r\n    font-size: 8px;\r\n    user-select: none;\r\n    cursor: pointer;\r\n    height: 19px;\r\n    min-width: 30px;\r\n    position: relative;\r\n    line-height: 15px;\r\n    text-align: center;\r\n}\r\n\r\n\r\n.tag-item:before{\r\n    opacity: 0;\r\n    content: "删除";\r\n    position: absolute;\r\n    width: 100%;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    left: 0;\r\n    height: 100%;\r\n    top: 0;\r\n    line-height: 19px;\r\n}\r\n\r\n.tag-item:hover:before{\r\n    opacity: 1;\r\n    color: white;\r\n    background-color: #a84716;\r\n}\r\n\r\n\r\n/* Comment Recovery UI */\r\n\r\n\r\n\r\n.deleted-comments-container{\r\n    position: absolute;\r\n    display: block;\r\n    width: 300px;\r\n\r\n    min-height: 300px;\r\n    overflow: hidden;\r\n}\r\n\r\n.deleted-comments-inner{\r\n    position: relative;\r\n    display: block;\r\n    width: 100%;\r\n\r\n}\r\n\r\n\r\n\r\n.deleted-comments-title{\r\n    box-sizing: border-box;\r\n    display: block;\r\n    font-size: 16px;\r\n    background-color: #b6adad;\r\n    padding: 3px 10px 3px 10px;\r\n}\r\n\r\n.deleted-comment-list{\r\n    height: 100%;\r\n    width: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}\r\n\r\n.deleted-comment{\r\n    border: 1px solid #e5e5e5;\r\n    background-color: #ffe;\r\n    display: block;\r\n}\r\n\r\n.deleted-comment img{\r\n    width: 100%;\r\n}\r\n\r\n.comment-info{\r\n    display: block;\r\n    height: 20px;\r\n    padding: 3px;\r\n}\r\n\r\n.comment-floor{\r\n    font-weight: 700;\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    width: 45px;\r\n    box-sizing: border-box;\r\n    margin-right: 3px;\r\n}\r\n\r\n.comment-query-state{\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.comment-content{\r\n    padding: 3px;\r\n}\r\n\r\n.hide-btn{\r\n    float: right;\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n    user-select: none;\r\n}\r\n\r\n.hide-btn:hover{\r\n    color: red;\r\n}\r\n\r\n\r\n/* setting ui  check box */\r\n/* Customize the label (the container) */\r\n.cc-container {\r\n    display: block;\r\n    position: relative;\r\n    padding-left: 22px;\r\n    margin-bottom: 12px;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n    line-height: 12px;\r\n}\r\n\r\n/* Hide the browser\'s default checkbox */\r\n.cc-container input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    cursor: pointer;\r\n    height: 0;\r\n    width: 0;\r\n}\r\n\r\n/* Create a custom checkbox */\r\n.checkmark {\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    height: 12px;\r\n    width: 12px;\r\n    background-color: #848484;\r\n}\r\n\r\n/* On mouse-over, add a grey background color */\r\n.cc-container:hover input ~ .checkmark {\r\n    background-color: #ccc;\r\n}\r\n\r\n/* When the checkbox is checked, add a blue background */\r\n.cc-container input:checked ~ .checkmark {\r\n    background-color: #2196F3;\r\n}\r\n\r\n/* Create the checkmark/indicator (hidden when not checked) */\r\n.checkmark:after {\r\n    content: "";\r\n    position: absolute;\r\n    display: none;\r\n}\r\n\r\n/* Show the checkmark when checked */\r\n.cc-container input:checked ~ .checkmark:after {\r\n    display: block;\r\n}\r\n\r\n/* Style the checkmark/indicator */\r\n.cc-container .checkmark:after {\r\n    left: 4px;\r\n    top: 2px;\r\n    width: 3px;\r\n    height: 6px;\r\n    border: solid white;\r\n    border-width: 0 2px 2px 0;\r\n    -webkit-transform: rotate(45deg);\r\n    -ms-transform: rotate(45deg);\r\n    transform: rotate(45deg);\r\n}', "" ]);
             const g = u;
         },
         645: e => {
@@ -336,7 +336,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             n(...t);
         }
-        const a = "3.008";
+        const a = "3.009";
         function l(e) {
             return e.replace(/(\r\n|\n|\r)/gm, "").trim();
         }
@@ -516,7 +516,7 @@ if (typeof module !=="undefined" && module !== null) {
                 e(n);
             }));
         }
-        function O(e) {
+        function k(e) {
             s("GENERAL_SETTING", {
                 showDeletedComment: true,
                 showUserTags: true,
@@ -527,15 +527,15 @@ if (typeof module !=="undefined" && module !== null) {
                 e(n);
             }));
         }
-        function k(e, n) {
+        function O(e, n) {
             A("GENERAL_SETTING", e, (() => {
                 n();
             }));
         }
         const P = {
             version: a,
-            loadGeneralSetting: O,
-            saveGeneralSetting: k,
+            loadGeneralSetting: k,
+            saveGeneralSetting: O,
             updateBanList: v,
             updateKeywords: b,
             updateReplyBanList: x,
@@ -751,8 +751,8 @@ if (typeof module !=="undefined" && module !== null) {
             apiRequest: Y
         };
         var F = '<div id="helperUI" class="helper-wrap" style="pointer-events:none"> <div class="helper-wrap-inner"> <div style="pointer-events:all" class="helper-main c-a ui-hidden smooth"> <div class="plugin-hint" id="hide_hint">隐藏插件--\x3e</div> <div class="page-wrap"> <div class="plugin-menu-title">插件设置</div> <div class="menu-wrap"> <a id="bannedAuthours">Ｕ Ｐ 主</a> <a id="bannedRepliers">回 复 者</a> <a id="bannedKeywords">关 键 词</a> <a id="cloudsync">云 同 步</a> <a id="commentRecovery">评论恢复</a> <a id="generalSetting">通用设置</a> <a id="aboutme">关于插件</a> </div> <div class="plugin-version">0.00</div> <div class="plugin-author">作恶者：<a href="https://message.acfun.cn/im?targetId=690324" style="color:#00f">人文情怀</a></div> </div> <div class="page-wrap inactive-page" id="ban_up_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入UP主ID..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_replier_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入评论者ID..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_keyword_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入屏蔽关键词..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">LOL</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="cloudsync_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class="sync-time"></div> <hr> <div> <button id="syncNow">立即同步</button> </div> </div> </div> <div class="page-wrap inactive-page" id="recovery_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div> 2.100版本新功能：已删除评论恢复！<br/> 当你打开投稿，插件会第一时间在本地备份所有看到的评论，当未来某个时间，有评论被删除，插件将会为你恢复。同时本地备份将会在云服务器上共享。只要有一个用户备份过一次被删除的评论，所有用户都会得到分享。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div> <b></b><span class="cache-info"></span> </div> <div> <button>删除缓存</button> </div> </div> </div> <div class="page-wrap inactive-page" id="general_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div> <label class="cc-container" data-id="showBanButton">在首页的投稿右上角显示[屏蔽]图标按钮 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showMouseover">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="autoSync">自动云同步所有列表 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showDeletedComment">显示投稿内被删除评论 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showUserTags">显示评论用户标签 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> </div> </div> </div> <div class="page-wrap inactive-page" id="about_page"> <a class="go-back">返回</a> <div class="about-page-content"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style="pointer-events:all" class="ac-girl ac-girl-hide smooth"> </div> </div> </div>';
-        const Q = F;
-        function G() {
+        const G = F;
+        function Q() {
             if ("undefined" === typeof t.g["eventStorage"]) t.g["eventStorage"] = {};
             return t.g["eventStorage"];
         }
@@ -763,7 +763,7 @@ if (typeof module !=="undefined" && module !== null) {
         }
         const V = {
             on: function(e, n) {
-                let t = G();
+                let t = Q();
                 if (!(e in t)) t[e] = [];
                 let r = X();
                 t[e].push({
@@ -772,7 +772,7 @@ if (typeof module !=="undefined" && module !== null) {
                 });
             },
             emit: function(e, n) {
-                let t = G();
+                let t = Q();
                 if (e in t) {
                     let r = t[e];
                     r.forEach((e => {
@@ -929,13 +929,17 @@ if (typeof module !=="undefined" && module !== null) {
         }
         function te(e) {
             e.querySelectorAll(".cc-container").forEach((e => {
+                let n = e;
+                let t = n.getAttribute("data-id");
                 e.addEventListener("change", (e => {
-                    let n = e.currentTarget;
-                    let t = n.getAttribute("data-id");
                     let r = n.querySelector("input").checked;
                     ne(t, r, (() => {
                         V.emit("SETTING_CHANGE_" + t, r);
                     }));
+                }));
+                P.loadGeneralSetting((n => {
+                    let r = e.querySelector("input");
+                    r.checked = n[t] ? "checked" : "";
                 }));
             }));
         }
@@ -1047,7 +1051,7 @@ if (typeof module !=="undefined" && module !== null) {
             state: "MENU",
             showSettingUI() {
                 let e = unsafeWindow.document;
-                e.body.insertAdjacentHTML("beforeend", Q);
+                e.body.insertAdjacentHTML("beforeend", G);
                 let n = e.body.querySelector("#helperUI");
                 se(n);
             }
@@ -1106,7 +1110,6 @@ if (typeof module !=="undefined" && module !== null) {
             let n;
             let t = r();
             if ("VIDEO" === t) n = e.querySelector(".up-info .up-name"); else n = e.querySelector(".up-name a");
-            o(n);
             return n.innerText;
         }
         function ve() {
@@ -1224,12 +1227,12 @@ if (typeof module !=="undefined" && module !== null) {
             }));
         }
         function We(e) {}
-        function Oe(e) {
+        function ke(e) {
             P.banReplier(e, (e => {
                 V.emit("REPLY_BAN_UPDATE", null);
             }));
         }
-        function ke(e, n) {
+        function Oe(e, n) {
             let t = unsafeWindow.document.createElement("span");
             t.innerText = "屏蔽";
             t.classList.add("area-comment-block");
@@ -1340,14 +1343,14 @@ if (typeof module !=="undefined" && module !== null) {
             },
             attachBanCommentButton(e) {
                 let n = H.getCommentType();
-                if ("NEW" === n) ke(e, (() => {
-                    Oe(e.username);
+                if ("NEW" === n) Oe(e, (() => {
+                    ke(e.username);
                 })); else Pe(e, (() => {
-                    Oe(e.username);
+                    ke(e.username);
                 }));
             }
         };
-        function Qe(e) {
+        function Ge(e) {
             let n = e.querySelectorAll(".monkey-video");
             let t = [];
             n.forEach((e => {
@@ -1363,7 +1366,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Ge(e) {
+        function Qe(e) {
             let n = e.querySelectorAll(".recommend-video");
             let t = [];
             n.forEach((e => {
@@ -1568,7 +1571,7 @@ if (typeof module !=="undefined" && module !== null) {
                 P.loadKeywords(e);
             }
             function r(e, n) {
-                let t = [ Qe, Ve, je, Ge, Ke, $e, Xe ];
+                let t = [ Ge, Ve, je, Qe, Ke, $e, Xe ];
                 let r = [ ze, Je, _e, Ze ];
                 let i = [ en ];
                 let o = [];
@@ -1887,7 +1890,7 @@ if (typeof module !=="undefined" && module !== null) {
                 Mn(t);
             }));
         }
-        function On(e) {
+        function kn(e) {
             let n = /\[img=图片\](https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))\[\/img\]/;
             let t = n.exec(e);
             if (t && t.length > 1) {
@@ -1895,10 +1898,10 @@ if (typeof module !=="undefined" && module !== null) {
                 let r = t[1];
                 let i = `<img src="${r}">`;
                 e = e.replace(n, i);
-                return On(e);
+                return kn(e);
             } else return e;
         }
-        function kn(e) {
+        function On(e) {
             let n = unsafeWindow.document;
             let t = n.body.querySelector(".deleted-comments-container");
             let r = t.querySelectorAll(".deleted-comment");
@@ -1908,7 +1911,7 @@ if (typeof module !=="undefined" && module !== null) {
                     let t = n.querySelector(".comment-username");
                     t.innerText = e.username;
                     t.classList.remove("remove");
-                    n.querySelector(".comment-text").innerHTML = On(e.content);
+                    n.querySelector(".comment-text").innerHTML = kn(e.content);
                     n.querySelector(".comment-query-state").classList.add("remove");
                     let r = new Date(e.replyTime);
                     n.querySelector(".comment-time").innerText = r.toLocaleString();
@@ -1927,14 +1930,14 @@ if (typeof module !=="undefined" && module !== null) {
         function qn(e) {
             let n = unsafeWindow.document;
             let t = n.body.querySelector(".deleted-comments-container");
-            if (qn) t.classList.remove("remove"); else t.classList.add("remove");
+            if (e) t.classList.remove("remove-2"); else t.classList.add("remove-2");
         }
         function Un() {
             V.on("SHOW_DELETED_COMMENT_UI", (e => {
                 Wn(e);
             }));
             V.on("FLOOR_RECOVER", (e => {
-                kn(e);
+                On(e);
             }));
             V.on("NO_SERVER_CACHE", (e => {
                 Pn(e);
@@ -1949,6 +1952,9 @@ if (typeof module !=="undefined" && module !== null) {
             unsafeWindow.onresize = Sn;
             Sn();
             Bn();
+            P.loadGeneralSetting((e => {
+                qn(e.showDeletedComment);
+            }));
         }
         const Rn = {
             init() {
@@ -1959,8 +1965,8 @@ if (typeof module !=="undefined" && module !== null) {
         const Yn = 1e3;
         const Hn = 60 * Yn;
         const Fn = 60 * Hn;
-        const Qn = 24 * Fn;
-        let Gn = 1 * Fn;
+        const Gn = 24 * Fn;
+        let Qn = 1 * Fn;
         function Xn(e, n, t) {
             P.saveCommentCache(e, n, (e => {
                 if (t) t(e);
@@ -2253,7 +2259,7 @@ if (typeof module !=="undefined" && module !== null) {
             o("主动帮助");
             let e = +new Date;
             P.getActiveHelpTime((n => {
-                if (e - Gn > n) {
+                if (e - Qn > n) {
                     let t = Math.round((e - n) / 1e3);
                     o(`距离上次主动帮助已经${t}秒了`);
                     at();
@@ -2524,7 +2530,7 @@ if (typeof module !=="undefined" && module !== null) {
             V.on("SYNC_NOW", (() => {
                 let e = Math.floor(+new Date / 1e3);
                 P.setUpdateTime(e, null);
-                Ot();
+                kt();
             }));
         }
         function Dt(e, n) {
@@ -2631,9 +2637,9 @@ if (typeof module !=="undefined" && module !== null) {
                 }
             }));
         }
-        function Ot() {
+        function kt() {
             if ("undefined" === typeof unsafeWindow.user) {
-                setTimeout(Ot, 1e3);
+                setTimeout(kt, 1e3);
                 return;
             }
             if ("用户" === unsafeWindow.user.name) return;
@@ -2641,11 +2647,11 @@ if (typeof module !=="undefined" && module !== null) {
                 if (e.autoSync) Wt();
             }));
         }
-        const kt = {
+        const Ot = {
             init: () => {
                 Tt();
             },
-            SyncWithCloud: Ot
+            SyncWithCloud: kt
         };
         function Pt(e, n, t) {
             let r = new Date;
@@ -2719,8 +2725,8 @@ if (typeof module !=="undefined" && module !== null) {
         o(Rt);
         Fe.loadUI(Rt);
         wt(Rt);
-        kt.init();
-        kt.SyncWithCloud();
+        Ot.init();
+        Ot.SyncWithCloud();
         unsafeWindow.sendBanana = Nt.feedBanana;
         unsafeWindow.getUDID = Nt.getUDID;
     })();
