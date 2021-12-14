@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.007
+// @version      3.008
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -336,7 +336,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             n(...t);
         }
-        const a = "3.007";
+        const a = "3.008";
         function l(e) {
             return e.replace(/(\r\n|\n|\r)/gm, "").trim();
         }
@@ -1107,7 +1107,6 @@ if (typeof module !=="undefined" && module !== null) {
             let t = r();
             if ("VIDEO" === t) n = e.querySelector(".up-info .up-name"); else n = e.querySelector(".up-name a");
             o(n);
-            if ("div" === n.tagName.toLowerCase()) n = n.firstChild;
             return n.innerText;
         }
         function ve() {
