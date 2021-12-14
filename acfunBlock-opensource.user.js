@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.005
+// @version      3.007
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -55,15 +55,15 @@ if (typeof module !=="undefined" && module !== null) {
             var o = t(645);
             var a = t.n(o);
             var l = t(667);
-            var A = t.n(l);
-            var c = new URL(t(972), t.b);
+            var c = t.n(l);
+            var A = new URL(t(972), t.b);
             var s = new URL(t(528), t.b);
             var d = new URL(t(653), t.b);
             var u = a()(i());
-            var f = A()(c);
-            var p = A()(s);
-            var m = A()(d);
-            u.push([ e.id, "/* Colors */\r\n.c-a {\r\n    background-color: #F7E6DE;\r\n}\r\n\r\n.c-b {\r\n    background-color: #D6C4C1;\r\n}\r\n\r\n.c-c {\r\n    background-color: #eee;\r\n}\r\n\r\n.c-d {\r\n    background-color: #D6C1CB;\r\n}\r\n\r\n.c-e {\r\n    background-color: #F7DEF7;\r\n}\r\n\r\n.ui-hidden {\r\n    /*display: none!important;*/\r\n    width: 0 !important;\r\n    border-width: 0!important;\r\n}\r\n\r\n.ui-hidden a {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden div {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden span {\r\n\r\n    background-color: transparent;\r\n}\r\n\r\n.helper-wrap {\r\n    user-select: none;\r\n    position: fixed;\r\n    z-index: 99;\r\n    height: 230px;\r\n    min-width: 60px;\r\n    top: 500px;\r\n    left: 0px;\r\n\r\n}\r\n\r\n.helper-wrap-inner {\r\n    position: relative;\r\n    height: 100%;\r\n}\r\n\r\n.helper-wrap-inner div {\r\n    float: left;\r\n    vertical-align: top;\r\n}\r\n\r\n.helper-main {\r\n    display: inline-block;\r\n    width: 280px;\r\n    height: 100%;\r\n    border: solid #666;\r\n    border-width: 1px 1px 1px 0;\r\n    position: relative;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n\r\n}\r\n\r\n.ac-girl {\r\n    display: inline-block;\r\n    width: 48px;\r\n    height: 80px;\r\n    background-image: url(" + f + ');\r\n    background-size: contain;\r\n    background-repeat: no-repeat;\r\n    cursor: pointer;\r\n    margin-top: 10px;\r\n}\r\n\r\n.ac-girl-hide {\r\n    transform: translateX(-100%);\r\n}\r\n\r\n.page-wrap {\r\n    height: 100%;\r\n    width: 280px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: inherit;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n}\r\n\r\n.go-back {\r\n    cursor: pointer;\r\n    padding: 3px;\r\n}\r\n\r\n.inactive-page {\r\n    display: none;\r\n}\r\n\r\n.menu-wrap {\r\n    text-align: center;\r\n    width: 80px;\r\n    position: absolute;\r\n    top: 55%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n.sync-time {\r\n    margin-top: 20px;\r\n}\r\n\r\n.plugin-hint {\r\n    z-index: 99;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    cursor: pointer;\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-menu-title {\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-author{\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n}\r\n\r\n.plugin-version {\r\n    position: absolute;\r\n    right: 20px;\r\n    bottom: 0;\r\n    pointer-events: none;\r\n}\r\n\r\n.menu-wrap a {\r\n    display: block;\r\n    margin: 10px 0 10px;\r\n    transition: 100ms;\r\n    cursor: pointer;\r\n}\r\n\r\n.menu-wrap a:hover {\r\n    transform: scale(1.2);\r\n}\r\n\r\n.plugin-add-ban-up {\r\n    margin: 10px;\r\n    display: block;\r\n    width: 100%;\r\n}\r\n\r\n.ban-title-input {\r\n    height: 20px;\r\n    background-color: transparent;\r\n    border-radius: 50px 0 0 50px;\r\n    font: 13px "宋体";\r\n    line-height: 13px;\r\n    text-align: center;\r\n    margin: 0 0 0 2px;\r\n    border: 1px solid #b6adad;\r\n    float: left;\r\n}\r\n\r\n.ban-title-input:focus {\r\n    background-color: rgba(255, 255, 255, 0.4);\r\n}\r\n\r\n.ban-item-submit {\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px;\r\n    background: darkred;\r\n    height: 22px;\r\n    color: white;\r\n    width: 40px;\r\n    border-radius: 0 50px 50px 0;\r\n}\r\n\r\n.ban-item-submit:hover {\r\n    background-color: #a84716;\r\n    transition: 50ms;\r\n}\r\n\r\n.ban-item-submit:active {\r\n    background-color: #cd9072;\r\n}\r\n\r\n.banned-items {\r\n    padding: 10px;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    height: 147px;\r\n    line-height: 23px;\r\n    margin: 2px;\r\n\r\n}\r\n\r\n\r\n.banned-items::-webkit-scrollbar {\r\n    width: 10px;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-track {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-thumb {\r\n    background-color: #666666;\r\n}\r\n\r\n.banned-item {\r\n    position: relative;\r\n    display: inline-block;\r\n    height: 16px;\r\n\r\n    margin: 3px 1px 5px 1px;\r\n}\r\n\r\nspan.banned-title {\r\n    height: 16px;\r\n    float: left;\r\n    vertical-align: middle;\r\n    background-color: #e0a040;\r\n    font: 12px "宋体";\r\n    border-radius: 5px;\r\n    padding: 1px 5px 1px 5px;\r\n    line-height: 16px;\r\n}\r\n\r\n.banned-item button {\r\n\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px 5px 1px 5px;\r\n    background: rgba(89, 0, 0, 0.7);\r\n    height: 18px;\r\n    width: 100%;\r\n    color: white;\r\n    border-radius: 5px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    cursor: pointer;\r\n    opacity: 0;\r\n    transition: 80ms ease-in;\r\n\r\n}\r\n\r\n.banned-item button:active {\r\n\r\n    background: rgba(255, 76, 76, 0.7);\r\n}\r\n\r\n.banned-item button:hover {\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.about-page-content {\r\n    width: 100%;\r\n    display: block;\r\n    word-wrap: break-word;\r\n    box-sizing: border-box;\r\n    padding: 20px;\r\n    overflow-y: auto;\r\n    height: 210px;\r\n    float: none!important;\r\n}\r\n\r\n\r\n/* 过滤UI */\r\n.filter-button {\r\n\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: rgba(255, 0, 0, 1);\r\n    padding: 1.5px;\r\n    left: 0;\r\n    top: 0;\r\n    transform: translate(0, 0);\r\n    display: block;\r\n    position: fixed;\r\n    z-index: 98;\r\n    background-size: contain;\r\n    background-image: url(' + p + ");\r\n    border-radius: 11px;\r\n    border: 2px rgb(230, 230, 230) solid;\r\n    cursor: pointer;\r\n}\r\n\r\n.smooth {\r\n    transition: 500ms ease-in-out;\r\n    -moz-transition: 500ms ease-in-out;\r\n    -o-transition: 500ms ease-in-out;\r\n    -webkit-transition: 500ms ease-in-out;\r\n}\r\n\r\n.banned-article {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 0 !important;\r\n    overflow: hidden;\r\n    opacity: 0;\r\n}\r\n\r\n.banned-page-item {\r\n    margin: 0;\r\n    opacity: 0;\r\n    transition: 300ms;\r\n\r\n}\r\n\r\n.banned-page-item:hover {\r\n    opacity: 1;\r\n}\r\n\r\n.remove {\r\n    display: none !important;\r\n}\r\n\r\n.area-comment-block {\r\n    line-height: 14px;\r\n    background: url(" + m + ') no-repeat;\r\n    background-size: 13px 13px;\r\n    background-position: 0 1px;\r\n    padding-left: 17px;\r\n    padding-right: 15px;\r\n    color: #999;\r\n}\r\n\r\n.banned-text {\r\n    font-size: 14px !important;\r\n}\r\n\r\n.unban-replier-btn {\r\n    margin: 0 10px;\r\n}\r\n\r\n.hide-avatar {\r\n    visibility: hidden;\r\n}\r\n\r\n\r\n/*subUI */\r\n.sub-ui-wrap {\r\n    position: fixed;\r\n    left: 0;\r\n    top: 38%;\r\n    height: 80px;\r\n    width: 30px;\r\n    z-index: 99;\r\n}\r\n\r\n.sub-ui-inner {\r\n    height: 80px;\r\n    width: 30px;\r\n    position: relative;\r\n    display: block;\r\n    overflow: hidden;\r\n}\r\n\r\n.sub-ui-banned {\r\n\r\n    background-color: rgba(253, 76, 93, 0.3);\r\n}\r\n\r\n.sub-ui-normal {\r\n\r\n    background-color: rgba(165, 253, 76, 0.3);\r\n}\r\n\r\n.sub-ui-text {\r\n    writing-mode: vertical-rl;\r\n    text-orientation: upright;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    height: 100%;\r\n    width: 100%;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button {\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button:hover {\r\n    transform: translateX(100%);\r\n}\r\n\r\n#banUp {\r\n    color: black;\r\n}\r\n\r\n#unbanUp {\r\n    color: black;\r\n}\r\n\r\n\r\n#banUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "屏蔽ＵＰ主";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #fc7630;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n\r\n#unbanUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "取消屏蔽";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #83ee1a;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n.on-top {\r\n    z-index: 1000;\r\n}\r\n\r\n.user-tags {\r\n    vertical-align: middle;\r\n    display: inline-block;\r\n    margin: 0 20px 0 20px;\r\n    max-width: 50%;\r\n}\r\n\r\n/* TAGGING */\r\n.user-tag {\r\n    margin-top: 2px;\r\n    margin-right: 3px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    border-color: rgba(0, 0, 0, 0.4);\r\n\r\n    user-select: none;\r\n    display: inline-block;\r\n\r\n    height: 15px;\r\n    min-width: 30px;\r\n\r\n    float: left;\r\n\r\n\r\n}\r\n.user-tag-text{\r\n\r\n    text-align: center;\r\n}\r\n\r\n.very-smooth {\r\n\r\n    transition: 200ms;\r\n    -moz-transition: 200ms;\r\n    -o-transition: 200ms;\r\n    -webkit-transition: 200ms;\r\n}\r\n\r\n\r\n.add-new-tag {\r\n\r\n    margin-top: 2px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n\r\n    border: 1px rgba(0, 0, 0, 0.25);\r\n    border-style: dashed;\r\n    user-select: none;\r\n\r\n    display: inline-block;\r\n    float: left;\r\n\r\n}\r\n\r\n.add-new-tag:hover {\r\n    background-color: rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.add-new-tag:active {\r\n    background-color: rgba(255, 255, 255, 0.3);\r\n}\r\n\r\n.tagging-ui-container {\r\n    overflow: hidden;\r\n    position: fixed;\r\n    top: 50%;\r\n    left: 50%;\r\n    height: 200px;\r\n    width: 300px;\r\n    transform: translate(-50%, -50%);\r\n\r\n    box-sizing: border-box;\r\n    padding: 10px;\r\n\r\n    -webkit-box-shadow: 2px 2px 7px 1px #787878;\r\n    box-shadow: 2px 2px 7px 1px #787878;\r\n    border-radius: 10px;\r\n\r\n    background-color: rgb(240,240,240);\r\n}\r\n\r\n.tagging-ui-inner {\r\n    position: relative;\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n}\r\n\r\n.name-to-tag{\r\n    padding: 3px;\r\n\r\n}\r\n\r\n.tags-container {\r\n    width: 280px;\r\n    height: 130px;\r\n    background-color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.tagging-input-wrap{\r\n    background-color: rgb(100,100,100);\r\n    height: 20px;\r\n    vertical-align: top;\r\n    border-bottom: 2px rgb(200,200,200);\r\n    margin-bottom: 2px;\r\n}\r\n\r\n.tagging-input{\r\n    float: left;\r\n    box-sizing: border-box;\r\n    padding: 2px;\r\n    height: 20px;\r\n    width: 235px;\r\n    border: none;\r\n\r\n}\r\n\r\n.tagging-submit{\r\n    float: left;\r\n    height: 20px;\r\n    border: none;\r\n    width: 45px;\r\n    background-color: #ced9c5;\r\n}\r\n\r\n.tagging-submit:hover{\r\n    background-color: #a5f400;\r\n}\r\n\r\n.tagging-submit:active{\r\n    background-color: #d4f400;\r\n}\r\n\r\n.tagging-close-button{\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    background-color: #a84716;\r\n    color: white;\r\n    border-radius: 0 10px 0 10px;\r\n    width: 45px;\r\n    height: 25px;\r\n    vertical-align: middle;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    z-index: 10;\r\n    user-select: none;\r\n}\r\n\r\n.smooth-remove{\r\n    transition: 300ms ease-in-out;\r\n    opacity: 0;\r\n    pointer-events: none;\r\n\r\n}\r\n\r\n\r\n.tagging-close-button:hover{\r\n    background-color: #ffc5c5;\r\n}\r\n\r\n.tagging-close-button:active{\r\n    background-color: #ffedd4;\r\n    padding-top: 2px;\r\n\r\n}\r\n\r\n.tag-item{\r\n    display: inline-block;\r\n    background-color: #e7e1e1;\r\n    margin: 1px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n    border: 1px dashed;\r\n    padding: 2px;\r\n    font-size: 8px;\r\n    user-select: none;\r\n    cursor: pointer;\r\n    height: 19px;\r\n    min-width: 30px;\r\n    position: relative;\r\n    line-height: 15px;\r\n    text-align: center;\r\n}\r\n\r\n\r\n.tag-item:before{\r\n    opacity: 0;\r\n    content: "删除";\r\n    position: absolute;\r\n    width: 100%;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    left: 0;\r\n    height: 100%;\r\n    top: 0;\r\n    line-height: 19px;\r\n}\r\n\r\n.tag-item:hover:before{\r\n    opacity: 1;\r\n    color: white;\r\n    background-color: #a84716;\r\n}\r\n\r\n\r\n/* Comment Recovery UI */\r\n\r\n\r\n\r\n.deleted-comments-container{\r\n    position: absolute;\r\n    display: block;\r\n    width: 300px;\r\n\r\n    min-height: 300px;\r\n    overflow: hidden;\r\n}\r\n\r\n.deleted-comments-inner{\r\n    position: relative;\r\n    display: block;\r\n    width: 100%;\r\n\r\n}\r\n\r\n\r\n\r\n.deleted-comments-title{\r\n    box-sizing: border-box;\r\n    display: block;\r\n    font-size: 16px;\r\n    background-color: #b6adad;\r\n    padding: 3px 10px 3px 10px;\r\n}\r\n\r\n.deleted-comment-list{\r\n    height: 100%;\r\n    width: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}\r\n\r\n.deleted-comment{\r\n    border: 1px solid #e5e5e5;\r\n    background-color: #ffe;\r\n    display: block;\r\n}\r\n\r\n.deleted-comment img{\r\n    width: 100%;\r\n}\r\n\r\n.comment-info{\r\n    display: block;\r\n    height: 20px;\r\n    padding: 3px;\r\n}\r\n\r\n.comment-floor{\r\n    font-weight: 700;\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    width: 45px;\r\n    box-sizing: border-box;\r\n    margin-right: 3px;\r\n}\r\n\r\n.comment-query-state{\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.comment-content{\r\n    padding: 3px;\r\n}\r\n\r\n.hide-btn{\r\n    float: right;\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n    user-select: none;\r\n}\r\n\r\n.hide-btn:hover{\r\n    color: red;\r\n}', "" ]);
+            var f = c()(A);
+            var p = c()(s);
+            var m = c()(d);
+            u.push([ e.id, "/* Colors */\r\n.c-a {\r\n    background-color: #F7E6DE;\r\n}\r\n\r\n.c-b {\r\n    background-color: #D6C4C1;\r\n}\r\n\r\n.c-c {\r\n    background-color: #eee;\r\n}\r\n\r\n.c-d {\r\n    background-color: #D6C1CB;\r\n}\r\n\r\n.c-e {\r\n    background-color: #F7DEF7;\r\n}\r\n\r\n.ui-hidden {\r\n    /*display: none!important;*/\r\n    width: 0 !important;\r\n    border-width: 0!important;\r\n}\r\n\r\n.ui-hidden a {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden div {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden span {\r\n\r\n    background-color: transparent;\r\n}\r\n\r\n.helper-wrap {\r\n    user-select: none;\r\n    position: fixed;\r\n    z-index: 99;\r\n    height: 230px;\r\n    min-width: 60px;\r\n    top: 500px;\r\n    left: 0px;\r\n\r\n}\r\n\r\n.helper-wrap-inner {\r\n    position: relative;\r\n    height: 100%;\r\n}\r\n\r\n.helper-wrap-inner div {\r\n    float: left;\r\n    vertical-align: top;\r\n}\r\n\r\n.helper-main {\r\n    display: inline-block;\r\n    width: 280px;\r\n    height: 100%;\r\n    border: solid #666;\r\n    border-width: 1px 1px 1px 0;\r\n    position: relative;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n\r\n}\r\n\r\n.ac-girl {\r\n    display: inline-block;\r\n    width: 48px;\r\n    height: 80px;\r\n    background-image: url(" + f + ');\r\n    background-size: contain;\r\n    background-repeat: no-repeat;\r\n    cursor: pointer;\r\n    margin-top: 10px;\r\n}\r\n\r\n.ac-girl-hide {\r\n    transform: translateX(-100%);\r\n}\r\n\r\n.page-wrap {\r\n    height: 100%;\r\n    width: 280px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: inherit;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n}\r\n\r\n.go-back {\r\n    cursor: pointer;\r\n    padding: 3px;\r\n}\r\n\r\n.inactive-page {\r\n    display: none;\r\n}\r\n\r\n.menu-wrap {\r\n    text-align: center;\r\n    width: 80px;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n.sync-time {\r\n    margin-top: 20px;\r\n}\r\n\r\n.plugin-hint {\r\n    z-index: 99;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    cursor: pointer;\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-menu-title {\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-author{\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n}\r\n\r\n.plugin-version {\r\n    position: absolute;\r\n    right: 20px;\r\n    bottom: 0;\r\n    pointer-events: none;\r\n}\r\n\r\n.menu-wrap a {\r\n    display: block;\r\n    margin: 3px 0 0px;\r\n    transition: 100ms;\r\n    cursor: pointer;\r\n}\r\n\r\n.menu-wrap a:hover {\r\n    transform: scale(1.2);\r\n}\r\n\r\n.plugin-add-ban-up {\r\n    margin: 10px;\r\n    display: block;\r\n    width: 100%;\r\n}\r\n\r\n.ban-title-input {\r\n    height: 20px;\r\n    background-color: transparent;\r\n    border-radius: 50px 0 0 50px;\r\n    font: 13px "宋体";\r\n    line-height: 13px;\r\n    text-align: center;\r\n    margin: 0 0 0 2px;\r\n    border: 1px solid #b6adad;\r\n    float: left;\r\n}\r\n\r\n.ban-title-input:focus {\r\n    background-color: rgba(255, 255, 255, 0.4);\r\n}\r\n\r\n.ban-item-submit {\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px;\r\n    background: darkred;\r\n    height: 22px;\r\n    color: white;\r\n    width: 40px;\r\n    border-radius: 0 50px 50px 0;\r\n}\r\n\r\n.ban-item-submit:hover {\r\n    background-color: #a84716;\r\n    transition: 50ms;\r\n}\r\n\r\n.ban-item-submit:active {\r\n    background-color: #cd9072;\r\n}\r\n\r\n.banned-items {\r\n    padding: 10px;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    height: 147px;\r\n    line-height: 23px;\r\n    margin: 2px;\r\n\r\n}\r\n\r\n\r\n.banned-items::-webkit-scrollbar {\r\n    width: 10px;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-track {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-thumb {\r\n    background-color: #666666;\r\n}\r\n\r\n.banned-item {\r\n    position: relative;\r\n    display: inline-block;\r\n    height: 16px;\r\n\r\n    margin: 3px 1px 5px 1px;\r\n}\r\n\r\nspan.banned-title {\r\n    height: 16px;\r\n    float: left;\r\n    vertical-align: middle;\r\n    background-color: #e0a040;\r\n    font: 12px "宋体";\r\n    border-radius: 5px;\r\n    padding: 1px 5px 1px 5px;\r\n    line-height: 16px;\r\n}\r\n\r\n.banned-item button {\r\n\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px 5px 1px 5px;\r\n    background: rgba(89, 0, 0, 0.7);\r\n    height: 18px;\r\n    width: 100%;\r\n    color: white;\r\n    border-radius: 5px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    cursor: pointer;\r\n    opacity: 0;\r\n    transition: 80ms ease-in;\r\n\r\n}\r\n\r\n.banned-item button:active {\r\n\r\n    background: rgba(255, 76, 76, 0.7);\r\n}\r\n\r\n.banned-item button:hover {\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.about-page-content {\r\n    width: 100%;\r\n    display: block;\r\n    word-wrap: break-word;\r\n    box-sizing: border-box;\r\n    padding: 20px;\r\n    overflow-y: auto;\r\n    height: 210px;\r\n    float: none!important;\r\n}\r\n\r\n\r\n/* 过滤UI */\r\n.filter-button {\r\n\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: rgba(255, 0, 0, 1);\r\n    padding: 1.5px;\r\n    left: 0;\r\n    top: 0;\r\n    transform: translate(0, 0);\r\n    display: block;\r\n    position: fixed;\r\n    z-index: 98;\r\n    background-size: contain;\r\n    background-image: url(' + p + ");\r\n    border-radius: 11px;\r\n    border: 2px rgb(230, 230, 230) solid;\r\n    cursor: pointer;\r\n}\r\n\r\n.smooth {\r\n    transition: 500ms ease-in-out;\r\n    -moz-transition: 500ms ease-in-out;\r\n    -o-transition: 500ms ease-in-out;\r\n    -webkit-transition: 500ms ease-in-out;\r\n}\r\n\r\n.banned-article {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 0 !important;\r\n    overflow: hidden;\r\n    opacity: 0;\r\n}\r\n\r\n.banned-page-item {\r\n    margin: 0;\r\n    opacity: 0;\r\n    transition: 300ms;\r\n\r\n}\r\n\r\n.banned-page-item:hover {\r\n\r\n}\r\n\r\n.hover-show:hover{\r\n    opacity: 1;\r\n}\r\n\r\n.remove {\r\n    display: none !important;\r\n}\r\n\r\n.area-comment-block {\r\n    line-height: 14px;\r\n    background: url(" + m + ') no-repeat;\r\n    background-size: 13px 13px;\r\n    background-position: 0 1px;\r\n    padding-left: 17px;\r\n    padding-right: 15px;\r\n    color: #999;\r\n}\r\n\r\n.banned-text {\r\n    font-size: 14px !important;\r\n}\r\n\r\n.unban-replier-btn {\r\n    margin: 0 10px;\r\n}\r\n\r\n.hide-avatar {\r\n    visibility: hidden;\r\n}\r\n\r\n\r\n/*subUI */\r\n.sub-ui-wrap {\r\n    position: fixed;\r\n    left: 0;\r\n    top: 38%;\r\n    height: 80px;\r\n    width: 30px;\r\n    z-index: 99;\r\n}\r\n\r\n.sub-ui-inner {\r\n    height: 80px;\r\n    width: 30px;\r\n    position: relative;\r\n    display: block;\r\n    overflow: hidden;\r\n}\r\n\r\n.sub-ui-banned {\r\n\r\n    background-color: rgba(253, 76, 93, 0.3);\r\n}\r\n\r\n.sub-ui-normal {\r\n\r\n    background-color: rgba(165, 253, 76, 0.3);\r\n}\r\n\r\n.sub-ui-text {\r\n    writing-mode: vertical-rl;\r\n    text-orientation: upright;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    height: 100%;\r\n    width: 100%;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button {\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button:hover {\r\n    transform: translateX(100%);\r\n}\r\n\r\n#banUp {\r\n    color: black;\r\n}\r\n\r\n#unbanUp {\r\n    color: black;\r\n}\r\n\r\n\r\n#banUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "屏蔽ＵＰ主";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #fc7630;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n\r\n#unbanUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: "取消屏蔽";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #83ee1a;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n.on-top {\r\n    z-index: 1000;\r\n}\r\n\r\n.user-tags {\r\n    vertical-align: middle;\r\n    display: inline-block;\r\n    margin: 0 20px 0 20px;\r\n    max-width: 50%;\r\n}\r\n\r\n/* TAGGING */\r\n.user-tag {\r\n    margin-top: 2px;\r\n    margin-right: 3px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    border-color: rgba(0, 0, 0, 0.4);\r\n\r\n    user-select: none;\r\n    display: inline-block;\r\n\r\n    height: 15px;\r\n    min-width: 30px;\r\n\r\n    float: left;\r\n\r\n\r\n}\r\n.user-tag-text{\r\n\r\n    text-align: center;\r\n}\r\n\r\n.very-smooth {\r\n\r\n    transition: 200ms;\r\n    -moz-transition: 200ms;\r\n    -o-transition: 200ms;\r\n    -webkit-transition: 200ms;\r\n}\r\n\r\n\r\n.add-new-tag {\r\n\r\n    margin-top: 2px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n\r\n    border: 1px rgba(0, 0, 0, 0.25);\r\n    border-style: dashed;\r\n    user-select: none;\r\n\r\n    display: inline-block;\r\n    float: left;\r\n\r\n}\r\n\r\n.add-new-tag:hover {\r\n    background-color: rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.add-new-tag:active {\r\n    background-color: rgba(255, 255, 255, 0.3);\r\n}\r\n\r\n.tagging-ui-container {\r\n    overflow: hidden;\r\n    position: fixed;\r\n    top: 50%;\r\n    left: 50%;\r\n    height: 200px;\r\n    width: 300px;\r\n    transform: translate(-50%, -50%);\r\n\r\n    box-sizing: border-box;\r\n    padding: 10px;\r\n\r\n    -webkit-box-shadow: 2px 2px 7px 1px #787878;\r\n    box-shadow: 2px 2px 7px 1px #787878;\r\n    border-radius: 10px;\r\n\r\n    background-color: rgb(240,240,240);\r\n}\r\n\r\n.tagging-ui-inner {\r\n    position: relative;\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n}\r\n\r\n.name-to-tag{\r\n    padding: 3px;\r\n\r\n}\r\n\r\n.tags-container {\r\n    width: 280px;\r\n    height: 130px;\r\n    background-color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.tagging-input-wrap{\r\n    background-color: rgb(100,100,100);\r\n    height: 20px;\r\n    vertical-align: top;\r\n    border-bottom: 2px rgb(200,200,200);\r\n    margin-bottom: 2px;\r\n}\r\n\r\n.tagging-input{\r\n    float: left;\r\n    box-sizing: border-box;\r\n    padding: 2px;\r\n    height: 20px;\r\n    width: 235px;\r\n    border: none;\r\n\r\n}\r\n\r\n.tagging-submit{\r\n    float: left;\r\n    height: 20px;\r\n    border: none;\r\n    width: 45px;\r\n    background-color: #ced9c5;\r\n}\r\n\r\n.tagging-submit:hover{\r\n    background-color: #a5f400;\r\n}\r\n\r\n.tagging-submit:active{\r\n    background-color: #d4f400;\r\n}\r\n\r\n.tagging-close-button{\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    background-color: #a84716;\r\n    color: white;\r\n    border-radius: 0 10px 0 10px;\r\n    width: 45px;\r\n    height: 25px;\r\n    vertical-align: middle;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    z-index: 10;\r\n    user-select: none;\r\n}\r\n\r\n.smooth-remove{\r\n    transition: 300ms ease-in-out;\r\n    opacity: 0;\r\n    pointer-events: none;\r\n\r\n}\r\n\r\n\r\n.tagging-close-button:hover{\r\n    background-color: #ffc5c5;\r\n}\r\n\r\n.tagging-close-button:active{\r\n    background-color: #ffedd4;\r\n    padding-top: 2px;\r\n\r\n}\r\n\r\n.tag-item{\r\n    display: inline-block;\r\n    background-color: #e7e1e1;\r\n    margin: 1px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n    border: 1px dashed;\r\n    padding: 2px;\r\n    font-size: 8px;\r\n    user-select: none;\r\n    cursor: pointer;\r\n    height: 19px;\r\n    min-width: 30px;\r\n    position: relative;\r\n    line-height: 15px;\r\n    text-align: center;\r\n}\r\n\r\n\r\n.tag-item:before{\r\n    opacity: 0;\r\n    content: "删除";\r\n    position: absolute;\r\n    width: 100%;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    left: 0;\r\n    height: 100%;\r\n    top: 0;\r\n    line-height: 19px;\r\n}\r\n\r\n.tag-item:hover:before{\r\n    opacity: 1;\r\n    color: white;\r\n    background-color: #a84716;\r\n}\r\n\r\n\r\n/* Comment Recovery UI */\r\n\r\n\r\n\r\n.deleted-comments-container{\r\n    position: absolute;\r\n    display: block;\r\n    width: 300px;\r\n\r\n    min-height: 300px;\r\n    overflow: hidden;\r\n}\r\n\r\n.deleted-comments-inner{\r\n    position: relative;\r\n    display: block;\r\n    width: 100%;\r\n\r\n}\r\n\r\n\r\n\r\n.deleted-comments-title{\r\n    box-sizing: border-box;\r\n    display: block;\r\n    font-size: 16px;\r\n    background-color: #b6adad;\r\n    padding: 3px 10px 3px 10px;\r\n}\r\n\r\n.deleted-comment-list{\r\n    height: 100%;\r\n    width: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}\r\n\r\n.deleted-comment{\r\n    border: 1px solid #e5e5e5;\r\n    background-color: #ffe;\r\n    display: block;\r\n}\r\n\r\n.deleted-comment img{\r\n    width: 100%;\r\n}\r\n\r\n.comment-info{\r\n    display: block;\r\n    height: 20px;\r\n    padding: 3px;\r\n}\r\n\r\n.comment-floor{\r\n    font-weight: 700;\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    width: 45px;\r\n    box-sizing: border-box;\r\n    margin-right: 3px;\r\n}\r\n\r\n.comment-query-state{\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.comment-content{\r\n    padding: 3px;\r\n}\r\n\r\n.hide-btn{\r\n    float: right;\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n    user-select: none;\r\n}\r\n\r\n.hide-btn:hover{\r\n    color: red;\r\n}\r\n\r\n\r\n/* setting ui  check box */\r\n/* Customize the label (the container) */\r\n.cc-container {\r\n    display: block;\r\n    position: relative;\r\n    padding-left: 22px;\r\n    margin-bottom: 12px;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n    line-height: 12px;\r\n}\r\n\r\n/* Hide the browser\'s default checkbox */\r\n.cc-container input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    cursor: pointer;\r\n    height: 0;\r\n    width: 0;\r\n}\r\n\r\n/* Create a custom checkbox */\r\n.checkmark {\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    height: 12px;\r\n    width: 12px;\r\n    background-color: #848484;\r\n}\r\n\r\n/* On mouse-over, add a grey background color */\r\n.cc-container:hover input ~ .checkmark {\r\n    background-color: #ccc;\r\n}\r\n\r\n/* When the checkbox is checked, add a blue background */\r\n.cc-container input:checked ~ .checkmark {\r\n    background-color: #2196F3;\r\n}\r\n\r\n/* Create the checkmark/indicator (hidden when not checked) */\r\n.checkmark:after {\r\n    content: "";\r\n    position: absolute;\r\n    display: none;\r\n}\r\n\r\n/* Show the checkmark when checked */\r\n.cc-container input:checked ~ .checkmark:after {\r\n    display: block;\r\n}\r\n\r\n/* Style the checkmark/indicator */\r\n.cc-container .checkmark:after {\r\n    left: 4px;\r\n    top: 2px;\r\n    width: 3px;\r\n    height: 6px;\r\n    border: solid white;\r\n    border-width: 0 2px 2px 0;\r\n    -webkit-transform: rotate(45deg);\r\n    -ms-transform: rotate(45deg);\r\n    transform: rotate(45deg);\r\n}', "" ]);
             const g = u;
         },
         645: e => {
@@ -87,9 +87,9 @@ if (typeof module !=="undefined" && module !== null) {
                 n.i = function e(t, r, i, o, a) {
                     if ("string" === typeof t) t = [ [ null, t, void 0 ] ];
                     var l = {};
-                    if (i) for (var A = 0; A < this.length; A++) {
-                        var c = this[A][0];
-                        if (null != c) l[c] = true;
+                    if (i) for (var c = 0; c < this.length; c++) {
+                        var A = this[c][0];
+                        if (null != A) l[A] = true;
                     }
                     for (var s = 0; s < t.length; s++) {
                         var d = [].concat(t[s]);
@@ -311,13 +311,13 @@ if (typeof module !=="undefined" && module !== null) {
             if ("http://www.acfun.cn/" === o || "https://www.acfun.cn/" === o) return "HOME";
             let a = /https?:\/\/www\.acfun\.cn\/([av])\/ac\d+/;
             let l = /www\.acfun\.cn\/.*/;
-            let A = a.exec(o);
-            let c = l.exec(o);
-            if (null !== A) {
-                if ("a" === A[1]) return "ARTICLE";
-                if ("v" === A[1]) return "VIDEO";
+            let c = a.exec(o);
+            let A = l.exec(o);
+            if (null !== c) {
+                if ("a" === c[1]) return "ARTICLE";
+                if ("v" === c[1]) return "VIDEO";
             }
-            let s = c[0];
+            let s = A[0];
             let d = n[s];
             if ("undefined" !== typeof d && null !== d) return "VIDEO_HOME";
             d = t[s];
@@ -328,30 +328,38 @@ if (typeof module !=="undefined" && module !== null) {
             } else return "OTHER";
         }
         var i = t(547);
-        const o = "3.005";
-        function a(e) {
+        function o(...e) {
+            var n = console.log;
+            let t = [ "插件DEBUG:" ];
+            e.forEach((e => {
+                t.push(e);
+            }));
+            n(...t);
+        }
+        const a = "3.007";
+        function l(e) {
             return e.replace(/(\r\n|\n|\r)/gm, "").trim();
         }
-        let l = e => "undefined" === typeof e || null === e ? () => {} : e;
+        let c = e => "undefined" === typeof e || null === e ? () => {} : e;
         let A = "undefined" === typeof GM_setValue ? function(e, n, t, r) {
             let i = GM.setValue(e, n);
-            i.then(l(t), l(r));
+            i.then(c(t), c(r));
         } : function(e, n, t) {
             GM_setValue(e, n);
-            l(t)();
+            c(t)();
         };
-        let c = "undefined" === typeof GM_getValue ? function(e, n, t) {
+        let s = "undefined" === typeof GM_getValue ? function(e, n, t) {
             let r = GM.getValue(e, n);
             r.then((e => {
-                l(t)(e);
+                c(t)(e);
             }), (() => {
-                l(t)(n);
+                c(t)(n);
             }));
         } : function(e, n, t, r) {
             let i = GM_getValue(e, n);
-            l(t)(i);
+            c(t)(i);
         };
-        let s = "undefined" !== typeof GM_deleteValue ? function(e, n, t) {
+        let d = "undefined" !== typeof GM_deleteValue ? function(e, n, t) {
             try {
                 GM_deleteValue(e);
                 n();
@@ -362,57 +370,57 @@ if (typeof module !=="undefined" && module !== null) {
             A(e, null, n, t);
         } : function(e, n, t) {
             GM.deleteValue(e).then((() => {
-                l(n)();
+                c(n)();
             })).catch((e => {
-                l(t)(e);
+                c(t)(e);
             }));
         };
-        function d() {
+        function u() {
             A("ACFUN_BLOCK_LIST", []);
         }
-        function u() {
+        function f() {
             A("ACFUN_BLOCK_KEYWORDS", []);
         }
-        function f(e) {
-            c("USE_NEW_CLOUD", false, e);
-        }
         function p(e) {
-            A("USE_NEW_CLOUD", true);
+            s("USE_NEW_CLOUD", false, e);
         }
         function m(e) {
-            c("ACFUN_BLOCK_LIST", [], e);
+            A("USE_NEW_CLOUD", true);
         }
         function g(e) {
-            c("ACFUN_BLOCK_KEYWORDS", [], e);
+            s("ACFUN_BLOCK_LIST", [], e);
         }
         function w(e) {
-            c("ACFUN_BLOCK_REPLIERS", [], e);
+            s("ACFUN_BLOCK_KEYWORDS", [], e);
         }
-        function h(e, n) {
-            A("ACFUN_BLOCK_LIST", e, n);
+        function h(e) {
+            s("ACFUN_BLOCK_REPLIERS", [], e);
         }
         function v(e, n) {
-            A("ACFUN_BLOCK_KEYWORDS", e, n);
+            A("ACFUN_BLOCK_LIST", e, n);
         }
         function b(e, n) {
+            A("ACFUN_BLOCK_KEYWORDS", e, n);
+        }
+        function x(e, n) {
             A("ACFUN_BLOCK_REPLIERS", e, n);
         }
         t.g["usernameCache"] = null;
-        function x(e) {
+        function y(e) {
             function n() {
                 setTimeout((() => {
-                    x(e);
+                    y(e);
                 }), 1e3);
             }
             if (t.g["usernameCache"]) {
-                l(e)(t.g["usernameCache"]);
+                c(e)(t.g["usernameCache"]);
                 return;
             }
             if ("undefined" !== typeof unsafeWindow.user) {
                 let r = unsafeWindow.user.name;
                 if ("用户" !== r && "未知用户" !== r) {
                     t.g["usernameCache"] = r;
-                    l(e)(r);
+                    c(e)(r);
                 } else n();
             } else {
                 let r = unsafeWindow.document.querySelector("a.fl.user-name");
@@ -420,26 +428,26 @@ if (typeof module !=="undefined" && module !== null) {
                     let i = r.innerText.trim();
                     if ("未知用户" !== i) {
                         t.g["usernameCache"] = i;
-                        l(e)(i);
+                        c(e)(i);
                     } else n();
                 } else n();
             }
         }
-        function y(e) {
-            if ("undefined" === typeof t.g["cachedUserTags"]) c("ALL_TAGS", {}, (n => {
+        function E(e) {
+            if ("undefined" === typeof t.g["cachedUserTags"]) s("ALL_TAGS", {}, (n => {
                 t.g["cachedUserTags"] = n;
                 let r = t.g["cachedUserTags"];
-                l(e)(r);
-            })); else l(e)(t.g["cachedUserTags"]);
+                c(e)(r);
+            })); else c(e)(t.g["cachedUserTags"]);
         }
-        function E(e) {
+        function C(e) {
             t.g["cachedUserTags"] = t.g["cachedUserTags"] ? t.g["cachedUserTags"] : {};
             A("ALL_TAGS", t.g["cachedUserTags"], (() => {
                 e();
             }));
         }
-        function C(e, n) {
-            D((t => {
+        function T(e, n) {
+            I((t => {
                 console.log(typeof e);
                 if (t.indexOf(e) < 0) {
                     t.push(e);
@@ -450,8 +458,8 @@ if (typeof module !=="undefined" && module !== null) {
                 }));
             }));
         }
-        function T(e, n) {
-            D((t => {
+        function D(e, n) {
+            I((t => {
                 if (t.indexOf(e) >= 0) {
                     let r = t.indexOf(e);
                     t.splice(r, 1);
@@ -461,34 +469,34 @@ if (typeof module !=="undefined" && module !== null) {
                 }
             }));
         }
-        function D(e) {
-            c("COMMENT_CACHE_INDEX", [], (n => {
-                l(e)(n);
+        function I(e) {
+            s("COMMENT_CACHE_INDEX", [], (n => {
+                c(e)(n);
             }));
         }
-        function I(e, n) {
+        function L(e, n) {
             let t = `COMMENT_CACHE_${e}`;
-            c(t, null, (e => {
-                l(n)(e);
+            s(t, null, (e => {
+                c(n)(e);
             }), (() => {
-                l(n)(null);
+                c(n)(null);
             }));
         }
-        function L(e, n, t) {
+        function B(e, n, t) {
             let r = `COMMENT_CACHE_${e}`;
             A(r, n, (() => {
-                C(e, (() => {
-                    l(t)();
+                T(e, (() => {
+                    c(t)();
                 }));
             }), (() => {
                 console.error("缓存评论失败！");
             }));
         }
-        function B(e, n) {
+        function S(e, n) {
             let t = `COMMENT_CACHE_${e}`;
-            s(t, (() => {
-                T(e, (() => {
-                    l(n)();
+            d(t, (() => {
+                D(e, (() => {
+                    c(n)();
                 }));
             }), (() => {
                 console.log("DEBUG 删除缓存失败");
@@ -501,139 +509,157 @@ if (typeof module !=="undefined" && module !== null) {
             });
         }
         function W(e) {
-            c("UI_POSITION", {
+            s("UI_POSITION", {
                 x: 0,
                 y: 500
             }, (n => {
                 e(n);
             }));
         }
-        const O = {
-            version: o,
-            updateBanList: h,
-            updateKeywords: v,
-            updateReplyBanList: b,
-            loadBanList: m,
-            loadReplyBanList: w,
-            loadKeywords: g,
-            isUsingNewCloud: f,
-            setUsingNewCloud: p,
-            getUsername: x,
+        function O(e) {
+            s("GENERAL_SETTING", {
+                showDeletedComment: true,
+                showUserTags: true,
+                showBanButton: true,
+                showMouseover: true,
+                autoSync: true
+            }, (n => {
+                e(n);
+            }));
+        }
+        function k(e, n) {
+            A("GENERAL_SETTING", e, (() => {
+                n();
+            }));
+        }
+        const P = {
+            version: a,
+            loadGeneralSetting: O,
+            saveGeneralSetting: k,
+            updateBanList: v,
+            updateKeywords: b,
+            updateReplyBanList: x,
+            loadBanList: g,
+            loadReplyBanList: h,
+            loadKeywords: w,
+            isUsingNewCloud: p,
+            setUsingNewCloud: m,
+            getUsername: y,
             loadUIPosition: W,
             saveUIPosition: M,
-            getAllCacheIndices: D,
-            getLocalCommentCache: I,
-            saveCommentCache: L,
-            deleteCommentCache: B,
+            getAllCacheIndices: I,
+            getLocalCommentCache: L,
+            saveCommentCache: B,
+            deleteCommentCache: S,
             getActiveHelpTime: function(e) {
                 let n = 0;
-                c("ACTIVE_HELP_TIME", n, (n => {
+                s("ACTIVE_HELP_TIME", n, (n => {
                     if ("undefined" === typeof n || null === n) n = 0;
                     let t = parseInt(n);
                     if (isNaN(t)) t = 0;
-                    l(e)(t);
+                    c(e)(t);
                 }));
             },
             setActiveHelpTime(e, n) {
                 let t = "undefined" === typeof e ? +new Date : e;
                 A("ACTIVE_HELP_TIME", t, (() => {
-                    l(n)(t);
+                    c(n)(t);
                 }));
             },
             setUpdateTime(e, n) {
                 let t = "undefined" === typeof e ? +new Date : e;
                 A("UPDATE_TIME", t, (() => {
-                    l(n)(t);
+                    c(n)(t);
                 }));
             },
             getUpdateTime(e) {
                 let n = 0;
-                c("UPDATE_TIME", n, (n => {
+                s("UPDATE_TIME", n, (n => {
                     if ("undefined" === typeof n || null === n) n = 0;
                     let t = parseInt(n);
                     if (isNaN(t)) t = 0;
-                    l(e)(parseInt(t));
+                    c(e)(parseInt(t));
                 }));
             },
             banUser(e, n) {
                 e = e.trim();
-                m((t => {
+                g((t => {
                     if (t.indexOf(e) < 0) {
                         t.push(e);
-                        h(t, (() => {
-                            l(n)(t);
+                        v(t, (() => {
+                            c(n)(t);
                         }));
-                    } else l(n)(t);
+                    } else c(n)(t);
                 }));
             },
             unbanUser(e, n) {
                 e = e.trim();
-                m((t => {
+                g((t => {
                     let r = t.indexOf(e);
                     if (r >= 0) {
                         t.splice(r, 1);
-                        h(t, (() => {
-                            l(n)(t);
+                        v(t, (() => {
+                            c(n)(t);
                         }));
-                    } else l(n)(t);
+                    } else c(n)(t);
                 }));
             },
             banKeyword(e, n) {
                 e = e.trim();
-                g((t => {
+                w((t => {
                     if (t.indexOf(e) < 0) {
                         t.push(e);
-                        v(t, (() => {
-                            l(n)(t);
+                        b(t, (() => {
+                            c(n)(t);
                         }));
-                    } else l(n)(t);
+                    } else c(n)(t);
                 }));
             },
             unbanKeyword(e, n) {
                 e = e.trim();
-                g((t => {
+                w((t => {
                     let r = t.indexOf(e);
                     if (r >= 0) {
                         t.splice(r, 1);
-                        v(t, (() => {
-                            l(n)(t);
+                        b(t, (() => {
+                            c(n)(t);
                         }));
-                    } else l(n)(t);
+                    } else c(n)(t);
                 }));
             },
             banReplier(e, n) {
                 e = e.trim();
-                w((t => {
+                h((t => {
                     if (t.indexOf(e) < 0) {
                         t.push(e);
-                        b(t, (() => {
-                            l(n)(t);
+                        x(t, (() => {
+                            c(n)(t);
                         }));
-                    } else l(n)(t);
+                    } else c(n)(t);
                 }));
             },
             unbanReplier(e, n) {
                 e = e.trim();
-                w((t => {
+                h((t => {
                     let r = t.indexOf(e);
                     if (r >= 0) {
                         t.splice(r, 1);
-                        b(t, (() => {
-                            l(n)(t);
+                        x(t, (() => {
+                            c(n)(t);
                         }));
-                    } else l(n)(t);
+                    } else c(n)(t);
                 }));
             },
             getTags(e, n) {
                 e = e.trim();
-                y((t => {
+                E((t => {
                     let r = t[e];
-                    l(n)(r ? r : []);
+                    c(n)(r ? r : []);
                 }));
             },
             removeTagForUser(e, n, r) {
                 e = e.trim();
-                y((i => {
+                E((i => {
                     let o = i[e];
                     o = o ? o : [];
                     let a = o.indexOf(n);
@@ -642,12 +668,12 @@ if (typeof module !=="undefined" && module !== null) {
                         i[e] = o;
                     }
                     t.g["cachedUserTags"] = i;
-                    E(r);
+                    C(r);
                 }));
             },
             addTagToUser(e, n, r) {
                 e = e.trim();
-                y((i => {
+                E((i => {
                     let o = e in i ? i[e] : [];
                     if (o.indexOf(n) < 0) {
                         console.log(n, "add to ", e);
@@ -656,12 +682,12 @@ if (typeof module !=="undefined" && module !== null) {
                     }
                     t.g["cachedUserTags"] = i;
                     console.log(t.g["cachedUserTags"]);
-                    E(r);
+                    C(r);
                 }));
             },
             AddTagsToUser(e, n, r) {
                 e = e.trim();
-                y().then((i => {
+                E().then((i => {
                     let o = i[e];
                     o = o ? o : [];
                     n.forEach((e => {
@@ -669,40 +695,32 @@ if (typeof module !=="undefined" && module !== null) {
                     }));
                     i[e] = o;
                     t.g["cachedUserTags"] = i;
-                    E(r);
+                    C(r);
                 }));
             },
             getAlltags(e) {
-                y((n => {
+                E((n => {
                     e(n);
                 }));
             }
         };
-        function P(...e) {
-            var n = console.log;
-            let t = [ "插件DEBUG:" ];
-            e.forEach((e => {
-                t.push(e);
-            }));
-            n(...t);
-        }
-        const S = "https://baldhumanity.top";
-        function q(e) {
-            return e;
-        }
+        const q = "https://baldhumanity.top";
         function U(e) {
             return e;
         }
-        function k() {
+        function N(e) {
+            return e;
+        }
+        function R() {
             if ("undefined" === typeof unsafeWindow.A) unsafeWindow.A = (e, n) => {
-                P(e, n);
+                o(e, n);
             };
         }
-        function N(e, n) {
+        function Y(e, n) {
             let t = new unsafeWindow.XMLHttpRequest;
-            let r = S + "/api";
+            let r = q + "/api";
             let i = JSON.stringify(e);
-            i = q(i);
+            i = U(i);
             t.open("POST", r, true);
             t.setRequestHeader("Content-Type", "text/plain");
             t.send(i);
@@ -717,44 +735,44 @@ if (typeof module !=="undefined" && module !== null) {
                 }
             };
         }
-        const R = {
+        const H = {
             getCommentType() {
                 let e = unsafeWindow.localStorage.getItem("ac_usp_commMode");
                 return "1" === e ? "NEW" : "OLD";
             },
             success(e) {
-                k();
+                R();
                 unsafeWindow.A.emit("global::success", e, 3e3);
             },
             warn(e) {
-                k();
+                R();
                 unsafeWindow.A.emit("global::warning", e, 3e3);
             },
-            apiRequest: N
+            apiRequest: Y
         };
-        var Y = '<div id="helperUI" class="helper-wrap" style="pointer-events:none"> <div class="helper-wrap-inner"> <div style="pointer-events:all" class="helper-main c-a ui-hidden smooth"> <div class="plugin-hint" id="hide_hint">隐藏插件--\x3e</div> <div class="page-wrap"> <div class="plugin-menu-title">插件设置</div> <div class="menu-wrap"> <a id="bannedAuthours">Ｕ Ｐ 主</a> <a id="bannedRepliers">回 复 者</a> <a id="bannedKeywords">关 键 词</a> <a id="cloudsync">云 同 步</a> <a id="commentRecovery">评论恢复</a> <a id="aboutme">关于插件</a> </div> <div class="plugin-version">0.00</div> <div class="plugin-author">作恶者：<a href="https://message.acfun.cn/im?targetId=690324" style="color:#00f">人文情怀</a></div> </div> <div class="page-wrap inactive-page" id="ban_up_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入UP主ID..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_replier_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入评论者ID..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_keyword_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入屏蔽关键词..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">LOL</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="cloudsync_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class="sync-time"></div> </div> </div> <div class="page-wrap inactive-page" id="recovery_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div> 2.100版本新功能：已删除评论恢复！<br/> 当你打开投稿，插件会第一时间在本地备份所有看到的评论，当未来某个时间，有评论被删除，插件将会为你恢复。同时本地备份将会在云服务器上共享。只要有一个用户备份过一次被删除的评论，所有用户都会得到分享。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div> <b></b><span class="cache-info"></span> </div> <div> <button>删除缓存</button> </div> </div> </div> <div class="page-wrap inactive-page" id="about_page"> <a class="go-back">返回</a> <div class="about-page-content"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style="pointer-events:all" class="ac-girl ac-girl-hide smooth"> </div> </div> </div>';
-        const Q = Y;
-        function F() {
+        var F = '<div id="helperUI" class="helper-wrap" style="pointer-events:none"> <div class="helper-wrap-inner"> <div style="pointer-events:all" class="helper-main c-a ui-hidden smooth"> <div class="plugin-hint" id="hide_hint">隐藏插件--\x3e</div> <div class="page-wrap"> <div class="plugin-menu-title">插件设置</div> <div class="menu-wrap"> <a id="bannedAuthours">Ｕ Ｐ 主</a> <a id="bannedRepliers">回 复 者</a> <a id="bannedKeywords">关 键 词</a> <a id="cloudsync">云 同 步</a> <a id="commentRecovery">评论恢复</a> <a id="generalSetting">通用设置</a> <a id="aboutme">关于插件</a> </div> <div class="plugin-version">0.00</div> <div class="plugin-author">作恶者：<a href="https://message.acfun.cn/im?targetId=690324" style="color:#00f">人文情怀</a></div> </div> <div class="page-wrap inactive-page" id="ban_up_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入UP主ID..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_replier_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入评论者ID..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_keyword_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="10" placeholder="输入屏蔽关键词..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">LOL</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="cloudsync_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class="sync-time"></div> <hr> <div> <button id="syncNow">立即同步</button> </div> </div> </div> <div class="page-wrap inactive-page" id="recovery_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div> 2.100版本新功能：已删除评论恢复！<br/> 当你打开投稿，插件会第一时间在本地备份所有看到的评论，当未来某个时间，有评论被删除，插件将会为你恢复。同时本地备份将会在云服务器上共享。只要有一个用户备份过一次被删除的评论，所有用户都会得到分享。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div> <b></b><span class="cache-info"></span> </div> <div> <button>删除缓存</button> </div> </div> </div> <div class="page-wrap inactive-page" id="general_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div> <label class="cc-container" data-id="showBanButton">在首页的投稿右上角显示[屏蔽]图标按钮 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showMouseover">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="autoSync">自动云同步所有列表 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showDeletedComment">显示投稿内被删除评论 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showUserTags">显示评论用户标签 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> </div> </div> </div> <div class="page-wrap inactive-page" id="about_page"> <a class="go-back">返回</a> <div class="about-page-content"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style="pointer-events:all" class="ac-girl ac-girl-hide smooth"> </div> </div> </div>';
+        const Q = F;
+        function G() {
             if ("undefined" === typeof t.g["eventStorage"]) t.g["eventStorage"] = {};
             return t.g["eventStorage"];
         }
-        function H() {
+        function X() {
             if ("undefined" === typeof t.g["eventCount"]) t.g["eventCount"] = 0;
             t.g["eventCount"]++;
             return t.g["eventCount"];
         }
-        const G = {
+        const V = {
             on: function(e, n) {
-                let t = F();
+                let t = G();
                 if (!(e in t)) t[e] = [];
-                let r = H();
+                let r = X();
                 t[e].push({
                     id: r,
                     callback: n
                 });
             },
             emit: function(e, n) {
-                let t = F();
+                let t = G();
                 if (e in t) {
                     let r = t[e];
                     r.forEach((e => {
@@ -789,41 +807,41 @@ if (typeof module !=="undefined" && module !== null) {
                 }));
             }
         };
-        function X(e, n, r = true, i = true) {
+        function K(e, n, r = true, i = true) {
             let o = unsafeWindow.document;
             let a = o.body;
             let l = -1;
-            let A = -1;
+            let c = -1;
             t.g.dragging = false;
-            let c;
+            let A;
             let s;
             e.addEventListener("pointerdown", (e => {
                 l = e.clientX;
-                A = e.clientY;
+                c = e.clientY;
                 let r = n.getBoundingClientRect();
-                c = r.left;
+                A = r.left;
                 s = r.top;
                 t.g.dragging = true;
             }));
             a.addEventListener("pointermove", (e => {
                 if (t.g.dragging) {
                     let t = e.clientX - l;
-                    let o = e.clientY - A;
-                    if (r) n.style.left = c + t + "px";
+                    let o = e.clientY - c;
+                    if (r) n.style.left = A + t + "px";
                     if (i) n.style.top = s + o + "px";
                 }
             }));
             a.addEventListener("pointerup", (() => {
                 t.g.dragging = false;
                 let e = n.getBoundingClientRect();
-                O.saveUIPosition(e.left, e.y);
+                P.saveUIPosition(e.left, e.y);
             }));
         }
-        function V(e, n) {
+        function j(e, n) {
             let t = {
-                up: [ "#ban_up_page", O.loadBanList, z, O.banUser, "UP_BAN_UPDATE" ],
-                replier: [ "#ban_replier_page", O.loadReplyBanList, J, O.banReplier, "REPLY_BAN_UPDATE" ],
-                keyword: [ "#ban_keyword_page", O.loadKeywords, _, O.banKeyword, "KEYWORD_BAN_UPDATE" ]
+                up: [ "#ban_up_page", P.loadBanList, _, P.banUser, "UP_BAN_UPDATE" ],
+                replier: [ "#ban_replier_page", P.loadReplyBanList, $, P.banReplier, "REPLY_BAN_UPDATE" ],
+                keyword: [ "#ban_keyword_page", P.loadKeywords, ee, P.banKeyword, "KEYWORD_BAN_UPDATE" ]
             };
             let r = t[n];
             r[1]((n => {
@@ -838,7 +856,7 @@ if (typeof module !=="undefined" && module !== null) {
                     }
                     e.value = "";
                     r[3](n, (() => {
-                        G.emit(r[4], null);
+                        V.emit(r[4], null);
                     }));
                 }));
                 let o = t.querySelector(".banned-items");
@@ -848,15 +866,15 @@ if (typeof module !=="undefined" && module !== null) {
                     let t = e.querySelector(".banned-title").innerText;
                     if (n.indexOf(t) >= 0) a.push(t); else e.remove();
                 }));
-                let A = unsafeWindow.document;
+                let c = unsafeWindow.document;
                 n.forEach((e => {
                     if (a.indexOf(e) < 0) {
-                        let n = A.createElement("div");
+                        let n = c.createElement("div");
                         n.classList.add("banned-item");
-                        let t = A.createElement("span");
+                        let t = c.createElement("span");
                         t.classList.add("banned-title");
                         t.innerText = e;
-                        let i = A.createElement("button");
+                        let i = c.createElement("button");
                         i.innerText = "×";
                         n.append(t, i);
                         i.addEventListener("click", (n => {
@@ -867,49 +885,68 @@ if (typeof module !=="undefined" && module !== null) {
                 }));
             }));
         }
-        function K(e) {
-            if ("undefined" === typeof e) {
-                let n = unsafeWindow.document;
-                e = n.body.querySelector("#helperUI");
-            }
-            V(e, "up");
-        }
-        function j(e) {
-            if ("undefined" === typeof e) {
-                let n = unsafeWindow.document;
-                e = n.body.querySelector("#helperUI");
-            }
-            V(e, "replier");
-        }
         function Z(e) {
             if ("undefined" === typeof e) {
                 let n = unsafeWindow.document;
                 e = n.body.querySelector("#helperUI");
             }
-            V(e, "keyword");
+            j(e, "up");
         }
         function z(e) {
-            O.unbanUser(e, (e => {
-                G.emit("UP_BAN_UPDATE", e);
-            }));
+            if ("undefined" === typeof e) {
+                let n = unsafeWindow.document;
+                e = n.body.querySelector("#helperUI");
+            }
+            j(e, "replier");
         }
         function J(e) {
-            O.unbanReplier(e, (e => {
-                G.emit("REPLY_BAN_UPDATE", e);
-            }));
+            if ("undefined" === typeof e) {
+                let n = unsafeWindow.document;
+                e = n.body.querySelector("#helperUI");
+            }
+            j(e, "keyword");
         }
         function _(e) {
-            O.unbanKeyword(e, (e => {
-                G.emit("KEYWORD_BAN_UPDATE", e);
+            P.unbanUser(e, (e => {
+                V.emit("UP_BAN_UPDATE", e);
             }));
         }
         function $(e) {
+            P.unbanReplier(e, (e => {
+                V.emit("REPLY_BAN_UPDATE", e);
+            }));
+        }
+        function ee(e) {
+            P.unbanKeyword(e, (e => {
+                V.emit("KEYWORD_BAN_UPDATE", e);
+            }));
+        }
+        function ne(e, n, t) {
+            P.loadGeneralSetting((r => {
+                r[e] = n;
+                P.saveGeneralSetting(r, t);
+            }));
+        }
+        function te(e) {
+            e.querySelectorAll(".cc-container").forEach((e => {
+                e.addEventListener("change", (e => {
+                    let n = e.currentTarget;
+                    let t = n.getAttribute("data-id");
+                    let r = n.querySelector("input").checked;
+                    ne(t, r, (() => {
+                        V.emit("SETTING_CHANGE_" + t, r);
+                    }));
+                }));
+            }));
+        }
+        function re(e) {
             let n = {
                 bannedAuthours: [ "#ban_up_page" ],
                 bannedRepliers: [ "#ban_replier_page" ],
                 bannedKeywords: [ "#ban_keyword_page" ],
                 cloudsync: [ "#cloudsync_page" ],
                 commentRecovery: [ "#recovery_page" ],
+                generalSetting: [ "#general_page" ],
                 aboutme: [ "#about_page" ]
             };
             let t = [];
@@ -936,7 +973,7 @@ if (typeof module !=="undefined" && module !== null) {
                 r.classList.add("ui-hidden");
             }));
         }
-        function ee(e) {
+        function ie(e) {
             function n(e) {
                 let n = new Date(1e3 * e);
                 let t = [ "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月" ];
@@ -945,92 +982,96 @@ if (typeof module !=="undefined" && module !== null) {
                 let o = n.getDate();
                 let a = n.getHours();
                 let l = n.getMinutes();
-                let A = n.getSeconds();
-                let c = r + "年" + i + o + "日 " + a + ":" + l + ":" + A;
-                return c;
+                let c = n.getSeconds();
+                let A = r + "年" + i + o + "日 " + a + ":" + l + ":" + c;
+                return A;
             }
-            O.getUpdateTime((t => {
+            P.getUpdateTime((t => {
                 e.querySelector(".sync-time").innerText = "上次同步时间：" + n(t);
             }));
         }
-        function ne(e) {
-            O.getAllCacheIndices((n => {
+        function oe(e) {
+            P.getAllCacheIndices((n => {
                 let t = n.length;
                 e.querySelector(".cache-info").innerText = `已缓存${t}篇投稿评论`;
             }));
         }
-        function te(e) {
-            G.on("UP_BAN_UPDATE", (() => {
-                K();
-            }));
-            G.on("REPLY_BAN_UPDATE", (() => {
-                j();
-            }));
-            G.on("KEYWORD_BAN_UPDATE", (() => {
+        function ae(e) {
+            V.on("UP_BAN_UPDATE", (() => {
                 Z();
             }));
-            G.on("SYNC_TIME_UPDATE", (() => {
-                ee(e);
+            V.on("REPLY_BAN_UPDATE", (() => {
+                z();
             }));
-            G.on("COMMENT_CACHE_UPDATE", (() => {
-                ne(e);
+            V.on("KEYWORD_BAN_UPDATE", (() => {
+                J();
+            }));
+            V.on("SYNC_TIME_UPDATE", (() => {
+                ie(e);
+            }));
+            V.on("COMMENT_CACHE_UPDATE", (() => {
+                oe(e);
+            }));
+            e.querySelector("#syncNow").addEventListener("click", (() => {
+                V.emit("SYNC_NOW", null);
             }));
         }
-        function re(e) {
+        function le(e) {
             let n = e.querySelector(".ac-girl");
             n.classList.remove("ac-girl-hide");
             let t = unsafeWindow.document.body.querySelector("#helperUI");
-            X(n, t, false);
+            K(n, t, false);
         }
-        function ie(e) {
-            e.querySelector(".plugin-version").innerText = "版本：" + O.version;
+        function ce(e) {
+            e.querySelector(".plugin-version").innerText = "版本：" + P.version;
         }
-        function oe(e) {
-            ne(e);
+        function Ae(e) {
+            oe(e);
         }
-        function ae(e) {
-            O.loadUIPosition((n => {
+        function se(e) {
+            P.loadUIPosition((n => {
                 e.style.top = n.y + "px";
                 e.style.left = n.x + "px";
             }));
+            ae(e);
             te(e);
-            K(e);
-            j(e);
             Z(e);
-            $(e);
-            ie(e);
-            oe(e);
+            z(e);
+            J(e);
             re(e);
+            ce(e);
+            Ae(e);
+            le(e);
         }
-        const le = {
+        const de = {
             state: "MENU",
             showSettingUI() {
                 let e = unsafeWindow.document;
                 e.body.insertAdjacentHTML("beforeend", Q);
                 let n = e.body.querySelector("#helperUI");
-                ae(n);
+                se(n);
             }
         };
-        var Ae = '<div class="sub-ui-wrap"> <div class="sub-ui-inner sub-ui-normal"> <div class="sub-ui-text"> 正 常 </div> <div id="banUp" class="sub-ui-button sub-ui-text smooth"> </div> <div id="unbanUp" class="sub-ui-button sub-ui-text remove smooth"> </div> </div> </div>';
-        const ce = Ae;
-        function se() {
-            G.on("UP_BAN_UPDATE", (() => {
-                fe();
+        var ue = '<div class="sub-ui-wrap"> <div class="sub-ui-inner sub-ui-normal"> <div class="sub-ui-text"> 正 常 </div> <div id="banUp" class="sub-ui-button sub-ui-text smooth"> </div> <div id="unbanUp" class="sub-ui-button sub-ui-text remove smooth"> </div> </div> </div>';
+        const fe = ue;
+        function pe() {
+            V.on("UP_BAN_UPDATE", (() => {
+                we();
             }));
             let e = unsafeWindow.document;
             let n = e.querySelector(".sub-ui-inner");
             let t = n.querySelector("#banUp");
             let r = n.querySelector("#unbanUp");
             t.addEventListener("click", (() => {
-                O.banUser(pe(e));
-                G.emit("UP_BAN_UPDATE", null);
+                P.banUser(he(e));
+                V.emit("UP_BAN_UPDATE", null);
             }));
             r.addEventListener("click", (() => {
-                O.unbanUser(pe(e));
-                G.emit("UP_BAN_UPDATE", null);
+                P.unbanUser(he(e));
+                V.emit("UP_BAN_UPDATE", null);
             }));
         }
-        function de() {
+        function me() {
             let e = unsafeWindow.document;
             let n = e.querySelector(".sub-ui-inner");
             n.classList.remove("sub-ui-normal");
@@ -1042,7 +1083,7 @@ if (typeof module !=="undefined" && module !== null) {
             r.classList.add("remove");
             i.classList.remove("remove");
         }
-        function ue() {
+        function ge() {
             let e = unsafeWindow.document;
             let n = e.querySelector(".sub-ui-inner");
             n.classList.add("sub-ui-normal");
@@ -1054,31 +1095,34 @@ if (typeof module !=="undefined" && module !== null) {
             r.classList.remove("remove");
             i.classList.add("remove");
         }
-        function fe() {
+        function we() {
             let e = unsafeWindow.document;
-            let n = pe(e);
-            O.loadBanList((e => {
-                if (e.indexOf(n) >= 0) de(); else ue();
+            let n = he(e);
+            P.loadBanList((e => {
+                if (e.indexOf(n) >= 0) me(); else ge();
             }));
         }
-        function pe(e) {
-            let n = e.querySelector(".up-name");
+        function he(e) {
+            let n;
+            let t = r();
+            if ("VIDEO" === t) n = e.querySelector(".up-info .up-name"); else n = e.querySelector(".up-name a");
+            o(n);
             if ("div" === n.tagName.toLowerCase()) n = n.firstChild;
             return n.innerText;
         }
-        function me() {
+        function ve() {
             let e = unsafeWindow.document;
-            e.body.insertAdjacentHTML("beforeend", ce);
+            e.body.insertAdjacentHTML("beforeend", fe);
             let n = e.querySelector(".container-video");
             if (n) n.classList.add("on-top");
         }
-        const ge = {
+        const be = {
             loadUI() {
-                me();
-                se();
+                ve();
+                pe();
             }
         };
-        function we(e) {
+        function xe(e) {
             if ("contentData" in e.dom) e = e.dom["contentData"];
             if (!("originalHeight" in e)) {
                 let n = e.dom.getBoundingClientRect();
@@ -1092,35 +1136,36 @@ if (typeof module !=="undefined" && module !== null) {
             setTimeout((() => {}), 500);
             e["hidden"] = true;
         }
-        function he(e) {
+        function ye(e) {
             e.dom.classList.add("smooth");
             e.dom.classList.add("banned-page-item");
+            if (t.g["showMouseover"]) e.dom.classList.add("hover-show"); else e.dom.classList.remove("hover-show");
             e["hidden"] = true;
         }
-        function ve(e) {
+        function Ee(e) {
             e.dom.classList.remove("banned-page-item");
             e["hidden"] = false;
         }
-        function be(e) {
+        function Ce(e) {
             e.dom.classList.remove("banned-article");
             e.dom.classList.remove("remove");
             e["hidden"] = false;
         }
-        function xe(e) {
+        function Te(e) {
             if ("contentData" in e.dom) e = e.dom["contentData"];
-            if ("ARTICLE" === e.type) we(e); else he(e);
+            if ("ARTICLE" === e.type) xe(e); else ye(e);
         }
-        function ye(e) {
+        function De(e) {
             if ("contentData" in e.dom) e = e.dom["contentData"];
-            if ("ARTICLE" === e.type) be(e); else ve(e);
+            if ("ARTICLE" === e.type) Ce(e); else Ee(e);
         }
-        function Ee(e) {
-            O.unbanReplier(e, (e => {
-                G.emit("REPLY_BAN_UPDATE");
+        function Ie(e) {
+            P.unbanReplier(e, (e => {
+                V.emit("REPLY_BAN_UPDATE");
             }));
         }
-        function Ce(e) {
-            let n = R.getCommentType();
+        function Le(e) {
+            let n = H.getCommentType();
             let t = unsafeWindow.document.createElement("div");
             t.append(...e.dom.childNodes);
             t.classList.add("remove");
@@ -1132,7 +1177,7 @@ if (typeof module !=="undefined" && module !== null) {
             i.classList.add("unban-replier-btn");
             i.innerText = "取消屏蔽";
             i.addEventListener("click", (() => {
-                Ee(e.username);
+                Ie(e.username);
             }));
             r.appendChild(i);
             e.dom.appendChild(t);
@@ -1141,7 +1186,7 @@ if (typeof module !=="undefined" && module !== null) {
             e.dom["bannedData"] = e;
             e.hidden = true;
         }
-        function Te(e) {
+        function Be(e) {
             if (!e.dom.hasOwnProperty("bannedData")) return;
             let n = e.dom["bannedData"];
             if (!n.hidden) return;
@@ -1150,42 +1195,42 @@ if (typeof module !=="undefined" && module !== null) {
             n.container.remove();
             n.hidden = false;
         }
-        function De(e) {
-            O.loadReplyBanList((n => {
+        function Se(e) {
+            P.loadReplyBanList((n => {
                 if (null !== n) e.forEach((e => {
                     if (n.indexOf(e.username) >= 0) if (e.dom.hasOwnProperty("bannedData")) {
-                        if (!e.dom["bannedData"].hidden) Ce(e);
-                    } else Ce(e); else Te(e);
+                        if (!e.dom["bannedData"].hidden) Le(e);
+                    } else Le(e); else Be(e);
                 }));
             }));
         }
-        function Ie(e) {
-            O.loadBanList((n => {
-                O.loadKeywords((t => {
+        function Me(e) {
+            P.loadBanList((n => {
+                P.loadKeywords((t => {
                     e.forEach((e => {
                         let r = false;
                         if (n.indexOf(e.username) >= 0) {
-                            xe(e);
+                            Te(e);
                             r = true;
                         }
                         t.forEach((n => {
                             if (e.title.indexOf(n) >= 0) {
-                                xe(e);
+                                Te(e);
                                 r = true;
                             }
                         }));
-                        if (!r) ye(e);
+                        if (!r) De(e);
                     }));
                 }));
             }));
         }
-        function Le(e) {}
-        function Be(e) {
-            O.banReplier(e, (e => {
-                G.emit("REPLY_BAN_UPDATE", null);
+        function We(e) {}
+        function Oe(e) {
+            P.banReplier(e, (e => {
+                V.emit("REPLY_BAN_UPDATE", null);
             }));
         }
-        function Me(e, n) {
+        function ke(e, n) {
             let t = unsafeWindow.document.createElement("span");
             t.innerText = "屏蔽";
             t.classList.add("area-comment-block");
@@ -1194,7 +1239,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             e.banButtonAnchor.insertAdjacentElement("afterend", t);
         }
-        function We(e, n) {
+        function Pe(e, n) {
             let t = unsafeWindow.document.createElement("a");
             t.innerText = "屏蔽";
             t.addEventListener("click", (() => {
@@ -1202,7 +1247,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             e.banButtonAnchor.insertAdjacentElement("afterend", t);
         }
-        function Oe() {
+        function qe() {
             let e = unsafeWindow.document;
             let n = e.createElement("div");
             n.classList.add("filter-button");
@@ -1211,8 +1256,8 @@ if (typeof module !=="undefined" && module !== null) {
             n.addEventListener("click", (e => {
                 let n = unsafeWindow["banButton"].activeData;
                 let t = n.username;
-                O.banUser(t, (e => {
-                    G.emit("UP_BAN_UPDATE", null);
+                P.banUser(t, (e => {
+                    V.emit("UP_BAN_UPDATE", null);
                 }));
             }));
             unsafeWindow["banButton"] = {
@@ -1236,61 +1281,74 @@ if (typeof module !=="undefined" && module !== null) {
                 t();
             }));
         }
-        function Pe() {
+        function Ue() {
             let e = unsafeWindow.document;
             let n = "<style>" + i.Z[0][1] + "</style>";
             e.head.insertAdjacentHTML("beforeend", n);
         }
-        function Se() {
-            Oe();
-            le.showSettingUI();
+        function Ne() {
+            qe();
+            de.showSettingUI();
         }
-        function qe() {
-            ge.loadUI();
-            le.showSettingUI();
+        function Re() {
+            be.loadUI();
+            de.showSettingUI();
         }
-        function Ue() {
-            G.on("FILTER_COMMENTS", (e => {
-                De(e);
+        function Ye() {
+            V.on("FILTER_COMMENTS", (e => {
+                Se(e);
             }));
-            G.on("FILTER_PAGE_CONTENTS", (e => {
-                Ie(e);
+            V.on("FILTER_PAGE_CONTENTS", (e => {
+                Me(e);
             }));
-            G.on("SHOW_COMMENT_TAGS", (e => {
-                Le(e);
+            V.on("SHOW_COMMENT_TAGS", (e => {
+                We(e);
+            }));
+            V.on("SETTING_CHANGE_showMouseover", (e => {
+                o("mouseovershow", e);
+                t.g["showMouseover"] = e;
+                V.emit("UP_BAN_UPDATE", null);
             }));
         }
-        const ke = {
+        function He() {
+            P.loadGeneralSetting((e => {
+                t.g["showMouseover"] = e.showMouseover;
+            }));
+        }
+        const Fe = {
             loadUI(e) {
+                He();
+                Ye();
                 Ue();
-                Pe();
-                if ("HOME" === e || "VIDEO_HOME" === e || "ARTICLE_HOME" === e) Se(); else if ("VIDEO" === e || "ARTICLE" === e) qe();
+                if ("HOME" === e || "VIDEO_HOME" === e || "ARTICLE_HOME" === e) Ne(); else if ("VIDEO" === e || "ARTICLE" === e) Re();
             },
             attachBanButton(e) {
                 let n = unsafeWindow["banButton"];
                 e.addEventListener("pointermove", (t => {
-                    if (n.activeDom !== e && !n.active) {
-                        if (e["contentData"]["hidden"]) return;
-                        n.activeDom = e;
-                        let t = e.getBoundingClientRect();
-                        n.dom.style.left = t.right - 20 + "px";
-                        n.dom.style.top = t.top + "px";
-                        n.dom.style.visibility = "visible";
-                        n.activeData = e["contentData"];
-                        n.active = true;
-                    }
+                    P.loadGeneralSetting((t => {
+                        if (t.showBanButton) if (n.activeDom !== e && !n.active) {
+                            if (e["contentData"]["hidden"]) return;
+                            n.activeDom = e;
+                            let t = e.getBoundingClientRect();
+                            n.dom.style.left = t.right - 20 + "px";
+                            n.dom.style.top = t.top + "px";
+                            n.dom.style.visibility = "visible";
+                            n.activeData = e["contentData"];
+                            n.active = true;
+                        }
+                    }));
                 }));
             },
             attachBanCommentButton(e) {
-                let n = R.getCommentType();
-                if ("NEW" === n) Me(e, (() => {
-                    Be(e.username);
-                })); else We(e, (() => {
-                    Be(e.username);
+                let n = H.getCommentType();
+                if ("NEW" === n) ke(e, (() => {
+                    Oe(e.username);
+                })); else Pe(e, (() => {
+                    Oe(e.username);
                 }));
             }
         };
-        function Ne(e) {
+        function Qe(e) {
             let n = e.querySelectorAll(".monkey-video");
             let t = [];
             n.forEach((e => {
@@ -1306,7 +1364,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Re(e) {
+        function Ge(e) {
             let n = e.querySelectorAll(".recommend-video");
             let t = [];
             n.forEach((e => {
@@ -1323,7 +1381,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Ye(e) {
+        function Xe(e) {
             let n = e.querySelectorAll(".banana-video");
             let t = [];
             n.forEach((e => {
@@ -1340,7 +1398,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Qe(e) {
+        function Ve(e) {
             let n = e.querySelectorAll(".live-video");
             let t = [];
             n.forEach((e => {
@@ -1356,7 +1414,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Fe(e) {
+        function Ke(e) {
             let n = e.querySelectorAll(".normal-video");
             let t = [];
             n.forEach((e => {
@@ -1374,7 +1432,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function He(e) {
+        function je(e) {
             let n = e.querySelectorAll(".list-content-videos .log-item");
             let t = [];
             n.forEach((e => {
@@ -1392,7 +1450,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Ge(e) {
+        function Ze(e) {
             let n = e.querySelectorAll(".slider-small-item");
             let t = [];
             n.forEach((e => {
@@ -1409,7 +1467,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Xe(e) {
+        function ze(e) {
             let n = e.querySelectorAll("figure.video-item");
             let t = [];
             n.forEach((e => {
@@ -1427,7 +1485,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Ve(e) {
+        function Je(e) {
             let n = e.querySelectorAll(".list-content-item");
             let t = [];
             n.forEach((e => {
@@ -1445,7 +1503,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function Ke(e) {
+        function _e(e) {
             let n = e.querySelectorAll(".rank-list li");
             let t = [];
             n.forEach((e => {
@@ -1463,7 +1521,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function je(e) {
+        function $e(e) {
             let n = e.querySelector(".article-tab");
             if (null == n) return [];
             let t = n.querySelectorAll("li[data-atomid]");
@@ -1486,7 +1544,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return r;
         }
-        function Ze(e) {
+        function en(e) {
             let n = e.querySelectorAll(".article-item");
             let t = [];
             n.forEach((e => {
@@ -1503,17 +1561,17 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return t;
         }
-        function ze(e) {
+        function nn(e) {
             function n(e) {
-                O.loadBanList(e);
+                P.loadBanList(e);
             }
             function t(e) {
-                O.loadKeywords(e);
+                P.loadKeywords(e);
             }
             function r(e, n) {
-                let t = [ Ne, Qe, He, Re, Fe, je, Ye ];
-                let r = [ Xe, Ve, Ke, Ge ];
-                let i = [ Ze ];
+                let t = [ Qe, Ve, je, Ge, Ke, $e, Xe ];
+                let r = [ ze, Je, _e, Ze ];
+                let i = [ en ];
                 let o = [];
                 if ("HOME" === e) o = t; else if ("VIDEO_HOME" === e) o = r; else if ("ARTICLE_HOME" === e) o = i;
                 let a = [];
@@ -1527,7 +1585,7 @@ if (typeof module !=="undefined" && module !== null) {
                 if ("undefined" === typeof n || null == n) n = unsafeWindow.document;
                 let t = r(e, n);
                 a(t);
-                G.emit("FILTER_PAGE_CONTENTS", t);
+                V.emit("FILTER_PAGE_CONTENTS", t);
             }
             function o() {
                 let e = new MutationObserver((function(e) {
@@ -1547,15 +1605,15 @@ if (typeof module !=="undefined" && module !== null) {
                 e.forEach((e => {
                     if (!("contentData" in e.dom)) {
                         e.dom["contentData"] = e;
-                        ke.attachBanButton(e.dom);
+                        Fe.attachBanButton(e.dom);
                     }
                 }));
             }
             function l() {
-                G.on("UP_BAN_UPDATE", (() => {
+                V.on("UP_BAN_UPDATE", (() => {
                     i();
                 }));
-                G.on("KEYWORD_BAN_UPDATE", (() => {
+                V.on("KEYWORD_BAN_UPDATE", (() => {
                     i();
                 }));
             }
@@ -1563,9 +1621,9 @@ if (typeof module !=="undefined" && module !== null) {
             l();
             setTimeout(i, 2e3);
         }
-        var Je = '<div class="tagging-ui-container smooth-remove"> <div class="tagging-close-button very-smooth">×</div> <div class="tagging-ui-inner"> <div class="name-to-tag">XXX的标签</div> <div class="tagging-input-wrap"> <input placeholder="...多个标签用空格分开,最多10字" maxlength="10" class="tagging-input"> <button class="tagging-submit very-smooth">添加</button> </div> <div class="tags-container"> </div> </div> </div>';
-        const _e = Je;
-        function $e(e) {
+        var tn = '<div class="tagging-ui-container smooth-remove"> <div class="tagging-close-button very-smooth">×</div> <div class="tagging-ui-inner"> <div class="name-to-tag">XXX的标签</div> <div class="tagging-input-wrap"> <input placeholder="...多个标签用空格分开,最多10字" maxlength="10" class="tagging-input"> <button class="tagging-submit very-smooth">添加</button> </div> <div class="tags-container"> </div> </div> </div>';
+        const rn = tn;
+        function on(e) {
             let n = unsafeWindow.document;
             let t = n.createElement("div");
             t.classList.add("user-tag");
@@ -1575,7 +1633,7 @@ if (typeof module !=="undefined" && module !== null) {
             t.appendChild(r);
             return t;
         }
-        function en() {
+        function an() {
             let e = unsafeWindow.document;
             let n = e.createElement("div");
             n.innerText = "＋标签";
@@ -1583,156 +1641,171 @@ if (typeof module !=="undefined" && module !== null) {
             n.classList.add("very-smooth");
             return n;
         }
-        function nn(e, n) {
-            let t = $e(n);
+        function ln(e, n) {
+            let t = on(n);
             e.appendChild(t);
         }
-        function tn(e, n) {}
-        function rn(e) {
+        function cn(e, n) {}
+        function An(e) {
             let n = unsafeWindow.document;
             let r = t.g["taggingUI"].querySelector(".tags-container");
             r.innerHTML = "";
-            O.getTags(e, (t => {
+            P.getTags(e, (t => {
                 t.forEach((t => {
                     let i = n.createElement("span");
                     i.classList.add("tag-item");
                     i.innerText = t;
                     i.onclick = () => {
-                        mn(e, t, (() => {
-                            G.emit("TAGS_UPDATE", e);
-                            rn(e);
+                        xn(e, t, (() => {
+                            V.emit("TAGS_UPDATE", e);
+                            An(e);
                         }));
                     };
                     r.append(i);
                 }));
             }));
         }
-        function on(e) {
+        function sn(e) {
             let n = t.g["taggingUI"];
             n.classList.remove("smooth-remove");
             n.querySelector(".name-to-tag").innerText = "[" + e + "]的标签";
             let r = t.g["taggingUI"].querySelector(".tags-container");
             while (r.firstChild) r.firstChild.remove();
-            rn(e);
+            An(e);
             n.querySelector(".tagging-submit").onclick = () => {
                 let t = n.querySelector(".tagging-input");
                 let r = t.value.trim();
                 t.value = "";
-                if (r.length > 0) pn(e, r, (() => {
-                    G.emit("TAGS_UPDATE", e);
-                    rn(e);
+                if (r.length > 0) bn(e, r, (() => {
+                    V.emit("TAGS_UPDATE", e);
+                    An(e);
                 }));
             };
         }
-        function an(e, n) {
+        function dn(e, n) {
             let t = unsafeWindow.document;
             let r = t.createElement("div");
             r.classList.add("user-tags");
-            let i = en();
-            O.getTags(e, (t => {
+            let i = an();
+            P.getTags(e, (t => {
                 t.forEach((e => {
-                    let n = $e(e);
+                    let n = on(e);
                     r.appendChild(n);
                 }));
                 n.insertAdjacentElement("afterend", r);
                 i.addEventListener("click", (() => {
-                    on(e);
+                    sn(e);
                 }));
                 r.appendChild(i);
             }));
         }
-        function ln(e, n) {
+        function un(e, n) {
             let t = n.parentElement.querySelector(".user-tags");
             t.querySelectorAll(".user-tag").forEach((e => {
                 e.remove();
             }));
             let r = t.querySelector(".add-new-tag");
-            O.getTags(e, (e => {
+            P.getTags(e, (e => {
                 e.forEach((e => {
-                    let n = $e(e);
+                    let n = on(e);
                     t.insertBefore(n, r);
                 }));
             }));
+            P.loadGeneralSetting((e => {
+                if (!e.showUserTags) t.classList.add("remove"); else t.classList.remove("remove");
+            }));
         }
-        function An(e) {
+        function fn(e) {
             e.forEach((e => {
                 let n = e.nameAnchor;
                 if ("undefined" === typeof n["tagShown"]) {
                     n["tagShown"] = true;
-                    an(e.username, n);
-                } else ln(e.username, n);
+                    dn(e.username, n);
+                } else un(e.username, n);
             }));
         }
-        function cn() {
+        function pn() {
             let e = unsafeWindow.document;
             let n = e.querySelector("a.up-name");
             if (!n) n = e.querySelector("a.upname");
-            if (!n) P("UP name not found!");
+            if (!n) o("UP name not found!");
             let r = n.innerText;
             n = n.nextSibling;
-            if (t.g["authorTagAdded"]) ln(r, n.parentElement); else an(r, n.parentElement);
+            if (t.g["authorTagAdded"]) un(r, n.parentElement); else dn(r, n.parentElement);
             t.g["authorTagAdded"] = true;
         }
-        function sn(e) {
-            An(e);
-            cn();
+        t.g["currentCommentData"] = [];
+        function mn(e) {
+            t.g["currentCommentData"] = e;
+            fn(e);
+            pn();
         }
-        function dn() {
-            G.on("SHOW_COMMENT_TAGS", An);
-            G.on("REFRESH_TAGS", sn);
+        function gn(e) {
+            let n = unsafeWindow.document;
+            if (!e) n.querySelectorAll(".user-tags").forEach((e => {
+                e.classList.add("remove");
+            })); else n.querySelectorAll(".user-tags").forEach((e => {
+                e.classList.remove("remove");
+            }));
         }
-        function un() {
+        function wn() {
+            V.on("SHOW_COMMENT_TAGS", fn);
+            V.on("REFRESH_TAGS", mn);
+            V.on("SETTING_CHANGE_showUserTags", gn);
+        }
+        function hn() {
             t.g["taggingUI"].classList.add("smooth-remove");
         }
-        function fn() {
-            unsafeWindow.document.body.insertAdjacentHTML("beforeend", _e);
+        function vn() {
+            unsafeWindow.document.body.insertAdjacentHTML("beforeend", rn);
             let e = unsafeWindow.document.body.lastChild;
             t.g["taggingUI"] = e;
             let n = e.querySelector(".tagging-close-button");
-            n.addEventListener("click", un);
+            n.addEventListener("click", hn);
         }
-        function pn(e, n, t) {
-            O.addTagToUser(e, n, (() => {
+        function bn(e, n, t) {
+            P.addTagToUser(e, n, (() => {
                 if (t) t();
             }));
         }
-        function mn(e, n, t) {
-            O.removeTagForUser(e, n, (() => {
-                G.emit("REMOVE_TAG", [ e, n ]);
+        function xn(e, n, t) {
+            P.removeTagForUser(e, n, (() => {
+                V.emit("REMOVE_TAG", [ e, n ]);
                 if (t) t();
             }));
         }
-        const gn = {
+        function yn() {}
+        const En = {
             addTags(e, n, t) {
-                O.addTagToUser(e, n, (() => {
-                    G.emit("ADD_TAGS", [ e, n ]);
+                P.addTagToUser(e, n, (() => {
+                    V.emit("ADD_TAGS", [ e, n ]);
                     if (t) t();
                 }));
             },
             addTag(e, n, t) {
-                pn(e, n, t);
+                bn(e, n, t);
             },
             delteTag(e, n, t) {
-                mn(e, n, t);
+                xn(e, n, t);
             },
             getTags(e, n) {
-                O.getTags(e, n);
+                P.getTags(e, n);
             },
             getAllTags(e) {
-                O.getAlltags(e);
+                P.getAlltags(e);
             },
             init() {
-                fn();
-                dn();
-                cn();
+                vn();
+                wn();
+                pn();
                 t.g["taggedComments"] = {};
             }
         };
-        var wn = '<div class="deleted-comments-container remove"> <div class="deleted-comments-inner"> <div class="deleted-comments-title">被删除楼层<div class="hide-btn">隐藏未收录</div></div> <div class="deleted-comment-list"> </div> </div> </div>';
-        const hn = wn;
-        var vn = '<div class="comment-info"> <div class="comment-floor">35</div> <div class="comment-query-state">查询中……</div> <div class="comment-username remove"></div> </div> <div class="comment-content remove"> <div class="comment-text">评论已删除</div> <div class="comment-time">2021-10-18 12:21:01</div> </div>';
-        const bn = vn;
-        var xn = function(e) {
+        var Cn = '<div class="deleted-comments-container remove"> <div class="deleted-comments-inner"> <div class="deleted-comments-title">被删除楼层<div class="hide-btn">隐藏未收录</div></div> <div class="deleted-comment-list"> </div> </div> </div>';
+        const Tn = Cn;
+        var Dn = '<div class="comment-info"> <div class="comment-floor">35</div> <div class="comment-query-state">查询中……</div> <div class="comment-username remove"></div> </div> <div class="comment-content remove"> <div class="comment-text">评论已删除</div> <div class="comment-time">2021-10-18 12:21:01</div> </div>';
+        const In = Dn;
+        var Ln = function(e) {
             var n = 0, t = 0;
             do {
                 n += e.offsetTop || 0;
@@ -1744,12 +1817,12 @@ if (typeof module !=="undefined" && module !== null) {
                 left: t
             };
         };
-        function yn() {
+        function Bn() {
             let e = new MutationObserver((function(e) {
                 e.forEach((function(e) {
                     let n = e.target;
                     if ("DIV" === n.tagName) setTimeout((() => {
-                        En();
+                        Sn();
                     }), 0);
                 }));
             }));
@@ -1758,20 +1831,20 @@ if (typeof module !=="undefined" && module !== null) {
                 childList: true
             });
         }
-        function En() {
+        function Sn() {
             let e = unsafeWindow.document;
             let n = e.querySelector("#main");
             let t = n.querySelector(".ac-comment-list");
             if (!t) return;
             let r = t.getBoundingClientRect();
-            let i = xn(t);
+            let i = Ln(t);
             let o = e.body.querySelector(".deleted-comments-container");
             o.style.top = i.top + "px";
             o.style.left = i.left + r.width + 30 + "px";
             let a = Math.max(t.scrollHeight, t.offsetHeight);
             o.style.height = `${a - 100}px`;
         }
-        function Cn(e) {
+        function Mn(e) {
             let n = !unsafeWindow["hideUnrecovered"];
             unsafeWindow["hideUnrecovered"] = n;
             if (n) e.querySelectorAll(".deleted-comment").forEach((e => {
@@ -1780,7 +1853,7 @@ if (typeof module !=="undefined" && module !== null) {
                 e.classList.remove("remove");
             }));
         }
-        function Tn(e) {
+        function Wn(e) {
             let n = unsafeWindow.document;
             let t = n.body.querySelector(".deleted-comments-container");
             unsafeWindow["deletedCommentsUI"] = t;
@@ -1788,7 +1861,7 @@ if (typeof module !=="undefined" && module !== null) {
             e.deletedFloors.forEach((e => {
                 let r = n.createElement("DIV");
                 r.classList.add("deleted-comment");
-                r.insertAdjacentHTML("afterbegin", bn);
+                r.insertAdjacentHTML("afterbegin", In);
                 r.querySelector(".comment-floor").innerText = "#" + e;
                 r["floor"] = e;
                 t.querySelector(".deleted-comment-list").appendChild(r);
@@ -1812,10 +1885,10 @@ if (typeof module !=="undefined" && module !== null) {
                 o.style.overflowY = "scroll";
             }
             t.querySelector(".hide-btn").addEventListener("click", (() => {
-                Cn(t);
+                Mn(t);
             }));
         }
-        function Dn(e) {
+        function On(e) {
             let n = /\[img=图片\](https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))\[\/img\]/;
             let t = n.exec(e);
             if (t && t.length > 1) {
@@ -1823,10 +1896,10 @@ if (typeof module !=="undefined" && module !== null) {
                 let r = t[1];
                 let i = `<img src="${r}">`;
                 e = e.replace(n, i);
-                return Dn(e);
+                return On(e);
             } else return e;
         }
-        function In(e) {
+        function kn(e) {
             let n = unsafeWindow.document;
             let t = n.body.querySelector(".deleted-comments-container");
             let r = t.querySelectorAll(".deleted-comment");
@@ -1836,7 +1909,7 @@ if (typeof module !=="undefined" && module !== null) {
                     let t = n.querySelector(".comment-username");
                     t.innerText = e.username;
                     t.classList.remove("remove");
-                    n.querySelector(".comment-text").innerHTML = Dn(e.content);
+                    n.querySelector(".comment-text").innerHTML = On(e.content);
                     n.querySelector(".comment-query-state").classList.add("remove");
                     let r = new Date(e.replyTime);
                     n.querySelector(".comment-time").innerText = r.toLocaleString();
@@ -1844,7 +1917,7 @@ if (typeof module !=="undefined" && module !== null) {
                 }
             }));
         }
-        function Ln(e) {
+        function Pn(e) {
             let n = unsafeWindow.document;
             let t = n.body.querySelector(".deleted-comments-container");
             let r = t.querySelectorAll(".deleted-comment");
@@ -1852,42 +1925,50 @@ if (typeof module !=="undefined" && module !== null) {
                 if (n["floor"] === e) n.querySelector(".comment-query-state").innerText = "服务器未收录";
             }));
         }
-        function Bn() {
-            G.on("SHOW_DELETED_COMMENT_UI", (e => {
-                Tn(e);
+        function qn(e) {
+            let n = unsafeWindow.document;
+            let t = n.body.querySelector(".deleted-comments-container");
+            if (qn) t.classList.remove("remove"); else t.classList.add("remove");
+        }
+        function Un() {
+            V.on("SHOW_DELETED_COMMENT_UI", (e => {
+                Wn(e);
             }));
-            G.on("FLOOR_RECOVER", (e => {
-                In(e);
+            V.on("FLOOR_RECOVER", (e => {
+                kn(e);
             }));
-            G.on("NO_SERVER_CACHE", (e => {
-                Ln(e);
+            V.on("NO_SERVER_CACHE", (e => {
+                Pn(e);
+            }));
+            V.on("SETTING_CHANGE_showDeletedComment", (e => {
+                qn(e);
             }));
         }
-        function Mn() {
+        function Nn() {
             let e = unsafeWindow.document;
-            e.body.insertAdjacentHTML("beforeend", hn);
-            unsafeWindow.onresize = En;
-            En();
-            yn();
+            e.body.insertAdjacentHTML("beforeend", Tn);
+            unsafeWindow.onresize = Sn;
+            Sn();
+            Bn();
         }
-        const Wn = {
+        const Rn = {
             init() {
-                Mn();
-                Bn();
+                Nn();
+                Un();
             }
         };
-        const On = 1e3;
-        const Pn = 60 * On;
-        const Sn = 60 * Pn;
-        const qn = 24 * Sn;
-        let Un = 1 * Sn;
-        function kn(e, n, t) {
-            O.saveCommentCache(e, n, (e => {
+        const Yn = 1e3;
+        const Hn = 60 * Yn;
+        const Fn = 60 * Hn;
+        const Qn = 24 * Fn;
+        let Gn = 1 * Fn;
+        function Xn(e, n, t) {
+            P.saveCommentCache(e, n, (e => {
                 if (t) t(e);
-                G.emit("COMMENT_CACHE_UPDATE", n);
+                V.emit("COMMENT_CACHE_UPDATE", n);
             }));
         }
-        function Nn(e, n) {
+        function Vn(e, n) {
             let t = new unsafeWindow.XMLHttpRequest;
             t.open("GET", e, true);
             t.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -1902,7 +1983,7 @@ if (typeof module !=="undefined" && module !== null) {
             };
             t.send();
         }
-        function Rn() {
+        function Kn() {
             let e = r();
             let n = null;
             if ("VIDEO" === e) {
@@ -1914,9 +1995,9 @@ if (typeof module !=="undefined" && module !== null) {
             }
             return n;
         }
-        function Yn(e, n, t, r) {
+        function jn(e, n, t, r) {
             let i = `https://www.acfun.cn/rest/pc-direct/comment/listByFloor?sourceId=${e}&sourceType=3&page=${n}&pivotCommentId=0&newPivotCommentId=0&t=1638284078529&supportZtEmot=true`;
-            Nn(i, (i => {
+            Vn(i, (i => {
                 if (i) {
                     let o = i.commentIds;
                     o.forEach((e => {
@@ -1935,15 +2016,15 @@ if (typeof module !=="undefined" && module !== null) {
                     r["totalCount"] = i.totalCount;
                     let a = i.totalPage;
                     if (n < a) setTimeout((() => {
-                        Yn(e, n + 1, t, r);
+                        jn(e, n + 1, t, r);
                     }), 500); else t(r);
                 }
             }));
         }
-        function Qn(e, n) {
+        function Zn(e, n) {
             let t = 1;
             let r = `https://www.acfun.cn/rest/pc-direct/comment/listByFloor?sourceId=${e}&sourceType=3&page=${t}&pivotCommentId=0&newPivotCommentId=0&t=1638284078529&supportZtEmot=true`;
-            Nn(r, (e => {
+            Vn(r, (e => {
                 if (e) {
                     let t = "c" + e.commentIds[0];
                     let r = e.commentsMap[t];
@@ -1952,8 +2033,8 @@ if (typeof module !=="undefined" && module !== null) {
                 }
             }));
         }
-        function Fn(e, n) {
-            P(`采集评论，投稿id=${e}`);
+        function zn(e, n) {
+            o(`采集评论，投稿id=${e}`);
             function t(t) {
                 let r = {
                     id: e,
@@ -1973,16 +2054,16 @@ if (typeof module !=="undefined" && module !== null) {
                     if (n > i) i = n;
                 }));
                 r.floorCount = t["totalCount"];
-                P(`已采集本投稿评论至${i}楼。`);
+                o(`已采集本投稿评论至${i}楼。`);
                 for (let e = 1; e <= i; e++) if (!(e in t)) r.deletedFloors.push(e); else {
                     let n = t[e].replyTime;
                     if (n > r.lastReplyTime) r.lastReplyTime = n;
                 }
                 n(r);
             }
-            Yn(e, 1, t, {});
+            jn(e, 1, t, {});
         }
-        function Hn(e) {
+        function Jn(e) {
             let n = {
                 id: e.id,
                 recoveredFloors: [],
@@ -2009,73 +2090,73 @@ if (typeof module !=="undefined" && module !== null) {
                 query: "report_cache",
                 cache: n
             };
-            if (t > 0) R.apiRequest(r, (n => {
+            if (t > 0) H.apiRequest(r, (n => {
                 e.reportedRecovery = e.recoveredFloors.map((e => e));
-                kn(e.id, e);
+                Xn(e.id, e);
             }));
         }
-        function Gn(e, n, t) {
-            Fn(e, (r => {
+        function _n(e, n, t) {
+            zn(e, (r => {
                 let i = Object.keys(r.floors).map((e => parseInt(e)));
-                let o = Math.max(...i);
-                for (let e = 1; e <= o; e++) if (e in r.floors && e in n.floors) ; else if (e in r.floors && !(e in n.floors)) ; else if (!(e in r.floors) && e in n.floors) {
+                let a = Math.max(...i);
+                for (let e = 1; e <= a; e++) if (e in r.floors && e in n.floors) ; else if (e in r.floors && !(e in n.floors)) ; else if (!(e in r.floors) && e in n.floors) {
                     r.floors[e] = n.floors[e];
                     r.recoveredFloors.push(e);
                 }
                 if (!n.reportedRecovery) n.reportedRecovery = [];
                 r.reportedRecovery = n.reportedRecovery.map((e => e));
-                let a = r.deletedFloors.length;
-                let l = r.recoveredFloors.length;
-                kn(e, r, (() => {
-                    P(r.lastReplyTime);
-                    P(`投稿${e}重新缓存完成。${a}个被删除，${l}个被恢复`);
+                let l = r.deletedFloors.length;
+                let c = r.recoveredFloors.length;
+                Xn(e, r, (() => {
+                    o(r.lastReplyTime);
+                    o(`投稿${e}重新缓存完成。${l}个被删除，${c}个被恢复`);
                     t(r);
-                    Hn(r);
+                    Jn(r);
                 }));
             }));
         }
-        function Xn(e, n) {
-            O.getLocalCommentCache(e, (t => {
-                if (!t) Fn(e, (t => {
-                    kn(e, t, (() => {
-                        P("首次收集投稿" + e + `评论完成。发现${t.deletedFloors.length}个评论被删除。`);
+        function $n(e, n) {
+            P.getLocalCommentCache(e, (t => {
+                if (!t) zn(e, (t => {
+                    Xn(e, t, (() => {
+                        o("首次收集投稿" + e + `评论完成。发现${t.deletedFloors.length}个评论被删除。`);
                         n(t);
                     }));
                 })); else {
-                    P("对比评论缓存是否需要更新。");
-                    Qn(e, ((r, i) => {
-                        let o = parseInt(r.timestamp);
-                        let a = parseInt(t.lastReplyTime);
-                        if (o !== a || t.floorCount !== i) {
-                            P(e + " 投稿缓存需要更新");
-                            Gn(e, t, n);
+                    o("对比评论缓存是否需要更新。");
+                    Zn(e, ((r, i) => {
+                        let a = parseInt(r.timestamp);
+                        let l = parseInt(t.lastReplyTime);
+                        if (a !== l || t.floorCount !== i) {
+                            o(e + " 投稿缓存需要更新");
+                            _n(e, t, n);
                         } else {
-                            P("已经缓存到最新评论了。");
+                            o("已经缓存到最新评论了。");
                             n(t);
                         }
                     }));
                 }
             }));
         }
-        function Vn(e) {
+        function et(e) {
             if (!e) e = () => 0;
-            let n = Rn();
-            Xn(n, e);
+            let n = Kn();
+            $n(n, e);
         }
-        function Kn(e) {
-            G.emit("SHOW_DELETED_COMMENT_UI", e);
+        function nt(e) {
+            V.emit("SHOW_DELETED_COMMENT_UI", e);
         }
-        function jn(e, n) {
-            P(`本地可恢复楼层：${e.recoveredFloors.join(" ")}`);
+        function tt(e, n) {
+            o(`本地可恢复楼层：${e.recoveredFloors.join(" ")}`);
             e.recoveredFloors.forEach((n => {
                 let t = e.floors[n];
-                G.emit("FLOOR_RECOVER", t);
+                V.emit("FLOOR_RECOVER", t);
             }));
             n();
         }
-        function Zn(e, n) {
+        function rt(e, n) {
             if (0 === e.cached.length) {
-                P("服务器没有其他缓存，已同步服务器缓存");
+                o("服务器没有其他缓存，已同步服务器缓存");
                 return;
             }
             e.cached.forEach((e => {
@@ -2085,59 +2166,59 @@ if (typeof module !=="undefined" && module !== null) {
                     n.reportedRecovery.push(e.floor);
                 }
             }));
-            kn(n.id, n, (() => {
-                P("已从服务器更新本投稿缓存。");
+            Xn(n.id, n, (() => {
+                o("已从服务器更新本投稿缓存。");
             }));
         }
-        function zn(e) {
+        function it(e) {
             let n = {
                 query: "query_floors",
                 id: e.id,
                 floors: e.deletedFloors.filter((n => e.recoveredFloors.indexOf(n) < 0))
             };
             if (n.floors.length > 0) {
-                P("向服务器发出恢复评论的请求");
-                R.apiRequest(n, (t => {
+                o("向服务器发出恢复评论的请求");
+                H.apiRequest(n, (t => {
                     let r = [];
                     t.cached.forEach((e => {
-                        G.emit("FLOOR_RECOVER", e);
+                        V.emit("FLOOR_RECOVER", e);
                         r.push(e.floor);
                     }));
                     n.floors.forEach((e => {
-                        if (r.indexOf(e) < 0) G.emit("NO_SERVER_CACHE", e);
+                        if (r.indexOf(e) < 0) V.emit("NO_SERVER_CACHE", e);
                     }));
-                    Zn(t, e);
+                    rt(t, e);
                 }));
             }
         }
-        function Jn(e) {
-            jn(e, (() => {
-                zn(e);
+        function ot(e) {
+            tt(e, (() => {
+                it(e);
             }));
         }
-        function _n() {
-            O.getAllCacheIndices((e => {
+        function at() {
+            P.getAllCacheIndices((e => {
                 let n = {
                     query: "active_recover",
                     ids: e
                 };
-                R.apiRequest(n, (e => {
-                    P(`收到服务器恢复需求。${e.result.length}个投稿需要本地数据`, e);
+                H.apiRequest(n, (e => {
+                    o(`收到服务器恢复需求。${e.result.length}个投稿需要本地数据`, e);
                     let n = e.result;
                     let t = 0;
                     let r = 0;
                     n.forEach(((e, i) => {
-                        O.getLocalCommentCache(e._id, (o => {
-                            let a = {
-                                id: o.id,
+                        P.getLocalCommentCache(e._id, (a => {
+                            let l = {
+                                id: a.id,
                                 recoveredFloors: [],
                                 floors: {}
                             };
-                            let l = 0;
+                            let c = 0;
                             e.floors.forEach((e => {
-                                if (e in o.floors) {
-                                    l++;
-                                    let n = o.floors[e];
+                                if (e in a.floors) {
+                                    c++;
+                                    let n = a.floors[e];
                                     let t = {
                                         username: n.username,
                                         replyTime: n.replyTime,
@@ -2145,71 +2226,71 @@ if (typeof module !=="undefined" && module !== null) {
                                         cId: parseInt(n.cId),
                                         content: n.content
                                     };
-                                    a.recoveredFloors.push(e);
-                                    a.floors[e] = t;
+                                    l.recoveredFloors.push(e);
+                                    l.floors[e] = t;
                                 }
                             }));
                             let A = {
                                 query: "report_cache",
-                                cache: a
+                                cache: l
                             };
-                            if (l > 0) {
-                                P("主动恢复评论数据", a);
-                                R.apiRequest(A, (e => {
-                                    P("恢复结果", e);
-                                    o.reportedRecovery = o.recoveredFloors.map((e => e));
-                                    kn(o.id, o);
+                            if (c > 0) {
+                                o("主动恢复评论数据", l);
+                                H.apiRequest(A, (e => {
+                                    o("恢复结果", e);
+                                    a.reportedRecovery = a.recoveredFloors.map((e => e));
+                                    Xn(a.id, a);
                                 }));
                                 t++;
-                                r += l;
+                                r += c;
                             }
-                            if (i === n.length - 1) P(`帮助服务器恢复共${t}个投稿和${r}个评论。`);
+                            if (i === n.length - 1) o(`帮助服务器恢复共${t}个投稿和${r}个评论。`);
                         }));
                     }));
                 }));
             }));
         }
-        function $n() {
-            P("主动帮助");
+        function lt() {
+            o("主动帮助");
             let e = +new Date;
-            O.getActiveHelpTime((n => {
-                if (e - Un > n) {
+            P.getActiveHelpTime((n => {
+                if (e - Gn > n) {
                     let t = Math.round((e - n) / 1e3);
-                    P(`距离上次主动帮助已经${t}秒了`);
-                    _n();
-                    O.setActiveHelpTime(e);
-                } else P(`距离上次主动帮助还未足够。`);
+                    o(`距离上次主动帮助已经${t}秒了`);
+                    at();
+                    P.setActiveHelpTime(e);
+                } else o(`距离上次主动帮助还未足够。`);
             }));
         }
-        function et(e) {
-            O.deleteCommentCache(e, (() => {
-                P(`删除缓存成功，id=${e}`);
+        function ct(e) {
+            P.deleteCommentCache(e, (() => {
+                o(`删除缓存成功，id=${e}`);
             }));
         }
-        function nt() {
-            O.getAllCacheIndices((e => {
+        function At() {
+            P.getAllCacheIndices((e => {
                 e.forEach((e => {
-                    et(e);
+                    ct(e);
                 }));
             }));
         }
-        const tt = {
+        const st = {
             init() {
-                Wn.init();
+                Rn.init();
                 let e = r();
                 if (!("VIDEO" === e || "ARTICLE" === e)) return;
-                unsafeWindow["deleteCache"] = O.deleteCommentCache;
-                unsafeWindow["clearCache"] = nt;
-                Vn((e => {
+                unsafeWindow["deleteCache"] = P.deleteCommentCache;
+                unsafeWindow["clearCache"] = At;
+                et((e => {
                     setTimeout((() => {
-                        Kn(e);
-                        Jn(e);
+                        nt(e);
+                        ot(e);
                     }), 1e3);
                 }));
-                $n();
+                lt();
             }
         };
-        function rt(e) {
+        function dt(e) {
             let n = [];
             let t = e.querySelectorAll(".fc-comment-item");
             t.forEach((e => {
@@ -2225,7 +2306,7 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return n;
         }
-        function it(e) {
+        function ut(e) {
             let n = [];
             let t = e.querySelectorAll(".area-comment-first");
             t.forEach((e => {
@@ -2241,35 +2322,35 @@ if (typeof module !=="undefined" && module !== null) {
             }));
             return n;
         }
-        function ot(e) {
-            let n = "NEW" === R.getCommentType() ? it(e) : rt(e);
+        function ft(e) {
+            let n = "NEW" === H.getCommentType() ? ut(e) : dt(e);
             return n;
         }
-        function at() {
+        function pt() {
             function e() {
-                G.on("TAGS_UPDATE", (e => {
+                V.on("TAGS_UPDATE", (e => {
                     let t = n(unsafeWindow.document);
                     t = t.filter((n => n.username === e));
-                    G.emit("REFRESH_TAGS", t);
+                    V.emit("REFRESH_TAGS", t);
                 }));
-                G.on("REPLY_BAN_UPDATE", (() => {
+                V.on("REPLY_BAN_UPDATE", (() => {
                     r();
                 }));
             }
             function n(e) {
-                return ot(e);
+                return ft(e);
             }
             function t(e) {
                 e.forEach((e => {
                     if (!e.dom.hasOwnProperty("commentData")) {
-                        ke.attachBanCommentButton(e);
+                        Fe.attachBanCommentButton(e);
                         e.dom["commentData"] = e;
                     }
                 }));
             }
             function r() {
                 let e = n(unsafeWindow.document);
-                G.emit("FILTER_COMMENTS", e);
+                V.emit("FILTER_COMMENTS", e);
             }
             function i() {
                 let e = new MutationObserver((function(e) {
@@ -2279,9 +2360,9 @@ if (typeof module !=="undefined" && module !== null) {
                             r.forEach((e => {
                                 if ("DIV" === e.tagName && (e.classList.contains("fc-comment-list") || e.classList.contains("ac-comment-hot-list") || e.classList.contains("ac-comment-root-list") || e.hasChildNodes() && "undefined" !== typeof e.firstChild.classList && (e.firstChild.classList.contains("area-comment-top") || e.firstChild.classList.contains("area-comment-sec")))) {
                                     let r = n(e);
-                                    G.emit("SHOW_COMMENT_TAGS", r);
+                                    V.emit("SHOW_COMMENT_TAGS", r);
                                     t(r);
-                                    G.emit("FILTER_COMMENTS", r);
+                                    V.emit("FILTER_COMMENTS", r);
                                     setTimeout((() => {}), 0);
                                 }
                             }));
@@ -2295,25 +2376,25 @@ if (typeof module !=="undefined" && module !== null) {
             }
             e();
             i();
-            gn.init();
-            tt.init();
+            En.init();
+            st.init();
         }
-        function lt(e) {
-            ze(e);
+        function mt(e) {
+            nn(e);
         }
-        function At() {
-            at();
+        function gt() {
+            pt();
         }
-        function ct(e) {
-            if ("HOME" === e || "VIDEO_HOME" === e || "ARTICLE_HOME" === e) lt(e); else if ("VIDEO" === e || "ARTICLE" === e) At();
+        function wt(e) {
+            if ("HOME" === e || "VIDEO_HOME" === e || "ARTICLE_HOME" === e) mt(e); else if ("VIDEO" === e || "ARTICLE" === e) gt();
         }
-        const st = 16731600;
-        let dt = 0;
-        function ut(e) {
+        const ht = 16731600;
+        let vt = 0;
+        function bt(e) {
             let n = unsafeWindow.ImSdk;
             let t = n.instance;
-            let r = "0_" + st;
-            let i = t.kernel.openSession(0, st);
+            let r = "0_" + ht;
+            let i = t.kernel.openSession(0, ht);
             i.then((n => {
                 let t = n.cachedSession.messages;
                 if ("undefined" === typeof t || 0 === t.length) {
@@ -2344,7 +2425,7 @@ if (typeof module !=="undefined" && module !== null) {
                 }
             }));
         }
-        function ft(e) {
+        function xt(e) {
             if (!"trySyncCount" in unsafeWindow) unsafeWindow["trySyncCount"] = 0;
             unsafeWindow["trySyncCount"]++;
             if (unsafeWindow["trySyncCount"] > 30) return;
@@ -2357,15 +2438,15 @@ if (typeof module !=="undefined" && module !== null) {
                 t = true;
             }
             if (t) {
-                P("载入信息。。");
+                o("载入信息。。");
                 setTimeout((() => {
-                    ft(e);
+                    xt(e);
                 }), 1e3);
             } else setTimeout((() => {
-                gt(e);
+                Ct(e);
             }), 0);
         }
-        function pt(e) {
+        function yt(e) {
             function n(e) {
                 return e.replace(/(\r\n|\n|\r)/gm, "").trim();
             }
@@ -2375,132 +2456,137 @@ if (typeof module !=="undefined" && module !== null) {
             let o = r.indexOf(" ") > 0 || t.indexOf(" ") > 0 ? " " : ",";
             let a = t.split(o).map(n);
             let l = r.split(o).map(n);
-            let A = i.split(o).map(n);
+            let c = i.split(o).map(n);
             a = 1 === a.length && "" === a[0] ? [] : a;
             l = 1 === l.length && "" === l[0] ? [] : l;
-            A = 1 === A.length && "" === A[0] ? [] : A;
-            O.updateBanList(l, (() => {
-                G.emit("UP_BAN_UPDATE", null);
+            c = 1 === c.length && "" === c[0] ? [] : c;
+            P.updateBanList(l, (() => {
+                V.emit("UP_BAN_UPDATE", null);
             }));
-            O.updateKeywords(a, (() => {
-                G.emit("KEYWORD_BAN_UPDATE", null);
+            P.updateKeywords(a, (() => {
+                V.emit("KEYWORD_BAN_UPDATE", null);
             }));
-            O.updateReplyBanList(A, (() => {
-                G.emit("REPLY_BAN_UPDATE", null);
+            P.updateReplyBanList(c, (() => {
+                V.emit("REPLY_BAN_UPDATE", null);
             }));
-            O.setUpdateTime(e.time, (() => {}));
+            P.setUpdateTime(e.time, (() => {}));
         }
-        let mt = null && 30 * 1e3;
-        function gt(e) {
-            O.getUpdateTime((e => {
-                dt = e;
-                ut((n => {
+        let Et = null && 30 * 1e3;
+        function Ct(e) {
+            P.getUpdateTime((e => {
+                vt = e;
+                bt((n => {
                     if (null === n) ; else {
-                        P(n);
+                        o(n);
                         try {
                             let t = JSON.parse(n);
-                            if ("undefined" === typeof t.version || parseFloat(t.version) < parseFloat(O.version)) {
-                                P("旧版同步信息发现，重新同步");
-                                pt(t);
-                            } else if (parseFloat(t.version) > parseFloat(O.version)) P("同步失败：你已经在其他地方使用过更新的版本了。请更新当前屏蔽插件，最新版本：" + t.version); else {
+                            if ("undefined" === typeof t.version || parseFloat(t.version) < parseFloat(P.version)) {
+                                o("旧版同步信息发现，重新同步");
+                                yt(t);
+                            } else if (parseFloat(t.version) > parseFloat(P.version)) o("同步失败：你已经在其他地方使用过更新的版本了。请更新当前屏蔽插件，最新版本：" + t.version); else {
                                 t.time = parseInt(decode(t.time));
                                 let n = t.time;
-                                if (n > e || O.version !== t.version) {
-                                    P("Update list");
-                                    pt(t);
-                                } else if (e > n) P("ImSdk is no longer available. Will try new cloud."); else P("Check done, no update needed", (e - n) / 1e3, t);
+                                if (n > e || P.version !== t.version) {
+                                    o("Update list");
+                                    yt(t);
+                                } else if (e > n) o("ImSdk is no longer available. Will try new cloud."); else o("Check done, no update needed", (e - n) / 1e3, t);
                             }
                         } catch (e) {}
                     }
-                    O.setUsingNewCloud((() => {
-                        P("切换到新服务器。");
+                    P.setUsingNewCloud((() => {
+                        o("切换到新服务器。");
                     }));
-                    setTimeout(yt, 5e3);
+                    setTimeout(St, 5e3);
                 }));
             }));
         }
-        function wt() {
-            G.on("SYNC_TIME_UPDATE", (e => {
-                if (e && "number" === typeof e && e > 0) O.setUpdateTime(e, (() => {
-                    P("更新同步时间", e);
+        function Tt() {
+            V.on("SYNC_TIME_UPDATE", (e => {
+                if (e && "number" === typeof e && e > 0) P.setUpdateTime(e, (() => {
+                    o("更新同步时间", e);
                 }));
             }));
-            G.on("TAGS_UPDATE", (() => {
+            V.on("TAGS_UPDATE", (() => {
                 let e = Math.floor(+new Date / 1e3);
-                O.setUpdateTime(e, null);
+                P.setUpdateTime(e, null);
             }));
-            G.on("UP_BAN_UPDATE", (() => {
+            V.on("UP_BAN_UPDATE", (() => {
                 let e = Math.floor(+new Date / 1e3);
-                O.setUpdateTime(e, null);
+                P.setUpdateTime(e, null);
             }));
-            G.on("REPLY_BAN_UPDATE", (() => {
+            V.on("REPLY_BAN_UPDATE", (() => {
                 let e = Math.floor(+new Date / 1e3);
-                O.setUpdateTime(e, null);
+                P.setUpdateTime(e, null);
             }));
-            G.on("KEYWORD_BAN_UPDATE", (() => {
+            V.on("KEYWORD_BAN_UPDATE", (() => {
                 let e = Math.floor(+new Date / 1e3);
-                O.setUpdateTime(e, null);
+                P.setUpdateTime(e, null);
+            }));
+            V.on("SYNC_NOW", (() => {
+                let e = Math.floor(+new Date / 1e3);
+                P.setUpdateTime(e, null);
+                Ot();
             }));
         }
-        function ht(e, n) {
-            R.apiRequest(e, n);
+        function Dt(e, n) {
+            H.apiRequest(e, n);
         }
-        function vt(e, n) {
+        function It(e, n) {
             let t = {
                 name: e,
                 query: "checktime"
             };
-            ht(t, n);
+            Dt(t, n);
         }
-        function bt(e) {
-            P("syncFromServer");
-            ht({
+        function Lt(e) {
+            o("syncFromServer");
+            Dt({
                 name: e,
                 query: "sync"
             }, (e => {
-                P("list from new Cloud", e);
+                o("list from new Cloud", e);
                 if (e.success) {
-                    O.updateBanList(e.uplist);
-                    O.updateReplyBanList(e.replylist);
-                    O.updateKeywords(e.keywords);
-                    G.emit("SYNC_TIME_UPDATE", e.lastsync);
-                    G.emit("UP_BAN_UPDATE", null);
-                    G.emit("REPLY_BAN_UPDATE", null);
-                    G.emit("KEYWORD_BAN_UPDATE", null);
+                    P.updateBanList(e.uplist);
+                    P.updateReplyBanList(e.replylist);
+                    P.updateKeywords(e.keywords);
+                    V.emit("SYNC_TIME_UPDATE", e.lastsync);
+                    V.emit("UP_BAN_UPDATE", null);
+                    V.emit("REPLY_BAN_UPDATE", null);
+                    V.emit("KEYWORD_BAN_UPDATE", null);
                 }
             }));
         }
-        let xt = e => {
-            P("成功", e);
+        let Bt = e => {
+            o("成功", e);
         };
-        function yt() {
-            P("检查新服务器");
-            O.getUsername((e => {
-                P("username=" + e);
-                vt(e, (n => {
-                    O.getUpdateTime((t => {
+        function St() {
+            o("检查新服务器");
+            P.getUsername((e => {
+                o("username=" + e);
+                It(e, (n => {
+                    P.getUpdateTime((t => {
                         if (n["synctime"] > 0 && t > 500 * n["synctime"]) t /= 1e3;
-                        if (n["synctime"] > t) bt(e); else if (n["synctime"] < t) Et((e => {
+                        if (n["synctime"] > t) Lt(e); else if (n["synctime"] < t) Mt((e => {
                             console.log("response", e);
                             if (e.success) {
-                                P("同步成功");
-                                xt(e);
-                                G.emit("SYNC_TIME_UPDATE", e.synctime);
+                                o("同步成功");
+                                Bt(e);
+                                V.emit("SYNC_TIME_UPDATE", e.synctime);
                             }
                         })); else {
-                            P("已经与服务器同步。");
-                            G.emit("SYNC_TIME_UPDATE", null);
+                            o("已经与服务器同步。");
+                            V.emit("SYNC_TIME_UPDATE", null);
                         }
                     }));
                 }));
             }));
         }
-        function Et(e) {
-            O.getUsername((n => {
-                O.loadBanList((t => {
-                    O.loadReplyBanList((r => {
-                        O.loadKeywords((i => {
-                            O.getAlltags((o => {
+        function Mt(e) {
+            P.getUsername((n => {
+                P.loadBanList((t => {
+                    P.loadReplyBanList((r => {
+                        P.loadKeywords((i => {
+                            P.getAlltags((o => {
                                 console.log("username update = ", n);
                                 let a = {
                                     name: n,
@@ -2510,64 +2596,66 @@ if (typeof module !=="undefined" && module !== null) {
                                     userTags: o,
                                     query: "update"
                                 };
-                                ht(a, e);
+                                Dt(a, e);
                             }));
                         }));
                     }));
                 }));
             }));
         }
-        function Ct() {
-            P("检查同步状态");
-            O.isUsingNewCloud((e => {
-                P("是否已经使用新服务器", e);
+        function Wt() {
+            o("检查同步状态");
+            P.isUsingNewCloud((e => {
+                o("是否已经使用新服务器", e);
                 if (!e) {
-                    P("并未使用新服务器");
-                    O.getUpdateTime((e => {
-                        P("检查本地同步时间 time=", e);
+                    o("并未使用新服务器");
+                    P.getUpdateTime((e => {
+                        o("检查本地同步时间 time=", e);
                         if (0 === e || isNaN(e)) {
-                            P("没有发现本地记录,首先检查旧服务");
-                            ft();
+                            o("没有发现本地记录,首先检查旧服务");
+                            xt();
                         } else {
-                            P("发现本地记录，未曾使用新服务器，尝试同步本地信息到新服务器");
-                            Et((e => {
+                            o("发现本地记录，未曾使用新服务器，尝试同步本地信息到新服务器");
+                            Mt((e => {
                                 if (e.success) {
-                                    P("同步成功");
-                                    O.setUpdateTime(e.lastsync, xt);
-                                    G.emit("SYNC_TIME_UPDATE", e.lastsync);
-                                    O.setUsingNewCloud((() => {}));
+                                    o("同步成功");
+                                    P.setUpdateTime(e.lastsync, Bt);
+                                    V.emit("SYNC_TIME_UPDATE", e.lastsync);
+                                    P.setUsingNewCloud((() => {}));
                                 }
                             }));
                         }
                     }));
                 } else {
-                    P("正常使用新服务器同步");
-                    yt();
+                    o("正常使用新服务器同步");
+                    St();
                 }
             }));
         }
-        function Tt() {
+        function Ot() {
             if ("undefined" === typeof unsafeWindow.user) {
-                setTimeout(Tt, 1e3);
+                setTimeout(Ot, 1e3);
                 return;
             }
             if ("用户" === unsafeWindow.user.name) return;
-            Ct();
+            P.loadGeneralSetting((e => {
+                if (e.autoSync) Wt();
+            }));
         }
-        const Dt = {
+        const kt = {
             init: () => {
-                wt();
+                Tt();
             },
-            SyncWithCloud: Tt
+            SyncWithCloud: Ot
         };
-        function It(e, n, t) {
+        function Pt(e, n, t) {
             let r = new Date;
             r.setTime(r.getTime() + 24 * t * 60 * 60 * 1e3);
             const i = "expires=" + r.toUTCString();
             unsafeWindow.document.cookie = e + "=" + n + "; " + i + "; path=/";
         }
-        let Lt = {};
-        Lt.x = function() {
+        let qt = {};
+        qt.x = function() {
             if ("undefined" !== typeof XMLHttpRequest) return new XMLHttpRequest;
             let e = [ "MSXML2.XmlHttp.6.0", "MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp" ];
             let n;
@@ -2577,9 +2665,9 @@ if (typeof module !=="undefined" && module !== null) {
             } catch (e) {}
             return n;
         };
-        Lt.send = function(e, n, t, r, i, o) {
+        qt.send = function(e, n, t, r, i, o) {
             if ("undefined" == typeof o) o = true;
-            let a = Lt.x();
+            let a = qt.x();
             a.open(t, e, o);
             a.onreadystatechange = function() {
                 if (4 === a.readyState) n(a.responseText);
@@ -2588,39 +2676,39 @@ if (typeof module !=="undefined" && module !== null) {
             if ("undefined" !== typeof i) for (let e in i) a.setRequestHeader(e, i[e]);
             a.send(r);
         };
-        Lt.get = function(e, n, t, r, i) {
+        qt.get = function(e, n, t, r, i) {
             let o = [];
             for (let e in n) o.push(encodeURIComponent(e) + "=" + encodeURIComponent(n[e]));
-            Lt.send(e + (o.length ? "?" + o.join("&") : ""), t, "GET", null, r, i);
+            qt.send(e + (o.length ? "?" + o.join("&") : ""), t, "GET", null, r, i);
         };
-        Lt.post = function(e, n, t, r, i) {
+        qt.post = function(e, n, t, r, i) {
             let o = [];
             for (let e in n) o.push(encodeURIComponent(e) + "=" + encodeURIComponent(n[e]));
-            Lt.send(e, t, "POST", o.join("&"), r, i);
+            qt.send(e, t, "POST", o.join("&"), r, i);
         };
-        function Bt() {
+        function Ut() {
             let e = unsafeWindow.document.cookie;
             let n = /_did=(\w+);/;
             let t = n.exec(e);
             return t[1];
         }
-        const Mt = {
-            getUDID: Bt,
+        const Nt = {
+            getUDID: Ut,
             feedBanana(e, n, t) {
-                let r = Bt();
+                let r = Ut();
                 if ("undefined" == typeof r) {
-                    P("未登陆，无法投蕉！");
+                    o("未登陆，无法投蕉！");
                     return;
                 }
                 let i = btoa(Math.random().toString(36).substr(2));
-                It("stochastic", i, 1);
-                let o = {
+                Pt("stochastic", i, 1);
+                let a = {
                     resourceId: parseInt(e),
                     resourceType: t,
                     count: n
                 };
-                let a = "https://www.acfun.cn/rest/pc-direct/banana/throwBanana";
-                Lt.post(a, o, (e => {
+                let l = "https://www.acfun.cn/rest/pc-direct/banana/throwBanana";
+                qt.post(l, a, (e => {
                     console.log(e);
                 }), {
                     udid: r
@@ -2628,13 +2716,13 @@ if (typeof module !=="undefined" && module !== null) {
             }
         };
         n()();
-        let Wt = r();
-        P(Wt);
-        ke.loadUI(Wt);
-        ct(Wt);
-        Dt.init();
-        Dt.SyncWithCloud();
-        unsafeWindow.sendBanana = Mt.feedBanana;
-        unsafeWindow.getUDID = Mt.getUDID;
+        let Rt = r();
+        o(Rt);
+        Fe.loadUI(Rt);
+        wt(Rt);
+        kt.init();
+        kt.SyncWithCloud();
+        unsafeWindow.sendBanana = Nt.feedBanana;
+        unsafeWindow.getUDID = Nt.getUDID;
     })();
 })();
