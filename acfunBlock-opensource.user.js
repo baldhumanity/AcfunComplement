@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.011
+// @version      3.012
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -629,7 +629,7 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.011");
+/* harmony default export */ const version = ("3.012");
 ;// CONCATENATED MODULE: ./dev/js/data.js
 //function to load Data
 
@@ -1251,7 +1251,7 @@ function _apiRequest(queryData, callback) {
 });
 ;// CONCATENATED MODULE: ./dev/html/mainUI.html
 // Module
-var code = "<div id=\"helperUI\" class=\"helper-wrap\" style=\"pointer-events:none\"> <div class=\"helper-wrap-inner\"> <div style=\"pointer-events:all\" class=\"helper-main c-a ui-hidden smooth\"> <div class=\"plugin-hint\" id=\"hide_hint\">隐藏插件--></div> <div class=\"page-wrap\"> <div class=\"plugin-menu-title\">插件设置</div> <div class=\"menu-wrap\"> <div class=\"menu-column\"> <a id=\"bannedAuthours\">Ｕ Ｐ 主</a> <a id=\"bannedRepliers\">回 复 者</a> <a id=\"bannedKeywords\">关 键 词</a> <a id=\"cloudsync\">云 同 步</a> <a id=\"commentRecovery\">评论恢复</a> </div> <div class=\"menu-column\"> <a id=\"generalSetting\">通用设置</a> <a id=\"aboutme\">关于插件</a> <a href=\"https://baldhumanity.top/acfun\">网站主页</a> </div> </div> <div class=\"plugin-version\">0.00</div> <div class=\"plugin-author\">作恶者：<a href=\"https://message.acfun.cn/im?targetId=690324\" style=\"color:#00f\">人文情怀</a></div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_up_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"10\" placeholder=\"输入UP主ID...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_replier_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"10\" placeholder=\"输入评论者ID...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_keyword_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"10\" placeholder=\"输入屏蔽关键词...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">LOL</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"cloudsync_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div class=\"cloud-description\"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class=\"sync-time\"></div> <hr> <div> <button id=\"syncNow\">立即同步</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"recovery_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div> 3.000版本新功能：查看已删除评论！<br/> 当你打开投稿，插件会第一时间在本地备份所有看到的评论，当未来某个时间，有评论被删除，插件将会为你恢复。同时本地备份将会在云服务器上共享。只要有一个用户备份过一次被删除的评论，所有用户都会得到分享。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div> <b></b><span class=\"cache-info\"></span> </div> <div> <button>删除缓存</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"general_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div> <label class=\"cc-container\" data-id=\"showBanButton\">在首页的投稿右上角显示[屏蔽]图标按钮 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showMouseover\">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"autoSync\">自动云同步所有列表 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showDeletedComment\">显示投稿内被删除评论 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showUserTags\">显示评论用户标签 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"about_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style=\"pointer-events:all\" class=\"ac-girl ac-girl-hide smooth\"> </div> </div> </div>";
+var code = "<div id=\"helperUI\" class=\"helper-wrap\" style=\"pointer-events:none\"> <div class=\"helper-wrap-inner\"> <div style=\"pointer-events:all\" class=\"helper-main c-a ui-hidden smooth\"> <div class=\"plugin-hint\" id=\"hide_hint\">隐藏插件--></div> <div class=\"page-wrap\"> <div class=\"plugin-menu-title\">插件设置</div> <div class=\"menu-wrap\"> <div class=\"menu-column\"> <a id=\"bannedAuthours\">Ｕ Ｐ 主</a> <a id=\"bannedRepliers\">回 复 者</a> <a id=\"bannedKeywords\">关 键 词</a> <a id=\"cloudsync\">云 同 步</a> <a id=\"commentRecovery\">评论恢复</a> </div> <div class=\"menu-column\"> <a id=\"generalSetting\">通用设置</a> <a id=\"aboutme\">关于插件</a> <a href=\"https://baldhumanity.top/acfun\">网站主页</a> </div> </div> <div class=\"plugin-version\">0.00</div> <div class=\"plugin-author\">作恶者：<a href=\"https://message.acfun.cn/im?targetId=690324\" style=\"color:#00f\">人文情怀</a></div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_up_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"10\" placeholder=\"输入UP主ID...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_replier_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"10\" placeholder=\"输入评论者ID...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_keyword_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"10\" placeholder=\"输入屏蔽关键词...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">LOL</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"cloudsync_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div class=\"cloud-description\"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class=\"sync-time\"></div> <hr> <div> <button id=\"syncNow\">立即同步</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"recovery_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div> 3.000版本新功能：查看已删除评论！<br/> 当你打开投稿，插件会第一时间在本地备份所有看到的评论，当未来某个时间，有评论被删除，插件将会为你恢复。同时本地备份将会在云服务器上共享。只要有一个用户备份过一次被删除的评论，所有用户都会得到分享。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div> <b></b><span class=\"cache-info\"></span> </div> <div> <button id=\"delete_cache\">删除缓存</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"general_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div> <label class=\"cc-container\" data-id=\"showBanButton\">在首页的投稿右上角显示[屏蔽]图标按钮 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showMouseover\">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"autoSync\">自动云同步所有列表 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showDeletedComment\">显示投稿内被删除评论 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showUserTags\">显示评论用户标签 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"about_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style=\"pointer-events:all\" class=\"ac-girl ac-girl-hide smooth\"> </div> </div> </div>";
 // Exports
 /* harmony default export */ const mainUI = (code);
 ;// CONCATENATED MODULE: ./dev/js/event.js
@@ -1332,7 +1332,802 @@ function _getNewEventId() {
     }
 
 });
+;// CONCATENATED MODULE: ./dev/html/recoveryUI.html
+// Module
+var recoveryUI_code = "<div class=\"deleted-comments-container remove\"> <div class=\"deleted-comments-inner\"> <div class=\"deleted-comments-title\">被删除楼层<div class=\"hide-btn\">隐藏未收录</div></div> <div class=\"deleted-comment-list\"> </div> </div> </div>";
+// Exports
+/* harmony default export */ const recoveryUI = (recoveryUI_code);
+;// CONCATENATED MODULE: ./dev/html/deletedComment.html
+// Module
+var deletedComment_code = "<div class=\"comment-info\"> <div class=\"comment-floor\">35</div> <div class=\"comment-query-state\">查询中……</div> <div class=\"comment-username remove\"></div> </div> <div class=\"comment-content remove\"> <div class=\"comment-text\">评论已删除</div> <div class=\"comment-time\">2021-10-18 12:21:01</div> </div>";
+// Exports
+/* harmony default export */ const deletedComment = (deletedComment_code);
+;// CONCATENATED MODULE: ./dev/js/commentUI.js
+
+
+
+
+
+
+
+var cumulativeOffset = function (element) {
+    var top = 0, left = 0;
+    do {
+        top += element.offsetTop || 0;
+        left += element.offsetLeft || 0;
+        element = element.offsetParent;
+    } while (element);
+
+    return {
+        top: top,
+        left: left
+    };
+};
+
+function _observer() {
+    let mutationObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            let target = mutation.target;
+
+            if (target.tagName === "DIV") {
+                setTimeout(() => {
+                    _repositionUI();
+                }, 0);
+
+            }
+        });
+    });
+
+    mutationObserver.observe(unsafeWindow.document, {subtree: true, childList: true});
+}
+
+function _repositionUI() {
+
+    let doc = unsafeWindow.document;
+    let main = doc.querySelector("#main")
+    let commentDIv = main.querySelector(".ac-comment-list");
+    if (!commentDIv) return;
+    let rect = commentDIv.getBoundingClientRect();
+    let offsets = cumulativeOffset(commentDIv);
+
+    let uidom = doc.body.querySelector(".deleted-comments-container");
+    uidom.style.top = offsets.top + "px";
+    uidom.style.left = offsets.left + rect.width + 30 + "px";
+
+
+    let height = Math.max(commentDIv.scrollHeight, commentDIv.offsetHeight);
+
+    uidom.style.height = `${height - 100}px`
+
+}
+
+function _hideUnrecovered(uidom) {
+    let k = !unsafeWindow["hideUnrecovered"];
+    unsafeWindow["hideUnrecovered"] = k;
+    if (k) {
+        uidom.querySelectorAll(".deleted-comment")
+            .forEach((dom) => {
+                if (!dom["data"])
+                    dom.classList.add("remove")
+            })
+    } else {
+        uidom.querySelectorAll(".deleted-comment")
+            .forEach((dom) => {
+                dom.classList.remove("remove")
+            })
+    }
+}
+
+function _showUI(cache) {
+
+    let doc = unsafeWindow.document;
+    let uidom = doc.body.querySelector(".deleted-comments-container");
+
+    unsafeWindow["deletedCommentsUI"] = uidom;
+    uidom.classList.remove("remove");
+
+    cache.deletedFloors.forEach((df) => {
+        let itemDom = doc.createElement("DIV")
+        itemDom.classList.add("deleted-comment")
+        itemDom.insertAdjacentHTML("afterbegin", deletedComment);
+        itemDom.querySelector(".comment-floor").innerText = "#" + df;
+        itemDom["floor"] = df;
+        uidom.querySelector(".deleted-comment-list")
+            .appendChild(itemDom);
+    })
+
+    //防遮挡
+
+    let rec = doc.querySelector(".area.recommendation");
+    if (rec) {
+        rec.style.maxHeight = "800px";
+        rec.style.overflowX = "hidden";
+        rec.style.overflowY = "scroll";
+    }
+    let rec2 = doc.querySelector("#pagelet_newrecommend")
+    if (rec2) {
+        rec2.style.maxHeight = "500px";
+        rec2.style.overflowX = "hidden";
+        rec2.style.overflowY = "scroll";
+    }
+
+    let fr = doc.querySelector(".content.wp.clearfix.area .fr");
+    ///log("fr =", fr)
+    if (fr) {
+        fr.style.maxHeight = "800px";
+        fr.style.overflowX = "hidden";
+        fr.style.overflowY = "scroll";
+    }
+
+
+    //隐藏未收录
+    uidom.querySelector(".hide-btn")
+        .addEventListener("click", () => {
+            _hideUnrecovered(uidom);
+        })
+
+
+}
+
+
+function _replaceImage(content) {
+    let sb1 = /\[img=图片\](https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))\[\/img\]/;
+    let res = sb1.exec(content);
+    if (res && res.length > 1) {
+        let oldstr = res[0];
+        let url = res[1];
+        let newstr = `<img src="${url}">`;
+
+        content = content.replace(oldstr, newstr);
+
+        return _replaceImage(content)
+    } else {
+        return content
+    }
+}
+
+function recoverFloor(floorData) {
+    //log(floorData);
+    let doc = unsafeWindow.document;
+    let uidom = doc.body.querySelector(".deleted-comments-container");
+    let doms = uidom.querySelectorAll(".deleted-comment");
+    //log("doms =",doms)
+    doms.forEach((itemDom) => {
+        //log("dom floor",itemDom["floor"])
+        if (itemDom["floor"] === floorData.floor) {
+            itemDom["data"] = floorData;
+            let usernameDom = itemDom.querySelector(".comment-username");
+            usernameDom.innerText = floorData.username;
+            usernameDom.classList.remove("remove");
+            itemDom.querySelector(".comment-text").innerHTML = _replaceImage(floorData.content);
+            itemDom.querySelector(".comment-query-state").classList.add("remove");
+            let datetime = new Date(floorData.replyTime);
+            itemDom.querySelector(".comment-time").innerText = datetime.toLocaleString()
+            itemDom.querySelector(".comment-content").classList.remove("remove");
+
+        }
+    })
+}
+
+
+function noticeUncached(f) {
+    let doc = unsafeWindow.document;
+    let uidom = doc.body.querySelector(".deleted-comments-container");
+    let doms = uidom.querySelectorAll(".deleted-comment");
+    //log("doms =",doms)
+    doms.forEach((itemDom) => {
+        //log("dom floor",itemDom["floor"])
+        if (itemDom["floor"] === f) {
+            itemDom.querySelector(".comment-query-state").innerText = "服务器未收录"
+
+        }
+    })
+}
+
+function enable(val){
+    let doc = unsafeWindow.document;
+    let uidom = doc.body.querySelector(".deleted-comments-container");
+    if (val){
+        uidom.classList.remove("remove-2");
+    }else{
+        uidom.classList.add("remove-2");
+    }
+}
+
+function _bindEvents() {
+    js_event.on("SHOW_DELETED_COMMENT_UI", (cache) => {
+        //log("SHOW_DELETED_COMMENT_UI")
+        _showUI(cache);
+    })
+    js_event.on("FLOOR_RECOVER", (floorData) => {
+        recoverFloor(floorData)
+    })
+    js_event.on("NO_SERVER_CACHE", (floor) => {
+        noticeUncached(floor)
+    })
+
+    js_event.on("SETTING_CHANGE_showDeletedComment", (val)=>{
+        enable(val);
+    })
+}
+
+function _loadUI() {
+    let doc = unsafeWindow.document;
+    doc.body.insertAdjacentHTML("beforeend", recoveryUI);
+    unsafeWindow.onresize = _repositionUI;
+    _repositionUI()
+    _observer()
+
+    data.loadGeneralSetting(setting=>{
+        //log("C INIT ", setting.showDeletedComment)
+        enable(setting.showDeletedComment);
+    })
+
+}
+
+/* harmony default export */ const commentUI = ({
+    init() {
+
+        _loadUI();
+        _bindEvents();
+    }
+});
+;// CONCATENATED MODULE: ./dev/js/commentRecovery.js
+
+
+
+
+
+
+
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
+
+let activeHelpInterval = 1 * HOUR; //interval between each active help. 1 day in production because we don't want to flood the server
+
+
+function commentRecovery_saveCommentCache(id, cache, callback) {
+    data.saveCommentCache(id, cache, (e) => {
+        if (callback) {
+            callback(e);
+        }
+        js_event.emit("COMMENT_CACHE_UPDATE", cache);
+    })
+}
+
+//querydata = {name, query, ...others}
+function _httpGet(url, callback) {
+    //_apiRequestWS(queryData,callback);
+    //log("httpGet", url)
+
+
+    let xhr = new unsafeWindow.XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    xhr.onload = function () {
+        try {
+
+            //log("httpget", this.responseText);
+            let d = JSON.parse(this.responseText);
+            if (callback)
+                callback(d);
+        } catch (e) {
+
+            console.error(e);
+            if (callback)
+                callback(null);
+        }
+    };
+    xhr.send();
+}
+
+function getContentId() {
+    let pagetype = getPageType();
+    let id = null;
+    if (pagetype === "VIDEO") {
+        let info = unsafeWindow.videoInfo;
+        id = info["dougaId"];
+    } else {
+        let info = unsafeWindow.articleInfo;
+        id = info["articleId"];
+    }
+    return id;
+}
+
+
+function getPage(id, p, callback, collectedComments) {
+    //log("getPage", id, p, collectedComments)
+    let url = `https://www.acfun.cn/rest/pc-direct/comment/listByFloor?sourceId=${id}&sourceType=3&page=${p}&pivotCommentId=0&newPivotCommentId=0&t=1638284078529&supportZtEmot=true`;
+
+    _httpGet(url, (d) => {
+        //console.log("DEBUG d1", url, d, JSON.stringify(collectedComments));
+        if (d) {
+            let keys = d.commentIds;
+            keys.forEach((key) => {
+                key = "c" + key;
+                let c = d.commentsMap[key];
+                //log(key, d.commentsMap);
+                if (c.isDelete) {
+                    return;
+                }
+
+                let comment = {
+                    username: c.userName,
+                    content: c.content,
+                    //deviceModel: c.deviceModel,
+                    replyTime: c.timestamp,
+                    cId: c.cid,
+                    floor: c.floor
+                };
+                collectedComments[parseInt(c.floor)] = comment;
+
+            })
+            collectedComments["totalCount"] = d.totalCount;
+            let maxPage = d.totalPage;
+            if (p < maxPage) {
+
+                //0.5秒等待，防止高楼DDOS
+                setTimeout(() => {
+                    getPage(id, p + 1, callback, collectedComments);
+                }, 500);
+            } else {
+                //log("GETPAGE DONE", collectedComments);
+                callback(collectedComments);
+            }
+        }
+
+    })
+}
+
+
+function _getPageLastReply(id, callback) {
+    let p = 1;
+    let url = `https://www.acfun.cn/rest/pc-direct/comment/listByFloor?sourceId=${id}&sourceType=3&page=${p}&pivotCommentId=0&newPivotCommentId=0&t=1638284078529&supportZtEmot=true`;
+
+    _httpGet(url, (d) => {
+        if (d) {
+            //if first page is the last page, callback directly
+            //log("d==", d);
+            let idlast = "c" + d.commentIds[0];
+            let clast = d.commentsMap[idlast];
+            let totalCount = d.totalCount;
+            callback(clast, totalCount);
+
+        }
+    })
+
+}
+
+function _getAllPageCommentOnline(id, callback) {
+    log_log(`采集评论，投稿id=${id}`)
+
+    // let collectedComments = {}; // {[floor number: content]} content = {username, content, replyTime, deviceModel, acId}
+
+
+    function collectDone(collectedComments) {
+        let commentInfo = {
+            id: id,
+            floors: collectedComments,
+            deletedFloors: [],
+            recoveredFloors: [],
+            lastReplyTime: 0,
+            lastCheckTime: +new Date(),
+            createTime: 0,
+            floorCount: 0,
+            reportedRecovery: [],
+            queriedFloors: [],
+        }
+
+        let maxFloor = 0;
+        Object.keys(commentInfo.floors).forEach((k) => {
+            let f = commentInfo.floors[k].floor
+            if (f > maxFloor) maxFloor = f;
+            //commentInfo.floorCount++;
+        })
+        commentInfo.floorCount = collectedComments["totalCount"];
+
+        log_log(`已采集本投稿评论至${maxFloor}楼。`);
+        // get the last reply time, and collect deleted floors (missing floors)
+        for (let i = 1; i <= maxFloor; i++) {
+            if (!(i in collectedComments)) {
+                //floor missing
+                commentInfo.deletedFloors.push(i);
+            } else {
+                let replyTime = collectedComments[i].replyTime;
+
+                if (replyTime > commentInfo.lastReplyTime) {
+                    //log("1", commentInfo.lastReplyTime)
+                    commentInfo.lastReplyTime = replyTime;
+                }
+
+            }
+        }
+        callback(commentInfo);
+
+    }
+
+
+    getPage(id, 1, collectDone, {});
+}
+
+function _activeReport(cache) {
+    let reportData = {
+        id: cache.id,
+        recoveredFloors: [],
+        floors: {}
+    }
+
+    let count = 0;
+    cache.recoveredFloors.forEach((fn) => {
+        fn = parseInt(fn);
+        //if this recovered floor has not been reported to the server
+        //report it
+        if (cache.reportedRecovery.indexOf(fn) < 0) {
+            reportData.recoveredFloors.push(fn);
+            let floor = cache.floors[fn];
+            let toReport = {
+                username: floor.username,
+                replyTime: floor.replyTime,
+                floor: parseInt(floor.floor),
+                cId: parseInt(floor.cId),
+                content: floor.content,
+            }
+
+            reportData.floors[fn] = toReport;
+            count++;
+        }
+    })
+
+
+    let queryData = {
+        query: "report_cache",
+        cache: reportData
+    }
+
+
+    //report when there is sth to report
+    if (count > 0) {
+        //log("DATA TO REPORT", reportData);
+        util.apiRequest(queryData, (result) => {
+            //log("report result", result);
+
+            //mark reported floors to cache
+            cache.reportedRecovery = cache.recoveredFloors.map(x => x)
+            commentRecovery_saveCommentCache(cache.id, cache);
+
+        })
+    }
+
+}
+
+
+//input id for the page, cache loaded in the upper function
+function _getCommentsOnlineAndMerge(id, oldCache, callback) {
+    //log("_getCommentsAndMerge", oldCache)
+    //get all comments, and compare with local, merge what is new, and mark what is missing
+    _getAllPageCommentOnline(id, (newCache) => {
+        //log("_getAllPageCommentOnline 2", newCache)
+        let intKeys = Object.keys(newCache.floors).map(x => parseInt(x));
+        let floorMax = Math.max(...intKeys);
+        //log("***", intKeys, floorMax);
+        for (let f = 1; f <= floorMax; f++) {
+            //log("merging ", f, f in newCache.floors, f in oldCache.floors);
+            if (f in newCache.floors && f in oldCache.floors) {
+                //Comment in both cache, nothing to do
+            } else if (f in newCache.floors && !(f in oldCache.floors)) {
+                //new comment compared to old cache, add it to new cache, which means nothing to do
+            } else if (!(f in newCache.floors) && f in oldCache.floors) {
+                //comment was here but deleted, merge old cache to new cache.
+                newCache.floors[f] = oldCache.floors[f];
+                newCache.recoveredFloors.push(f);
+            } else {
+                //floor missing in both , todo: allow user to query the server for this missing
+            }
+
+        }
+        if (!oldCache.reportedRecovery) {
+            oldCache.reportedRecovery = [];
+        }
+        newCache.reportedRecovery = oldCache.reportedRecovery.map(x => x); //deep copy
+
+        let delcount = newCache.deletedFloors.length;
+        let recovCount = newCache.recoveredFloors.length;
+        commentRecovery_saveCommentCache(id, newCache, () => {
+            log_log(newCache.lastReplyTime)
+            log_log(`投稿${id}重新缓存完成。${delcount}个被删除，${recovCount}个被恢复`);
+            callback(newCache)
+            _activeReport(newCache);
+        })
+
+    })
+
+
+}
+
+//cache format  {id: id, floors : { [floor number]: {floor data}}, lastReplyTime: LINUX_TIME, lastCheckTime: LINUX_TIME }
+//cache if there is none
+//cache if last reply time is later than local lastCheckTime
+
+
+//this function check the cache and check the\
+function _checkPageComment(id, callback) {
+    data.getLocalCommentCache(id, (cache) => {
+        //log("cache = ", cache);
+        //if tehre is no cache, cache all comments straight away.
+        if (!cache) {
+            _getAllPageCommentOnline(id, (c) => {
+
+                commentRecovery_saveCommentCache(id, c, () => {
+                    log_log("首次收集投稿" + id + `评论完成。发现${c.deletedFloors.length}个评论被删除。`);
+                    callback(c);
+                })
+            })
+        } else {
+            //if there is cache,
+            //get page latest reply, if it is later than cache, re-cache all comments
+            log_log("对比评论缓存是否需要更新。")
+            _getPageLastReply(id, (lastReply, totalCount) => {
+                //log("lastreply", lastReply, cache)
+
+                let t1 = parseInt(lastReply.timestamp);
+                let t2 = parseInt(cache.lastReplyTime)
+                //log(cache.floorCount, totalCount)
+                if (t1 !== t2 || cache.floorCount !== totalCount) {
+                    log_log(id + " 投稿缓存需要更新");
+                    _getCommentsOnlineAndMerge(id, cache, callback);
+                } else {
+                    log_log("已经缓存到最新评论了。")
+                    callback(cache);
+                }
+            })
+        }
+    })
+}
+
+
+function _checkCurrentPageComment(callback) {
+    if (!callback)
+        callback = () => 0;
+    let id = getContentId();
+    //log("id=", id);
+    _checkPageComment(id, callback)
+}
+
+function showUI(cache) {
+    js_event.emit("SHOW_DELETED_COMMENT_UI", cache);
+}
+
+
+function _recoverByLocalCache(cache, then) {
+    //log(cache);
+    log_log(`本地可恢复楼层：${cache.recoveredFloors.join(" ")}`);
+
+    cache.recoveredFloors.forEach((recoveredFloor) => {
+        let floor = cache.floors[recoveredFloor];
+        js_event.emit("FLOOR_RECOVER", floor);
+    })
+
+    then();
+}
+
+function _mergeServerCacheToLocal(serverCache, localCache) {
+    //log("_mergeServerCacheToLocal", serverCache, localCache)
+
+    if (serverCache.cached.length === 0) {
+        log_log("服务器没有其他缓存，已同步服务器缓存");
+        return;
+    }
+    serverCache.cached.forEach((floor) => {
+        if (localCache.recoveredFloors.indexOf(floor.floor) < 0) {
+            localCache.floors[floor.floor] = floor;
+            localCache.recoveredFloors.push(floor.floor);
+            localCache.reportedRecovery.push(floor.floor);
+        }
+    })
+    commentRecovery_saveCommentCache(localCache.id, localCache, () => {
+        log_log("已从服务器更新本投稿缓存。")
+    })
+}
+
+function _recoverByServerCache(localCache) {
+
+    //log("LOCALCACHE", localCache)
+    let queryObj = {
+        query: "query_floors",
+        id: localCache.id,
+        floors: localCache.deletedFloors.filter(x => localCache.recoveredFloors.indexOf(x) < 0),
+    }
+
+    if (queryObj.floors.length > 0) {
+        log_log("向服务器发出恢复评论的请求");
+        util.apiRequest(queryObj, (result) => {
+            //log("Query REs", result);
+
+            //update page with recovered
+            let cachedFloors = [];
+            result.cached.forEach((floor) => {
+                js_event.emit("FLOOR_RECOVER", floor);
+                cachedFloors.push(floor.floor)
+            })
+
+            //for each queried floor, if not cached by server, emit event for ui to show info
+            queryObj.floors.forEach((f) => {
+                if (cachedFloors.indexOf(f) < 0) {
+                    //log("Not found in server", f);
+
+                    js_event.emit("NO_SERVER_CACHE", f);
+                }
+            })
+
+            _mergeServerCacheToLocal(result, localCache)
+
+        })
+    }
+
+}
+
+function recoverComments(cache) {
+    //log("recoverComments")
+    //first use local cache to recover
+    _recoverByLocalCache(cache, () => {
+        //after using local cache, everything left will be request
+        _recoverByServerCache(cache);
+    });
+}
+
+
+function __activeHelp() {
+    data.getAllCacheIndices((ids) => {
+        let queryObj = {
+            query: "active_recover",
+            ids: ids,
+        }
+        util.apiRequest(queryObj, (_d) => {
+            log_log(`收到服务器恢复需求。${_d.result.length}个投稿需要本地数据`, _d);
+            let list = _d.result;
+            let recoverCount = 0;
+            let floorTotal = 0;
+            list.forEach((serverRequest, index) => {
+                data.getLocalCommentCache(serverRequest._id, (cache) => {
+
+                    let reportData = {
+                        id: cache.id,
+                        recoveredFloors: [],
+                        floors: {}
+                    }
+                    let count = 0;
+                    serverRequest.floors.forEach((f) => {
+                        if (f in cache.floors) {
+                            count++;
+                            let floor = cache.floors[f];
+                            let toReport = {
+                                username: floor.username,
+                                replyTime: floor.replyTime,
+                                floor: parseInt(floor.floor),
+                                cId: parseInt(floor.cId),
+                                content: floor.content,
+                            }
+
+                            reportData.recoveredFloors.push(f);
+                            reportData.floors[f] = toReport;
+                        }
+                    })
+
+
+                    let queryData = {
+                        query: "report_cache",
+                        cache: reportData
+                    }
+
+
+                    //report when there is sth to report
+                    if (count > 0) {
+                        log_log("主动恢复评论数据", reportData);
+                        util.apiRequest(queryData, (result) => {
+                            log_log("恢复结果", result);
+
+                            //mark reported floors to cache
+                            cache.reportedRecovery = cache.recoveredFloors.map(x => x)
+                            commentRecovery_saveCommentCache(cache.id, cache);
+
+                        })
+                        recoverCount++;
+                        floorTotal += count;
+                    }
+
+                    if (index === list.length - 1) {
+                        log_log(`帮助服务器恢复共${recoverCount}个投稿和${floorTotal}个评论。`)
+                    }
+
+                })
+            })
+
+
+        })
+    })
+}
+
+function _activeHelp() {
+    log_log("主动帮助")
+    let t = +new Date();
+    data.getActiveHelpTime((lasttime) => {
+        //log("上次主动帮助时间", lasttime, (new Date(lasttime)).toLocaleTimeString());
+        if (t - activeHelpInterval > lasttime) {
+            let interval = Math.round((t - lasttime) / 1000);
+
+            log_log(`距离上次主动帮助已经${interval}秒了`)
+            __activeHelp();
+            data.setActiveHelpTime(t);
+        } else {
+
+            log_log(`距离上次主动帮助还未足够。`)
+        }
+    })
+}
+
+function _deleteCache(id) {
+    log_log("trying to delete cache, id=",id);
+    data.deleteCommentCache(id, () => {
+        //log(`删除缓存成功，id=${id}`);
+    })
+}
+
+
+
+function _deleteAllCache(callback) {
+    log_log("deleteallcache")
+    function deleteOneByOne(ids, i){
+        if (i>=ids.length) {
+            js_event.emit("COMMENT_CACHE_UPDATE", null);
+            callback();
+            return
+        }
+
+        let id = ids[i];
+        _deleteCache(id);
+        setTimeout(()=>{
+            deleteOneByOne(ids,i+1)
+        })
+    }
+
+    data.getAllCacheIndices((ids) => {
+        deleteOneByOne(ids,0);
+    })
+}
+
+
+/* harmony default export */ const commentRecovery = ({
+    init() {
+        commentUI.init();
+        //check if page type is content page
+        let pagetype = getPageType();
+        if (!(pagetype === "VIDEO" || pagetype === "ARTICLE")) {
+            return;
+        }
+        //debug
+
+        unsafeWindow["deleteCache"] = data.deleteCommentCache;
+        unsafeWindow["clearCache"] = _deleteAllCache
+
+
+
+        _checkCurrentPageComment((cache) => {
+            setTimeout(() => {
+                showUI(cache);
+                recoverComments(cache);
+            }, 1000)
+
+
+        });
+        bindEvents();
+        _activeHelp();
+    },
+    deleteAllCache:_deleteAllCache
+});
 ;// CONCATENATED MODULE: ./dev/js/setting-ui.js
+
 
 
 
@@ -1517,10 +2312,9 @@ function bindGeneralSettingEvents(dom) {
                 })
 
 
-
             })
 
-            data.loadGeneralSetting((setting)=>{
+            data.loadGeneralSetting((setting) => {
                 let input = dom.querySelector("input")
                 input.checked = setting[key] ? "checked" : "";
                 //log(setting,key,setting[key]);
@@ -1615,7 +2409,7 @@ function _refreshCommentCachePage(dom) {
 
 }
 
-function bindEvents(dom) {
+function setting_ui_bindEvents(dom) {
     js_event.on("UP_BAN_UPDATE", () => {
         updateBannedUpList();
     })
@@ -1631,9 +2425,21 @@ function bindEvents(dom) {
     js_event.on("COMMENT_CACHE_UPDATE", () => {
         _refreshCommentCachePage(dom);
     })
-    dom.querySelector("#syncNow").addEventListener("click",()=>{
-        js_event.emit("SYNC_NOW",null);
+    dom.querySelector("#syncNow").addEventListener("click", () => {
+        js_event.emit("SYNC_NOW", null);
     })
+
+    let cacheDelBtn = dom.querySelector("#delete_cache");
+    cacheDelBtn.addEventListener("click", () => {
+
+        cacheDelBtn.disabled = true;
+        commentRecovery.deleteAllCache(() => {
+            setTimeout(()=>{
+                cacheDelBtn.disabled = false;
+            }, 1000)
+        });
+    })
+
 
 }
 
@@ -1663,7 +2469,7 @@ function init(dom) {
         dom.style.left = pos.x + "px";
     })
 
-    bindEvents(dom);
+    setting_ui_bindEvents(dom);
     bindGeneralSettingEvents(dom);
 
     updateBannedUpList(dom);
@@ -1790,7 +2596,7 @@ function _getUsername(doc) {
 
 }
 
-function _loadUI() {
+function contentPageUI_loadUI() {
     let doc = unsafeWindow.document;
     doc.body.insertAdjacentHTML("beforeend", subUI)
 
@@ -1803,7 +2609,7 @@ function _loadUI() {
 
 /* harmony default export */ const contentPageUI = ({
     loadUI() {
-        _loadUI();
+        contentPageUI_loadUI();
         contentPageUI_bindEvents();
     }
 });
@@ -2907,779 +3713,6 @@ function _init(){
         __webpack_require__.g["taggedComments"] = {};
     }
 });
-;// CONCATENATED MODULE: ./dev/html/recoveryUI.html
-// Module
-var recoveryUI_code = "<div class=\"deleted-comments-container remove\"> <div class=\"deleted-comments-inner\"> <div class=\"deleted-comments-title\">被删除楼层<div class=\"hide-btn\">隐藏未收录</div></div> <div class=\"deleted-comment-list\"> </div> </div> </div>";
-// Exports
-/* harmony default export */ const recoveryUI = (recoveryUI_code);
-;// CONCATENATED MODULE: ./dev/html/deletedComment.html
-// Module
-var deletedComment_code = "<div class=\"comment-info\"> <div class=\"comment-floor\">35</div> <div class=\"comment-query-state\">查询中……</div> <div class=\"comment-username remove\"></div> </div> <div class=\"comment-content remove\"> <div class=\"comment-text\">评论已删除</div> <div class=\"comment-time\">2021-10-18 12:21:01</div> </div>";
-// Exports
-/* harmony default export */ const deletedComment = (deletedComment_code);
-;// CONCATENATED MODULE: ./dev/js/commentUI.js
-
-
-
-
-
-
-
-var cumulativeOffset = function (element) {
-    var top = 0, left = 0;
-    do {
-        top += element.offsetTop || 0;
-        left += element.offsetLeft || 0;
-        element = element.offsetParent;
-    } while (element);
-
-    return {
-        top: top,
-        left: left
-    };
-};
-
-function _observer() {
-    let mutationObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            let target = mutation.target;
-
-            if (target.tagName === "DIV") {
-                setTimeout(() => {
-                    _repositionUI();
-                }, 0);
-
-            }
-        });
-    });
-
-    mutationObserver.observe(unsafeWindow.document, {subtree: true, childList: true});
-}
-
-function _repositionUI() {
-
-    let doc = unsafeWindow.document;
-    let main = doc.querySelector("#main")
-    let commentDIv = main.querySelector(".ac-comment-list");
-    if (!commentDIv) return;
-    let rect = commentDIv.getBoundingClientRect();
-    let offsets = cumulativeOffset(commentDIv);
-
-    let uidom = doc.body.querySelector(".deleted-comments-container");
-    uidom.style.top = offsets.top + "px";
-    uidom.style.left = offsets.left + rect.width + 30 + "px";
-
-
-    let height = Math.max(commentDIv.scrollHeight, commentDIv.offsetHeight);
-
-    uidom.style.height = `${height - 100}px`
-
-}
-
-function _hideUnrecovered(uidom) {
-    let k = !unsafeWindow["hideUnrecovered"];
-    unsafeWindow["hideUnrecovered"] = k;
-    if (k) {
-        uidom.querySelectorAll(".deleted-comment")
-            .forEach((dom) => {
-                if (!dom["data"])
-                    dom.classList.add("remove")
-            })
-    } else {
-        uidom.querySelectorAll(".deleted-comment")
-            .forEach((dom) => {
-                dom.classList.remove("remove")
-            })
-    }
-}
-
-function _showUI(cache) {
-
-    let doc = unsafeWindow.document;
-    let uidom = doc.body.querySelector(".deleted-comments-container");
-
-    unsafeWindow["deletedCommentsUI"] = uidom;
-    uidom.classList.remove("remove");
-
-    cache.deletedFloors.forEach((df) => {
-        let itemDom = doc.createElement("DIV")
-        itemDom.classList.add("deleted-comment")
-        itemDom.insertAdjacentHTML("afterbegin", deletedComment);
-        itemDom.querySelector(".comment-floor").innerText = "#" + df;
-        itemDom["floor"] = df;
-        uidom.querySelector(".deleted-comment-list")
-            .appendChild(itemDom);
-    })
-
-    //防遮挡
-
-    let rec = doc.querySelector(".area.recommendation");
-    if (rec) {
-        rec.style.maxHeight = "800px";
-        rec.style.overflowX = "hidden";
-        rec.style.overflowY = "scroll";
-    }
-    let rec2 = doc.querySelector("#pagelet_newrecommend")
-    if (rec2) {
-        rec2.style.maxHeight = "500px";
-        rec2.style.overflowX = "hidden";
-        rec2.style.overflowY = "scroll";
-    }
-
-    let fr = doc.querySelector(".content.wp.clearfix.area .fr");
-    ///log("fr =", fr)
-    if (fr) {
-        fr.style.maxHeight = "800px";
-        fr.style.overflowX = "hidden";
-        fr.style.overflowY = "scroll";
-    }
-
-
-    //隐藏未收录
-    uidom.querySelector(".hide-btn")
-        .addEventListener("click", () => {
-            _hideUnrecovered(uidom);
-        })
-
-
-}
-
-
-function _replaceImage(content) {
-    let sb1 = /\[img=图片\](https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))\[\/img\]/;
-    let res = sb1.exec(content);
-    if (res && res.length > 1) {
-        let oldstr = res[0];
-        let url = res[1];
-        let newstr = `<img src="${url}">`;
-
-        content = content.replace(oldstr, newstr);
-
-        return _replaceImage(content)
-    } else {
-        return content
-    }
-}
-
-function recoverFloor(floorData) {
-    //log(floorData);
-    let doc = unsafeWindow.document;
-    let uidom = doc.body.querySelector(".deleted-comments-container");
-    let doms = uidom.querySelectorAll(".deleted-comment");
-    //log("doms =",doms)
-    doms.forEach((itemDom) => {
-        //log("dom floor",itemDom["floor"])
-        if (itemDom["floor"] === floorData.floor) {
-            itemDom["data"] = floorData;
-            let usernameDom = itemDom.querySelector(".comment-username");
-            usernameDom.innerText = floorData.username;
-            usernameDom.classList.remove("remove");
-            itemDom.querySelector(".comment-text").innerHTML = _replaceImage(floorData.content);
-            itemDom.querySelector(".comment-query-state").classList.add("remove");
-            let datetime = new Date(floorData.replyTime);
-            itemDom.querySelector(".comment-time").innerText = datetime.toLocaleString()
-            itemDom.querySelector(".comment-content").classList.remove("remove");
-
-        }
-    })
-}
-
-
-function noticeUncached(f) {
-    let doc = unsafeWindow.document;
-    let uidom = doc.body.querySelector(".deleted-comments-container");
-    let doms = uidom.querySelectorAll(".deleted-comment");
-    //log("doms =",doms)
-    doms.forEach((itemDom) => {
-        //log("dom floor",itemDom["floor"])
-        if (itemDom["floor"] === f) {
-            itemDom.querySelector(".comment-query-state").innerText = "服务器未收录"
-
-        }
-    })
-}
-
-function enable(val){
-    let doc = unsafeWindow.document;
-    let uidom = doc.body.querySelector(".deleted-comments-container");
-    if (val){
-        uidom.classList.remove("remove-2");
-    }else{
-        uidom.classList.add("remove-2");
-    }
-}
-
-function _bindEvents() {
-    js_event.on("SHOW_DELETED_COMMENT_UI", (cache) => {
-        //log("SHOW_DELETED_COMMENT_UI")
-        _showUI(cache);
-    })
-    js_event.on("FLOOR_RECOVER", (floorData) => {
-        recoverFloor(floorData)
-    })
-    js_event.on("NO_SERVER_CACHE", (floor) => {
-        noticeUncached(floor)
-    })
-
-    js_event.on("SETTING_CHANGE_showDeletedComment", (val)=>{
-        enable(val);
-    })
-}
-
-function commentUI_loadUI() {
-    let doc = unsafeWindow.document;
-    doc.body.insertAdjacentHTML("beforeend", recoveryUI);
-    unsafeWindow.onresize = _repositionUI;
-    _repositionUI()
-    _observer()
-
-    data.loadGeneralSetting(setting=>{
-        //log("C INIT ", setting.showDeletedComment)
-        enable(setting.showDeletedComment);
-    })
-
-}
-
-/* harmony default export */ const commentUI = ({
-    init() {
-
-        commentUI_loadUI();
-        _bindEvents();
-    }
-});
-;// CONCATENATED MODULE: ./dev/js/commentRecovery.js
-
-
-
-
-
-
-
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
-const HOUR = 60 * MINUTE;
-const DAY = 24 * HOUR;
-
-let activeHelpInterval = 1 * HOUR; //interval between each active help. 1 day in production because we don't want to flood the server
-
-
-function commentRecovery_saveCommentCache(id, cache, callback) {
-    data.saveCommentCache(id, cache, (e) => {
-        if (callback) {
-            callback(e);
-        }
-        js_event.emit("COMMENT_CACHE_UPDATE", cache);
-    })
-}
-
-//querydata = {name, query, ...others}
-function _httpGet(url, callback) {
-    //_apiRequestWS(queryData,callback);
-    //log("httpGet", url)
-
-
-    let xhr = new unsafeWindow.XMLHttpRequest();
-    xhr.open("GET", url, true);
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.onload = function () {
-        try {
-
-            //log("httpget", this.responseText);
-            let d = JSON.parse(this.responseText);
-            if (callback)
-                callback(d);
-        } catch (e) {
-
-            console.error(e);
-            if (callback)
-                callback(null);
-        }
-    };
-    xhr.send();
-}
-
-function getContentId() {
-    let pagetype = getPageType();
-    let id = null;
-    if (pagetype === "VIDEO") {
-        let info = unsafeWindow.videoInfo;
-        id = info["dougaId"];
-    } else {
-        let info = unsafeWindow.articleInfo;
-        id = info["articleId"];
-    }
-    return id;
-}
-
-
-function getPage(id, p, callback, collectedComments) {
-    //log("getPage", id, p, collectedComments)
-    let url = `https://www.acfun.cn/rest/pc-direct/comment/listByFloor?sourceId=${id}&sourceType=3&page=${p}&pivotCommentId=0&newPivotCommentId=0&t=1638284078529&supportZtEmot=true`;
-
-    _httpGet(url, (d) => {
-        //console.log("DEBUG d1", url, d, JSON.stringify(collectedComments));
-        if (d) {
-            let keys = d.commentIds;
-            keys.forEach((key) => {
-                key = "c" + key;
-                let c = d.commentsMap[key];
-                //log(key, d.commentsMap);
-                if (c.isDelete) {
-                    return;
-                }
-
-                let comment = {
-                    username: c.userName,
-                    content: c.content,
-                    //deviceModel: c.deviceModel,
-                    replyTime: c.timestamp,
-                    cId: c.cid,
-                    floor: c.floor
-                };
-                collectedComments[parseInt(c.floor)] = comment;
-
-            })
-            collectedComments["totalCount"] = d.totalCount;
-            let maxPage = d.totalPage;
-            if (p < maxPage) {
-
-                //0.5秒等待，防止高楼DDOS
-                setTimeout(() => {
-                    getPage(id, p + 1, callback, collectedComments);
-                }, 500);
-            } else {
-                //log("GETPAGE DONE", collectedComments);
-                callback(collectedComments);
-            }
-        }
-
-    })
-}
-
-
-function _getPageLastReply(id, callback) {
-    let p = 1;
-    let url = `https://www.acfun.cn/rest/pc-direct/comment/listByFloor?sourceId=${id}&sourceType=3&page=${p}&pivotCommentId=0&newPivotCommentId=0&t=1638284078529&supportZtEmot=true`;
-
-    _httpGet(url, (d) => {
-        if (d) {
-            //if first page is the last page, callback directly
-            //log("d==", d);
-            let idlast = "c" + d.commentIds[0];
-            let clast = d.commentsMap[idlast];
-            let totalCount = d.totalCount;
-            callback(clast, totalCount);
-
-        }
-    })
-
-}
-
-function _getAllPageCommentOnline(id, callback) {
-    log_log(`采集评论，投稿id=${id}`)
-
-    // let collectedComments = {}; // {[floor number: content]} content = {username, content, replyTime, deviceModel, acId}
-
-
-    function collectDone(collectedComments) {
-        let commentInfo = {
-            id: id,
-            floors: collectedComments,
-            deletedFloors: [],
-            recoveredFloors: [],
-            lastReplyTime: 0,
-            lastCheckTime: +new Date(),
-            createTime: 0,
-            floorCount: 0,
-            reportedRecovery: [],
-            queriedFloors: [],
-        }
-
-        let maxFloor = 0;
-        Object.keys(commentInfo.floors).forEach((k) => {
-            let f = commentInfo.floors[k].floor
-            if (f > maxFloor) maxFloor = f;
-            //commentInfo.floorCount++;
-        })
-        commentInfo.floorCount = collectedComments["totalCount"];
-
-        log_log(`已采集本投稿评论至${maxFloor}楼。`);
-        // get the last reply time, and collect deleted floors (missing floors)
-        for (let i = 1; i <= maxFloor; i++) {
-            if (!(i in collectedComments)) {
-                //floor missing
-                commentInfo.deletedFloors.push(i);
-            } else {
-                let replyTime = collectedComments[i].replyTime;
-
-                if (replyTime > commentInfo.lastReplyTime) {
-                    //log("1", commentInfo.lastReplyTime)
-                    commentInfo.lastReplyTime = replyTime;
-                }
-
-            }
-        }
-        callback(commentInfo);
-
-    }
-
-
-    getPage(id, 1, collectDone, {});
-}
-
-function _activeReport(cache) {
-    let reportData = {
-        id: cache.id,
-        recoveredFloors: [],
-        floors: {}
-    }
-
-    let count = 0;
-    cache.recoveredFloors.forEach((fn) => {
-        fn = parseInt(fn);
-        //if this recovered floor has not been reported to the server
-        //report it
-        if (cache.reportedRecovery.indexOf(fn) < 0) {
-            reportData.recoveredFloors.push(fn);
-            let floor = cache.floors[fn];
-            let toReport = {
-                username: floor.username,
-                replyTime: floor.replyTime,
-                floor: parseInt(floor.floor),
-                cId: parseInt(floor.cId),
-                content: floor.content,
-            }
-
-            reportData.floors[fn] = toReport;
-            count++;
-        }
-    })
-
-
-    let queryData = {
-        query: "report_cache",
-        cache: reportData
-    }
-
-
-    //report when there is sth to report
-    if (count > 0) {
-        //log("DATA TO REPORT", reportData);
-        util.apiRequest(queryData, (result) => {
-            //log("report result", result);
-
-            //mark reported floors to cache
-            cache.reportedRecovery = cache.recoveredFloors.map(x => x)
-            commentRecovery_saveCommentCache(cache.id, cache);
-
-        })
-    }
-
-}
-
-
-//input id for the page, cache loaded in the upper function
-function _getCommentsOnlineAndMerge(id, oldCache, callback) {
-    //log("_getCommentsAndMerge", oldCache)
-    //get all comments, and compare with local, merge what is new, and mark what is missing
-    _getAllPageCommentOnline(id, (newCache) => {
-        //log("_getAllPageCommentOnline 2", newCache)
-        let intKeys = Object.keys(newCache.floors).map(x => parseInt(x));
-        let floorMax = Math.max(...intKeys);
-        //log("***", intKeys, floorMax);
-        for (let f = 1; f <= floorMax; f++) {
-            //log("merging ", f, f in newCache.floors, f in oldCache.floors);
-            if (f in newCache.floors && f in oldCache.floors) {
-                //Comment in both cache, nothing to do
-            } else if (f in newCache.floors && !(f in oldCache.floors)) {
-                //new comment compared to old cache, add it to new cache, which means nothing to do
-            } else if (!(f in newCache.floors) && f in oldCache.floors) {
-                //comment was here but deleted, merge old cache to new cache.
-                newCache.floors[f] = oldCache.floors[f];
-                newCache.recoveredFloors.push(f);
-            } else {
-                //floor missing in both , todo: allow user to query the server for this missing
-            }
-
-        }
-        if (!oldCache.reportedRecovery) {
-            oldCache.reportedRecovery = [];
-        }
-        newCache.reportedRecovery = oldCache.reportedRecovery.map(x => x); //deep copy
-
-        let delcount = newCache.deletedFloors.length;
-        let recovCount = newCache.recoveredFloors.length;
-        commentRecovery_saveCommentCache(id, newCache, () => {
-            log_log(newCache.lastReplyTime)
-            log_log(`投稿${id}重新缓存完成。${delcount}个被删除，${recovCount}个被恢复`);
-            callback(newCache)
-            _activeReport(newCache);
-        })
-
-    })
-
-
-}
-
-//cache format  {id: id, floors : { [floor number]: {floor data}}, lastReplyTime: LINUX_TIME, lastCheckTime: LINUX_TIME }
-//cache if there is none
-//cache if last reply time is later than local lastCheckTime
-
-
-//this function check the cache and check the\
-function _checkPageComment(id, callback) {
-    data.getLocalCommentCache(id, (cache) => {
-        //log("cache = ", cache);
-        //if tehre is no cache, cache all comments straight away.
-        if (!cache) {
-            _getAllPageCommentOnline(id, (c) => {
-
-                commentRecovery_saveCommentCache(id, c, () => {
-                    log_log("首次收集投稿" + id + `评论完成。发现${c.deletedFloors.length}个评论被删除。`);
-                    callback(c);
-                })
-            })
-        } else {
-            //if there is cache,
-            //get page latest reply, if it is later than cache, re-cache all comments
-            log_log("对比评论缓存是否需要更新。")
-            _getPageLastReply(id, (lastReply, totalCount) => {
-                //log("lastreply", lastReply, cache)
-
-                let t1 = parseInt(lastReply.timestamp);
-                let t2 = parseInt(cache.lastReplyTime)
-                //log(cache.floorCount, totalCount)
-                if (t1 !== t2 || cache.floorCount !== totalCount) {
-                    log_log(id + " 投稿缓存需要更新");
-                    _getCommentsOnlineAndMerge(id, cache, callback);
-                } else {
-                    log_log("已经缓存到最新评论了。")
-                    callback(cache);
-                }
-            })
-        }
-    })
-}
-
-
-function _checkCurrentPageComment(callback) {
-    if (!callback)
-        callback = () => 0;
-    let id = getContentId();
-    //log("id=", id);
-    _checkPageComment(id, callback)
-}
-
-function showUI(cache) {
-    js_event.emit("SHOW_DELETED_COMMENT_UI", cache);
-}
-
-
-function _recoverByLocalCache(cache, then) {
-    //log(cache);
-    log_log(`本地可恢复楼层：${cache.recoveredFloors.join(" ")}`);
-
-    cache.recoveredFloors.forEach((recoveredFloor) => {
-        let floor = cache.floors[recoveredFloor];
-        js_event.emit("FLOOR_RECOVER", floor);
-    })
-
-    then();
-}
-
-function _mergeServerCacheToLocal(serverCache, localCache) {
-    //log("_mergeServerCacheToLocal", serverCache, localCache)
-
-    if (serverCache.cached.length === 0) {
-        log_log("服务器没有其他缓存，已同步服务器缓存");
-        return;
-    }
-    serverCache.cached.forEach((floor) => {
-        if (localCache.recoveredFloors.indexOf(floor.floor) < 0) {
-            localCache.floors[floor.floor] = floor;
-            localCache.recoveredFloors.push(floor.floor);
-            localCache.reportedRecovery.push(floor.floor);
-        }
-    })
-    commentRecovery_saveCommentCache(localCache.id, localCache, () => {
-        log_log("已从服务器更新本投稿缓存。")
-    })
-}
-
-function _recoverByServerCache(localCache) {
-
-    //log("LOCALCACHE", localCache)
-    let queryObj = {
-        query: "query_floors",
-        id: localCache.id,
-        floors: localCache.deletedFloors.filter(x => localCache.recoveredFloors.indexOf(x) < 0),
-    }
-
-    if (queryObj.floors.length > 0) {
-        log_log("向服务器发出恢复评论的请求");
-        util.apiRequest(queryObj, (result) => {
-            //log("Query REs", result);
-
-            //update page with recovered
-            let cachedFloors = [];
-            result.cached.forEach((floor) => {
-                js_event.emit("FLOOR_RECOVER", floor);
-                cachedFloors.push(floor.floor)
-            })
-
-            //for each queried floor, if not cached by server, emit event for ui to show info
-            queryObj.floors.forEach((f) => {
-                if (cachedFloors.indexOf(f) < 0) {
-                    //log("Not found in server", f);
-
-                    js_event.emit("NO_SERVER_CACHE", f);
-                }
-            })
-
-            _mergeServerCacheToLocal(result, localCache)
-
-        })
-    }
-
-}
-
-function recoverComments(cache) {
-    //log("recoverComments")
-    //first use local cache to recover
-    _recoverByLocalCache(cache, () => {
-        //after using local cache, everything left will be request
-        _recoverByServerCache(cache);
-    });
-}
-
-
-function __activeHelp() {
-    data.getAllCacheIndices((ids) => {
-        let queryObj = {
-            query: "active_recover",
-            ids: ids,
-        }
-        util.apiRequest(queryObj, (_d) => {
-            log_log(`收到服务器恢复需求。${_d.result.length}个投稿需要本地数据`, _d);
-            let list = _d.result;
-            let recoverCount = 0;
-            let floorTotal = 0;
-            list.forEach((serverRequest, index) => {
-                data.getLocalCommentCache(serverRequest._id, (cache) => {
-
-                    let reportData = {
-                        id: cache.id,
-                        recoveredFloors: [],
-                        floors: {}
-                    }
-                    let count = 0;
-                    serverRequest.floors.forEach((f) => {
-                        if (f in cache.floors) {
-                            count++;
-                            let floor = cache.floors[f];
-                            let toReport = {
-                                username: floor.username,
-                                replyTime: floor.replyTime,
-                                floor: parseInt(floor.floor),
-                                cId: parseInt(floor.cId),
-                                content: floor.content,
-                            }
-
-                            reportData.recoveredFloors.push(f);
-                            reportData.floors[f] = toReport;
-                        }
-                    })
-
-
-                    let queryData = {
-                        query: "report_cache",
-                        cache: reportData
-                    }
-
-
-                    //report when there is sth to report
-                    if (count > 0) {
-                        log_log("主动恢复评论数据", reportData);
-                        util.apiRequest(queryData, (result) => {
-                            log_log("恢复结果", result);
-
-                            //mark reported floors to cache
-                            cache.reportedRecovery = cache.recoveredFloors.map(x => x)
-                            commentRecovery_saveCommentCache(cache.id, cache);
-
-                        })
-                        recoverCount++;
-                        floorTotal += count;
-                    }
-
-                    if (index === list.length - 1) {
-                        log_log(`帮助服务器恢复共${recoverCount}个投稿和${floorTotal}个评论。`)
-                    }
-
-                })
-            })
-
-
-        })
-    })
-}
-
-function _activeHelp() {
-    log_log("主动帮助")
-    let t = +new Date();
-    data.getActiveHelpTime((lasttime) => {
-        //log("上次主动帮助时间", lasttime, (new Date(lasttime)).toLocaleTimeString());
-        if (t - activeHelpInterval > lasttime) {
-            let interval = Math.round((t - lasttime) / 1000);
-
-            log_log(`距离上次主动帮助已经${interval}秒了`)
-            __activeHelp();
-            data.setActiveHelpTime(t);
-        } else {
-
-            log_log(`距离上次主动帮助还未足够。`)
-        }
-    })
-}
-
-function _deleteCache(id) {
-    data.deleteCommentCache(id, () => {
-        log_log(`删除缓存成功，id=${id}`);
-    })
-}
-
-function _deleteAllCache() {
-    data.getAllCacheIndices((ids) => {
-        ids.forEach((id) => {
-            _deleteCache(id);
-        })
-    })
-}
-
-/* harmony default export */ const commentRecovery = ({
-    init() {
-        commentUI.init();
-        //check if page type is content page
-        let pagetype = getPageType();
-        if (!(pagetype === "VIDEO" || pagetype === "ARTICLE")) {
-            return;
-        }
-        //debug
-
-        unsafeWindow["deleteCache"] = data.deleteCommentCache;
-        unsafeWindow["clearCache"] = _deleteAllCache
-        _checkCurrentPageComment((cache) => {
-            setTimeout(() => {
-                showUI(cache);
-                recoverComments(cache);
-            }, 1000)
-
-
-        });
-
-        _activeHelp();
-    }
-});
 ;// CONCATENATED MODULE: ./dev/js/contentTask.js
 
 
@@ -3790,10 +3823,9 @@ function contentTask() {
         let mutationObserver = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
 
-
                 if (mutation.type === "childList") {
                     let targets = mutation.addedNodes;
-                    //console.log("targets", targets)
+                    //log("targets", targets)
                     targets.forEach((target) => {
 
                         if (target.tagName === "DIV" && (
