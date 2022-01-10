@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.012
+// @version      3.015
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -43,7 +43,6 @@ if (typeof module !=="undefined" && module !== null) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
-
 
 if ( true && module !== null) {
     module.exports = function header() {
@@ -629,7 +628,7 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.012");
+/* harmony default export */ const version = ("3.015");
 ;// CONCATENATED MODULE: ./dev/js/data.js
 //function to load Data
 
@@ -1486,6 +1485,20 @@ function _replaceImage(content) {
     }
 }
 
+function _replaceEmot(content) {
+    let sb1 = /\[emot=acfun,(\d+)\/\]/g
+    let ms = [...content.matchAll(sb1)];
+    let result = content.toString();
+    ms.forEach((m) => {
+        let id = m[1];
+        let o = unsafeWindow.emotDict[id];
+        let url = o.emotionImageUrl;
+        let imgtag = `<img class="ubb-emotion" src="${url}" />`;
+        result = result.replaceAll(m[0], imgtag)
+    })
+    return result;
+}
+
 function recoverFloor(floorData) {
     //log(floorData);
     let doc = unsafeWindow.document;
@@ -1499,7 +1512,9 @@ function recoverFloor(floorData) {
             let usernameDom = itemDom.querySelector(".comment-username");
             usernameDom.innerText = floorData.username;
             usernameDom.classList.remove("remove");
-            itemDom.querySelector(".comment-text").innerHTML = _replaceImage(floorData.content);
+            let content = _replaceImage(floorData.content);
+            content = _replaceEmot(content);
+            itemDom.querySelector(".comment-text").innerHTML = content;
             itemDom.querySelector(".comment-query-state").classList.add("remove");
             let datetime = new Date(floorData.replyTime);
             itemDom.querySelector(".comment-time").innerText = datetime.toLocaleString()
@@ -1524,12 +1539,12 @@ function noticeUncached(f) {
     })
 }
 
-function enable(val){
+function enable(val) {
     let doc = unsafeWindow.document;
     let uidom = doc.body.querySelector(".deleted-comments-container");
-    if (val){
+    if (val) {
         uidom.classList.remove("remove-2");
-    }else{
+    } else {
         uidom.classList.add("remove-2");
     }
 }
@@ -1546,9 +1561,19 @@ function _bindEvents() {
         noticeUncached(floor)
     })
 
-    js_event.on("SETTING_CHANGE_showDeletedComment", (val)=>{
+    js_event.on("SETTING_CHANGE_showDeletedComment", (val) => {
         enable(val);
     })
+}
+
+function _loadEmots() {
+    let s = localStorage.getItem("emoticonList")
+    let list = JSON.parse(s);
+    let dict = {};
+    list.forEach((o) => {
+        dict[o.emotionId] = o;
+    })
+    unsafeWindow["emotDict"] = dict;
 }
 
 function _loadUI() {
@@ -1558,7 +1583,7 @@ function _loadUI() {
     _repositionUI()
     _observer()
 
-    data.loadGeneralSetting(setting=>{
+    data.loadGeneralSetting(setting => {
         //log("C INIT ", setting.showDeletedComment)
         enable(setting.showDeletedComment);
     })
@@ -1567,7 +1592,7 @@ function _loadUI() {
 
 /* harmony default export */ const commentUI = ({
     init() {
-
+        _loadEmots();
         _loadUI();
         _bindEvents();
     }
@@ -2121,7 +2146,6 @@ function _deleteAllCache(callback) {
 
 
         });
-        bindEvents();
         _activeHelp();
     },
     deleteAllCache:_deleteAllCache
@@ -2409,7 +2433,7 @@ function _refreshCommentCachePage(dom) {
 
 }
 
-function setting_ui_bindEvents(dom) {
+function bindEvents(dom) {
     js_event.on("UP_BAN_UPDATE", () => {
         updateBannedUpList();
     })
@@ -2469,7 +2493,7 @@ function init(dom) {
         dom.style.left = pos.x + "px";
     })
 
-    setting_ui_bindEvents(dom);
+    bindEvents(dom);
     bindGeneralSettingEvents(dom);
 
     updateBannedUpList(dom);
