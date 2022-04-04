@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.016
+// @version      3.017
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -630,7 +630,7 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.016");
+/* harmony default export */ const version = ("3.017");
 ;// CONCATENATED MODULE: ./dev/js/data.js
 //function to load Data
 
@@ -2670,7 +2670,7 @@ function contentPageUI_loadUI() {
 
 function hideArticle(c) {
 
-    if ("contentData" in c.dom){
+    if ("contentData" in c.dom) {
         c = c.dom["contentData"];
     }
 
@@ -2693,9 +2693,9 @@ function hideArticle(c) {
 function hideItem(c) {
     c.dom.classList.add("smooth");
     c.dom.classList.add("banned-page-item");
-    if (__webpack_require__.g["showMouseover"]){
+    if (__webpack_require__.g["showMouseover"]) {
         c.dom.classList.add("hover-show");
-    }else{
+    } else {
         c.dom.classList.remove("hover-show");
     }
     c["hidden"] = true;
@@ -2713,7 +2713,7 @@ function showArticle(c) {
 }
 
 function _hideContent(c) {
-    if ("contentData" in c.dom){
+    if ("contentData" in c.dom) {
         c = c.dom["contentData"];
     }
     if (c.type === "ARTICLE") {
@@ -2724,7 +2724,7 @@ function _hideContent(c) {
 }
 
 function _showContent(c) {
-    if ("contentData" in c.dom){
+    if ("contentData" in c.dom) {
         c = c.dom["contentData"];
     }
     if (c.type === "ARTICLE") {
@@ -2812,18 +2812,19 @@ function refreshPageItems(contents) {
 
             contents.forEach((c) => {
                 let banned = false;
-                if (blist.indexOf(c.username) >= 0) {
+                if (blist && blist.indexOf && blist.indexOf(c.username) >= 0) {
                     //过滤被屏蔽的视频
                     _hideContent(c);
                     banned = true;
                 }
-
-                klist.forEach((keyword) => {
-                    if (c.title.indexOf(keyword) >= 0) {
-                        _hideContent(c);
-                        banned = true;
-                    }
-                })
+                if (klist && klist.indexOf) {
+                    klist.forEach((keyword) => {
+                        if (c.title.indexOf(keyword) >= 0) {
+                            _hideContent(c);
+                            banned = true;
+                        }
+                    })
+                }
 
                 if (!banned) {
                     _showContent(c);
@@ -2837,7 +2838,7 @@ function refreshPageItems(contents) {
 
 }
 
-function showCommentTags(content){
+function showCommentTags(content) {
 
 }
 
@@ -2990,11 +2991,11 @@ function ui_bindEvents() {
         refreshPageItems(contents);
     })
 
-    js_event.on("SHOW_COMMENT_TAGS", (contents)=>{
+    js_event.on("SHOW_COMMENT_TAGS", (contents) => {
         showCommentTags(contents);
     })
 
-    js_event.on("SETTING_CHANGE_showMouseover", (val)=>{
+    js_event.on("SETTING_CHANGE_showMouseover", (val) => {
         log_log("mouseovershow", val);
         __webpack_require__.g["showMouseover"] = val;
 //force refresh
@@ -3002,8 +3003,8 @@ function ui_bindEvents() {
     })
 }
 
-function ui_init(){
-    data.loadGeneralSetting(setting=>{
+function ui_init() {
+    data.loadGeneralSetting(setting => {
         __webpack_require__.g["showMouseover"] = setting.showMouseover;
     });
 }
@@ -3040,8 +3041,8 @@ function ui_init(){
         let banButton = unsafeWindow["banButton"];
         dom.addEventListener("pointermove", (e) => {
 
-            data.loadGeneralSetting((setting)=>{
-                if (setting.showBanButton){
+            data.loadGeneralSetting((setting) => {
+                if (setting.showBanButton) {
                     if (banButton.activeDom !== dom && !banButton.active) {
                         if (dom["contentData"]["hidden"]) return;
                         //log(dom["contentData"]);
