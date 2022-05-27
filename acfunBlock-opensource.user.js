@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.017
+// @version      3.018
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -45,7 +45,6 @@ if (typeof module !=="undefined" && module !== null) {
 /* module decorator */ module = __webpack_require__.nmd(module);
 
 
-
 if ( true && module !== null) {
     module.exports = function header() {
         console.log("AcFun 网页端辅助启动中。。。")
@@ -80,7 +79,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_g
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
 var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Colors */\r\n.c-a {\r\n    background-color: #F7E6DE;\r\n}\r\n\r\n.c-b {\r\n    background-color: #D6C4C1;\r\n}\r\n\r\n.c-c {\r\n    background-color: #eee;\r\n}\r\n\r\n.c-d {\r\n    background-color: #D6C1CB;\r\n}\r\n\r\n.c-e {\r\n    background-color: #F7DEF7;\r\n}\r\n\r\n.ui-hidden {\r\n    /*display: none!important;*/\r\n    width: 0 !important;\r\n    border-width: 0!important;\r\n}\r\n\r\n.ui-hidden a {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden div {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden span {\r\n\r\n    background-color: transparent;\r\n}\r\n\r\n.helper-wrap {\r\n    user-select: none;\r\n    position: fixed;\r\n    z-index: 99;\r\n    height: 230px;\r\n    min-width: 60px;\r\n    top: 500px;\r\n    left: 0px;\r\n\r\n}\r\n\r\n.helper-wrap-inner {\r\n    position: relative;\r\n    height: 100%;\r\n}\r\n\r\n.helper-wrap-inner div {\r\n    float: left;\r\n    vertical-align: top;\r\n}\r\n\r\n.helper-main {\r\n    display: inline-block;\r\n    width: 280px;\r\n    height: 100%;\r\n    border: solid #666;\r\n    border-width: 1px 1px 1px 0;\r\n    position: relative;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n\r\n}\r\n\r\n.ac-girl {\r\n    display: inline-block;\r\n    width: 48px;\r\n    height: 80px;\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\r\n    background-size: contain;\r\n    background-repeat: no-repeat;\r\n    cursor: pointer;\r\n    margin-top: 10px;\r\n}\r\n\r\n.ac-girl-hide {\r\n    transform: translateX(-100%);\r\n}\r\n\r\n.page-wrap {\r\n    height: 100%;\r\n    width: 280px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: inherit;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n}\r\n\r\n.go-back {\r\n    cursor: pointer;\r\n    padding: 3px;\r\n}\r\n\r\n.inactive-page {\r\n    display: none;\r\n}\r\n\r\n.menu-wrap {\r\n    text-align: center;\r\n\r\n    position: relative;\r\n    width: 100%;\r\n    height: 190px;\r\n    margin-top: 40px;\r\n\r\n    /*width: 80px;*/\r\n    /*position: absolute;*/\r\n    /*top: 50%;*/\r\n    /*left: 50%;*/\r\n    /*transform: translate(-50%, -50%);*/\r\n}\r\n\r\n.menu-column{\r\n    width: 50%;\r\n    float: left;\r\n}\r\n\r\n.sync-time {\r\n    margin-top: 20px;\r\n}\r\n\r\n.plugin-hint {\r\n    z-index: 99;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    cursor: pointer;\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-menu-title {\r\n    overflow: hidden;\r\n}\r\n\r\n.plugin-author{\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n}\r\n\r\n.plugin-version {\r\n    position: absolute;\r\n    right: 20px;\r\n    bottom: 0;\r\n    pointer-events: none;\r\n}\r\n\r\n.menu-wrap a {\r\n    display: block;\r\n    margin: 3px 0 0px;\r\n    transition: 100ms;\r\n    cursor: pointer;\r\n}\r\n\r\n.menu-wrap a:hover {\r\n    transform: scale(1.2);\r\n}\r\n\r\n.plugin-add-ban-up {\r\n    margin: 10px;\r\n    display: block;\r\n    width: 100%;\r\n}\r\n\r\n.ban-title-input {\r\n    height: 20px;\r\n    background-color: transparent;\r\n    border-radius: 50px 0 0 50px;\r\n    font: 13px \"宋体\";\r\n    line-height: 13px;\r\n    text-align: center;\r\n    margin: 0 0 0 2px;\r\n    border: 1px solid #b6adad;\r\n    float: left;\r\n}\r\n\r\n.ban-title-input:focus {\r\n    background-color: rgba(255, 255, 255, 0.4);\r\n}\r\n\r\n.ban-item-submit {\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px;\r\n    background: darkred;\r\n    height: 22px;\r\n    color: white;\r\n    width: 40px;\r\n    border-radius: 0 50px 50px 0;\r\n}\r\n\r\n.ban-item-submit:hover {\r\n    background-color: #a84716;\r\n    transition: 50ms;\r\n}\r\n\r\n.ban-item-submit:active {\r\n    background-color: #cd9072;\r\n}\r\n\r\n.banned-items {\r\n    padding: 10px;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    height: 147px;\r\n    line-height: 23px;\r\n    margin: 2px;\r\n\r\n}\r\n\r\n\r\n.banned-items::-webkit-scrollbar {\r\n    width: 10px;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-track {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-thumb {\r\n    background-color: #666666;\r\n}\r\n\r\n.banned-item {\r\n    position: relative;\r\n    display: inline-block;\r\n    height: 16px;\r\n\r\n    margin: 3px 1px 5px 1px;\r\n}\r\n\r\nspan.banned-title {\r\n    height: 16px;\r\n    float: left;\r\n    vertical-align: middle;\r\n    background-color: #e0a040;\r\n    font: 12px \"宋体\";\r\n    border-radius: 5px;\r\n    padding: 1px 5px 1px 5px;\r\n    line-height: 16px;\r\n}\r\n\r\n.banned-item button {\r\n\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px 5px 1px 5px;\r\n    background: rgba(89, 0, 0, 0.7);\r\n    height: 18px;\r\n    width: 100%;\r\n    color: white;\r\n    border-radius: 5px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    cursor: pointer;\r\n    opacity: 0;\r\n    transition: 80ms ease-in;\r\n\r\n}\r\n\r\n.banned-item button:active {\r\n\r\n    background: rgba(255, 76, 76, 0.7);\r\n}\r\n\r\n.banned-item button:hover {\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.about-page-content {\r\n    width: 100%;\r\n    display: block;\r\n    word-wrap: break-word;\r\n    box-sizing: border-box;\r\n    padding: 20px;\r\n    overflow-y: auto;\r\n    height: 210px;\r\n    float: none!important;\r\n}\r\n\r\n\r\n/* 过滤UI */\r\n.filter-button {\r\n\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: rgba(255, 0, 0, 1);\r\n    padding: 1.5px;\r\n    left: 0;\r\n    top: 0;\r\n    transform: translate(0, 0);\r\n    display: block;\r\n    position: fixed;\r\n    z-index: 98;\r\n    background-size: contain;\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\r\n    border-radius: 11px;\r\n    border: 2px rgb(230, 230, 230) solid;\r\n    cursor: pointer;\r\n}\r\n\r\n.smooth {\r\n    transition: 500ms ease-in-out;\r\n    -moz-transition: 500ms ease-in-out;\r\n    -o-transition: 500ms ease-in-out;\r\n    -webkit-transition: 500ms ease-in-out;\r\n}\r\n\r\n.banned-article {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 0 !important;\r\n    overflow: hidden;\r\n    opacity: 0;\r\n}\r\n\r\n.banned-page-item {\r\n    margin: 0;\r\n    opacity: 0;\r\n    transition: 300ms;\r\n    pointer-events: none;\r\n}\r\n\r\n.banned-page-item:hover {\r\n\r\n}\r\n\r\n.hover-show{\r\n    pointer-events: auto!important;\r\n}\r\n\r\n.hover-show:hover{\r\n    opacity: 1;\r\n}\r\n\r\n.remove {\r\n    display: none !important;\r\n}\r\n\r\n.remove-2{\r\n    display: none !important;\r\n}\r\n\r\n.area-comment-block {\r\n    line-height: 14px;\r\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ") no-repeat;\r\n    background-size: 13px 13px;\r\n    background-position: 0 1px;\r\n    padding-left: 17px;\r\n    padding-right: 15px;\r\n    color: #999;\r\n}\r\n\r\n.banned-text {\r\n    font-size: 14px !important;\r\n}\r\n\r\n.unban-replier-btn {\r\n    margin: 0 10px;\r\n}\r\n\r\n.hide-avatar {\r\n    visibility: hidden;\r\n}\r\n\r\n\r\n/*subUI */\r\n.sub-ui-wrap {\r\n    position: fixed;\r\n    left: 0;\r\n    top: 38%;\r\n    height: 80px;\r\n    width: 30px;\r\n    z-index: 99;\r\n}\r\n\r\n.sub-ui-inner {\r\n    height: 80px;\r\n    width: 30px;\r\n    position: relative;\r\n    display: block;\r\n    overflow: hidden;\r\n}\r\n\r\n.sub-ui-banned {\r\n\r\n    background-color: rgba(253, 76, 93, 0.3);\r\n}\r\n\r\n.sub-ui-normal {\r\n\r\n    background-color: rgba(165, 253, 76, 0.3);\r\n}\r\n\r\n.sub-ui-text {\r\n    writing-mode: vertical-rl;\r\n    text-orientation: upright;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    height: 100%;\r\n    width: 100%;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button {\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button:hover {\r\n    transform: translateX(100%);\r\n}\r\n\r\n#banUp {\r\n    color: black;\r\n}\r\n\r\n#unbanUp {\r\n    color: black;\r\n}\r\n\r\n\r\n#banUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: \"屏蔽ＵＰ主\";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #fc7630;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n\r\n#unbanUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: \"取消屏蔽\";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #83ee1a;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n.on-top {\r\n    z-index: 1000;\r\n}\r\n\r\n.user-tags {\r\n    vertical-align: middle;\r\n    display: inline-block;\r\n    margin: 0 20px 0 20px;\r\n    max-width: 50%;\r\n}\r\n\r\n/* TAGGING */\r\n.user-tag {\r\n    margin-top: 2px;\r\n    margin-right: 3px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    /*border-color: rgba(0, 0, 0, 0.4);*/\r\n    border-color: rgba(255, 0, 0, 0.4);\r\n    color:red;\r\n    user-select: none;\r\n    display: inline-block;\r\n\r\n    height: 15px;\r\n    min-width: 30px;\r\n\r\n    float: left;\r\n\r\n\r\n}\r\n.user-tag-text{\r\n\r\n    text-align: center;\r\n}\r\n\r\n.very-smooth {\r\n\r\n    transition: 200ms;\r\n    -moz-transition: 200ms;\r\n    -o-transition: 200ms;\r\n    -webkit-transition: 200ms;\r\n}\r\n\r\n\r\n.add-new-tag {\r\n\r\n    margin-top: 2px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n\r\n    border: 1px rgba(0, 0, 0, 0.25);\r\n    border-style: dashed;\r\n    user-select: none;\r\n\r\n    display: inline-block;\r\n    float: left;\r\n\r\n}\r\n\r\n.add-new-tag:hover {\r\n    background-color: rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.add-new-tag:active {\r\n    background-color: rgba(255, 255, 255, 0.3);\r\n}\r\n\r\n.tagging-ui-container {\r\n    overflow: hidden;\r\n    position: fixed;\r\n    top: 50%;\r\n    left: 50%;\r\n    height: 200px;\r\n    width: 300px;\r\n    transform: translate(-50%, -50%);\r\n\r\n    box-sizing: border-box;\r\n    padding: 10px;\r\n\r\n    -webkit-box-shadow: 2px 2px 7px 1px #787878;\r\n    box-shadow: 2px 2px 7px 1px #787878;\r\n    border-radius: 10px;\r\n\r\n    background-color: rgb(240,240,240);\r\n}\r\n\r\n.tagging-ui-inner {\r\n    position: relative;\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n}\r\n\r\n.name-to-tag{\r\n    padding: 3px;\r\n\r\n}\r\n\r\n.tags-container {\r\n    width: 280px;\r\n    height: 130px;\r\n    background-color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.tagging-input-wrap{\r\n    background-color: rgb(100,100,100);\r\n    height: 20px;\r\n    vertical-align: top;\r\n    border-bottom: 2px rgb(200,200,200);\r\n    margin-bottom: 2px;\r\n}\r\n\r\n.tagging-input{\r\n    float: left;\r\n    box-sizing: border-box;\r\n    padding: 2px;\r\n    height: 20px;\r\n    width: 235px;\r\n    border: none;\r\n\r\n}\r\n\r\n.tagging-submit{\r\n    float: left;\r\n    height: 20px;\r\n    border: none;\r\n    width: 45px;\r\n    background-color: #ced9c5;\r\n}\r\n\r\n.tagging-submit:hover{\r\n    background-color: #a5f400;\r\n}\r\n\r\n.tagging-submit:active{\r\n    background-color: #d4f400;\r\n}\r\n\r\n.tagging-close-button{\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    background-color: #a84716;\r\n    color: white;\r\n    border-radius: 0 10px 0 10px;\r\n    width: 45px;\r\n    height: 25px;\r\n    vertical-align: middle;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    z-index: 10;\r\n    user-select: none;\r\n}\r\n\r\n.smooth-remove{\r\n    transition: 300ms ease-in-out;\r\n    opacity: 0;\r\n    pointer-events: none;\r\n\r\n}\r\n\r\n\r\n.tagging-close-button:hover{\r\n    background-color: #ffc5c5;\r\n}\r\n\r\n.tagging-close-button:active{\r\n    background-color: #ffedd4;\r\n    padding-top: 2px;\r\n\r\n}\r\n\r\n.tag-item{\r\n    display: inline-block;\r\n    background-color: #e7e1e1;\r\n    margin: 1px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n    border: 1px dashed;\r\n    padding: 2px;\r\n    font-size: 8px;\r\n    user-select: none;\r\n    cursor: pointer;\r\n    height: 19px;\r\n    min-width: 30px;\r\n    position: relative;\r\n    line-height: 15px;\r\n    text-align: center;\r\n}\r\n\r\n\r\n.tag-item:before{\r\n    opacity: 0;\r\n    content: \"删除\";\r\n    position: absolute;\r\n    width: 100%;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    left: 0;\r\n    height: 100%;\r\n    top: 0;\r\n    line-height: 19px;\r\n}\r\n\r\n.tag-item:hover:before{\r\n    opacity: 1;\r\n    color: white;\r\n    background-color: #a84716;\r\n}\r\n\r\n\r\n/* Comment Recovery UI */\r\n\r\n\r\n\r\n.deleted-comments-container{\r\n    position: absolute;\r\n    display: block;\r\n    width: 300px;\r\n\r\n    min-height: 300px;\r\n    overflow: hidden;\r\n}\r\n\r\n.deleted-comments-inner{\r\n    position: relative;\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n\r\n}\r\n\r\n\r\n\r\n.deleted-comments-title{\r\n    box-sizing: border-box;\r\n    display: block;\r\n    font-size: 16px;\r\n    background-color: #b6adad;\r\n    padding: 3px 10px 3px 10px;\r\n}\r\n\r\n.deleted-comment-list{\r\n    height: calc(100% - 50px );\r\n    width: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}\r\n\r\n.deleted-comment{\r\n    border: 1px solid #e5e5e5;\r\n    background-color: #ffe;\r\n    display: block;\r\n}\r\n\r\n.deleted-comment img{\r\n    width: 100%;\r\n}\r\n\r\n.comment-info{\r\n    display: block;\r\n    height: 20px;\r\n    padding: 3px;\r\n}\r\n\r\n.comment-floor{\r\n    font-weight: 700;\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    width: 45px;\r\n    box-sizing: border-box;\r\n    margin-right: 3px;\r\n}\r\n\r\n.comment-query-state{\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.comment-content{\r\n    padding: 3px;\r\n}\r\n\r\n.hide-btn{\r\n    float: right;\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n    user-select: none;\r\n}\r\n\r\n.hide-btn:hover{\r\n    color: red;\r\n}\r\n\r\n\r\n/* setting ui  check box */\r\n/* Customize the label (the container) */\r\n.cc-container {\r\n    display: block;\r\n    position: relative;\r\n    padding-left: 22px;\r\n    margin-bottom: 12px;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n    line-height: 12px;\r\n}\r\n\r\n/* Hide the browser's default checkbox */\r\n.cc-container input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    cursor: pointer;\r\n    height: 0;\r\n    width: 0;\r\n}\r\n\r\n/* Create a custom checkbox */\r\n.checkmark {\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    height: 12px;\r\n    width: 12px;\r\n    background-color: #848484;\r\n}\r\n\r\n/* On mouse-over, add a grey background color */\r\n.cc-container:hover input ~ .checkmark {\r\n    background-color: #ccc;\r\n}\r\n\r\n/* When the checkbox is checked, add a blue background */\r\n.cc-container input:checked ~ .checkmark {\r\n    background-color: #2196F3;\r\n}\r\n\r\n/* Create the checkmark/indicator (hidden when not checked) */\r\n.checkmark:after {\r\n    content: \"\";\r\n    position: absolute;\r\n    display: none;\r\n}\r\n\r\n/* Show the checkmark when checked */\r\n.cc-container input:checked ~ .checkmark:after {\r\n    display: block;\r\n}\r\n\r\n/* Style the checkmark/indicator */\r\n.cc-container .checkmark:after {\r\n    left: 4px;\r\n    top: 2px;\r\n    width: 3px;\r\n    height: 6px;\r\n    border: solid white;\r\n    border-width: 0 2px 2px 0;\r\n    -webkit-transform: rotate(45deg);\r\n    -ms-transform: rotate(45deg);\r\n    transform: rotate(45deg);\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Colors */\r\n.c-a {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n.c-b {\r\n    background-color: #D6C4C1;\r\n}\r\n\r\n.c-c {\r\n    background-color: #eee;\r\n}\r\n\r\n.c-d {\r\n    background-color: #D6C1CB;\r\n}\r\n\r\n.c-e {\r\n    background-color: #F7DEF7;\r\n}\r\n\r\n.ui-hidden {\r\n    /*display: none!important;*/\r\n    width: 0 !important;\r\n    border-width: 0 !important;\r\n}\r\n\r\n.ui-hidden a {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden div {\r\n\r\n    color: rgba(0, 0, 0, 0) !important;\r\n}\r\n\r\n.ui-hidden span {\r\n\r\n    background-color: transparent;\r\n}\r\n\r\n.helper-wrap {\r\n    user-select: none;\r\n    position: fixed;\r\n    z-index: 99;\r\n    height: 230px;\r\n    min-width: 60px;\r\n    top: 500px;\r\n    left: 0px;\r\n\r\n}\r\n\r\n.helper-wrap-inner {\r\n\r\n    position: relative;\r\n    height: 100%;\r\n}\r\n\r\n.helper-wrap-inner div {\r\n    float: left;\r\n    vertical-align: top;\r\n}\r\n\r\n.helper-main {\r\n    display: inline-block;\r\n    width: 280px;\r\n    height: 100%;\r\n\r\n    position: relative;\r\n    border-radius: 0 10px 10px 0;\r\n    box-shadow: 1px 1px 5px 1px rgba(212,212,212,0.45);\r\n    border:none;\r\n    overflow: hidden;\r\n}\r\n\r\n.ac-girl {\r\n    display: inline-block;\r\n    width: 48px;\r\n    height: 80px;\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\r\n    background-size: contain;\r\n    background-repeat: no-repeat;\r\n    cursor: pointer;\r\n    margin-top: 10px;\r\n}\r\n\r\n.ac-girl-hide {\r\n    transform: translateX(-100%);\r\n}\r\n\r\n.page-wrap {\r\n    height: 100%;\r\n    width: 280px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: inherit;\r\n    border-radius: 0 10px 10px 0;\r\n    overflow: hidden;\r\n}\r\n\r\n.go-back {\r\n    cursor: pointer;\r\n    padding: 3px;\r\n}\r\n\r\n.inactive-page {\r\n    display: none;\r\n}\r\n\r\n.menu-wrap {\r\n    text-align: center;\r\n\r\n    position: relative;\r\n    width: 100%;\r\n    height: 190px;\r\n    margin-top: 40px;\r\n\r\n    /*width: 80px;*/\r\n    /*position: absolute;*/\r\n    /*top: 50%;*/\r\n    /*left: 50%;*/\r\n    /*transform: translate(-50%, -50%);*/\r\n}\r\n\r\n.menu-column {\r\n    width: 50%;\r\n    float: left;\r\n}\r\n\r\n.sync-time {\r\n    margin-top: 20px;\r\n}\r\n\r\n.plugin-hint {\r\n    z-index: 99;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    cursor: pointer;\r\n    overflow: hidden;\r\n    padding: 2px;\r\n    font-weight: bold;\r\n}\r\n\r\n.plugin-menu-title {\r\n    overflow: hidden;\r\n    padding: 2px;\r\n    font-weight: bold;\r\n}\r\n\r\n.plugin-author {\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n    padding: 2px;\r\n    font-weight: bold;\r\n}\r\n\r\n.plugin-version {\r\n    position: absolute;\r\n    right: 20px;\r\n    bottom: 0;\r\n    pointer-events: none;\r\n    padding: 2px;\r\n    font-weight: bold;\r\n}\r\n\r\n.menu-wrap a {\r\n    display: block;\r\n    margin: 3px 0 0px;\r\n    transition: 100ms;\r\n    cursor: pointer;\r\n}\r\n\r\n.menu-wrap a:hover {\r\n    transform: scale(1.2);\r\n}\r\n\r\n.plugin-add-ban-up {\r\n    margin: 10px;\r\n    display: block;\r\n    width: 100%;\r\n}\r\n\r\n.ban-title-input {\r\n    height: 20px;\r\n    background-color: transparent;\r\n    border-radius: 50px 0 0 50px;\r\n    font: 13px \"宋体\";\r\n    line-height: 13px;\r\n    text-align: center;\r\n    margin: 0 0 0 2px;\r\n    border: 1px solid #b6adad;\r\n    float: left;\r\n}\r\n\r\n.ban-title-input:focus {\r\n    background-color: rgba(255, 255, 255, 0.4);\r\n}\r\n\r\n.ban-item-submit {\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px;\r\n    background: darkred;\r\n    height: 22px;\r\n    color: white;\r\n    width: 40px;\r\n    border-radius: 0 50px 50px 0;\r\n}\r\n\r\n.ban-item-submit:hover {\r\n    background-color: #f1c7c7;\r\n    transition: 50ms;\r\n}\r\n\r\n.ban-item-submit:active {\r\n    background-color: #cd9072;\r\n}\r\n\r\n.banned-items {\r\n    padding: 10px;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    height: 147px;\r\n    line-height: 23px;\r\n    margin: 2px;\r\n\r\n}\r\n\r\n\r\n.banned-items::-webkit-scrollbar {\r\n    width: 10px;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-track {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n.banned-items::-webkit-scrollbar-thumb {\r\n    background-color: #666666;\r\n}\r\n\r\n.banned-item {\r\n    position: relative;\r\n    display: inline-block;\r\n    height: 16px;\r\n\r\n    margin: 3px 1px 5px 1px;\r\n}\r\n\r\nspan.banned-title {\r\n    height: 16px;\r\n    float: left;\r\n    vertical-align: middle;\r\n    background-color: #f9f9f9;\r\n    font: 12px \"宋体\";\r\n    border-radius: 5px;\r\n    padding: 1px 5px 1px 5px;\r\n    line-height: 16px;\r\n}\r\n\r\n.banned-item button {\r\n\r\n    border: 0px solid;\r\n    display: inline-block;\r\n    float: left;\r\n    padding: 1px 5px 1px 5px;\r\n    background: rgb(163 52 52 / 70%);\r\n    height: 18px;\r\n    width: 100%;\r\n    color: white;\r\n    border-radius: 5px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    cursor: pointer;\r\n    opacity: 0;\r\n    transition: 80ms ease-in;\r\n\r\n}\r\n\r\n.banned-item button:active {\r\n\r\n    background: rgba(255, 76, 76, 0.7);\r\n}\r\n\r\n.banned-item button:hover {\r\n    opacity: 1;\r\n}\r\n\r\n\r\n.about-page-content {\r\n    width: 100%;\r\n    display: block;\r\n    word-wrap: break-word;\r\n    box-sizing: border-box;\r\n    padding: 20px;\r\n    overflow-y: auto;\r\n    height: 210px;\r\n    float: none !important;\r\n}\r\n\r\n\r\n/* 过滤UI */\r\n.filter-button {\r\n\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: rgba(255, 0, 0, 1);\r\n    padding: 1.5px;\r\n    left: 0;\r\n    top: 0;\r\n    transform: translate(0, 0);\r\n    display: block;\r\n    position: fixed;\r\n    z-index: 98;\r\n    background-size: contain;\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\r\n    border-radius: 11px;\r\n    border: 2px rgb(230, 230, 230) solid;\r\n    cursor: pointer;\r\n}\r\n\r\n.smooth {\r\n    transition: 500ms ease-in-out;\r\n    -moz-transition: 500ms ease-in-out;\r\n    -o-transition: 500ms ease-in-out;\r\n    -webkit-transition: 500ms ease-in-out;\r\n}\r\n\r\n.banned-article {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 0 !important;\r\n    overflow: hidden;\r\n    opacity: 0;\r\n}\r\n\r\n.banned-page-item {\r\n    margin: 0;\r\n    opacity: 0;\r\n    transition: 300ms;\r\n    pointer-events: none;\r\n}\r\n\r\n.banned-page-item:hover {\r\n\r\n}\r\n\r\n.hover-show {\r\n    pointer-events: auto !important;\r\n}\r\n\r\n.hover-show:hover {\r\n    opacity: 1;\r\n}\r\n\r\n.remove {\r\n    display: none !important;\r\n}\r\n\r\n.remove-2 {\r\n    display: none !important;\r\n}\r\n\r\n.area-comment-block {\r\n    line-height: 15px;\r\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ") no-repeat;\r\n    background-size: 13px 13px;\r\n    background-position: 0 1px;\r\n    padding-left: 17px;\r\n    padding-right: 15px;\r\n    color: #999;\r\n    cursor: pointer;\r\n}\r\n\r\n.area-comment-block:hover{\r\n    color: red;\r\n    filter: ;\r\n}\r\n\r\n.banned-text {\r\n    font-size: 14px !important;\r\n}\r\n\r\n.unban-replier-btn {\r\n    margin: 0 10px;\r\n}\r\n\r\n.hide-avatar {\r\n    visibility: hidden;\r\n}\r\n\r\n\r\n/*subUI */\r\n.sub-ui-wrap {\r\n    position: fixed;\r\n    left: 0;\r\n    top: 38%;\r\n    height: 80px;\r\n    width: 30px;\r\n    z-index: 99;\r\n}\r\n\r\n.sub-ui-inner {\r\n    height: 80px;\r\n    width: 30px;\r\n    position: relative;\r\n    display: block;\r\n    overflow: hidden;\r\n}\r\n\r\n.sub-ui-banned {\r\n\r\n    background-color: rgba(253, 76, 93, 0.3);\r\n}\r\n\r\n.sub-ui-normal {\r\n\r\n    background-color: rgba(165, 253, 76, 0.3);\r\n}\r\n\r\n.sub-ui-text {\r\n    writing-mode: vertical-rl;\r\n    text-orientation: upright;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    height: 100%;\r\n    width: 100%;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button {\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    left: 0;\r\n    top: 0;\r\n    user-select: none;\r\n}\r\n\r\n.sub-ui-button:hover {\r\n    transform: translateX(100%);\r\n}\r\n\r\n#banUp {\r\n    color: black;\r\n}\r\n\r\n#unbanUp {\r\n    color: black;\r\n}\r\n\r\n\r\n#banUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: \"屏蔽ＵＰ主\";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #fc7630;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n\r\n#unbanUp:after {\r\n    box-sizing: border-box;\r\n    padding: 5px;\r\n    content: \"取消屏蔽\";\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: #83ee1a;\r\n    transform: translateX(-100%);\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n}\r\n\r\n.on-top {\r\n    z-index: 1000;\r\n}\r\n\r\n.user-tags {\r\n    vertical-align: middle;\r\n    display: inline-block;\r\n    margin: 0 20px 0 20px;\r\n    max-width: 50%;\r\n}\r\n\r\n/* TAGGING */\r\n.user-tag {\r\n    margin-top: 2px;\r\n    margin-right: 3px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    /*border-color: rgba(0, 0, 0, 0.4);*/\r\n    border-color: rgba(255, 0, 0, 0.4);\r\n    color: red;\r\n    user-select: none;\r\n    display: inline-block;\r\n\r\n    height: 15px;\r\n    min-width: 30px;\r\n\r\n    float: left;\r\n\r\n\r\n}\r\n\r\n.user-tag-text {\r\n\r\n    text-align: center;\r\n}\r\n\r\n.very-smooth {\r\n\r\n    transition: 200ms;\r\n    -moz-transition: 200ms;\r\n    -o-transition: 200ms;\r\n    -webkit-transition: 200ms;\r\n}\r\n\r\n\r\n.add-new-tag {\r\n\r\n    margin-top: 2px;\r\n    padding: 1px 4px 1px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n\r\n    border: 1px rgba(0, 0, 0, 0.25);\r\n    border-style: dashed;\r\n    user-select: none;\r\n\r\n    display: inline-block;\r\n    float: left;\r\n\r\n}\r\n\r\n.add-new-tag:hover {\r\n    background-color: rgba(0, 0, 0, 0.3);\r\n}\r\n\r\n.add-new-tag:active {\r\n    background-color: rgba(255, 255, 255, 0.3);\r\n}\r\n\r\n.tagging-ui-container {\r\n    overflow: hidden;\r\n    position: fixed;\r\n    top: 50%;\r\n    left: 50%;\r\n    height: 200px;\r\n    width: 300px;\r\n    transform: translate(-50%, -50%);\r\n\r\n    box-sizing: border-box;\r\n    padding: 10px;\r\n\r\n    -webkit-box-shadow: 2px 2px 7px 1px #787878;\r\n    box-shadow: 2px 2px 7px 1px #787878;\r\n    border-radius: 10px;\r\n\r\n    background-color: rgb(240, 240, 240);\r\n}\r\n\r\n.tagging-ui-inner {\r\n    position: relative;\r\n    height: 100%;\r\n    width: 100%;\r\n\r\n}\r\n\r\n.name-to-tag {\r\n    padding: 3px;\r\n\r\n}\r\n\r\n.tags-container {\r\n    width: 280px;\r\n    height: 130px;\r\n    background-color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.tagging-input-wrap {\r\n    background-color: rgb(100, 100, 100);\r\n    height: 20px;\r\n    vertical-align: top;\r\n    border-bottom: 2px rgb(200, 200, 200);\r\n    margin-bottom: 2px;\r\n}\r\n\r\n.tagging-input {\r\n    float: left;\r\n    box-sizing: border-box;\r\n    padding: 2px;\r\n    height: 20px;\r\n    width: 235px;\r\n    border: none;\r\n\r\n}\r\n\r\n.tagging-submit {\r\n    float: left;\r\n    height: 20px;\r\n    border: none;\r\n    width: 45px;\r\n    background-color: #ced9c5;\r\n}\r\n\r\n.tagging-submit:hover {\r\n    background-color: #a5f400;\r\n}\r\n\r\n.tagging-submit:active {\r\n    background-color: #d4f400;\r\n}\r\n\r\n.tagging-close-button {\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    background-color: #a84716;\r\n    color: white;\r\n    border-radius: 0 10px 0 10px;\r\n    width: 45px;\r\n    height: 25px;\r\n    vertical-align: middle;\r\n    text-align: center;\r\n    box-sizing: border-box;\r\n    z-index: 10;\r\n    user-select: none;\r\n}\r\n\r\n.smooth-remove {\r\n    transition: 300ms ease-in-out;\r\n    opacity: 0;\r\n    pointer-events: none;\r\n\r\n}\r\n\r\n\r\n.tagging-close-button:hover {\r\n    background-color: #ffc5c5;\r\n}\r\n\r\n.tagging-close-button:active {\r\n    background-color: #ffedd4;\r\n    padding-top: 2px;\r\n\r\n}\r\n\r\n.tag-item {\r\n    display: inline-block;\r\n    background-color: #e7e1e1;\r\n    margin: 1px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n    border: 1px dashed;\r\n    padding: 2px;\r\n    font-size: 8px;\r\n    user-select: none;\r\n    cursor: pointer;\r\n    height: 19px;\r\n    min-width: 30px;\r\n    position: relative;\r\n    line-height: 15px;\r\n    text-align: center;\r\n}\r\n\r\n\r\n.tag-item:before {\r\n    opacity: 0;\r\n    content: \"删除\";\r\n    position: absolute;\r\n    width: 100%;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    left: 0;\r\n    height: 100%;\r\n    top: 0;\r\n    line-height: 19px;\r\n}\r\n\r\n.tag-item:hover:before {\r\n    opacity: 1;\r\n    color: white;\r\n    background-color: #a84716;\r\n}\r\n\r\n\r\n/* Comment Recovery UI */\r\n\r\n\r\n.deleted-comments-container {\r\n    position: absolute;\r\n    display: block;\r\n    width: 300px;\r\n\r\n    min-height: 300px;\r\n    overflow: hidden;\r\n}\r\n\r\n.deleted-comments-inner {\r\n    position: relative;\r\n    display: block;\r\n    width: 100%;\r\n    height: 100%;\r\n\r\n}\r\n\r\n\r\n.deleted-comments-title {\r\n    box-sizing: border-box;\r\n    display: block;\r\n    font-size: 16px;\r\n    background-color: #b6adad;\r\n    padding: 3px 10px 3px 10px;\r\n}\r\n\r\n.deleted-comment-list {\r\n    height: calc(100% - 50px);\r\n    width: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n}\r\n\r\n.deleted-comment {\r\n    border: 1px solid #e5e5e5;\r\n    background-color: #ffe;\r\n    display: block;\r\n}\r\n\r\n.deleted-comment img {\r\n    width: 100%;\r\n}\r\n\r\n.comment-info {\r\n    display: block;\r\n    height: 20px;\r\n    padding: 3px;\r\n}\r\n\r\n.comment-floor {\r\n    font-weight: 700;\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    width: 45px;\r\n    box-sizing: border-box;\r\n    margin-right: 3px;\r\n}\r\n\r\n.comment-query-state {\r\n    display: inline-block;\r\n    float: left;\r\n    line-height: 14px;\r\n    padding: 3px;\r\n    height: 20px;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.comment-content {\r\n    padding: 3px;\r\n}\r\n\r\n.hide-btn {\r\n    float: right;\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n    user-select: none;\r\n}\r\n\r\n.hide-btn:hover {\r\n    color: red;\r\n}\r\n\r\n\r\n/* setting ui  check box */\r\n/* Customize the label (the container) */\r\n.cc-container {\r\n    display: block;\r\n    position: relative;\r\n    padding-left: 22px;\r\n    margin-bottom: 12px;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n    line-height: 12px;\r\n}\r\n\r\n/* Hide the browser's default checkbox */\r\n.cc-container input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    cursor: pointer;\r\n    height: 0;\r\n    width: 0;\r\n}\r\n\r\n/* Create a custom checkbox */\r\n.checkmark {\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    height: 12px;\r\n    width: 12px;\r\n    background-color: #848484;\r\n}\r\n\r\n/* On mouse-over, add a grey background color */\r\n.cc-container:hover input ~ .checkmark {\r\n    background-color: #ccc;\r\n}\r\n\r\n/* When the checkbox is checked, add a blue background */\r\n.cc-container input:checked ~ .checkmark {\r\n    background-color: #2196F3;\r\n}\r\n\r\n/* Create the checkmark/indicator (hidden when not checked) */\r\n.checkmark:after {\r\n    content: \"\";\r\n    position: absolute;\r\n    display: none;\r\n}\r\n\r\n/* Show the checkmark when checked */\r\n.cc-container input:checked ~ .checkmark:after {\r\n    display: block;\r\n}\r\n\r\n/* Style the checkmark/indicator */\r\n.cc-container .checkmark:after {\r\n    left: 4px;\r\n    top: 2px;\r\n    width: 3px;\r\n    height: 6px;\r\n    border: solid white;\r\n    border-width: 0 2px 2px 0;\r\n    -webkit-transform: rotate(45deg);\r\n    -ms-transform: rotate(45deg);\r\n    transform: rotate(45deg);\r\n}\r\n\r\n\r\n/*  UDP area */\r\n.udp-container {\r\n    position: fixed;\r\n    right: 0;\r\n    top: 0;\r\n    height: 100%;\r\n    width: 400px;\r\n    z-index: 199;\r\n    background: white;\r\n    transition: 0.4s ease-in;\r\n    box-shadow: -2px -2px 5px 0px #ddd;\r\n    overflow: hidden;\r\n}\r\n\r\n.udp-title{\r\n    height: 30px;\r\n    font-size: 16px;\r\n    padding: 5px 5px 5px 5px;\r\n    z-index: 199;\r\n    box-shadow: 0 0 2px 2px #ddd;\r\n    line-height: 30px;\r\n    position: relative;\r\n}\r\n\r\n.udp-inner {\r\n    position: relative;\r\n    height: calc(100% - 40px);\r\n    overflow-y: scroll;\r\n}\r\n\r\n.udp-item{\r\n    margin: 5px;\r\n    border-radius: 10px;\r\n    padding: 5px;\r\n    background-color: rgb(240,240,240);\r\n}\r\n\r\n.udp-item img{\r\n    width: 100%;\r\n}\r\n\r\n.udp-item-info{\r\n    margin-top: 4px;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    background-color: #eee;\r\n    font-weight: bold;\r\n}\r\n\r\n.udp-close{\r\n    position: absolute;\r\n    top: 0;\r\n    right: 0;\r\n    height: 25px;\r\n    width: 25px;\r\n    color: white;\r\n    background-color: #a84716;\r\n    cursor: pointer;\r\n    font-size: 25px;\r\n    line-height: 25px;\r\n    text-align: center;\r\n    border-radius: 0 0 0 4px;\r\n    z-index: 299;\r\n}\r\n\r\n.udp-av{\r\n    align-self: flex-end;\r\n}\r\n\r\n.udp-hidden{\r\n    transform: translateX(100%);\r\n}\r\n\r\n.lookup-btn{\r\n    margin-top: 2px;\r\n    padding: 0px 4px 0px 4px;\r\n    line-height: 15px;\r\n    font-size: 8px !important;\r\n    border: 1px rgba(0, 0, 0, 0.25);\r\n    border-style: dashed;\r\n    user-select: none;\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    margin-right: 2px;\r\n    cursor: pointer;\r\n}\r\n\r\n.lookup-btn i{\r\n    transition: 0.2s;\r\n}\r\n\r\n.lookup-btn:hover{\r\n    background-color: rgba(35,255,0,0.2);\r\n}\r\n\r\n.lookup-btn:hover i{\r\n    transform: translateY(-2px);\r\n}\r\n\r\n.lookup-btn:active i{\r\n    transform: scale(0.95);\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -630,7 +629,7 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.017");
+/* harmony default export */ const version = ("3.018");
 ;// CONCATENATED MODULE: ./dev/js/data.js
 //function to load Data
 
@@ -1343,7 +1342,13 @@ var recoveryUI_code = "<div class=\"deleted-comments-container remove\"> <div cl
 var deletedComment_code = "<div class=\"comment-info\"> <div class=\"comment-floor\">35</div> <div class=\"comment-query-state\">查询中……</div> <div class=\"comment-username remove\"></div> </div> <div class=\"comment-content remove\"> <div class=\"comment-text\">评论已删除</div> <div class=\"comment-time\">2021-10-18 12:21:01</div> </div>";
 // Exports
 /* harmony default export */ const deletedComment = (deletedComment_code);
+;// CONCATENATED MODULE: ./dev/html/udp.html
+// Module
+var udp_code = "<div class=\"udp-container udp-hidden\"> <div class=\"udp-close\">×</div> <div class=\"udp-title\"></div> <div class=\"udp-inner\"> </div> </div>";
+// Exports
+/* harmony default export */ const udp = (udp_code);
 ;// CONCATENATED MODULE: ./dev/js/commentUI.js
+
 
 
 
@@ -1471,32 +1476,16 @@ function _showUI(cache) {
 }
 
 
-function _replaceImage(content) {
-    let sb1 = /\[img=图片\](https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))\[\/img\]/;
-    let res = sb1.exec(content);
-    if (res && res.length > 1) {
-        let oldstr = res[0];
-        let url = res[1];
-        let newstr = `<img src="${url}">`;
-
-        content = content.replace(oldstr, newstr);
-
-        return _replaceImage(content)
-    } else {
-        return content
-    }
-}
-
-function _replaceImage2(content){
+function _replaceImage2(content) {
 
     let sb = /\[img(?:=图片)*\](https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))\[\/img\]/g;
     let ms = [...content.matchAll(sb)];
     let result = content.toString();
-    ms.forEach((m)=>{
+    ms.forEach((m) => {
         let oldstr = m[0];
         let url = m[1];
         let newstr = `<a href="${url}" target="_blank" ><img src="${url}"></a>`;
-        result=result.replaceAll(oldstr, newstr);
+        result = result.replaceAll(oldstr, newstr);
     })
     return result;
 }
@@ -1567,6 +1556,44 @@ function enable(val) {
     }
 }
 
+function showUDP(result) {
+    let doc = unsafeWindow.document;
+    let dom = doc.body.querySelector(".udp-container");
+    dom.classList.remove("udp-hidden");
+    let titledom = dom.querySelector(".udp-title")
+    let inner = dom.querySelector(".udp-inner")
+    inner.innerHTML="";
+    let closebtn = dom.querySelector(".udp-close")
+
+    closebtn.onclick = ()=>{
+        dom.classList.add("udp-hidden")
+    }
+
+    titledom.innerHTML = `已收录[${result.username.substring(0,16)}]被删除评论 <strong>${result.list.length}<b>条`
+    console.log(result);
+
+    result.list.forEach((item) => {
+        let d = item.v;
+        let ac = item._id;
+        let content = _replaceImage2(d.content);
+        content = _replaceEmot(content);
+        let datetime = new Date(d.replyTime);
+        datetime = datetime.toLocaleString()
+
+        let div = doc.createElement("div")
+        div.classList.add("udp-item")
+        div.innerHTML =
+            `
+<div class="udp-item-content">${content}</div>
+<div class="udp-item-info">
+    <div class="udp-time">${datetime}</div>
+    <a href="/v/ac${ac}"><div class="udp-av">ac${ac}</div></a>
+</div>`
+
+        inner.append(div);
+    })
+}
+
 function _bindEvents() {
     js_event.on("SHOW_DELETED_COMMENT_UI", (cache) => {
         //log("SHOW_DELETED_COMMENT_UI")
@@ -1582,6 +1609,22 @@ function _bindEvents() {
     js_event.on("SETTING_CHANGE_showDeletedComment", (val) => {
         enable(val);
     })
+
+    js_event.on("LOOKUP", (username) => {
+
+        let w = unsafeWindow;
+        w.A.emit("global::success", `正在查询[${username}]的被删评论……`)
+        commentRecovery.getUserDeletedPost(username, (result) => {
+            js_event.emit("LOOKUP_RESULT", result);
+
+            w.A.emit("global::success", `完成！`)
+        })
+    })
+
+
+    js_event.on("LOOKUP_RESULT", (result) => {
+        showUDP(result)
+    })
 }
 
 function _loadEmots() {
@@ -1592,6 +1635,14 @@ function _loadEmots() {
         dict[o.emotionId] = o;
     })
     unsafeWindow["emotDict"] = dict;
+}
+
+function _loadUDPUI() {
+    let doc = unsafeWindow.document;
+    doc.body.insertAdjacentHTML("beforeend", udp);
+
+
+
 }
 
 function _loadUI() {
@@ -1612,6 +1663,7 @@ function _loadUI() {
     init() {
         _loadEmots();
         _loadUI();
+        _loadUDPUI()
         _bindEvents();
     }
 });
@@ -1742,6 +1794,23 @@ function _getPageLastReply(id, callback) {
     })
 
 }
+
+let udpCache = {};
+
+function _getUserDeletedPost(username, callback) {
+    if (username in udpCache) {
+        callback(udpCache[username]);
+    } else {
+        util.apiRequest({
+            query: "udp",
+            username: username
+        }, (result) => {
+            udpCache[username] = result;
+            callback(result);
+        })
+    }
+}
+
 
 function _getAllPageCommentOnline(id, callback) {
     log_log(`采集评论，投稿id=${id}`)
@@ -2111,18 +2180,18 @@ function _activeHelp() {
 }
 
 function _deleteCache(id) {
-    log_log("trying to delete cache, id=",id);
+    log_log("trying to delete cache, id=", id);
     data.deleteCommentCache(id, () => {
         //log(`删除缓存成功，id=${id}`);
     })
 }
 
 
-
 function _deleteAllCache(callback) {
     log_log("deleteallcache")
-    function deleteOneByOne(ids, i){
-        if (i>=ids.length) {
+
+    function deleteOneByOne(ids, i) {
+        if (i >= ids.length) {
             js_event.emit("COMMENT_CACHE_UPDATE", null);
             callback();
             return
@@ -2130,13 +2199,13 @@ function _deleteAllCache(callback) {
 
         let id = ids[i];
         _deleteCache(id);
-        setTimeout(()=>{
-            deleteOneByOne(ids,i+1)
+        setTimeout(() => {
+            deleteOneByOne(ids, i + 1)
         })
     }
 
     data.getAllCacheIndices((ids) => {
-        deleteOneByOne(ids,0);
+        deleteOneByOne(ids, 0);
     })
 }
 
@@ -2155,7 +2224,6 @@ function _deleteAllCache(callback) {
         unsafeWindow["clearCache"] = _deleteAllCache
 
 
-
         _checkCurrentPageComment((cache) => {
             setTimeout(() => {
                 showUI(cache);
@@ -2166,7 +2234,8 @@ function _deleteAllCache(callback) {
         });
         _activeHelp();
     },
-    deleteAllCache:_deleteAllCache
+    deleteAllCache: _deleteAllCache,
+    getUserDeletedPost: _getUserDeletedPost
 });
 ;// CONCATENATED MODULE: ./dev/js/setting-ui.js
 
@@ -3516,6 +3585,17 @@ function _newTagButton() {
 
 }
 
+
+function _lookUpButton(){
+    //add lookup button btw with tagging
+    let doc = unsafeWindow.document;
+    let b = doc.createElement("div");
+    b.innerHTML= "<i class='icon-ks icon-dao-hang-search'></i>"
+    b.classList.add("lookup-btn");
+    b.classList.add("very-smooth");
+    return b;
+}
+
 function _addTagToContainer(container, tag) {
     let t = _newTagDom(tag);
     container.appendChild(t);
@@ -3578,12 +3658,17 @@ function popAddingTagWindow(username) {
 
 }
 
+
+
+
 function _attachUserTagsDom(username, anchor) {
     let doc = unsafeWindow.document;
     let container = doc.createElement("div");
     container.classList.add("user-tags")
 
     let newBtn = _newTagButton();
+
+    let lookBtn = _lookUpButton();
 
     data.getTags(username, (tags) => {
         // log("tags=", tags)
@@ -3599,7 +3684,12 @@ function _attachUserTagsDom(username, anchor) {
         newBtn.addEventListener("click", () => {
             popAddingTagWindow(username);
         })
+        container.insertAdjacentElement("beforebegin", lookBtn);
         container.appendChild(newBtn);
+        lookBtn.addEventListener("click", ()=>{
+            js_event.emit("LOOKUP", username);
+        })
+
     })
 }
 
@@ -3631,7 +3721,6 @@ function _refreshUserTags(username, anchor) {
 
 function _showCommentUsrTag(commentData) {
     //log("_showCommentUsrTag")
-
     //tagging for comment
     commentData.forEach((d) => {
         let anchor = d.nameAnchor;
@@ -3782,7 +3871,14 @@ function _getCommentsOldVer(doc) {
     items.forEach((i) => {
         let nameAnchor = i.querySelector("a.name");
         let username = nameAnchor.innerText;
-        let banButtonAnchor = i.querySelector("a.btn-report");
+        let banButtonAnchor = i.querySelector("a.btn-quote");
+        if (banButtonAnchor===null){
+            console.log()
+            return;
+        }
+        let count = banButtonAnchor.parentNode.children.length;
+        banButtonAnchor = banButtonAnchor.parentNode.children[count - 1];
+
         if (banButtonAnchor !== null) {
             result.push({
                 username: username,
@@ -3841,6 +3937,7 @@ function contentTask() {
         js_event.on("REPLY_BAN_UPDATE", () => {
             runCommentTask()
         })
+
     }
 
     //load all visible comments
@@ -3864,6 +3961,7 @@ function contentTask() {
         js_event.emit("FILTER_COMMENTS", comments);
     }
 
+
     //observer
     function lauchObserver() {
         let mutationObserver = new MutationObserver(function (mutations) {
@@ -3880,8 +3978,8 @@ function contentTask() {
                             target.classList.contains("ac-comment-root-list") ||
 
                             target.hasChildNodes() && typeof target.firstChild.classList !== "undefined" && (
-                            target.firstChild.classList.contains("area-comment-top") ||
-                            target.firstChild.classList.contains("area-comment-sec")))
+                                target.firstChild.classList.contains("area-comment-top") ||
+                                target.firstChild.classList.contains("area-comment-sec")))
 
                         ) {
                             //console.log("targets", targets)
