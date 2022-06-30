@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.018
+// @version      3.019
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -43,7 +43,6 @@ if (typeof module !=="undefined" && module !== null) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
-
 
 if ( true && module !== null) {
     module.exports = function header() {
@@ -494,6 +493,9 @@ function getPageType() {
         "www.acfun.cn/v/list74/index.htm": "动漫文化",
         "www.acfun.cn/v/list75/index.htm": "漫画·文学",
         "www.acfun.cn/v/list63/index.htm": "文章",
+
+
+
     }
 
     let videoHomes = [
@@ -598,6 +600,14 @@ function getPageType() {
         return "VIDEO_HOME";
     }
 
+    let regexAS = /www\.acfun\.cn\/v\/as(\d+)/
+    let testAS = regexAS.exec(href);
+    if (testAS){
+        let num = parseInt(testAS[1]);
+        if (num>0){
+            return "ARTICLE_HOME"
+        }
+    }
 
     pageTitle = dict2[hrefPart];
     if (typeof pageTitle !== "undefined" && pageTitle !== null) {
@@ -607,6 +617,7 @@ function getPageType() {
         if (articleHome.indexOf(pageTitle) >= 0) {
             return "ARTICLE_HOME";
         }
+
         return "OTHER";
     } else {
         return "OTHER";
@@ -629,7 +640,7 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.018");
+/* harmony default export */ const version = ("3.019");
 ;// CONCATENATED MODULE: ./dev/js/data.js
 //function to load Data
 
@@ -3416,7 +3427,7 @@ function getHomeArticle(doc) {
 //Article Home 文章区列表
 function getArticles(doc) {
     let list = doc.querySelectorAll(".article-item")
-
+    console.log("list=",list)
     let result = [];
 
     list.forEach((i) => {
