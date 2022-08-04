@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.020
+// @version      3.021
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -43,7 +43,6 @@ if (typeof module !=="undefined" && module !== null) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
-
 
 
 if ( true && module !== null) {
@@ -642,7 +641,7 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.020");
+/* harmony default export */ const version = ("3.021");
 ;// CONCATENATED MODULE: ./dev/js/server.txt
 /* harmony default export */ const server = ("https://baldhumanity.top");
 ;// CONCATENATED MODULE: ./dev/js/util.js
@@ -807,11 +806,31 @@ function _setUsingNewCloud(callback) {
     GM_set("USE_NEW_CLOUD", true);
 }
 
+function _loadBanList_simple(callback) {
+    GM_get("ACFUN_BLOCK_LIST", [], (val)=>{
+        callback(removeDuplicate(val));
+    });
+}
+
+function _loadKeywords_simple(callback) {
+    GM_get("ACFUN_BLOCK_KEYWORDS", [], (val)=>{
+        callback(removeDuplicate(val));
+    });
+}
+
+function _loadReplyBanList_simple(callback) {
+    GM_get("ACFUN_BLOCK_REPLIERS", [], (val)=>{
+        callback(removeDuplicate(val));
+    });
+}
+
 function _loadBanList(callback, stringOnly=true) {
 
 
     GM_get("ACFUN_BLOCK_LIST", [], (list)=>{
 
+        list=removeDuplicate(list);
+        console.log("LOADBANLIST DEBUG DUP", list);
         _loadGeneralSetting((setting)=>{
             if (setting.useBannedUpRankList){
                 _loadRankingData((data)=>{
@@ -840,6 +859,8 @@ function _loadKeywords(callback,stringOnly=true) {
 
     GM_get("ACFUN_BLOCK_KEYWORDS", [], (list)=>{
 
+        list=removeDuplicate(list);
+        console.log("DEBUG remove dup", list);
         _loadGeneralSetting((setting)=>{
             if (setting.useBannedKeywordsList){
                 _loadRankingData((data)=>{
@@ -869,6 +890,8 @@ function _loadReplyBanList(callback,stringOnly=true) {
 
     GM_get("ACFUN_BLOCK_REPLIERS", [], (list)=>{
 
+        list=removeDuplicate(list);
+        console.log("ACFUN_BLOCK_REPLIERS DEBUG DUP", list);
         _loadGeneralSetting((setting)=>{
             if (setting.useBannedReplierList){
                 _loadRankingData((data)=>{
@@ -1097,9 +1120,9 @@ function _loadGeneralSetting(callback) {
         autoSync: true,
         showBanStatusTag: true,
 
-        useBannedUpRankList: true,
-        useBannedKeywordsList: true,
-        useBannedReplierList: true,
+        useBannedUpRankList: false,
+        useBannedKeywordsList: false,
+        useBannedReplierList: false,
     }, (val) => {
         callback(val);
     })
@@ -1137,6 +1160,17 @@ function _cacheRankingData(data, callback){
     GM_set("RANKING_DATA", {time: +new Date(), data: data}, ()=>{
         callback();
     })
+}
+
+function removeDuplicate(list=[]){
+
+    let dict = {};
+    list.forEach((item)=>{
+        dict[item]=true;
+    })
+    let newList = Object.keys(dict);
+    return newList;
+
 }
 
 /* harmony default export */ const data = ({
@@ -1214,7 +1248,9 @@ function _cacheRankingData(data, callback){
 
     banUser(username, callback) {
         username = username.trim();
-        _loadBanList((list) => {
+        _loadBanList_simple((list) => {
+
+            list=removeDuplicate(list);
             if (list.indexOf(username) < 0) {
                 list.push(username);
                 _updateBanList(list, () => {
@@ -1229,7 +1265,9 @@ function _cacheRankingData(data, callback){
 
     unbanUser(username, callback) {
         username = username.trim();
-        _loadBanList((list) => {
+        _loadBanList_simple((list) => {
+
+            list=removeDuplicate(list);
             let i = list.indexOf(username);
             if (i >= 0) {
                 list.splice(i, 1);
@@ -1244,9 +1282,12 @@ function _cacheRankingData(data, callback){
 
     banKeyword(w, callback) {
         w = w.trim();
-        _loadKeywords((ws) => {
+        _loadKeywords_simple((ws) => {
+
+            ws=removeDuplicate(ws);
             if (ws.indexOf(w) < 0) {
                 ws.push(w);
+
                 _updateKeywords(ws, () => {
                     empty(callback)(ws);
                 });
@@ -1258,7 +1299,9 @@ function _cacheRankingData(data, callback){
 
     unbanKeyword(w, callback) {
         w = w.trim();
-        _loadKeywords((ws) => {
+        _loadKeywords_simple((ws) => {
+
+            ws=removeDuplicate(ws);
             let i = ws.indexOf(w);
             if (i >= 0) {
                 ws.splice(i, 1);
@@ -1273,7 +1316,8 @@ function _cacheRankingData(data, callback){
 
     banReplier(username, callback) {
         username = username.trim();
-        _loadReplyBanList((list) => {
+        _loadReplyBanList_simple((list) => {
+            list=removeDuplicate(list);
             if (list.indexOf(username) < 0) {
                 list.push(username);
                 _updateReplyBanList(list, () => {
@@ -1287,7 +1331,8 @@ function _cacheRankingData(data, callback){
 
     unbanReplier(username, callback) {
         username = username.trim();
-        _loadReplyBanList((list) => {
+        _loadReplyBanList_simple((list) => {
+            list=removeDuplicate(list);
             let i = list.indexOf(username);
             if (i >= 0) {
                 list.splice(i, 1);
@@ -2453,17 +2498,19 @@ function showBannedList(dom, listName) {
         //List of banned items
         let container = page.querySelector(".banned-items")
 
-        let currentList = [];
-        let currentItemDoms = container.querySelectorAll(".banned-item");
-        currentItemDoms.forEach((i) => {
-            let username = i.querySelector(".banned-title").innerText;
+        container.innerHTML="";
 
-            if (stringOnlyList.indexOf(username) >= 0) {
-                currentList.push(username);
-            } else {
-                i.remove();
-            }
-        });
+        let currentList = [];
+        // let currentItemDoms = container.querySelectorAll(".banned-item");
+        // currentItemDoms.forEach((i) => {
+        //     let username = i.querySelector(".banned-title").innerText;
+        //
+        //     if (stringOnlyList.indexOf(username) >= 0) {
+        //         currentList.push(username);
+        //     } else {
+        //         i.remove();
+        //     }
+        // });
 
         let doc = unsafeWindow.document;
 
