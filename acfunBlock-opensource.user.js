@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.021
+// @version      3.022
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -43,6 +43,7 @@ if (typeof module !=="undefined" && module !== null) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
+
 
 
 if ( true && module !== null) {
@@ -641,10 +642,11 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.021");
+/* harmony default export */ const version = ("3.022");
 ;// CONCATENATED MODULE: ./dev/js/server.txt
 /* harmony default export */ const server = ("https://baldhumanity.top");
 ;// CONCATENATED MODULE: ./dev/js/util.js
+
 
 
 
@@ -662,6 +664,7 @@ function util_decode(a) {
 }
 
 function check() {
+    let unsafeWindow = window;
     if (typeof unsafeWindow.A === "undefined") {
         unsafeWindow.A = (t, m) => {
             log_log(t, m);
@@ -674,7 +677,7 @@ let xhttp = typeof GM_xmlhttpRequest !== "undefined" ? GM_xmlhttpRequest : GM.xm
 
 //querydata = {name, query, ...others}
 function _apiRequest(queryData, callback) {
-
+    let unsafeWindow = window
     let xhr = new unsafeWindow.XMLHttpRequest();
     let url = server + "/api";
     let str = JSON.stringify(queryData);
@@ -703,8 +706,16 @@ function _apiRequest(queryData, callback) {
 /* harmony default export */ const util = ({
 
     getCommentType() {
-        let m = unsafeWindow.localStorage.getItem("ac_usp_commMode");
-        return m === "1" ? "NEW" : "OLD";
+        // let m = unsafeWindow.localStorage.getItem("ac_usp_commMode");
+        // console.log(m, unsafeWindow.localStorage)
+        // let t =  m === "1" ? "NEW" : "OLD";
+        // log("commentType = "+t);
+        // return t;
+        let c = window.document.querySelector(".mode-container");
+        let tag = c.querySelector(".active");
+        let t = tag.getAttribute("data-usemode");
+        return t === "FLOOR" ? "OLD" : "NEW";
+
     },
     success(msg) {
         check();
@@ -725,6 +736,8 @@ function _apiRequest(queryData, callback) {
 
 
 
+
+let unsafeWindow_alt=window;
 
 function trimWord(d) {
     return d.replace(/(\r\n|\n|\r)/gm, "").trim();
@@ -830,7 +843,7 @@ function _loadBanList(callback, stringOnly=true) {
     GM_get("ACFUN_BLOCK_LIST", [], (list)=>{
 
         list=removeDuplicate(list);
-        console.log("LOADBANLIST DEBUG DUP", list);
+        //console.log("LOADBANLIST DEBUG DUP", list);
         _loadGeneralSetting((setting)=>{
             if (setting.useBannedUpRankList){
                 _loadRankingData((data)=>{
@@ -860,7 +873,7 @@ function _loadKeywords(callback,stringOnly=true) {
     GM_get("ACFUN_BLOCK_KEYWORDS", [], (list)=>{
 
         list=removeDuplicate(list);
-        console.log("DEBUG remove dup", list);
+        //console.log("DEBUG remove dup", list);
         _loadGeneralSetting((setting)=>{
             if (setting.useBannedKeywordsList){
                 _loadRankingData((data)=>{
@@ -891,7 +904,7 @@ function _loadReplyBanList(callback,stringOnly=true) {
     GM_get("ACFUN_BLOCK_REPLIERS", [], (list)=>{
 
         list=removeDuplicate(list);
-        console.log("ACFUN_BLOCK_REPLIERS DEBUG DUP", list);
+        //console.log("ACFUN_BLOCK_REPLIERS DEBUG DUP", list);
         _loadGeneralSetting((setting)=>{
             if (setting.useBannedReplierList){
                 _loadRankingData((data)=>{
@@ -930,7 +943,7 @@ function _updateReplyBanList(d, callback) {
 __webpack_require__.g["usernameIDCache"] = null
 
 function _getUsernameID(callback) {
-
+    let unsafeWindow_alt=unsafeWindow
     function retry() {
         setTimeout(() => {
             _getUsernameID(callback);
@@ -941,12 +954,14 @@ function _getUsernameID(callback) {
         empty(callback)(__webpack_require__.g["usernameIDCache"]);
         return;
     }
-    if (typeof unsafeWindow.user !== "undefined") {
-        let name = unsafeWindow.user.name;
-        if (name !== "用户" && name !== "未知用户" && unsafeWindow.ImSdk) {
+
+
+    if (typeof unsafeWindow_alt.user !== "undefined") {
+        let name = unsafeWindow_alt.user.name;
+        if (name !== "用户" && name !== "未知用户" && unsafeWindow_alt.ImSdk) {
             let id = null;
             try {
-                id = unsafeWindow.ImSdk.instance.kernel.cache.uid.low;
+                id = unsafeWindow_alt.ImSdk.instance.kernel.cache.uid.low;
             } catch (e) {
                 console.error(e)
 
@@ -957,13 +972,13 @@ function _getUsernameID(callback) {
             retry()
         }
     } else {
-        let ndom = unsafeWindow.document.querySelector("a.fl.user-name")
+        let ndom = unsafeWindow_alt.document.querySelector("a.fl.user-name")
         if (ndom) {
             let name = ndom.innerText.trim();
-            if (name !== "未知用户" && unsafeWindow.ImSdk) {
+            if (name !== "未知用户" && unsafeWindow_alt.ImSdk) {
                 let id = null;
                 try {
-                    id = unsafeWindow.ImSdk.instance.kernel.cache.uid;
+                    id = unsafeWindow_alt.ImSdk.instance.kernel.cache.uid;
                 } catch (e) {
 
                 }
@@ -1173,7 +1188,7 @@ function removeDuplicate(list=[]){
 
 }
 
-/* harmony default export */ const data = ({
+/* harmony default export */ const js_data = ({
     version: version,
 
     loadRankingData:_loadRankingData,
@@ -1233,6 +1248,7 @@ function removeDuplicate(list=[]){
     },
 
     getUpdateTime(callback) {
+        log_log("getUpdateTime")
         let time = 0;
         GM_get("UPDATE_TIME", time, (d) => {
             //console.log("get update time", d, parseInt(d));
@@ -1420,7 +1436,7 @@ function removeDuplicate(list=[]){
 });
 ;// CONCATENATED MODULE: ./dev/html/mainUI.html
 // Module
-var code = "<div id=\"helperUI\" class=\"helper-wrap\" style=\"pointer-events:none\"> <div class=\"helper-wrap-inner\"> <div style=\"pointer-events:all\" class=\"helper-main c-a ui-hidden smooth\"> <div class=\"plugin-hint\" id=\"hide_hint\">隐藏插件--></div> <div class=\"page-wrap\"> <div class=\"plugin-menu-title\">插件设置</div> <div class=\"menu-wrap\"> <div class=\"menu-column\"> <a id=\"bannedAuthours\">Ｕ Ｐ 主</a> <a id=\"bannedRepliers\">回 复 者</a> <a id=\"bannedKeywords\">关 键 词</a> <a id=\"cloudsync\">云 同 步</a> <a id=\"commentRecovery\">评论恢复</a> </div> <div class=\"menu-column\"> <a id=\"generalSetting\">通用设置</a> <a id=\"sharedRankList\">屏蔽排名</a> <a id=\"aboutme\">关于插件</a> <a href=\"https://baldhumanity.top/acfun\">网站主页</a> </div> </div> <div class=\"plugin-version\">0.00</div> <div class=\"plugin-author\">作恶者：<a href=\"https://message.acfun.cn/im?targetId=690324\" style=\"color:#00f\">人文情怀</a></div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_up_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入UP主ID...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_replier_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入评论者ID...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_keyword_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入屏蔽关键词...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">LOL</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"cloudsync_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div class=\"cloud-description\"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class=\"sync-time\"></div> <hr> <div> <button id=\"syncNow\">立即同步</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"recovery_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div> 3.000版本新功能：查看已删除评论！<br/> 当你打开投稿，插件会第一时间在本地备份所有看到的评论，当未来某个时间，有评论被删除，插件将会为你恢复。同时本地备份将会在云服务器上共享。只要有一个用户备份过一次被删除的评论，所有用户都会得到分享。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div> <b></b><span class=\"cache-info\"></span> </div> <div> <button id=\"delete_cache\">删除缓存</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"general_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div> <label class=\"cc-container\" data-id=\"showBanButton\">在首页的投稿右上角显示[屏蔽]图标按钮 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showMouseover\">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"autoSync\">自动云同步所有列表 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showDeletedComment\">显示投稿内被删除评论 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showUserTags\">显示评论用户标签 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showBanStatusTag\">显示投稿页左侧屏蔽状态 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"sharedRankList_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <label class=\"cc-container\" data-id=\"useBannedUpRankList\">屏蔽排行榜上UP <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"useBannedKeywordsList\">屏蔽排行榜上关键词 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"useBannedReplierList\">屏蔽排行榜上评论家 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <a href=\"https://baldhumanity.top/acfun/ranking.html\" style=\"color:#00008b\">点击这里查看排行榜</a> </div> </div> <div class=\"page-wrap inactive-page\" id=\"about_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style=\"pointer-events:all\" class=\"ac-girl ac-girl-hide smooth\"> </div> </div> </div>";
+var code = "<div id=\"helperUI\" class=\"helper-wrap\" style=\"pointer-events:none\"> <div class=\"helper-wrap-inner\"> <div style=\"pointer-events:all\" class=\"helper-main c-a ui-hidden smooth\"> <div class=\"plugin-hint\" id=\"hide_hint\">隐藏插件--></div> <div class=\"page-wrap\"> <div class=\"plugin-menu-title\">插件设置</div> <div class=\"menu-wrap\"> <div class=\"menu-column\"> <a id=\"bannedAuthours\">Ｕ Ｐ 主</a> <a id=\"bannedRepliers\">回 复 者</a> <a id=\"bannedKeywords\">关 键 词</a> <a id=\"cloudsync\">云 同 步</a> <a id=\"commentRecovery\">评论恢复</a> </div> <div class=\"menu-column\"> <a id=\"generalSetting\">通用设置</a> <a id=\"sharedRankList\">屏蔽排名</a> <a id=\"aboutme\">关于插件</a> <a href=\"https://baldhumanity.top/acfun\">网站主页</a> </div> </div> <div class=\"plugin-version\">0.00</div> <div class=\"plugin-author\">作恶者：<a href=\"https://message.acfun.cn/im?targetId=690324\" style=\"color:#00f\">人文情怀</a></div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_up_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入UP主ID...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_replier_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入评论者ID...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_keyword_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入屏蔽关键词...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">LOL</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"cloudsync_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div class=\"cloud-description\"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class=\"sync-time\"></div> <hr> <div> <button id=\"syncNow\">立即同步</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"recovery_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div> 3.000版本新功能：查看已删除评论！<br/> 当你打开投稿，插件会第一时间在本地备份所有看到的评论，当未来某个时间，有评论被删除，插件将会为你恢复。同时本地备份将会在云服务器上共享。只要有一个用户备份过一次被删除的评论，所有用户都会得到分享。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div> <b></b><span class=\"cache-info\"></span> </div> <div> <button id=\"delete_cache\">删除缓存</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"general_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div> <label class=\"cc-container\" data-id=\"showBanButton\">在首页的投稿右上角显示[屏蔽]图标按钮 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showMouseover\">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"autoSync\">自动云同步所有列表 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showDeletedComment\">显示投稿内被删除评论 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showUserTags\">显示评论用户标签 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showBanStatusTag\">显示投稿页左侧屏蔽状态 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"sharedRankList_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <label class=\"cc-container\" data-id=\"useBannedUpRankList\">屏蔽排行榜上UP <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"useBannedUpKeywordsList\">屏蔽排行榜上关键词 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"useBannedUpReplierList\">屏蔽排行榜上评论家 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <a href=\"https://baldhumanity.top/acfun/ranking.html\" style=\"color:#00008b\">点击这里查看排行榜</a> </div> </div> <div class=\"page-wrap inactive-page\" id=\"about_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style=\"pointer-events:all\" class=\"ac-girl ac-girl-hide smooth\"> </div> </div> </div>";
 // Exports
 /* harmony default export */ const mainUI = (code);
 ;// CONCATENATED MODULE: ./dev/js/event.js
@@ -1525,6 +1541,8 @@ var udp_code = "<div class=\"udp-container udp-hidden\"> <div class=\"udp-close\
 
 
 
+let commentUI_unsafeWindow_alt = window;
+
 var cumulativeOffset = function (element) {
     var top = 0, left = 0;
     do {
@@ -1553,12 +1571,12 @@ function _observer() {
         });
     });
 
-    mutationObserver.observe(unsafeWindow.document, {subtree: true, childList: true});
+    mutationObserver.observe(commentUI_unsafeWindow_alt.document, {subtree: true, childList: true});
 }
 
 function _repositionUI() {
 
-    let doc = unsafeWindow.document;
+    let doc = commentUI_unsafeWindow_alt.document;
     let main = doc.querySelector("#main")
     let commentDIv = main.querySelector(".ac-comment-list");
     if (!commentDIv) return;
@@ -1577,8 +1595,8 @@ function _repositionUI() {
 }
 
 function _hideUnrecovered(uidom) {
-    let k = !unsafeWindow["hideUnrecovered"];
-    unsafeWindow["hideUnrecovered"] = k;
+    let k = !commentUI_unsafeWindow_alt["hideUnrecovered"];
+    commentUI_unsafeWindow_alt["hideUnrecovered"] = k;
     if (k) {
         uidom.querySelectorAll(".deleted-comment")
             .forEach((dom) => {
@@ -1595,10 +1613,10 @@ function _hideUnrecovered(uidom) {
 
 function _showUI(cache) {
 
-    let doc = unsafeWindow.document;
+    let doc = commentUI_unsafeWindow_alt.document;
     let uidom = doc.body.querySelector(".deleted-comments-container");
 
-    unsafeWindow["deletedCommentsUI"] = uidom;
+    commentUI_unsafeWindow_alt["deletedCommentsUI"] = uidom;
     uidom.classList.remove("remove");
 
     cache.deletedFloors.forEach((df) => {
@@ -1665,7 +1683,7 @@ function _replaceEmot(content) {
     let result = content.toString();
     ms.forEach((m) => {
         let id = m[1];
-        let o = unsafeWindow.emotDict[id];
+        let o = commentUI_unsafeWindow_alt.emotDict[id];
         let url = o.emotionImageUrl;
         let imgtag = `<img class="ubb-emotion" src="${url}" />`;
         result = result.replaceAll(m[0], imgtag)
@@ -1675,7 +1693,7 @@ function _replaceEmot(content) {
 
 function recoverFloor(floorData) {
     //log(floorData);
-    let doc = unsafeWindow.document;
+    let doc = commentUI_unsafeWindow_alt.document;
     let uidom = doc.body.querySelector(".deleted-comments-container");
     let doms = uidom.querySelectorAll(".deleted-comment");
     //log("doms =",doms)
@@ -1702,7 +1720,7 @@ function recoverFloor(floorData) {
 
 
 function noticeUncached(f) {
-    let doc = unsafeWindow.document;
+    let doc = commentUI_unsafeWindow_alt.document;
     let uidom = doc.body.querySelector(".deleted-comments-container");
     let doms = uidom.querySelectorAll(".deleted-comment");
     //log("doms =",doms)
@@ -1716,7 +1734,7 @@ function noticeUncached(f) {
 }
 
 function enable(val) {
-    let doc = unsafeWindow.document;
+    let doc = commentUI_unsafeWindow_alt.document;
     let uidom = doc.body.querySelector(".deleted-comments-container");
     if (val) {
         uidom.classList.remove("remove-2");
@@ -1726,7 +1744,7 @@ function enable(val) {
 }
 
 function showUDP(result) {
-    let doc = unsafeWindow.document;
+    let doc = commentUI_unsafeWindow_alt.document;
     let dom = doc.body.querySelector(".udp-container");
     dom.classList.remove("udp-hidden");
     let titledom = dom.querySelector(".udp-title")
@@ -1797,17 +1815,17 @@ function _bindEvents() {
 }
 
 function _loadEmots() {
-    let s = localStorage.getItem("emoticonList")
+    let s = unsafeWindow.localStorage.getItem("emoticonList")
     let list = JSON.parse(s);
     let dict = {};
     list.forEach((o) => {
         dict[o.emotionId] = o;
     })
-    unsafeWindow["emotDict"] = dict;
+    commentUI_unsafeWindow_alt["emotDict"] = dict;
 }
 
 function _loadUDPUI() {
-    let doc = unsafeWindow.document;
+    let doc = commentUI_unsafeWindow_alt.document;
     doc.body.insertAdjacentHTML("beforeend", udp);
 
 
@@ -1815,13 +1833,13 @@ function _loadUDPUI() {
 }
 
 function _loadUI() {
-    let doc = unsafeWindow.document;
+    let doc = commentUI_unsafeWindow_alt.document;
     doc.body.insertAdjacentHTML("beforeend", recoveryUI);
-    unsafeWindow.onresize = _repositionUI;
+    commentUI_unsafeWindow_alt.onresize = _repositionUI;
     _repositionUI()
     _observer()
 
-    data.loadGeneralSetting(setting => {
+    js_data.loadGeneralSetting(setting => {
         //log("C INIT ", setting.showDeletedComment)
         enable(setting.showDeletedComment);
     })
@@ -1851,9 +1869,9 @@ const DAY = 24 * HOUR;
 
 let activeHelpInterval = 20 * MINUTE; //interval between each active help. 1 day in production because we don't want to flood the server
 
-
+let commentRecovery_unsafeWindow_alt = window;
 function commentRecovery_saveCommentCache(id, cache, callback) {
-    data.saveCommentCache(id, cache, (e) => {
+    js_data.saveCommentCache(id, cache, (e) => {
         if (callback) {
             callback(e);
         }
@@ -1867,7 +1885,7 @@ function _httpGet(url, callback) {
     //log("httpGet", url)
 
 
-    let xhr = new unsafeWindow.XMLHttpRequest();
+    let xhr = new commentRecovery_unsafeWindow_alt.XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     xhr.onload = function () {
@@ -2134,7 +2152,7 @@ function _getCommentsOnlineAndMerge(id, oldCache, callback) {
 
 //this function check the cache and check the\
 function _checkPageComment(id, callback) {
-    data.getLocalCommentCache(id, (cache) => {
+    js_data.getLocalCommentCache(id, (cache) => {
         //log("cache = ", cache);
         //if tehre is no cache, cache all comments straight away.
         if (!cache) {
@@ -2260,7 +2278,7 @@ function recoverComments(cache) {
 
 
 function __activeHelp() {
-    data.getAllCacheIndices((ids) => {
+    js_data.getAllCacheIndices((ids) => {
         let queryObj = {
             query: "active_recover",
             ids: ids,
@@ -2271,7 +2289,7 @@ function __activeHelp() {
             let recoverCount = 0;
             let floorTotal = 0;
             list.forEach((serverRequest, index) => {
-                data.getLocalCommentCache(serverRequest._id, (cache) => {
+                js_data.getLocalCommentCache(serverRequest._id, (cache) => {
 
                     let reportData = {
                         id: cache.id,
@@ -2333,14 +2351,14 @@ function __activeHelp() {
 function _activeHelp() {
     log_log("主动帮助")
     let t = +new Date();
-    data.getActiveHelpTime((lasttime) => {
+    js_data.getActiveHelpTime((lasttime) => {
         //log("上次主动帮助时间", lasttime, (new Date(lasttime)).toLocaleTimeString());
         if (t - activeHelpInterval > lasttime) {
             let interval = Math.round((t - lasttime) / 1000);
 
             log_log(`距离上次主动帮助已经${interval}秒了`)
             __activeHelp();
-            data.setActiveHelpTime(t);
+            js_data.setActiveHelpTime(t);
         } else {
 
             log_log(`距离上次主动帮助还未足够。`)
@@ -2350,7 +2368,7 @@ function _activeHelp() {
 
 function _deleteCache(id) {
     log_log("trying to delete cache, id=", id);
-    data.deleteCommentCache(id, () => {
+    js_data.deleteCommentCache(id, () => {
         //log(`删除缓存成功，id=${id}`);
     })
 }
@@ -2373,7 +2391,7 @@ function _deleteAllCache(callback) {
         })
     }
 
-    data.getAllCacheIndices((ids) => {
+    js_data.getAllCacheIndices((ids) => {
         deleteOneByOne(ids, 0);
     })
 }
@@ -2389,8 +2407,8 @@ function _deleteAllCache(callback) {
         }
         //debug
 
-        unsafeWindow["deleteCache"] = data.deleteCommentCache;
-        unsafeWindow["clearCache"] = _deleteAllCache
+        commentRecovery_unsafeWindow_alt["deleteCache"] = js_data.deleteCommentCache;
+        commentRecovery_unsafeWindow_alt["clearCache"] = _deleteAllCache
 
 
         _checkCurrentPageComment((cache) => {
@@ -2413,9 +2431,10 @@ function _deleteAllCache(callback) {
 
 
 
+let setting_ui_unsafeWindow = window;
 
 function enableDragging(controlDom, containerDom, enableX = true, enableY = true) {
-    let doc = unsafeWindow.document;
+    let doc = setting_ui_unsafeWindow.document;
     let body = doc.body;
 
     let cx = -1;
@@ -2451,7 +2470,7 @@ function enableDragging(controlDom, containerDom, enableX = true, enableY = true
     body.addEventListener("pointerup", () => {
         __webpack_require__.g.dragging = false;
         let rect = containerDom.getBoundingClientRect();
-        data.saveUIPosition(rect.left, rect.y);
+        js_data.saveUIPosition(rect.left, rect.y);
     })
 
 }
@@ -2461,17 +2480,17 @@ function showBannedList(dom, listName) {
 
 
     let dictBan = {
-        up: ["#ban_up_page", data.loadBanList, unbanUpButtonClick, data.banUser, "UP_BAN_UPDATE"],
-        replier: ["#ban_replier_page", data.loadReplyBanList, unbanReplierButtonClick, data.banReplier, "REPLY_BAN_UPDATE"],
-        keyword: ["#ban_keyword_page", data.loadKeywords, unbanKeywordButtonClick, data.banKeyword, "KEYWORD_BAN_UPDATE"]
+        up: ["#ban_up_page", js_data.loadBanList, unbanUpButtonClick, js_data.banUser, "UP_BAN_UPDATE"],
+        replier: ["#ban_replier_page", js_data.loadReplyBanList, unbanReplierButtonClick, js_data.banReplier, "REPLY_BAN_UPDATE"],
+        keyword: ["#ban_keyword_page", js_data.loadKeywords, unbanKeywordButtonClick, js_data.banKeyword, "KEYWORD_BAN_UPDATE"]
     }
 
     let opt = dictBan[listName];
-    console.log("DEBUG dictBan", listName)
+    //console.log("DEBUG dictBan", listName)
     //stringOnly=false
     opt[1]((list) => {
 
-        console.log("DEBUG listName", listName, list);
+        //console.log("DEBUG listName", listName, list);
         //page inputbox button
         let page = dom.querySelector(opt[0]);
 
@@ -2511,7 +2530,7 @@ function showBannedList(dom, listName) {
         //         i.remove();
         //     }
         // });
-
+        let unsafeWindow=window
         let doc = unsafeWindow.document;
 
         list.forEach((i) => {
@@ -2552,7 +2571,7 @@ function showBannedList(dom, listName) {
 
 function updateBannedUpList(dom) {
     if (typeof dom === "undefined") {
-        let doc = unsafeWindow.document;
+        let doc = setting_ui_unsafeWindow.document;
         dom = doc.body.querySelector("#helperUI")
     }
     showBannedList(dom, "up")
@@ -2560,7 +2579,7 @@ function updateBannedUpList(dom) {
 
 function updateBannedReplierList(dom) {
     if (typeof dom === "undefined") {
-        let doc = unsafeWindow.document;
+        let doc = setting_ui_unsafeWindow.document;
         dom = doc.body.querySelector("#helperUI")
     }
     showBannedList(dom, "replier")
@@ -2568,34 +2587,34 @@ function updateBannedReplierList(dom) {
 
 function updateBannedKeywordsList(dom) {
     if (typeof dom === "undefined") {
-        let doc = unsafeWindow.document;
+        let doc = setting_ui_unsafeWindow.document;
         dom = doc.body.querySelector("#helperUI")
     }
     showBannedList(dom, "keyword")
 }
 
 function unbanUpButtonClick(username) {
-    data.unbanUser(username, (banlist) => {
+    js_data.unbanUser(username, (banlist) => {
         js_event.emit("UP_BAN_UPDATE", banlist);
     })
 }
 
 function unbanReplierButtonClick(username) {
-    data.unbanReplier(username, (banlist) => {
+    js_data.unbanReplier(username, (banlist) => {
         js_event.emit("REPLY_BAN_UPDATE", banlist);
     })
 }
 
 function unbanKeywordButtonClick(keyword) {
-    data.unbanKeyword(keyword, (banlist) => {
+    js_data.unbanKeyword(keyword, (banlist) => {
         js_event.emit("KEYWORD_BAN_UPDATE", banlist);
     })
 }
 
 function _changeSetting(key, val, callback) {
-    data.loadGeneralSetting((s) => {
+    js_data.loadGeneralSetting((s) => {
         s[key] = val;
-        data.saveGeneralSetting(s, callback);
+        js_data.saveGeneralSetting(s, callback);
     })
 }
 
@@ -2616,7 +2635,7 @@ function bindGeneralSettingEvents(dom) {
 
             })
 
-            data.loadGeneralSetting((setting) => {
+            js_data.loadGeneralSetting((setting) => {
                 let input = dom.querySelector("input")
                 input.checked = setting[key] ? "checked" : "";
                 //log(setting,key,setting[key]);
@@ -2695,7 +2714,7 @@ function refreshSyncTime(dom) {
         return time;
     }
 
-    data.getUpdateTime((time) => {
+    js_data.getUpdateTime((time) => {
         dom.querySelector(".sync-time")
             .innerText = "上次同步时间：" + timeConverter(time);
     })
@@ -2703,7 +2722,7 @@ function refreshSyncTime(dom) {
 
 function _refreshCommentCachePage(dom) {
 
-    data.getAllCacheIndices((ids) => {
+    js_data.getAllCacheIndices((ids) => {
         let count = ids.length;
 
         dom.querySelector(".cache-info")
@@ -2762,14 +2781,14 @@ function initAcGirl(dom) {
 
     let girl = dom.querySelector(".ac-girl");
     girl.classList.remove("ac-girl-hide");
-    let ui = unsafeWindow.document.body.querySelector("#helperUI")
+    let ui = window.document.body.querySelector("#helperUI")
     enableDragging(girl, ui, false);
 
 }
 
 
 function setting_ui_version(dom) {
-    dom.querySelector(".plugin-version").innerText = "版本：" + data.version;
+    dom.querySelector(".plugin-version").innerText = "版本：" + js_data.version;
 }
 
 function cacheInfo(dom) {
@@ -2779,30 +2798,38 @@ function cacheInfo(dom) {
 
 function init(dom) {
 
-    data.loadUIPosition((pos) => {
+    js_data.loadUIPosition((pos) => {
         dom.style.top = pos.y + "px";
         dom.style.left = pos.x + "px";
     })
-
+    log_log("init SETTING UI")
     bindEvents(dom);
+
+
+
+    log_log("bindEvents done")
     bindGeneralSettingEvents(dom);
 
     updateBannedUpList(dom);
     updateBannedReplierList(dom);
     updateBannedKeywordsList(dom);
 
+    log_log("update done")
     initButtons(dom)
     setting_ui_version(dom)
     cacheInfo(dom)
 
+    log_log("init done")
     initAcGirl(dom);
+
+    log_log("initAcGirl done")
 }
 
 
 /* harmony default export */ const setting_ui = ({
     state: "MENU",
     showSettingUI() {
-        let doc = unsafeWindow.document;
+        let doc = window.document;
         doc.body.insertAdjacentHTML("beforeend", mainUI)
 
         let uiDom = doc.body.querySelector("#helperUI")
@@ -2823,23 +2850,25 @@ var subUI_code = "<div class=\"sub-ui-wrap\"> <div class=\"sub-ui-inner sub-ui-n
 
 
 
+let contentPageUI_unsafeWindow=window;
+
 function contentPageUI_bindEvents() {
     js_event.on("UP_BAN_UPDATE", () => {
         refreshUI();
     })
-    let doc = unsafeWindow.document;
+    let doc = contentPageUI_unsafeWindow.document;
     let innerWrap = doc.querySelector(".sub-ui-inner");
     let banbutton = innerWrap.querySelector("#banUp");
     let unbanbutton = innerWrap.querySelector("#unbanUp");
 
     banbutton.addEventListener("click", () => {
-        data.banUser(_getUsername(doc));
+        js_data.banUser(_getUsername(doc));
 
         js_event.emit("UP_BAN_UPDATE", null);
     })
 
     unbanbutton.addEventListener("click", () => {
-        data.unbanUser(_getUsername(doc));
+        js_data.unbanUser(_getUsername(doc));
         js_event.emit("UP_BAN_UPDATE", null);
     })
 
@@ -2854,7 +2883,7 @@ function contentPageUI_bindEvents() {
     })
 
 
-    data.loadGeneralSetting((setting) => {
+    js_data.loadGeneralSetting((setting) => {
         let show = setting.showBanStatusTag;
         if (show){
             innerWrap.classList.remove("hide")
@@ -2866,7 +2895,7 @@ function contentPageUI_bindEvents() {
 
 
 function showBannedUI() {
-    let doc = unsafeWindow.document;
+    let doc = contentPageUI_unsafeWindow.document;
     let innerWrap = doc.querySelector(".sub-ui-inner");
     innerWrap.classList.remove("sub-ui-normal")
     innerWrap.classList.add("sub-ui-banned")
@@ -2883,7 +2912,7 @@ function showBannedUI() {
 
 function showNormalUI() {
 
-    let doc = unsafeWindow.document;
+    let doc = contentPageUI_unsafeWindow.document;
     let innerWrap = doc.querySelector(".sub-ui-inner");
     innerWrap.classList.add("sub-ui-normal")
     innerWrap.classList.remove("sub-ui-banned")
@@ -2898,9 +2927,9 @@ function showNormalUI() {
 }
 
 function refreshUI() {
-    let doc = unsafeWindow.document;
+    let doc = contentPageUI_unsafeWindow.document;
     let username = _getUsername(doc);
-    data.loadBanList((list) => {
+    js_data.loadBanList((list) => {
         if (list.indexOf(username) >= 0) {
             //banned
             showBannedUI();
@@ -2930,7 +2959,7 @@ function _getUsername(doc) {
 }
 
 function contentPageUI_loadUI() {
-    let doc = unsafeWindow.document;
+    let doc = contentPageUI_unsafeWindow.document;
     doc.body.insertAdjacentHTML("beforeend", subUI)
 
     let vid = doc.querySelector(".container-video")
@@ -2955,6 +2984,8 @@ function contentPageUI_loadUI() {
 
 
 
+
+let ui_unsafeWindow=window;
 
 function hideArticle(c) {
 
@@ -3023,7 +3054,7 @@ function _showContent(c) {
 }
 
 function unbanReplier(username) {
-    data.unbanReplier(username, (banlist) => {
+    js_data.unbanReplier(username, (banlist) => {
         js_event.emit("REPLY_BAN_UPDATE")
     })
 }
@@ -3031,16 +3062,16 @@ function unbanReplier(username) {
 
 function _hideSingleComment(c) {
     let type = util.getCommentType();
-    let blockDiv = unsafeWindow.document.createElement("div")
+    let blockDiv = ui_unsafeWindow.document.createElement("div")
     blockDiv.append(...c.dom.childNodes);
     blockDiv.classList.add("remove");
     blockDiv.classList.add("block-mark");
 
-    let infoDiv = unsafeWindow.document.createElement("div");
+    let infoDiv = ui_unsafeWindow.document.createElement("div");
     infoDiv.classList.add("banned-text");
     infoDiv.innerText = "已屏蔽[" + c.username + "]的发言。"
 
-    let unblockA = unsafeWindow.document.createElement("a");
+    let unblockA = ui_unsafeWindow.document.createElement("a");
     unblockA.classList.add("unban-replier-btn")
     unblockA.innerText = "取消屏蔽"
     unblockA.addEventListener("click", () => {
@@ -3070,7 +3101,7 @@ function _unhideSingleComment(c) {
 }
 
 function refreshUserComments(comments) {
-    data.loadReplyBanList((banlist) => {
+    js_data.loadReplyBanList((banlist) => {
 
         if (banlist !== null) {
             comments.forEach((c) => {
@@ -3094,9 +3125,9 @@ function refreshUserComments(comments) {
 
 function refreshPageItems(contents) {
 
-    data.loadBanList((blist) => {
+    js_data.loadBanList((blist) => {
 
-        data.loadKeywords((klist) => {
+        js_data.loadKeywords((klist) => {
 
             contents.forEach((c) => {
                 let banned = false;
@@ -3157,7 +3188,7 @@ function showCommentTags(content) {
 // }
 
 function _banReplyUser(username) {
-    data.banReplier(username, (banlist) => {
+    js_data.banReplier(username, (banlist) => {
 
         js_event.emit("REPLY_BAN_UPDATE", null);
 
@@ -3188,7 +3219,7 @@ function _banReplyUser(username) {
 
 //Attach ban user comment button link, input comment data
 function attachBanCommentButtonNew(c, onclick) {
-    let b = unsafeWindow.document.createElement("span")
+    let b = ui_unsafeWindow.document.createElement("span")
     b.innerText = "屏蔽";
     b.classList.add("area-comment-block");
     b.addEventListener("click", () => {
@@ -3198,7 +3229,7 @@ function attachBanCommentButtonNew(c, onclick) {
 }
 
 function attachBanCommentButtonOld(c, onclick) {
-    let b = unsafeWindow.document.createElement("a")
+    let b = ui_unsafeWindow.document.createElement("a")
     b.innerText = "屏蔽";
     b.addEventListener("click", () => {
         onclick(c);
@@ -3207,25 +3238,29 @@ function attachBanCommentButtonOld(c, onclick) {
 }
 
 //User Interface part
+window.banButtonObj = {}
 
 function createbanButton() {
-
-    let doc = unsafeWindow.document;
+    log_log("createbanButton")
+    let doc = window.document;
     let buttonDiv = doc.createElement("div");
     buttonDiv.classList.add("filter-button");
     doc.body.appendChild(buttonDiv);
     buttonDiv.style.visibility = "hidden";
 
+
+    log_log("  buttonDiv.addEventListener")
+
     buttonDiv.addEventListener("click", (e) => {
-        let c = unsafeWindow["banButton"].activeData;
+        let c = banButtonObj.activeData;
         let u = c.username;
-        data.banUser(u, (list) => {
+        js_data.banUser(u, (list) => {
             js_event.emit("UP_BAN_UPDATE", null);
         })
     })
 
 
-    unsafeWindow["banButton"] = {
+    window.banButtonObj  = {
         dom: buttonDiv,
         activeDom: null,
         activeData: null,
@@ -3233,15 +3268,15 @@ function createbanButton() {
 
     let hideBanButton = () => {
 
-        unsafeWindow["banButton"].dom.style.visibility = "hidden";
-        unsafeWindow["banButton"].activeDom = null;
-        unsafeWindow["banButton"].activeData = null;
-        unsafeWindow["banButton"].active = false;
+        banButtonObj.dom.style.visibility = "hidden";
+        banButtonObj.activeDom = null;
+        banButtonObj.activeData = null;
+        banButtonObj.active = false;
     }
 
     doc.addEventListener("pointermove", (e) => {
-        if (unsafeWindow["banButton"].activeDom !== null && unsafeWindow["banButton"].active) {
-            let rect = unsafeWindow["banButton"].activeDom.getBoundingClientRect();
+        if (banButtonObj.activeDom !== null && banButtonObj.active) {
+            let rect = banButtonObj.activeDom.getBoundingClientRect();
 
             if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
                 hideBanButton();
@@ -3249,22 +3284,23 @@ function createbanButton() {
         }
     })
 
+    log_log( banButtonObj)
     doc.addEventListener("scroll", (e) => {
         hideBanButton();
     })
-
+    log_log("createbanButton done")
 
 }
 
 function injectStyle() {
-    let doc = unsafeWindow.document;
+    let doc = ui_unsafeWindow.document;
     let str = "<style>" + style/* default.0.1 */.Z[0][1] + "</style>";
     doc.head.insertAdjacentHTML("beforeend", str);
 }
 
 
 function loadHomeUI() {
-
+    log_log("loadHomeUI")
 
     createbanButton();
     setting_ui.showSettingUI();
@@ -3272,6 +3308,7 @@ function loadHomeUI() {
 }
 
 function loadArticleUI() {
+    log_log("loadHomeUI")
     contentPageUI.loadUI();
     setting_ui.showSettingUI();
 }
@@ -3295,11 +3332,24 @@ function ui_bindEvents() {
 //force refresh
         js_event.emit("UP_BAN_UPDATE", null);
     })
+    console.log("DEBUG",ui_unsafeWindow)
+    console.log("DEBUG",ui_unsafeWindow.document)
+    log_log("visibilitychange")
 
+    setTimeout(()=>{
+
+        ui_unsafeWindow.document.addEventListener("visibilitychange", ()=>{
+            js_event.emit("REPLY_BAN_UPDATE", null);
+            js_event.emit("UP_BAN_UPDATE", null);
+        })
+    })
+
+
+    log_log("bindEvents done")
 }
 
 function ui_init() {
-    data.loadGeneralSetting(setting => {
+    js_data.loadGeneralSetting(setting => {
         __webpack_require__.g["showMouseover"] = setting.showMouseover;
     });
 }
@@ -3317,10 +3367,16 @@ function ui_init() {
     // },
 
     loadUI(pageType) {
+
+        log_log("Load UI 1")
         ui_init();
+        log_log("Load UI init")
         ui_bindEvents();
+        log_log("Load UI bindEvents")
         injectStyle();
 
+        log_log("Load UI injectStyle")
+        log_log("pageType"+pageType)
         if (pageType === "HOME" || pageType === "VIDEO_HOME" || pageType === "ARTICLE_HOME") {
             loadHomeUI();
         } else if (pageType === "VIDEO" || pageType === "ARTICLE") {
@@ -3333,10 +3389,10 @@ function ui_init() {
     //Attach events for the dom element to show [Block Button]
     attachBanButton(dom) {
 
-        let banButton = unsafeWindow["banButton"];
+        let banButton = banButtonObj;
         dom.addEventListener("pointermove", (e) => {
 
-            data.loadGeneralSetting((setting) => {
+            js_data.loadGeneralSetting((setting) => {
                 if (setting.showBanButton) {
                     if (banButton.activeDom !== dom && !banButton.active) {
                         if (dom["contentData"]["hidden"]) return;
@@ -3385,7 +3441,7 @@ function ui_init() {
 //获得页面所有视频信息
 //格式： {title, domElement, username}
 
-
+let homeTask_unsafeWindow=window;
 //猴子推荐
 function getMonkeyVideo(doc) {
     let list = doc.querySelectorAll(".monkey-video");
@@ -3671,11 +3727,11 @@ function homeTask(pageType) {
 
 
     function loadBanList(callback) {
-        data.loadBanList(callback)
+        js_data.loadBanList(callback)
     }
 
     function loadKeywordList(callback) {
-        data.loadKeywords(callback);
+        js_data.loadKeywords(callback);
     }
 
     //获得全部投稿信息
@@ -3721,7 +3777,7 @@ function homeTask(pageType) {
 
     function refreshPageContent(target) {
         if (typeof target === "undefined" || target == null) {
-            target = unsafeWindow.document;
+            target = homeTask_unsafeWindow.document;
         }
         let contents = getAllVideoContentInfo(pageType, target);
         attachInfo(contents);
@@ -3744,7 +3800,7 @@ function homeTask(pageType) {
             });
         });
 
-        mutationObserver.observe(unsafeWindow.document, {subtree: true, childList: true});
+        mutationObserver.observe(homeTask_unsafeWindow.document, {subtree: true, childList: true});
     }
 
     //Attach info
@@ -3787,10 +3843,10 @@ var taggingUI_code = "<div class=\"tagging-ui-container smooth-remove\"> <div cl
 
 
 
-
+let tagging_unsafeWindow = window;
 function _newTagDom(text) {
 
-    let doc = unsafeWindow.document;
+    let doc = tagging_unsafeWindow.document;
     let tagDom = doc.createElement("div")
     tagDom.classList.add("user-tag");
     let tagText = doc.createElement("div")
@@ -3802,7 +3858,7 @@ function _newTagDom(text) {
 }
 
 function _newTagButton() {
-    let doc = unsafeWindow.document;
+    let doc = tagging_unsafeWindow.document;
     let b = doc.createElement("div");
     b.innerText = "＋标签"
     b.classList.add("add-new-tag");
@@ -3814,7 +3870,7 @@ function _newTagButton() {
 
 function _lookUpButton(){
     //add lookup button btw with tagging
-    let doc = unsafeWindow.document;
+    let doc = tagging_unsafeWindow.document;
     let b = doc.createElement("div");
     b.innerHTML= "<i class='icon-ks icon-dao-hang-search'></i>"
     b.classList.add("lookup-btn");
@@ -3833,11 +3889,11 @@ function _removeTagFromContainer(container, tag) {
 
 function _showTagsInWindow(username) {
 
-    let doc = unsafeWindow.document;
+    let doc = tagging_unsafeWindow.document;
     let tagsContainerDom = __webpack_require__.g["taggingUI"].querySelector(".tags-container");
     tagsContainerDom.innerHTML = "";
 
-    data.getTags(username, (tags) => {
+    js_data.getTags(username, (tags) => {
         tags.forEach((t) => {
 
             let tdom = doc.createElement("span")
@@ -3888,7 +3944,7 @@ function popAddingTagWindow(username) {
 
 
 function _attachUserTagsDom(username, anchor) {
-    let doc = unsafeWindow.document;
+    let doc = tagging_unsafeWindow.document;
     let container = doc.createElement("div");
     container.classList.add("user-tags")
 
@@ -3896,7 +3952,7 @@ function _attachUserTagsDom(username, anchor) {
 
     let lookBtn = _lookUpButton();
 
-    data.getTags(username, (tags) => {
+    js_data.getTags(username, (tags) => {
         // log("tags=", tags)
         tags.forEach((t) => {
             let tagDom = _newTagDom(t);
@@ -3926,7 +3982,7 @@ function _refreshUserTags(username, anchor) {
         d.remove();
     })
     let addBtn = container.querySelector(".add-new-tag");
-    data.getTags(username, (tags) => {
+    js_data.getTags(username, (tags) => {
         //log(username, "tags=", tags);
         tags.forEach((t) => {
             let tagDom = _newTagDom(t);
@@ -3934,7 +3990,7 @@ function _refreshUserTags(username, anchor) {
         })
     })
 
-    data.loadGeneralSetting((setting)=>{
+    js_data.loadGeneralSetting((setting)=>{
         if (!setting.showUserTags){
             container.classList.add("remove");
         }else{
@@ -3967,7 +4023,7 @@ function _showCommentUsrTag(commentData) {
 
 function _showAuthorTag() {
 
-    let doc = unsafeWindow.document;
+    let doc = tagging_unsafeWindow.document;
     let anchor = doc.querySelector("a.up-name");
     if (!anchor) anchor = doc.querySelector("a.upname");
     if (!anchor) log_log("UP name not found!");
@@ -3993,7 +4049,7 @@ function _refreshTags(commentData) {
 }
 
 function enableTags(val){
-    let doc = unsafeWindow.document;
+    let doc = tagging_unsafeWindow.document;
     if (!val){
         doc.querySelectorAll(".user-tags")
             .forEach((dom)=>{
@@ -4020,15 +4076,15 @@ function _closeUI() {
 }
 
 function loadUIHTML() {
-    unsafeWindow.document.body.insertAdjacentHTML("beforeend", taggingUI);
-    let ui = unsafeWindow.document.body.lastChild//unsafeWindow.document.body.querySelector(".tagging-ui-container");
+    tagging_unsafeWindow.document.body.insertAdjacentHTML("beforeend", taggingUI);
+    let ui = tagging_unsafeWindow.document.body.lastChild//unsafeWindow.document.body.querySelector(".tagging-ui-container");
     __webpack_require__.g["taggingUI"] = ui;
     let closeBtn = ui.querySelector(".tagging-close-button");
     closeBtn.addEventListener("click", _closeUI)
 }
 
 function _addTag(username, tag, callback) {
-    data.addTagToUser(username, tag, () => {
+    js_data.addTagToUser(username, tag, () => {
         //Event.emit("ADD_TAG", [username, tag]);
 
         if (callback) callback();
@@ -4036,7 +4092,7 @@ function _addTag(username, tag, callback) {
 }
 
 function _deleteTag(username, tag, callback) {
-    data.removeTagForUser(username, tag, () => {
+    js_data.removeTagForUser(username, tag, () => {
         js_event.emit("REMOVE_TAG", [username, tag])
         if (callback) callback();
     })
@@ -4048,7 +4104,7 @@ function _init(){
 
 /* harmony default export */ const tagging = ({
     addTags(username, tags, callback) {
-        data.addTagToUser(username, tags, () => {
+        js_data.addTagToUser(username, tags, () => {
             js_event.emit("ADD_TAGS", [username, tags]);
             if (callback) callback();
         })
@@ -4061,11 +4117,11 @@ function _init(){
         _deleteTag(username, tag, callback)
     },
     getTags(username, callback) {
-        data.getTags(username, callback);
+        js_data.getTags(username, callback);
 
     },
     getAllTags(callback) {
-        data.getAlltags(callback);
+        js_data.getAlltags(callback);
     },
     init() {
         loadUIHTML();
@@ -4089,11 +4145,12 @@ function _init(){
 //         callback(list);
 //     })
 // }
-
+let contentTask_unsafeWindow = window;
 //旧版页面评论
 function _getCommentsOldVer(doc) {
     let result = [];
     let items = doc.querySelectorAll(".fc-comment-item")
+    console.log("DEBUG doc.querySelectorAll(\".fc-comment-item\")", doc.querySelectorAll(".fc-comment-item"), doc)
     items.forEach((i) => {
         let nameAnchor = i.querySelector("a.name");
         let username = nameAnchor.innerText;
@@ -4114,6 +4171,7 @@ function _getCommentsOldVer(doc) {
             })
         }
     })
+    console.trace("DEBUG COMMENTS", result)
 
     return result;
 }
@@ -4141,6 +4199,7 @@ function _getCommentsNewVer(doc) {
 }
 
 function _getComments(doc) {
+    log_log("_getComments")
     let comments = util.getCommentType() === "NEW"
         ? _getCommentsNewVer(doc)
         : _getCommentsOldVer(doc);
@@ -4153,7 +4212,7 @@ function contentTask() {
     function bindEvents() {
 
         js_event.on("TAGS_UPDATE", (username) => {
-            let cs = getCommentsData(unsafeWindow.document);
+            let cs = getCommentsData(contentTask_unsafeWindow.document);
             cs = cs.filter(x => x.username === username)
             js_event.emit("REFRESH_TAGS", cs);
 
@@ -4173,7 +4232,9 @@ function contentTask() {
 
     //Attach data and UI
     function attachDataUI(cs) {
+        console.log("DEBUG attachDataUI", cs)
         cs.forEach((c) => {
+            console.log(c, c.dom.hasOwnProperty("commentData"))
             if (!c.dom.hasOwnProperty("commentData")) {
                 ui.attachBanCommentButton(c);
                 c.dom["commentData"] = c;
@@ -4183,7 +4244,7 @@ function contentTask() {
 
     //Run Filter
     function runCommentTask() {
-        let comments = getCommentsData(unsafeWindow.document);
+        let comments = getCommentsData(contentTask_unsafeWindow.document);
         js_event.emit("FILTER_COMMENTS", comments);
     }
 
@@ -4208,12 +4269,12 @@ function contentTask() {
                                 target.firstChild.classList.contains("area-comment-sec")))
 
                         ) {
-                            //console.log("targets", targets)
+                            console.log("DEBUG targets", targets)
                             let cs = getCommentsData(target);
                             //log(cs.length, mutation);
                             js_event.emit("SHOW_COMMENT_TAGS", cs);
 
-
+                            console.log("DEBUG before attachDataUI")
                             attachDataUI(cs);
                             js_event.emit("FILTER_COMMENTS", cs);
                             setTimeout(() => {
@@ -4227,7 +4288,7 @@ function contentTask() {
             });
         });
 
-        mutationObserver.observe(unsafeWindow.document, {subtree: true, childList: true});
+        mutationObserver.observe(contentTask_unsafeWindow.document, {subtree: true, childList: true});
     }
 
     bindEvents();
@@ -4241,16 +4302,21 @@ function contentTask() {
 
 
 
+
 function taskHOME(pagetype){
+    log_log("Load HOME")
     homeTask(pagetype);
 }
 
 
 function taskCONTENT(){
+
+    log_log("Load CONTENT")
     contentTask()
 }
 
 function executeTask(pageType){
+    log_log("执行任务")
     if (pageType==="HOME" || pageType==="VIDEO_HOME" || pageType==="ARTICLE_HOME"){
         taskHOME(pageType);
     }else if (pageType === "VIDEO" || pageType === "ARTICLE"){
@@ -4329,15 +4395,17 @@ function oldCloudGet(callback) {
 function checkImSDKInit(args) {
     //log("checkImSDKInit")
 
-
-    if (!"trySyncCount" in unsafeWindow) {
-        unsafeWindow["trySyncCount"] = 0;
-    }
-
-    unsafeWindow["trySyncCount"]++;
-    if (unsafeWindow["trySyncCount"] > 30) return;
+    //let unsafeWindow = window
+    let trySyncCount= 0;
+    // if (!"trySyncCount" in unsafeWindow) {
+    //     unsafeWindow["trySyncCount"] = 0;
+    // }
+    trySyncCount++
+    // unsafeWindow["trySyncCount"]++;
+    if (trySyncCount > 30) return;
     let im = unsafeWindow.ImSdk;
-
+    log("IMSDK")
+    log(im)
     let needWait = false;
     try {
 
@@ -4356,12 +4424,13 @@ function checkImSDKInit(args) {
         needWait = checklist;
     } catch (e) {
         needWait = true;
+        console.log("sync old DEBUG", needWait);
     }
 
     //console.log("need wait", needWait)
 
     if (needWait) {
-        log_log("载入信息。。");
+        log("载入信息。。");
         setTimeout(() => {
             checkImSDKInit(args);
         }, 1000);
@@ -4394,15 +4463,15 @@ function updateListByOldCloudData(d) {
     //console.log(ups, keywords);
     data.updateBanList(ups, () => {
         //console.log("Uplist updated!", ups);
-        js_event.emit("UP_BAN_UPDATE", null);
+        Event.emit("UP_BAN_UPDATE", null);
     });
     data.updateKeywords(keywords, () => {
         //console.log("Keywordlist Updated", keywords);
-        js_event.emit("KEYWORD_BAN_UPDATE", null);
+        Event.emit("KEYWORD_BAN_UPDATE", null);
     });
     data.updateReplyBanList(repliers, () => {
         //console.log("Replierlist updated", repliers);
-        js_event.emit("REPLY_BAN_UPDATE", null);
+        Event.emit("REPLY_BAN_UPDATE", null);
     });
     data.setUpdateTime(d.time, () => {
         //console.log("Time Updated", (d.time))
@@ -4415,40 +4484,41 @@ let defaultUpdateInterval = (/* unused pure expression or super */ null && (30 *
 function ImSdkDataCheck(args) {
     //unsafeWindow.document.querySelector('#cloudsync').addClass("disabled").text("正在同步...");
 
-
+    log("ImSdkDataCheck")
     data.getUpdateTime((localTime) => {
         lastUpdateTime = localTime;
         oldCloudGet((text) => {
+            console.log("oldCloudGet", text)
             if (text === null) {
                 //nothing found, //Inform and use new server
                 //console.log("Update by null");
 
             } else {
-                log_log(text);
+                log(text);
                 try {
                     let d = JSON.parse(text);
                     //检查版本兼容
                     if (typeof d.version === "undefined" || parseFloat(d.version) < parseFloat(data.version)) {
-                        log_log("旧版同步信息发现，重新同步");
+                        log("旧版同步信息发现，重新同步");
                         updateListByOldCloudData(d);
 
                     } else if (parseFloat(d.version) > parseFloat(data.version)) {
-                        log_log("同步失败：你已经在其他地方使用过更新的版本了。请更新当前屏蔽插件，最新版本：" + d.version)
+                        log("同步失败：你已经在其他地方使用过更新的版本了。请更新当前屏蔽插件，最新版本：" + d.version)
                     } else {
                         //log("data time", d.time, decode(d.time), "local", localTime);
                         d.time = parseInt(decode(d.time));
                         let cloudtime = d.time;
                         if (cloudtime > localTime || data.version !== d.version) {
                             //如果云时间更新，则使用云上的
-                            log_log("Update list");
+                            log("Update list");
                             updateListByOldCloudData(d);
 
                         } else if (localTime > (cloudtime)) {
                             //本地更新，尝试更新
-                            log_log("ImSdk is no longer available. Will try new cloud.");
+                            log("ImSdk is no longer available. Will try new cloud.");
 
                         } else {
-                            log_log("Check done, no update needed", (localTime - cloudtime) / 1000, d);
+                            log("Check done, no update needed", (localTime - cloudtime) / 1000, d);
 
                         }
 
@@ -4458,7 +4528,7 @@ function ImSdkDataCheck(args) {
                 }
             }
             data.setUsingNewCloud(() => {
-                log_log("切换到新服务器。")
+                log("切换到新服务器。")
             });//not yet for debug
             setTimeout(checkNewCloud, 5000);//then check new cloud for good
         })
@@ -4473,7 +4543,7 @@ function ImSdkDataCheck(args) {
 function synchroize_bindEvents() {
     js_event.on("SYNC_TIME_UPDATE", (t) => {
         if (t && typeof t === "number" && t > 0) {
-            data.setUpdateTime(t, () => {
+            js_data.setUpdateTime(t, () => {
                 log_log("更新同步时间", t);
             });
         }
@@ -4482,24 +4552,24 @@ function synchroize_bindEvents() {
 
     js_event.on("TAGS_UPDATE", () => {
         let t = Math.floor((+new Date()) / 1000);
-        data.setUpdateTime(t, null);
+        js_data.setUpdateTime(t, null);
     })
     js_event.on("UP_BAN_UPDATE", () => {
         let t = Math.floor((+new Date()) / 1000);
-        data.setUpdateTime(t, null);
+        js_data.setUpdateTime(t, null);
     })
     js_event.on("REPLY_BAN_UPDATE", () => {
         let t = Math.floor((+new Date()) / 1000);
-        data.setUpdateTime(t, null);
+        js_data.setUpdateTime(t, null);
     })
     js_event.on("KEYWORD_BAN_UPDATE", () => {
         let t = Math.floor((+new Date()) / 1000);
-        data.setUpdateTime(t, null);
+        js_data.setUpdateTime(t, null);
     })
 
     js_event.on("SYNC_NOW", ()=>{
         let t = Math.floor((+new Date()) / 1000);
-        data.setUpdateTime(t, null);
+        js_data.setUpdateTime(t, null);
         _syncWithCloud();
     })
 
@@ -4531,6 +4601,7 @@ function synchroize_apiRequest(queryData, callback) {
 
 
 function checkDataForName(uid, name, callback) {
+    log_log("checkDataForName")
     let d = {
         uid: uid,
         name: name,
@@ -4551,9 +4622,9 @@ function syncFromServer(name, uid) {
             //console.log(d);
             log_log("list from new Cloud", d)
             if (d.success) {
-                data.updateBanList(d.uplist);
-                data.updateReplyBanList(d.replylist);
-                data.updateKeywords(d.keywords);
+                js_data.updateBanList(d.uplist);
+                js_data.updateReplyBanList(d.replylist);
+                js_data.updateKeywords(d.keywords);
                 js_event.emit("SYNC_TIME_UPDATE", d.lastsync);
                 js_event.emit("UP_BAN_UPDATE", null);
                 js_event.emit("REPLY_BAN_UPDATE", null);
@@ -4570,13 +4641,14 @@ let successNotice = (d) => {
 
 function checkNewCloud() {
     log_log("检查新服务器")
-    data.getUsernameID((usernameId) => {
+    js_data.getUsernameID((usernameId) => {
         let username = usernameId[0];
         let uid = usernameId[1];
         log_log("username=" + username);
         checkDataForName(uid, username, (d) => {
 
-            data.getUpdateTime((localtime) => {
+            js_data.getUpdateTime((localtime) => {
+
                 if (d["synctime"] > 0 && localtime > d["synctime"] * 500) {
                     // log("旧同步时间", localtime)
                     localtime = localtime / 1000; //old cloud time is 1000 times bigger, since it uses millisecond, but new cloud uses second
@@ -4607,14 +4679,14 @@ function checkNewCloud() {
 }
 
 function uploadData(callback) {
-    data.getUsernameID((usernameId) => {
+    js_data.getUsernameID((usernameId) => {
         let username = usernameId[0];
         let uid = usernameId[1]
 
-        data.loadBanList((uplist) => {
-            data.loadReplyBanList((replylist) => {
-                data.loadKeywords((keywords) => {
-                    data.getAlltags((tags) => {
+        js_data.loadBanList((uplist) => {
+            js_data.loadReplyBanList((replylist) => {
+                js_data.loadKeywords((keywords) => {
+                    js_data.getAlltags((tags) => {
                         console.log("username update = ", username)
                         let d = {
                             uid: uid,
@@ -4639,52 +4711,55 @@ function checkSync() {
 
     //Check if this is already using new cloud
     log_log("检查同步状态")
-    data.isUsingNewCloud((using) => {
-        log_log("是否已经使用新服务器", using)
-        if (!using) {
-            //not using new cloud
-            //check if old local data exists
-            log_log("并未使用新服务器")
-            //如果没有使用新服务器，尝试同步旧云，如果旧云没有内容，直接设置为新云，如果旧云有内容，先同步旧信息到本地，然后同步本地到新云
-            data.getUpdateTime((time) => {
-                log_log("检查本地同步时间 time=", time)
-                if (time === 0 || isNaN(time)) {
-                    log_log("没有发现本地记录,首先检查旧服务")
-                    //time is 0 as default, means we don't have old data
-                    //possibility:
-                    //1. new users
-                    //2. new device
-                    //check old cloud , if there is data while nothing in local browser, download it
-                    checkImSDKInit();
-
-                    //checkNewCloud(); //will do after imsdk check is done
-                } else {
-
-                    log_log("发现本地记录，未曾使用新服务器，尝试同步本地信息到新服务器")
-                    //old data exists
-                    //upload it once
-                    uploadData((response) => {
-                        if (response.success) {
-                            log_log("同步成功")
-                            data.setUpdateTime(response.lastsync, successNotice);
-                            js_event.emit("SYNC_TIME_UPDATE", response.lastsync);
-                            data.setUsingNewCloud(() => {
-                            });//not yet for debug
-                        }
-                    });
-                }
-                //from now one use new one.
-
-
-            })
-
-
-        } else {
-            //already using new data
-            log_log("正常使用新服务器同步")
-            checkNewCloud()
-        }
-    })
+    log_log("正常使用新服务器同步")
+    checkNewCloud()
+    // data.isUsingNewCloud((using) => {
+    //     // log("是否已经使用新服务器", using)
+    //     // if (!using) {
+    //     //     //not using new cloud
+    //     //     //check if old local data exists
+    //     //     log("并未使用新服务器")
+    //     //     //如果没有使用新服务器，尝试同步旧云，如果旧云没有内容，直接设置为新云，如果旧云有内容，先同步旧信息到本地，然后同步本地到新云
+    //     //     data.getUpdateTime((time) => {
+    //     //         log("检查本地同步时间 time=", time)
+    //     //         if (time === 0 || isNaN(time)) {
+    //     //             log("没有发现本地记录,首先检查旧服务")
+    //     //             //time is 0 as default, means we don't have old data
+    //     //             //possibility:
+    //     //             //1. new users
+    //     //             //2. new device
+    //     //             //check old cloud , if there is data while nothing in local browser, download it
+    //     //             checkImSDKInit();
+    //     //
+    //     //             //checkNewCloud(); //will do after imsdk check is done
+    //     //         } else {
+    //     //
+    //     //             log("发现本地记录，未曾使用新服务器，尝试同步本地信息到新服务器")
+    //     //             //old data exists
+    //     //             //upload it once
+    //     //             uploadData((response) => {
+    //     //                 if (response.success) {
+    //     //                     log("同步成功")
+    //     //                     data.setUpdateTime(response.lastsync, successNotice);
+    //     //                     Event.emit("SYNC_TIME_UPDATE", response.lastsync);
+    //     //                     data.setUsingNewCloud(() => {
+    //     //                     });//not yet for debug
+    //     //                 }
+    //     //             });
+    //     //         }
+    //     //         //from now one use new one.
+    //     //
+    //     //
+    //     //     })
+    //     //
+    //     //
+    //     // } else
+    //     {
+    //         //already using new data
+    //         log("正常使用新服务器同步")
+    //         checkNewCloud()
+    //     }
+    // })
 
 
     //if no info , we use new cloud directly
@@ -4698,7 +4773,7 @@ function checkSync() {
 }
 
 function _syncWithCloud() {
-
+    log_log("_syncWithCloud")
     if (typeof unsafeWindow.user === "undefined") {
 
         setTimeout(_syncWithCloud, 1000);
@@ -4710,7 +4785,8 @@ function _syncWithCloud() {
         return;
     } //not logged in so we don't cloud sync
 
-    data.loadGeneralSetting((setting) => {
+    log_log("_syncWithCloud loadGeneralSetting")
+    js_data.loadGeneralSetting((setting) => {
         if (setting.autoSync) {
             checkSync();
         }
@@ -4720,6 +4796,7 @@ function _syncWithCloud() {
 
 /* harmony default export */ const synchroize = ({
     init: () => {
+        log_log("sync EVENT BINDING")
         synchroize_bindEvents();
     },
     SyncWithCloud: _syncWithCloud,
@@ -4896,10 +4973,13 @@ async function _getRecentContent(uid) {
 header_default()();
 let pageType = getPageType();
 log_log(pageType)
+
 //load UI
 ui.loadUI(pageType);
 
+log_log("executeTask")
 executeTask(pageType);
+log_log("synchroize")
 synchroize.init();
 synchroize.SyncWithCloud();
 
