@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.025
+// @version      3.026
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -642,7 +642,7 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.025");
+/* harmony default export */ const version = ("3.026");
 ;// CONCATENATED MODULE: ./dev/js/server.txt
 /* harmony default export */ const server = ("https://baldhumanity.top");
 ;// CONCATENATED MODULE: ./dev/js/util.js
@@ -1033,7 +1033,7 @@ function _updateAllTags(callback) {
         }
     }
     GM_set("ALL_TAGS", tsnew, () => {
-        callback();
+        empty(callback)();
     });
 }
 
@@ -1044,7 +1044,7 @@ function _updateAllTags(callback) {
 //dict COMMENT_INDEX , a list of all cache id
 
 function _addToCommentIndex(id, callback) {
-    _getAllIndex((ids) => {
+    _getAllCacheIndex((ids) => {
         console.log(typeof id);
         if (ids.indexOf(id) < 0) {
             ids.push(id);
@@ -1053,18 +1053,18 @@ function _addToCommentIndex(id, callback) {
             })
         }
         GM_set("COMMENT_CACHE_INDEX", ids, () => {
-            callback();
+            empty(callback)();
         })
     })
 }
 
 function _deleteFromCommentIndex(id, callback) {
-    _getAllIndex((ids) => {
+    _getAllCacheIndex((ids) => {
         if (ids.indexOf(id) >= 0) {
             let i = ids.indexOf(id);
             ids.splice(i, 1);
             GM_set("COMMENT_CACHE_INDEX", ids, () => {
-                callback();
+                empty(callback)();
             })
         }
     })
@@ -1073,9 +1073,17 @@ function _deleteFromCommentIndex(id, callback) {
 //A ID LIST OF actively queried articles,
 
 
-function _getAllIndex(callback) {
+function _getAllCacheIndex(callback) {
     GM_get("COMMENT_CACHE_INDEX", [], (ids) => {
         empty(callback)(ids);
+    })
+}
+
+function _deleteAllCacheIndex(callback){
+    GM_delete("COMMENT_CACHE_INDEX", ()=>{
+        empty(callback)();
+    }, ()=>{
+        log_log("删除缓存出错！");
     })
 }
 
@@ -1325,7 +1333,9 @@ function _banReplier(username, callback) {
     saveUIPosition: _saveUIPosition,
 
     // Get Comment Cache
-    getAllCacheIndices: _getAllIndex,
+    getAllCacheIndex: _getAllCacheIndex,
+    deleteAllCacheIndex:_deleteAllCacheIndex,
+
     getLocalCommentCache: _getCommentCache,
     saveCommentCache: _saveCommentCache,
     deleteCommentCache: _deleteCommentCache,
@@ -1941,6 +1951,7 @@ const DAY = 24 * HOUR;
 let activeHelpInterval = 20 * MINUTE; //interval between each active help. 1 day in production because we don't want to flood the server
 
 let commentRecovery_unsafeWindow_alt = window;
+
 function commentRecovery_saveCommentCache(id, cache, callback) {
     js_data.saveCommentCache(id, cache, (e) => {
         if (callback) {
@@ -2349,7 +2360,7 @@ function recoverComments(cache) {
 
 
 function __activeHelp() {
-    js_data.getAllCacheIndices((ids) => {
+    js_data.getAllCacheIndex((ids) => {
         let queryObj = {
             query: "active_recover",
             ids: ids,
@@ -2448,25 +2459,76 @@ function _deleteCache(id) {
 function _deleteAllCache(callback) {
     log_log("deleteallcache")
 
-    function deleteOneByOne(ids, i) {
-        if (i >= ids.length) {
+    function deleteOneByOne(ids) {
+        if (ids.length <= 0) {
             js_event.emit("COMMENT_CACHE_UPDATE", null);
+
+            js_data.deleteAllCacheIndex(() => {
+            });
             callback();
             return
         }
 
-        let id = ids[i];
+        let id = ids.splice(0, 1);
         _deleteCache(id);
         setTimeout(() => {
-            deleteOneByOne(ids, i + 1)
+            deleteOneByOne(ids)
         })
     }
 
-    js_data.getAllCacheIndices((ids) => {
-        deleteOneByOne(ids, 0);
+    js_data.getAllCacheIndex((ids) => {
+        log_log("缓存文章列表")
+        log_log(ids);
+
+        deleteOneByOne(ids);
     })
 }
 
+
+function _searchCacheByKeyword(str, callback) {
+    log_log("搜索缓存 - 关键词:" + str);
+    let searchResult = [];
+
+    function searchOneByOne(ids) {
+        if (ids.length <= 0) {
+            js_event.emit("COMMENT_CACHE_UPDATE", null);
+            if (callback)
+                callback(searchResult);
+            return;
+        }
+
+        let id = ids.splice(0, 1)[0];
+        js_data.getLocalCommentCache(id, (c) => {
+            //log(c.floors);
+
+
+            for (let floor in c.floors) {
+                let f = c.floors[floor]
+                if (f.content && f.content.indexOf(str) >= 0) {
+                    let res = {
+                        ac: "ac" + id,
+                        floor: floor,
+                        content: f.content,
+                        username: f.username,
+                    }
+
+                    log_log(JSON.stringify(res));
+                    searchResult.push(res);
+                }
+            }
+
+            searchOneByOne(ids);
+        })
+
+    }
+
+    js_data.getAllCacheIndex((ids) => {
+        //log("缓存文章列表")
+        //log(ids);
+
+        searchOneByOne(ids);
+    })
+}
 
 /* harmony default export */ const commentRecovery = ({
     init() {
@@ -2478,6 +2540,7 @@ function _deleteAllCache(callback) {
         }
         //debug
 
+        //log("DEBUG SEARCH")
         commentRecovery_unsafeWindow_alt["deleteCache"] = js_data.deleteCommentCache;
         commentRecovery_unsafeWindow_alt["clearCache"] = _deleteAllCache
 
@@ -2491,7 +2554,9 @@ function _deleteAllCache(callback) {
 
         });
         _activeHelp();
+
     },
+    searchCacheByKeyword: _searchCacheByKeyword,
     deleteAllCache: _deleteAllCache,
     getUserDeletedPost: _getUserDeletedPost
 });
@@ -2793,7 +2858,7 @@ function refreshSyncTime(dom) {
 
 function _refreshCommentCachePage(dom) {
 
-    js_data.getAllCacheIndices((ids) => {
+    js_data.getAllCacheIndex((ids) => {
         let count = ids.length;
 
         dom.querySelector(".cache-info")
@@ -4316,7 +4381,7 @@ function _getCommentsNewVer(doc) {
 }
 
 function _getComments(doc) {
-    log_log("_getComments")
+    //log("_getComments")
     let comments = util.getCommentType() === "NEW"
         ? _getCommentsNewVer(doc)
         : _getCommentsOldVer(doc);
@@ -4387,12 +4452,12 @@ function contentTask() {
                                 target.firstChild.classList.contains("area-comment-sec")))
 
                         ) {
-                            console.log("DEBUG targets", targets)
+                            //console.log("DEBUG targets", targets)
                             let cs = getCommentsData(target);
                             //log(cs.length, mutation);
                             js_event.emit("SHOW_COMMENT_TAGS", cs);
 
-                            console.log("DEBUG before attachDataUI")
+                            //console.log("DEBUG before attachDataUI")
                             attachDataUI(cs);
                             js_event.emit("FILTER_COMMENTS", cs);
                             setTimeout(() => {
@@ -5088,6 +5153,7 @@ async function _getRecentContent(uid) {
 
 
 
+
 header_default()();
 let pageType = getPageType();
 log_log(pageType)
@@ -5104,6 +5170,11 @@ synchroize.SyncWithCloud();
 unsafeWindow.sendBanana = banana.feedBanana;
 unsafeWindow.getArticleList= banana.getArticleList;
 unsafeWindow.getUDID = banana.getUDID
+
+
+unsafeWindow.search = commentRecovery.searchCacheByKeyword
+unsafeWindow["搜索"] = commentRecovery.searchCacheByKeyword
+
 })();
 
 /******/ })()
