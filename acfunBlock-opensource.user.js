@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.027
+// @version      3.028
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -43,7 +43,6 @@ if (typeof module !=="undefined" && module !== null) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
-
 
 
 if ( true && module !== null) {
@@ -390,7 +389,9 @@ var header_default = /*#__PURE__*/__webpack_require__.n(header);
 
 
 function getPageType() {
-    let pageUrl = window.location.href.replaceAll("#","");
+    console.log("DEBUG TYPE", window.location, window.location.href)
+    let pageUrl = window.location.href.replace("/\#/g","");
+    //.replace(/foo/g, 'moo');
     let dict1 = {
         //"www.acfun.cn/": "首页",
         //"www.acfun.cn/v/list177/index.htm": "AC正义",
@@ -642,7 +643,7 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.027");
+/* harmony default export */ const version = ("3.028");
 ;// CONCATENATED MODULE: ./dev/js/server.txt
 /* harmony default export */ const server = ("https://baldhumanity.top");
 ;// CONCATENATED MODULE: ./dev/js/util.js
