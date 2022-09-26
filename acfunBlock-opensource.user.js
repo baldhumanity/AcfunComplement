@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.028
+// @version      3.029
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -43,6 +43,7 @@ if (typeof module !=="undefined" && module !== null) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
+
 
 
 if ( true && module !== null) {
@@ -643,7 +644,7 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.028");
+/* harmony default export */ const version = ("3.029");
 ;// CONCATENATED MODULE: ./dev/js/server.txt
 /* harmony default export */ const server = ("https://baldhumanity.top");
 ;// CONCATENATED MODULE: ./dev/js/util.js
@@ -684,7 +685,7 @@ function _apiRequest(queryData, callback) {
     let str = JSON.stringify(queryData);
     str = encode(str)
     xhr.open("POST", url, true);
-    xhr.setRequestHeader('Content-Type', 'text/plain');
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
     xhr.send(str);
     xhr.onload = function () {
         let d = {};
@@ -1518,7 +1519,7 @@ function _banReplier(username, callback) {
 });
 ;// CONCATENATED MODULE: ./dev/html/mainUI.html
 // Module
-var code = "<div id=\"helperUI\" class=\"helper-wrap\" style=\"pointer-events:none\"> <div class=\"helper-wrap-inner\"> <div style=\"pointer-events:all\" class=\"helper-main c-a ui-hidden smooth\"> <div class=\"plugin-hint\" id=\"hide_hint\">隐藏插件--></div> <div class=\"page-wrap\"> <div class=\"plugin-menu-title\">插件设置</div> <div class=\"menu-wrap\"> <div class=\"menu-column\"> <a id=\"bannedAuthours\">Ｕ Ｐ 主</a> <a id=\"bannedRepliers\">回 复 者</a> <a id=\"bannedKeywords\">关 键 词</a> <a id=\"cloudsync\">云 同 步</a> <a id=\"commentRecovery\">评论恢复</a> </div> <div class=\"menu-column\"> <a id=\"generalSetting\">通用设置</a> <a id=\"sharedRankList\">屏蔽排名</a> <a id=\"aboutme\">关于插件</a> <a href=\"https://baldhumanity.top/acfun\">网站主页</a> </div> </div> <div class=\"plugin-version\">0.00</div> <div class=\"plugin-author\">作恶者：<a href=\"https://message.acfun.cn/im?targetId=690324\" style=\"color:#00f\">人文情怀</a></div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_up_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入UP主ID...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_replier_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入评论者ID...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_keyword_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入屏蔽关键词...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">LOL</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"cloudsync_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div class=\"cloud-description\"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class=\"sync-time\"></div> <hr> <div> <button id=\"syncNow\">立即同步</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"recovery_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\" style=\"float:none\"> <div class=\"no-float\"> 3.000版本新功能：查看已删除评论！<br/> 插件将备份所有你浏览过的投稿的评论。并且在其他人请求时，共享出去。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div class=\"no-float\"> <b></b><span class=\"cache-info\"></span> <button id=\"delete_cache\">删除缓存</button> </div> <hr> <div class=\"no-float\"> <label>被删评论查询<input type=\"text\" placeholder=\"输入评论家ID...\" class=\"lookup-cache-input\" id=\"lookup_cache_input\"></label> <button id=\"lookup_cache\">查询</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"general_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div> <label class=\"cc-container\" data-id=\"showBanButton\">在首页的投稿右上角显示[屏蔽]图标按钮 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showMouseover\">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"autoSync\">自动云同步所有列表 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showDeletedComment\">显示投稿内被删除评论 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showUserTags\">显示评论用户标签 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showBanStatusTag\">显示投稿页左侧屏蔽状态 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"sharedRankList_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div style=\"float:none\"> <label class=\"cc-container\" data-id=\"useBannedUpRankList\">屏蔽排行榜上UP <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> <br> <a id=\"copy_uprank\">复制到我的列表</a> </label> </div> <div style=\"float:none\"> <label class=\"cc-container\" data-id=\"useBannedKeywordsList\">屏蔽排行榜上关键词 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> <br> <a id=\"copy_keywordrank\">复制到我的列表</a> </label> </div> <div style=\"float:none\"> <label class=\"cc-container\" data-id=\"useBannedReplierList\">屏蔽排行榜上评论家 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> <br> <a id=\"copy_replierrank\">复制到我的列表</a> </label> </div> <div style=\"float:none\"> <a href=\"https://baldhumanity.top/acfun/ranking.html\" style=\"color:#00008b\">点击这里查看排行榜</a> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"about_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style=\"pointer-events:all\" class=\"ac-girl ac-girl-hide smooth\"> </div> </div> </div>";
+var code = "<div id=\"helperUI\" class=\"helper-wrap\" style=\"pointer-events:none\"> <div class=\"helper-wrap-inner\"> <div style=\"pointer-events:all\" class=\"helper-main c-a ui-hidden smooth\"> <div class=\"plugin-hint\" id=\"hide_hint\">隐藏插件--></div> <div class=\"page-wrap\"> <div class=\"plugin-menu-title\">插件设置</div> <div class=\"menu-wrap\"> <div class=\"menu-column\"> <a id=\"bannedAuthours\">Ｕ Ｐ 主</a> <a id=\"bannedRepliers\">回 复 者</a> <a id=\"bannedKeywords\">关 键 词</a> <a id=\"cloudsync\">云 同 步</a> <a id=\"commentRecovery\">评论恢复</a> </div> <div class=\"menu-column\"> <a id=\"generalSetting\">通用设置</a> <a id=\"sharedRankList\">屏蔽排名</a> <a id=\"aboutme\">关于插件</a> <a href=\"https://baldhumanity.top/acfun\">网站主页</a> </div> </div> <div class=\"plugin-version\">0.00</div> <div class=\"plugin-author\">作恶者：<a href=\"https://message.acfun.cn/im?targetId=690324\" style=\"color:#00f\">人文情怀</a></div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_up_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入UP主名字...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_replier_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入评论者名字...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">我是名字</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"ban_keyword_page\"> <a class=\"go-back\">返回</a> <div class=\"plugin-add-ban-up\"> <input class=\"ban-title-input\" type=\"text\" maxlength=\"16\" placeholder=\"输入屏蔽关键词...\"/> <input class=\"ban-item-submit\" type=\"button\" value=\"屏蔽\"> </div> <div class=\"banned-items\"> <div class=\"banned-item\"> <span class=\"banned-title\">LOL</span> <button>×</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"cloudsync_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div class=\"cloud-description\"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class=\"sync-time\"></div> <hr> <div> <button id=\"syncNow\">立即同步</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"recovery_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\" style=\"float:none\"> <div class=\"no-float\"> 3.000版本新功能：查看已删除评论！<br/> 插件将备份所有你浏览过的投稿的评论。并且在其他人请求时，共享出去。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div class=\"no-float\"> <b></b><span class=\"cache-info\"></span> <button id=\"delete_cache\">删除缓存</button> </div> <hr> <div class=\"no-float\"> <label>被删评论查询<input type=\"text\" placeholder=\"输入评论家ID...\" class=\"lookup-cache-input\" id=\"lookup_cache_input\"></label> <button id=\"lookup_cache\">查询</button> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"general_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div> <label class=\"cc-container\" data-id=\"showBanButton\">在首页的投稿右上角显示[屏蔽]图标按钮 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showMouseover\">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"autoSync\">自动云同步所有列表 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showDeletedComment\">显示投稿内被删除评论 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showUserTags\">显示评论用户标签 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> <label class=\"cc-container\" data-id=\"showBanStatusTag\">显示投稿页左侧屏蔽状态 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> </label> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"sharedRankList_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> <div style=\"float:none\"> <label class=\"cc-container\" data-id=\"useBannedUpRankList\">屏蔽排行榜上UP <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> <br> <a id=\"copy_uprank\">复制到我的列表</a> </label> </div> <div style=\"float:none\"> <label class=\"cc-container\" data-id=\"useBannedKeywordsList\">屏蔽排行榜上关键词 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> <br> <a id=\"copy_keywordrank\">复制到我的列表</a> </label> </div> <div style=\"float:none\"> <label class=\"cc-container\" data-id=\"useBannedReplierList\">屏蔽排行榜上评论家 <input type=\"checkbox\" checked=\"checked\"> <span class=\"checkmark\"></span> <br> <a id=\"copy_replierrank\">复制到我的列表</a> </label> </div> <div style=\"float:none\"> <a href=\"https://baldhumanity.top/acfun/ranking.html\" style=\"color:#00008b\">点击这里查看排行榜</a> </div> </div> </div> <div class=\"page-wrap inactive-page\" id=\"about_page\"> <a class=\"go-back\">返回</a> <div class=\"about-page-content\"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style=\"pointer-events:all\" class=\"ac-girl ac-girl-hide smooth\"> </div> </div> </div>";
 // Exports
 /* harmony default export */ const mainUI = (code);
 ;// CONCATENATED MODULE: ./dev/js/event.js
@@ -4957,15 +4958,19 @@ function checkSync() {
 }
 
 function _syncWithCloud() {
-    log_log("_syncWithCloud")
+    log_log("登陆用户名："+ JSON.stringify(unsafeWindow.user))
+
     if (typeof unsafeWindow.user === "undefined") {
 
         setTimeout(_syncWithCloud, 1000);
         return;
+    }else{
+
     }
 
-    if (
-        unsafeWindow.user.name === "用户") {
+    if (unsafeWindow.user.name === "用户") {
+
+        log_log("用户未登陆，取消同步")
         return;
     } //not logged in so we don't cloud sync
 
