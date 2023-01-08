@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.030
+// @version      3.031
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -43,6 +43,7 @@ if (typeof module !=="undefined" && module !== null) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
+
 
 
 if ( true && module !== null) {
@@ -643,7 +644,7 @@ function log_log(...args){
 
 }
 ;// CONCATENATED MODULE: ./dev/version.txt
-/* harmony default export */ const version = ("3.030");
+/* harmony default export */ const version = ("3.031");
 ;// CONCATENATED MODULE: ./dev/js/server.txt
 /* harmony default export */ const server = ("https://baldhumanity.top");
 ;// CONCATENATED MODULE: ./dev/js/util.js
@@ -1366,17 +1367,19 @@ function _banReplier(username, callback) {
     // ENd Get comment cache
 
     setUpdateTime(time, callback) {
+        //console.trace("DEBUG set time trace", time,  typeof time);
         let t = typeof time === "undefined" ? +new Date() : time;
         GM_set("UPDATE_TIME", t, () => {
+            //console.trace("DEBUG set time trace 2", time);
             empty(callback)(t);
         });
     },
 
     getUpdateTime(callback) {
-        log_log("getUpdateTime")
+        //log("getUpdateTime1")
         let time = 0;
         GM_get("UPDATE_TIME", time, (d) => {
-            //console.log("get update time", d, parseInt(d));
+            //console.log("DEBUG get local update time", d, parseInt(d), time);
 
             if (typeof d === "undefined" || d === null) d = 0;
             let d2 = parseInt(d);
@@ -2978,27 +2981,27 @@ function init(dom) {
         dom.style.top = pos.y + "px";
         dom.style.left = pos.x + "px";
     })
-    log_log("init SETTING UI")
+    log_log("加载设置页面")
     bindEvents(dom);
 
 
 
-    log_log("bindEvents done")
+    log_log("初始化事件")
     bindGeneralSettingEvents(dom);
 
     updateBannedUpList(dom);
     updateBannedReplierList(dom);
     updateBannedKeywordsList(dom);
 
-    log_log("update done")
+    log_log("载入屏蔽列表")
     initButtons(dom)
     setting_ui_version(dom)
     cacheInfo(dom)
 
-    log_log("init done")
+    log_log("初始化完成")
     initAcGirl(dom);
 
-    log_log("initAcGirl done")
+    log_log("AC娘载入成功")
 }
 
 
@@ -3426,7 +3429,7 @@ function attachBanCommentButtonOld(c, onclick) {
 window.banButtonObj = {}
 
 function createbanButton() {
-    log_log("createbanButton")
+    log_log("加载屏蔽按钮")
     let doc = window.document;
     let buttonDiv = doc.createElement("div");
     buttonDiv.classList.add("filter-button");
@@ -3434,7 +3437,6 @@ function createbanButton() {
     buttonDiv.style.visibility = "hidden";
 
 
-    log_log("  buttonDiv.addEventListener")
 
     buttonDiv.addEventListener("click", (e) => {
         let c = banButtonObj.activeData;
@@ -3469,11 +3471,11 @@ function createbanButton() {
         }
     })
 
-    log_log(banButtonObj)
+    //log(banButtonObj)
     doc.addEventListener("scroll", (e) => {
         hideBanButton();
     })
-    log_log("createbanButton done")
+    log_log("屏蔽按钮植入完成")
 
 }
 
@@ -3485,7 +3487,7 @@ function injectStyle() {
 
 
 function loadHomeUI() {
-    log_log("loadHomeUI")
+    log_log("载入主要UI")
 
     createbanButton();
     setting_ui.showSettingUI();
@@ -3493,7 +3495,7 @@ function loadHomeUI() {
 }
 
 function loadArticleUI() {
-    log_log("loadHomeUI")
+    log_log("载入投稿页UI")
     contentPageUI.loadUI();
     setting_ui.showSettingUI();
 }
@@ -3512,25 +3514,25 @@ function ui_bindEvents() {
     })
 
     js_event.on("SETTING_CHANGE_showMouseover", (val) => {
-        log_log("mouseovershow", val);
+        //log("mouseovershow", val);
         __webpack_require__.g["showMouseover"] = val;
 //force refresh
         js_event.emit("UP_BAN_UPDATE", null);
     })
-    console.log("DEBUG", ui_unsafeWindow)
-    console.log("DEBUG", ui_unsafeWindow.document)
-    log_log("visibilitychange")
+    //console.log("DEBUG", unsafeWindow)
+    //console.log("DEBUG", unsafeWindow.document)
+    //log("visibilitychange")
 
     setTimeout(() => {
 
         ui_unsafeWindow.document.addEventListener("visibilitychange", () => {
-            js_event.emit("REPLY_BAN_UPDATE", null);
-            js_event.emit("UP_BAN_UPDATE", null);
+            // Event.emit("REPLY_BAN_UPDATE", null);
+            // Event.emit("UP_BAN_UPDATE", null);
         })
     })
 
 
-    log_log("bindEvents done")
+    //log("bindEvents done")
 }
 
 function ui_init() {
@@ -3553,15 +3555,13 @@ function ui_init() {
 
     loadUI(pageType) {
 
-        log_log("Load UI 1")
+        log_log("UI初始化")
         ui_init();
-        log_log("Load UI init")
+        log_log("UI事件绑定中")
         ui_bindEvents();
-        log_log("Load UI bindEvents")
+        log_log("CSS加载中")
         injectStyle();
-
-        log_log("Load UI injectStyle")
-        log_log("pageType" + pageType)
+        log_log("页面类型：" + pageType)
         if (pageType === "HOME" || pageType === "VIDEO_HOME" || pageType === "ARTICLE_HOME") {
             loadHomeUI();
         } else if (pageType === "VIDEO" || pageType === "ARTICLE") {
@@ -4498,14 +4498,14 @@ function contentTask() {
 
 
 function taskHOME(pagetype){
-    log_log("Load HOME")
+    log_log("载入主要页面模块")
     homeTask(pagetype);
 }
 
 
 function taskCONTENT(){
 
-    log_log("Load CONTENT")
+    log_log("载入投稿页模块")
     contentTask()
 }
 
@@ -4795,7 +4795,7 @@ function synchroize_apiRequest(queryData, callback) {
 
 
 function checkDataForName(uid, name, callback) {
-    log_log("checkDataForName")
+    log_log("从服务器查找用户:"+name)
     let d = {
         uid: uid,
         name: name,
@@ -4806,7 +4806,7 @@ function checkDataForName(uid, name, callback) {
 }
 
 function syncFromServer(name, uid) {
-    log_log("syncFromServer")
+    log_log("从服务器同步中。")
     synchroize_apiRequest({
             uid: uid,
             name: name,
@@ -4814,7 +4814,7 @@ function syncFromServer(name, uid) {
         },
         (d) => {
             //console.log(d);
-            log_log("list from new Cloud", d)
+            log_log("已从服务器获得数据：", d)
             if (d.success) {
                 js_data.updateBanList(d.uplist);
                 js_data.updateReplyBanList(d.replylist);
@@ -4838,23 +4838,23 @@ function checkNewCloud() {
     js_data.getUsernameID((usernameId) => {
         let username = usernameId[0];
         let uid = usernameId[1];
-        log_log("username=" + username);
+        //log("username=" + username);
         checkDataForName(uid, username, (d) => {
 
             js_data.getUpdateTime((localtime) => {
-
-                if (d["synctime"] > 0 && localtime > d["synctime"] * 500) {
-                    // log("旧同步时间", localtime)
-                    localtime = localtime / 1000; //old cloud time is 1000 times bigger, since it uses millisecond, but new cloud uses second
-                }
+                console.log("服务器时间="+ d["synctime"] , "本地时间="+localtime);
+                // if (d["synctime"] > 0 && localtime > d["synctime"] * 500) {
+                //     // log("旧同步时间", localtime)
+                //     localtime = localtime / 1000; //old cloud time is 1000 times bigger, since it uses millisecond, but new cloud uses second
+                // }
                 //log(d, d["synctime"], localtime);
                 if (d["synctime"] > localtime) {
-
+                    //console.log("Local is old", d);
                     syncFromServer(username, uid);
                 } else if (d["synctime"] < localtime) {
                     uploadData((response) => {
 
-                        console.log("response", response)
+                        //console.log("response", response)
                         if (response.success) {
                             log_log("同步成功")
                             successNotice(response);
@@ -4881,7 +4881,7 @@ function uploadData(callback) {
             js_data.loadReplyBanList((replylist) => {
                 js_data.loadKeywords((keywords) => {
                     js_data.getAlltags((tags) => {
-                        console.log("username update = ", username)
+                        //console.log("username update = ", username)
                         let d = {
                             uid: uid,
                             name: username,
@@ -4967,7 +4967,6 @@ function checkSync() {
 }
 
 function _syncWithCloud() {
-    log_log("登陆用户名："+ JSON.stringify(unsafeWindow.user))
 
     if (typeof unsafeWindow.user === "undefined") {
 
@@ -4983,7 +4982,8 @@ function _syncWithCloud() {
         return;
     } //not logged in so we don't cloud sync
 
-    log_log("_syncWithCloud loadGeneralSetting")
+    log_log("登陆用户名："+ JSON.stringify(unsafeWindow.user))
+    log_log("检查同步设置")
     js_data.loadGeneralSetting((setting) => {
         if (setting.autoSync) {
             checkSync();
@@ -4994,7 +4994,7 @@ function _syncWithCloud() {
 
 /* harmony default export */ const synchroize = ({
     init: () => {
-        log_log("sync EVENT BINDING")
+        log_log("初始化同步模块")
         synchroize_bindEvents();
     },
     SyncWithCloud: _syncWithCloud,
@@ -5169,6 +5169,7 @@ async function _getRecentContent(uid) {
 
 
 
+
 header_default()();
 let pageType = getPageType();
 log_log(pageType)
@@ -5176,9 +5177,9 @@ log_log(pageType)
 //load UI
 ui.loadUI(pageType);
 
-log_log("executeTask")
+log_log("加载页面类型："+pageType)
 executeTask(pageType);
-log_log("synchroize")
+log_log("尝试同步。。。")
 synchroize.init();
 synchroize.SyncWithCloud();
 
@@ -5189,6 +5190,9 @@ unsafeWindow.getUDID = banana.getUDID
 
 unsafeWindow.search = commentRecovery.searchCacheByKeyword
 unsafeWindow["搜索"] = commentRecovery.searchCacheByKeyword
+
+
+unsafeWindow.debug = {data: js_data};
 
 })();
 
