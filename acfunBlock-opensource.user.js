@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.035
+// @version      3.036
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -240,7 +240,7 @@
         function header() {
             return h();
         }
-        const version = "3.035";
+        const version = "3.036";
         let logFunc = console.log;
         let errorFunc = console.error;
         let warnFunc = console.warn;
@@ -2556,7 +2556,8 @@
         };
         function VideoItem2NormalVideoContainer(node, i) {
             let a = node.querySelector("a.video-image");
-            let avId = a.getAttribute("href").substring(5);
+            let idRegex = /\d.{5,}/;
+            let avId = a.getAttribute("href").match(idRegex);
             let img = a.querySelector("img");
             let title = img.getAttribute("alt");
             let thumbnail = img.getAttribute("src");
