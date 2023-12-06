@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Acfun屏蔽计划
 // @namespace    http://tampermonkey.net/
-// @version      3.003
+// @version      3.004
 // @author       人文情怀
 // @exclude      https://www.acfun.cn/login/*
 // @exclude      http://www.acfun.cn/login/*
@@ -18,6 +18,7 @@
 // @match        https://www.acfun.cn/v/as*
 // @match        http://www.acfun.cn/v/as*
 // @connect      greasyfork.org
+// @connect      localhost
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM.getValue
@@ -27,18 +28,18 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM.xmlHttpRequest
 // @grant        unsafeWindow
-// @run-at      document-idle
+// @run-at      document-start
 // @description 帮助你屏蔽不想看的UP主
 // @license     MIT
 // ==/UserScript==
- 
+
 //  添加上面的exclude两行表示这个脚本不会在登陆页面出现
 //这只是个代码下载器，用来下载正式的代码，具体想了解代码的人可以自己去看看。
+// 开源代码： https://greasyfork.org/zh-CN/scripts/387296-acfunblock%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81
 (function(){
- 
- 
+
     let dev = false;
- 
+
     let empty = (a) => {
         return typeof a === "undefined" ? () => {
             console.log("EmptyFunction Called");
@@ -49,15 +50,15 @@
         function (key, value, callback, failcallback) {
             let p = GM.setValue(key, value);
             p.then(empty(callback), empty(failcallback));
- 
- 
+
+
         }
     : function (key, value, callback) {
         let res = GM_setValue(key, value);
         callback();
     };
- 
- 
+
+
     let GM_get = typeof GM_getValue === "undefined" ?
         function (key, value, callback) {
             let p = GM.getValue(key, value);
@@ -72,52 +73,42 @@
         let res = GM_getValue(key, value);
         callback(res);
     };
- 
+
     let xhttp = typeof GM_xmlhttpRequest !== "undefined" ? GM_xmlhttpRequest : GM.xmlHttpRequest;
- 
+
     //下载代码并运行
-    function downloadScript(callback){
- 
-        //开源地址
-        let url1 =  "https://greasyfork.org/scripts/387296-acfun%E5%B1%8F%E8%94%BD%E8%AE%A1%E5%88%92-%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81/code/Acfun%E5%B1%8F%E8%94%BD%E8%AE%A1%E5%88%92-%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81.user.js";
-        //备用开源地址
-        let url2 =  "https://github.com/baldhumanity/AcfunComplement/raw/master/acfunBlock-opensource.user.js";
+    function downloadScript(callback, i=0){
+
         //debug url
-        let url3 = "http://localhost:8080/acfunhelper.build.js?time="+(+new Date());
- 
-        let fallbackurl = dev ? url3 : url2;
- 
-        let fallback = ()=>{
-            console.log("下载失败，启用备用链接");
-            xhttp({
-                nocache:true,
-                method: "GET",
-                url:fallbackurl,
-                onload: function (response) {
-                    let text = response.responseText;
-                    callback(text);
-                },
-                onerror(evt) {
-                    callback(null);
-                }
-            });
- 
+        let debugUrl = "http://localhost:8080/acfunBlock-opensource.user.js?time="+(+new Date());
+
+        let urls = [
+            "https://greasyfork.org/scripts/387296-acfunblock%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81/code/AcfunBlock%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81.user.js", //开源地址
+            "https://github.com/baldhumanity/AcfunComplement/raw/master/acfunBlock-opensource.user.js",//备用开源地址
+        ]
+
+        if (i>=urls.length){
+            console.log("DEBUG 插件下载失败！");
+            return;
         }
+
+
         xhttp({
             nocache:true,
             method: "GET",
-            url:url1,
+            url:dev ? debugUrl : urls[i],
             onload: function (response) {
                 let text = response.responseText;
- 
                 callback(text);
             },
             onerror(evt) {
-                fallback();
+                console.log("DEBUG use fallback url.")
+                downloadScript(callback, i+1);
+
             }
         });
     }
- 
+
     function getVersion(s){
         try{
             if (typeof s === "undefined" || s==null || s==="undefined" || s==="") return 0;
@@ -129,8 +120,8 @@
             return 0;
         }
     }
- 
- 
+
+
     function Initialise(){
         //Check if script is downloaded;
         GM_get("ACFUN_BLOCK_CODE","", (s)=>{
@@ -139,7 +130,7 @@
             //如果已经有可用版本，先使用
             if (currentVersion>0 && !dev){
                    var code = s;
- 
+
                    setTimeout(()=>{
                                 eval(code);
                    })
@@ -171,8 +162,17 @@
                 })
         })
     }
-    function debug(){
+    function reset(){
          GM_set("ACFUN_BLOCK_CODE", "", ()=>{})
+    }
+
+
+
+    if (unsafeWindow){
+        unsafeWindow.reset = reset;
+    }
+    if (window){
+        window.reset = reset;
     }
     //debug();
     Initialise();

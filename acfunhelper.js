@@ -1,35 +1,3 @@
-// ==UserScript==
-// @name         AcfunBlock开源代码
-// @namespace    http://tampermonkey.net/
-// @version      3.038
-// @description  帮助你屏蔽不想看的UP主
-// @author       人文情怀
-// @match        http://www.acfun.cn/a/ac*
-// @match        http://www.acfun.cn/v/list63
-// @match        https://www.acfun.cn/a/ac*
-// @match        http://www.acfun.cn/*
-// @match        https://www.acfun.cn/*
-// @match        https://www.acfun.cn/v/list*
-// @match        http://www.acfun.cn/a/ac*
-// @match        https://www.acfun.cn/a/ac*
-// @match        http://www.acfun.cn/v/ac*
-// @match        https://www.acfun.cn/v/ac*
-// @match        https://www.acfun.cn/v/as*
-// @match        http://www.acfun.cn/v/as*
-// @connect      greasyfork.org
-// @grant        GM_getValue
-// @grant        GM_setValue
-// @grant        GM.getValue
-// @grant        GM.setValue
-// @grant        GM_deleteValue
-// @grant        GM.deleteValue
-// @grant        GM_xmlhttpRequest
-// @grant        GM.xmlHttpRequest
-// @grant        unsafeWindow
-// @run-at      document-idle
-// @license MIT
-// ==/UserScript==
-
 (() => {
     "use strict";
     var __webpack_modules__ = {
