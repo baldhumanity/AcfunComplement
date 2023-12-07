@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.040
+// @version      3.041
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -240,7 +240,7 @@
         function header() {
             return h();
         }
-        const version = "3.040";
+        const version = "3.041";
         let logFunc = console.log;
         let errorFunc = console.error;
         let warnFunc = console.warn;
@@ -350,12 +350,14 @@
                     onload: res => {
                         const parser = new DOMParser;
                         let doc = parser.parseFromString(res.responseText, "text/html");
+                        downloadCache[link] = doc;
                         callback(doc);
                     }
                 });
             }
         };
         unsafeWindow.setInterval(pageDownloader, 500);
+        let downloadCache = {};
         const util = {
             getCommentType() {
                 let c = window.document.querySelector(".mode-container");
@@ -374,6 +376,10 @@
             apiRequest: _apiRequest,
             getPage: _getPage,
             downloadPage(link, callback) {
+                if (downloadCache[link]) {
+                    callback(downloadCache[link]);
+                    return;
+                }
                 pagesToDownload.push({
                     link,
                     callback
@@ -2426,7 +2432,7 @@
                         }));
                     }
                     if (banned) {
-                        log_log("缓存后屏蔽条目：", c.title);
+                        log_log("使用缓存后屏蔽条目：", c.title);
                         _hideContent(c);
                     } else {
                         _showContent(c);
