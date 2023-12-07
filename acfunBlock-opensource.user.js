@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.038
+// @version      3.039
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -240,7 +240,7 @@
         function header() {
             return h();
         }
-        const version = "3.038";
+        const version = "3.039";
         let logFunc = console.log;
         let errorFunc = console.error;
         let warnFunc = console.warn;
@@ -338,6 +338,24 @@
                 }
             };
         }
+        let pagesToDownload = [];
+        let pageDownloader = function() {
+            if (pagesToDownload.length > 0) {
+                let data = pagesToDownload.shift();
+                let link = data.link;
+                let callback = data.callback;
+                xhttp({
+                    method: "GET",
+                    url: link,
+                    onload: res => {
+                        const parser = new DOMParser;
+                        let doc = parser.parseFromString(res.responseText, "text/html");
+                        callback(doc);
+                    }
+                });
+            }
+        };
+        setInterval(pageDownloader, 500);
         const util = {
             getCommentType() {
                 let c = window.document.querySelector(".mode-container");
@@ -356,22 +374,9 @@
             apiRequest: _apiRequest,
             getPage: _getPage,
             downloadPage(link, callback) {
-                let cache = unsafeWindow.localStorage.getItem(link);
-                if (cache !== null) {
-                    let parser = new DOMParser;
-                    let doc = parser.parseFromString(cache, "text/html");
-                    callback(doc);
-                    return;
-                }
-                xhttp({
-                    method: "GET",
-                    url: link,
-                    onload: res => {
-                        const parser = new DOMParser;
-                        let doc = parser.parseFromString(res.responseText, "text/html");
-                        unsafeWindow.localStorage.setItem(link, res.responseText);
-                        callback(doc);
-                    }
+                pagesToDownload.push({
+                    link,
+                    callback
                 });
             }
         };
@@ -2407,6 +2412,29 @@
         function preloadTest(contents, klist) {
             contents.forEach((c => {
                 let link = c.dom.querySelector("a").getAttribute("href");
+                let regex = /\/a\/ac(\d+)/;
+                let id = regex.exec(link)[1];
+                link = "https://m.acfun.cn/v?ac=" + id;
+                console.log(link);
+                let contentCache = ui_unsafeWindow.localStorage.getItem(link);
+                if (contentCache) {
+                    log_log("cache=", contentCache);
+                    let banned = false;
+                    if (klist && klist.indexOf) {
+                        klist.forEach((keyword => {
+                            if (contentCache.indexOf(keyword) >= 0) {
+                                banned = true;
+                            }
+                        }));
+                    }
+                    if (banned) {
+                        log_log("缓存后屏蔽条目：", c.title);
+                        _hideContent(c);
+                    } else {
+                        _showContent(c);
+                    }
+                    return;
+                }
                 util.downloadPage(link, (doc => {
                     let mainDiv = doc.querySelector("#main");
                     if (!mainDiv) return;
@@ -2421,6 +2449,8 @@
                     parts.forEach((p => {
                         content += p.content;
                     }));
+                    log_log("预加载了[ac" + id + "], size=" + content.length + "字节");
+                    ui_unsafeWindow.localStorage.setItem(link, content);
                     let banned = false;
                     if (klist && klist.indexOf) {
                         for (let i = 0; i < klist.length; i++) {
