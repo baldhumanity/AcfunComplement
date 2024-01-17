@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Acfun屏蔽计划
 // @namespace    http://tampermonkey.net/
-// @version      3.004
+// @version      3.005
 // @author       人文情怀
 // @exclude      https://www.acfun.cn/login/*
 // @exclude      http://www.acfun.cn/login/*
@@ -31,6 +31,8 @@
 // @run-at      document-start
 // @description 帮助你屏蔽不想看的UP主
 // @license     MIT
+// @downloadURL https://update.greasyfork.org/scripts/381476/Acfun%E5%B1%8F%E8%94%BD%E8%AE%A1%E5%88%92.user.js
+// @updateURL https://update.greasyfork.org/scripts/381476/Acfun%E5%B1%8F%E8%94%BD%E8%AE%A1%E5%88%92.meta.js
 // ==/UserScript==
 
 //  添加上面的exclude两行表示这个脚本不会在登陆页面出现
@@ -91,10 +93,13 @@
             console.log("DEBUG 插件下载失败！");
             return;
         }
-
-
+        // via Cache-Control header:
         xhttp({
             nocache:true,
+            headers:{
+              "Cache-Control": "no-cache, no-store, max-age=0",
+              "Pragma": "no-cache"
+            },
             method: "GET",
             url:dev ? debugUrl : urls[i],
             onload: function (response) {
