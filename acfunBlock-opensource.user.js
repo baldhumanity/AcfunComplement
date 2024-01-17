@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.041
+// @version      3.043
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -240,35 +240,38 @@
         function header() {
             return h();
         }
-        const version = "3.041";
+        const version = "3.043";
         let logFunc = console.log;
         let errorFunc = console.error;
         let warnFunc = console.warn;
         console.clear();
         let msgBuffer = [];
-        if (unsafeWindow && unsafeWindow.console) {
-            unsafeWindow.console.log = (...args) => {
-                msgBuffer.push({
-                    f: logFunc,
-                    args
-                });
-            };
-            unsafeWindow.console.warn = (...args) => {
-                msgBuffer.push({
-                    f: warnFunc,
-                    args
-                });
-            };
-            unsafeWindow.console.error = (...args) => {
-                msgBuffer.push({
-                    f: errorFunc,
-                    args
-                });
-            };
-            unsafeWindow.addEventListener("error", (errorEvent => {
-                logFunc(errorEvent);
-            }));
+        function init() {
+            if (unsafeWindow && unsafeWindow.console) {
+                unsafeWindow.console.log = (...args) => {
+                    msgBuffer.push({
+                        f: logFunc,
+                        args
+                    });
+                };
+                unsafeWindow.console.warn = (...args) => {
+                    msgBuffer.push({
+                        f: warnFunc,
+                        args
+                    });
+                };
+                unsafeWindow.console.error = (...args) => {
+                    msgBuffer.push({
+                        f: errorFunc,
+                        args
+                    });
+                };
+                unsafeWindow.addEventListener("error", (errorEvent => {
+                    logFunc(errorEvent);
+                }));
+            }
         }
+        setTimeout(init);
         function collector() {
             let worker = () => {
                 if (msgBuffer.length === 0) return;
@@ -304,6 +307,92 @@
                 };
             }
         }
+        class IndexedDBHelper {
+            constructor(dbName, storeName) {
+                this.dbName = dbName;
+                this.storeName = storeName;
+                this.db = null;
+            }
+            open() {
+                return new Promise(((resolve, reject) => {
+                    if (this.db) {
+                        resolve(this.db);
+                        return;
+                    }
+                    const request = indexedDB.open(this.dbName, 1);
+                    request.onupgradeneeded = event => {
+                        let db = event.target.result;
+                        db.createObjectStore(this.storeName);
+                    };
+                    request.onsuccess = event => {
+                        this.db = event.target.result;
+                        resolve(this.db);
+                    };
+                    request.onerror = event => {
+                        reject("IndexedDB error: " + event.target.errorCode);
+                    };
+                }));
+            }
+            save(key, value) {
+                return new Promise(((resolve, reject) => {
+                    this.open().then((db => {
+                        const transaction = db.transaction([ this.storeName ], "readwrite");
+                        const store = transaction.objectStore(this.storeName);
+                        const request = store.put(value, key);
+                        request.onsuccess = () => resolve();
+                        request.onerror = event => reject("Save error: " + event.target.errorCode);
+                    })).catch(reject);
+                }));
+            }
+            load(key) {
+                return new Promise(((resolve, reject) => {
+                    this.open().then((db => {
+                        const transaction = db.transaction([ this.storeName ]);
+                        const store = transaction.objectStore(this.storeName);
+                        const request = store.get(key);
+                        request.onsuccess = () => resolve(request.result);
+                        request.onerror = event => reject("Load error: " + event.target.errorCode);
+                    })).catch(reject);
+                }));
+            }
+            count() {
+                return new Promise(((resolve, reject) => {
+                    this.open().then((db => {
+                        const transaction = db.transaction([ this.storeName ]);
+                        const store = transaction.objectStore(this.storeName);
+                        const request = store.count();
+                        request.onsuccess = () => resolve(request.result);
+                        request.onerror = event => reject("Load error: " + event.target.errorCode);
+                    })).catch(reject);
+                }));
+            }
+            clearAll() {
+                return new Promise(((resolve, reject) => {
+                    this.open().then((db => {
+                        const transaction = db.transaction([ this.storeName ], "readonly");
+                        const store = transaction.objectStore(this.storeName);
+                        const countRequest = store.count();
+                        countRequest.onsuccess = () => {
+                            const count = countRequest.result;
+                            const deleteTransaction = db.transaction([ this.storeName ], "readwrite");
+                            const deleteStore = deleteTransaction.objectStore(this.storeName);
+                            const clearRequest = deleteStore.clear();
+                            clearRequest.onsuccess = () => {
+                                console.log("All data cleared from the store");
+                                resolve(count);
+                            };
+                            clearRequest.onerror = event => {
+                                reject("Error in clearing store: " + event.target.errorCode);
+                            };
+                        };
+                        countRequest.onerror = event => {
+                            reject("Error in counting store items: " + event.target.errorCode);
+                        };
+                    })).catch(reject);
+                }));
+            }
+        }
+        const dbHelper = new IndexedDBHelper("MyTestDatabase", "keyValuePairs");
         let xhttp = typeof GM_xmlhttpRequest !== "undefined" ? GM_xmlhttpRequest : GM.xmlHttpRequest;
         function _getPage(href, callback) {
             let unsafeWindow = window;
@@ -352,13 +441,17 @@
                         let doc = parser.parseFromString(res.responseText, "text/html");
                         downloadCache[link] = doc;
                         callback(doc);
+                    },
+                    onerror: e => {
+                        log_log("下载页面失败：", link);
                     }
                 });
             }
         };
-        unsafeWindow.setInterval(pageDownloader, 500);
+        unsafeWindow.setInterval(pageDownloader, 100);
         let downloadCache = {};
         const util = {
+            dbHelper,
             getCommentType() {
                 let c = window.document.querySelector(".mode-container");
                 let tag = c.querySelector(".active");
@@ -1129,7 +1222,7 @@
             }
         }
         var style = __webpack_require__(547);
-        var code = '<div id="helperUI" class="helper-wrap" style="pointer-events:none"> <div class="helper-wrap-inner"> <div style="pointer-events:all" class="helper-main c-a ui-hidden smooth"> <div class="plugin-hint" id="hide_hint">隐藏插件--\x3e</div> <div class="page-wrap"> <div class="plugin-menu-title">插件设置</div> <div class="menu-wrap"> <div class="menu-column"> <a id="bannedAuthours">Ｕ Ｐ 主</a> <a id="bannedRepliers">回 复 者</a> <a id="bannedKeywords">关 键 词</a> <a id="cloudsync">云 同 步</a> <a id="commentRecovery">评论恢复</a> </div> <div class="menu-column"> <a id="generalSetting">通用设置</a> <a id="sharedRankList">屏蔽排名</a> <a id="aboutme">关于插件</a> <a href="https://baldhumanity.top/acfun">网站主页</a> </div> </div> <div class="plugin-downloader-version">0.00</div> <div class="plugin-version">0.00</div> <div class="plugin-author">作恶者：<a href="https://message.acfun.cn/im?targetId=690324" style="color:#00f">人文情怀</a></div> </div> <div class="page-wrap inactive-page" id="ban_up_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入UP主名字..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_replier_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入评论者名字..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_keyword_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入屏蔽关键词..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">LOL</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="cloudsync_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class="sync-time"></div> <hr> <div> <button id="syncNow">立即同步</button> </div> </div> </div> <div class="page-wrap inactive-page" id="recovery_page"> <a class="go-back">返回</a> <div class="about-page-content" style="float:none"> <div class="no-float"> 3.000版本新功能：查看已删除评论！<br/> 插件将备份所有你浏览过的投稿的评论。并且在其他人请求时，共享出去。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div class="no-float"> <b></b><span class="cache-info"></span> <button id="delete_cache">删除缓存</button> </div> <hr> <div class="no-float"> <label>被删评论查询<input type="text" placeholder="输入评论家ID..." class="lookup-cache-input" id="lookup_cache_input"></label> <button id="lookup_cache">查询</button> </div> </div> </div> <div class="page-wrap inactive-page" id="general_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div> <label class="cc-container" data-id="showBanButton">在首页的投稿右上角显示[屏蔽]图标按钮 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showMouseover">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="autoSync">自动云同步所有列表 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showDeletedComment">显示投稿内被删除评论 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showUserTags">显示评论用户标签 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showBanStatusTag">显示投稿页左侧屏蔽状态 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="disableAnimation">禁止评论区动画 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> </div> </div> </div> <div class="page-wrap inactive-page" id="sharedRankList_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div style="float:none"> <label class="cc-container" data-id="useBannedUpRankList">屏蔽排行榜上UP <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_uprank">复制到我的列表</a> </label> </div> <div style="float:none"> <label class="cc-container" data-id="useBannedKeywordsList">屏蔽排行榜上关键词 <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_keywordrank">复制到我的列表</a> </label> </div> <div style="float:none"> <label class="cc-container" data-id="useBannedReplierList">屏蔽排行榜上评论家 <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_replierrank">复制到我的列表</a> </label> </div> <div style="float:none"> <a href="https://baldhumanity.top/acfun/ranking.html" style="color:#00008b">点击这里查看排行榜</a> </div> </div> </div> <div class="page-wrap inactive-page" id="about_page"> <a class="go-back">返回</a> <div class="about-page-content"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style="pointer-events:all" class="ac-girl ac-girl-hide smooth"> </div> </div> </div>';
+        var code = '<div id="helperUI" class="helper-wrap" style="pointer-events:none"> <div class="helper-wrap-inner"> <div style="pointer-events:all" class="helper-main c-a ui-hidden smooth"> <div class="plugin-hint" id="hide_hint">隐藏插件--\x3e</div> <div class="page-wrap"> <div class="plugin-menu-title">插件设置</div> <div class="menu-wrap"> <div class="menu-column"> <a id="bannedAuthours">Ｕ Ｐ 主</a> <a id="bannedRepliers">回 复 者</a> <a id="bannedKeywords">关 键 词</a> <a id="preloadSetting">预 加 载</a> <a id="commentRecovery">评论恢复</a> </div> <div class="menu-column"> <a id="cloudsync">云 同 步</a> <a id="generalSetting">通用设置</a> <a id="sharedRankList">屏蔽排名</a> <a id="aboutme">关于插件</a> <a href="https://baldhumanity.top/acfun">网站主页</a> </div> </div> <div class="plugin-downloader-version">0.00</div> <div class="plugin-version">0.00</div> <div class="plugin-author">作恶者：<a href="https://message.acfun.cn/im?targetId=690324" style="color:#00f">人文情怀</a></div> </div> <div class="page-wrap inactive-page" id="ban_up_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入UP主名字..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_replier_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入评论者名字..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_keyword_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入屏蔽关键词..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">LOL</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="cloudsync_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class="sync-time"></div> <hr> <div> <button id="syncNow">立即同步</button> </div> </div> </div> <div class="page-wrap inactive-page" id="preload_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> <b>文章区预加载。</b><br/> 插件将自动下载主页文章文章内容，检查内部文字，如果包含你屏蔽的关键词，将会在你打开文章之前在主页屏蔽文章。<br/> </div> <hr> <div> <div style="width:100%"><button id="clearPreloadCache">清除缓存</button></div> <div id="clearCacheInfo"></div> </div> </div> </div> <div class="page-wrap inactive-page" id="recovery_page"> <a class="go-back">返回</a> <div class="about-page-content" style="float:none"> <div class="no-float"> 3.000版本新功能：查看已删除评论！<br/> 插件将备份所有你浏览过的投稿的评论。并且在其他人请求时，共享出去。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div class="no-float"> <b><span class="cache-info"></span></b> <button id="delete_cache">删除缓存</button> </div> <hr> <div class="no-float"> <label>被删评论查询<input type="text" placeholder="输入评论家ID..." class="lookup-cache-input" id="lookup_cache_input"></label> <button id="lookup_cache">查询</button> </div> </div> </div> <div class="page-wrap inactive-page" id="general_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div> <label class="cc-container" data-id="showBanButton">在首页的投稿右上角显示[屏蔽]图标按钮 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showMouseover">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="autoSync">自动云同步所有列表 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showDeletedComment">显示投稿内被删除评论 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showUserTags">显示评论用户标签 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showBanStatusTag">显示投稿页左侧屏蔽状态 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="disableAnimation">禁止评论区动画 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> </div> </div> </div> <div class="page-wrap inactive-page" id="sharedRankList_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div style="float:none"> <label class="cc-container" data-id="useBannedUpRankList">屏蔽排行榜上UP <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_uprank">复制到我的列表</a> </label> </div> <div style="float:none"> <label class="cc-container" data-id="useBannedKeywordsList">屏蔽排行榜上关键词 <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_keywordrank">复制到我的列表</a> </label> </div> <div style="float:none"> <label class="cc-container" data-id="useBannedReplierList">屏蔽排行榜上评论家 <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_replierrank">复制到我的列表</a> </label> </div> <div style="float:none"> <a href="https://baldhumanity.top/acfun/ranking.html" style="color:#00008b">点击这里查看排行榜</a> </div> </div> </div> <div class="page-wrap inactive-page" id="about_page"> <a class="go-back">返回</a> <div class="about-page-content"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style="pointer-events:all" class="ac-girl ac-girl-hide smooth"> </div> </div> </div>';
         const mainUI = code;
         function _getStorage() {
             if (typeof __webpack_require__.g["eventStorage"] === "undefined") {
@@ -1626,7 +1719,6 @@
                 let delcount = newCache.deletedFloors.length;
                 let recovCount = newCache.recoveredFloors.length;
                 commentRecovery_saveCommentCache(id, newCache, (() => {
-                    log_log(newCache.lastReplyTime);
                     log_log(`投稿${id}重新缓存完成。${delcount}个被删除，${recovCount}个被恢复`);
                     callback(newCache);
                     _activeReport(newCache);
@@ -2026,6 +2118,7 @@
                 bannedAuthours: [ "#ban_up_page" ],
                 bannedRepliers: [ "#ban_replier_page" ],
                 bannedKeywords: [ "#ban_keyword_page" ],
+                preloadSetting: [ "#preload_page" ],
                 cloudsync: [ "#cloudsync_page" ],
                 commentRecovery: [ "#recovery_page" ],
                 generalSetting: [ "#general_page" ],
@@ -2092,6 +2185,16 @@
             }));
             dom.querySelector("#syncNow").addEventListener("click", (() => {
                 js_event.emit("SYNC_NOW", null);
+            }));
+            dom.querySelector("#clearPreloadCache").addEventListener("click", (() => {
+                util.dbHelper.clearAll().then((count => {
+                    document.querySelector("#clearCacheInfo").innerText = `已清除${count}个缓存页面。`;
+                }));
+            }));
+            dom.querySelector("#preloadSetting").addEventListener("click", (() => {
+                util.dbHelper.count().then((count => {
+                    document.querySelector("#clearCacheInfo").innerText = `现在已经有${count}个缓存页面了。`;
+                }));
             }));
             let cacheDelBtn = dom.querySelector("#delete_cache");
             cacheDelBtn.addEventListener("click", (() => {
@@ -2176,7 +2279,7 @@
         function cacheInfo(dom) {
             _refreshCommentCachePage(dom);
         }
-        function init(dom) {
+        function setting_ui_init(dom) {
             js_data.loadUIPosition((pos => {
                 dom.style.top = pos.y + "px";
                 dom.style.left = pos.x + "px";
@@ -2202,7 +2305,7 @@
                 let doc = window.document;
                 doc.body.insertAdjacentHTML("beforeend", mainUI);
                 let uiDom = doc.body.querySelector("#helperUI");
-                init(uiDom);
+                setting_ui_init(uiDom);
             }
         };
         var subUI_code = '<div class="sub-ui-wrap"> <div class="sub-ui-inner sub-ui-normal"> <div class="sub-ui-text"> 正 常 </div> <div id="banUp" class="sub-ui-button sub-ui-text smooth"> </div> <div id="unbanUp" class="sub-ui-button sub-ui-text remove smooth"> </div> </div> </div>';
@@ -2415,63 +2518,113 @@
                 }
             }));
         }
-        function preloadTest(contents, klist) {
+        let preloadKlistCache = [];
+        let preloadTestContentList = [];
+        let preloadTestContentListFiltered = [];
+        function addToPreLoadTestList(contents) {
+            let exists = false;
             contents.forEach((c => {
+                for (let i = 0; i < preloadTestContentList.length; i++) {
+                    let item = preloadTestContentList[i];
+                    if (c.title === item.title) {
+                        exists = true;
+                        return;
+                    }
+                }
+                for (let i = 0; i < preloadTestContentListFiltered.length; i++) {
+                    let item = preloadTestContentListFiltered[i];
+                    if (c.title === item.title) {
+                        exists = true;
+                        return;
+                    }
+                }
+                if (!exists) preloadTestContentList.push(c);
+            }));
+        }
+        function getAndSavePreloadCache(link, contentObject) {
+            util.downloadPage(link, (doc => {
+                let mainDiv = doc.querySelector("#main");
+                if (!mainDiv) return;
+                let firstScript = mainDiv.querySelector("script");
+                if (!firstScript) return;
+                let script = firstScript.innerText;
+                let regex = /window.articleInfo = (.+);/;
+                let json = regex.exec(script)[1];
+                let data = JSON.parse(json);
+                let parts = data.parts;
+                let content = "";
+                parts.forEach((p => {
+                    content += p.content;
+                }));
+                let parser = new DOMParser;
+                let d = parser.parseFromString(content, "text/html");
+                let body = d.querySelector("body");
+                let text = body.innerText;
+                util.dbHelper.save(link, text);
+                log_log("完成预加载： ", link);
+                checkPreloadBanned(contentObject, text);
+            }));
+        }
+        function checkPreloadBanned(contentObj, contentText) {
+            let banned = false;
+            let klist = preloadKlistCache;
+            if (klist && klist.indexOf) {
+                for (let i = 0; i < klist.length; i++) {
+                    let keyword = klist[i];
+                    if (contentText.indexOf(keyword) >= 0) {
+                        banned = true;
+                        break;
+                    }
+                }
+            }
+            if (banned) {
+                log_log("预加载后屏蔽条目：", contentObj.title);
+                _hideContent(contentObj);
+            } else {
+                _showContent(contentObj);
+            }
+        }
+        function preloadTestWorker() {
+            if (preloadTestContentListFiltered.length === 0) {
+                return;
+            }
+            let c = preloadTestContentListFiltered.pop();
+            let link = c.dom.querySelector("a").getAttribute("href");
+            let regex = /\/a\/ac(\d+)/;
+            let id = regex.exec(link)[1];
+            link = "https://m.acfun.cn/v?ac=" + id;
+            util.dbHelper.load(link).then((value => {
+                if (typeof value === "undefined" || value === null) {
+                    getAndSavePreloadCache(link, c);
+                } else {
+                    checkPreloadBanned(c, value);
+                }
+            }));
+        }
+        function preloadTestFilter() {
+            preloadTestContentList.forEach((c => {
                 let link = c.dom.querySelector("a").getAttribute("href");
                 let regex = /\/a\/ac(\d+)/;
                 let id = regex.exec(link)[1];
                 link = "https://m.acfun.cn/v?ac=" + id;
-                let contentCache = ui_unsafeWindow.localStorage.getItem(link);
-                if (contentCache) {
-                    let banned = false;
-                    if (klist && klist.indexOf) {
-                        klist.forEach((keyword => {
-                            if (contentCache.indexOf(keyword) >= 0) {
-                                banned = true;
-                            }
-                        }));
-                    }
-                    if (banned) {
-                        log_log("使用缓存后屏蔽条目：", c.title);
-                        _hideContent(c);
+                util.dbHelper.load(link).then((value => {
+                    if (typeof value === "undefined" || value === null) {
+                        preloadTestContentListFiltered.push(c);
                     } else {
-                        _showContent(c);
-                    }
-                    return;
-                }
-                util.downloadPage(link, (doc => {
-                    let mainDiv = doc.querySelector("#main");
-                    if (!mainDiv) return;
-                    let firstScript = mainDiv.querySelector("script");
-                    if (!firstScript) return;
-                    let script = firstScript.innerText;
-                    let regex = /window.articleInfo = (.+);/;
-                    let json = regex.exec(script)[1];
-                    let data = JSON.parse(json);
-                    let parts = data.parts;
-                    let content = "";
-                    parts.forEach((p => {
-                        content += p.content;
-                    }));
-                    ui_unsafeWindow.localStorage.setItem(link, content);
-                    let banned = false;
-                    if (klist && klist.indexOf) {
-                        for (let i = 0; i < klist.length; i++) {
-                            let keyword = klist[i];
-                            if (content.indexOf(keyword) >= 0) {
-                                banned = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (banned) {
-                        log_log("预加载后屏蔽条目：", c.title);
-                        _hideContent(c);
-                    } else {
-                        _showContent(c);
+                        checkPreloadBanned(c, value);
                     }
                 }));
             }));
+        }
+        let preloadWorker = null;
+        function preloadTest(contents, klist) {
+            if (contents.length === 0) return;
+            addToPreLoadTestList(contents);
+            preloadKlistCache = klist;
+            preloadTestFilter();
+            if (preloadWorker === null) {
+                preloadWorker = setInterval(preloadTestWorker, 300);
+            }
         }
         function refreshPageItems(contents) {
             js_data.loadBanList((blist => {
@@ -3457,7 +3610,6 @@
                 oldCloudGet((text => {
                     console.log("oldCloudGet", text);
                     if (text === null) {} else {
-                        log(text);
                         try {
                             let d = JSON.parse(text);
                             if (typeof d.version === "undefined" || parseFloat(d.version) < parseFloat(data.version)) {
