@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.043
+// @version      3.047
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -30,9 +30,604 @@
 // @license MIT
 // ==/UserScript==
 
+//3.044更新以后用到了 gif.js 所以直接引用了min版本在代码, 请看gifJob和gif_js变量
+//请注意3.044以后将会自动关注UP主账号,并且给UP主的最新文章投蕉作为支持。
+
 (() => {
     "use strict";
     var __webpack_modules__ = {
+        786: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+            __webpack_require__.d(__webpack_exports__, {
+                Z: () => __WEBPACK_DEFAULT_EXPORT__
+            });
+            var _log__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(959);
+            function AddCSS() {
+                const style = document.createElement("style");
+                document.head.appendChild(style);
+                style.sheet.insertRule(`\n        .plugin_send_btn {\n            background-color: ##f8f8f8;\n            color: #999;\n            font-size: 14px;\n            border-radius: 5px;\n            border: none;\n            line-height: 30px;\n            height: 30px;\n            display: inline-block;\n            text-align: center;\n            width: 96px;\n            margin-top: 4px !important;\n        }\n    `, style.sheet.cssRules.length);
+                style.sheet.insertRule(`\n        .plugin_send_btn:hover {\n            background-color: #e5e5e5;\n            color: grey;\n        }\n    `, style.sheet.cssRules.length);
+            }
+            function gifJob() {
+                const workerScript = `!function(t){function e(r){if(i[r])return i[r].exports;var s=i[r]={exports:{},id:r,loaded:!1};return t[r].call(s.exports,s,s.exports,e),s.loaded=!0,s.exports}var i={};return e.m=t,e.c=i,e.p="",e(0)}([function(t,e,i){var r,s;r=i(1),s=function(t){var e,i,s,o;return e=new r(t.width,t.height),0===t.index?e.writeHeader():e.firstFrame=!1,e.setTransparent(t.transparent),e.setRepeat(t.repeat),e.setDelay(t.delay),e.setQuality(t.quality),e.setDither(t.dither),e.setGlobalPalette(t.globalPalette),e.addFrame(t.data),t.last&&e.finish(),t.globalPalette===!0&&(t.globalPalette=e.getGlobalPalette()),s=e.stream(),t.data=s.pages,t.cursor=s.cursor,t.pageSize=s.constructor.pageSize,t.canTransfer?(o=function(){var e,r,s,o;for(s=t.data,o=[],e=0,r=s.length;e<r;e++)i=s[e],o.push(i.buffer);return o}(),self.postMessage(t,o)):self.postMessage(t)},self.onmessage=function(t){return s(t.data)}},function(t,e,i){function r(){this.page=-1,this.pages=[],this.newPage()}function s(t,e){this.width=~~t,this.height=~~e,this.transparent=null,this.transIndex=0,this.repeat=-1,this.delay=0,this.image=null,this.pixels=null,this.indexedPixels=null,this.colorDepth=null,this.colorTab=null,this.neuQuant=null,this.usedEntry=new Array,this.palSize=7,this.dispose=-1,this.firstFrame=!0,this.sample=10,this.dither=!1,this.globalPalette=!1,this.out=new r}var o=i(2),n=i(3);r.pageSize=4096,r.charMap={};for(var a=0;a<256;a++)r.charMap[a]=String.fromCharCode(a);r.prototype.newPage=function(){this.pages[++this.page]=new Uint8Array(r.pageSize),this.cursor=0},r.prototype.getData=function(){for(var t="",e=0;e<this.pages.length;e++)for(var i=0;i<r.pageSize;i++)t+=r.charMap[this.pages[e][i]];return t},r.prototype.writeByte=function(t){this.cursor>=r.pageSize&&this.newPage(),this.pages[this.page][this.cursor++]=t},r.prototype.writeUTFBytes=function(t){for(var e=t.length,i=0;i<e;i++)this.writeByte(t.charCodeAt(i))},r.prototype.writeBytes=function(t,e,i){for(var r=i||t.length,s=e||0;s<r;s++)this.writeByte(t[s])},s.prototype.setDelay=function(t){this.delay=Math.round(t/10)},s.prototype.setFrameRate=function(t){this.delay=Math.round(100/t)},s.prototype.setDispose=function(t){t>=0&&(this.dispose=t)},s.prototype.setRepeat=function(t){this.repeat=t},s.prototype.setTransparent=function(t){this.transparent=t},s.prototype.addFrame=function(t){this.image=t,this.colorTab=this.globalPalette&&this.globalPalette.slice?this.globalPalette:null,this.getImagePixels(),this.analyzePixels(),this.globalPalette===!0&&(this.globalPalette=this.colorTab),this.firstFrame&&(this.writeLSD(),this.writePalette(),this.repeat>=0&&this.writeNetscapeExt()),this.writeGraphicCtrlExt(),this.writeImageDesc(),this.firstFrame||this.globalPalette||this.writePalette(),this.writePixels(),this.firstFrame=!1},s.prototype.finish=function(){this.out.writeByte(59)},s.prototype.setQuality=function(t){t<1&&(t=1),this.sample=t},s.prototype.setDither=function(t){t===!0&&(t="FloydSteinberg"),this.dither=t},s.prototype.setGlobalPalette=function(t){this.globalPalette=t},s.prototype.getGlobalPalette=function(){return this.globalPalette&&this.globalPalette.slice&&this.globalPalette.slice(0)||this.globalPalette},s.prototype.writeHeader=function(){this.out.writeUTFBytes("GIF89a")},s.prototype.analyzePixels=function(){this.colorTab||(this.neuQuant=new o(this.pixels,this.sample),this.neuQuant.buildColormap(),this.colorTab=this.neuQuant.getColormap()),this.dither?this.ditherPixels(this.dither.replace("-serpentine",""),null!==this.dither.match(/-serpentine/)):this.indexPixels(),this.pixels=null,this.colorDepth=8,this.palSize=7,null!==this.transparent&&(this.transIndex=this.findClosest(this.transparent,!0))},s.prototype.indexPixels=function(){var t=this.pixels.length/3;this.indexedPixels=new Uint8Array(t);for(var e=0,i=0;i<t;i++){var r=this.findClosestRGB(255&this.pixels[e++],255&this.pixels[e++],255&this.pixels[e++]);this.usedEntry[r]=!0,this.indexedPixels[i]=r}},s.prototype.ditherPixels=function(t,e){var i={FalseFloydSteinberg:[[3/8,1,0],[3/8,0,1],[.25,1,1]],FloydSteinberg:[[7/16,1,0],[3/16,-1,1],[5/16,0,1],[1/16,1,1]],Stucki:[[8/42,1,0],[4/42,2,0],[2/42,-2,1],[4/42,-1,1],[8/42,0,1],[4/42,1,1],[2/42,2,1],[1/42,-2,2],[2/42,-1,2],[4/42,0,2],[2/42,1,2],[1/42,2,2]],Atkinson:[[1/8,1,0],[1/8,2,0],[1/8,-1,1],[1/8,0,1],[1/8,1,1],[1/8,0,2]]};if(!t||!i[t])throw"Unknown dithering kernel: "+t;var r=i[t],s=0,o=this.height,n=this.width,a=this.pixels,h=e?-1:1;this.indexedPixels=new Uint8Array(this.pixels.length/3);for(var l=0;l<o;l++){e&&(h*=-1);for(var u=1==h?0:n-1,p=1==h?n:0;u!==p;u+=h){s=l*n+u;var f=3*s,c=a[f],y=a[f+1],w=a[f+2];f=this.findClosestRGB(c,y,w),this.usedEntry[f]=!0,this.indexedPixels[s]=f,f*=3;for(var d=this.colorTab[f],g=this.colorTab[f+1],x=this.colorTab[f+2],b=c-d,v=y-g,P=w-x,m=1==h?0:r.length-1,B=1==h?r.length:0;m!==B;m+=h){var S=r[m][1],T=r[m][2];if(S+u>=0&&S+u<n&&T+l>=0&&T+l<o){var M=r[m][0];f=s+S+T*n,f*=3,a[f]=Math.max(0,Math.min(255,a[f]+b*M)),a[f+1]=Math.max(0,Math.min(255,a[f+1]+v*M)),a[f+2]=Math.max(0,Math.min(255,a[f+2]+P*M))}}}}},s.prototype.findClosest=function(t,e){return this.findClosestRGB((16711680&t)>>16,(65280&t)>>8,255&t,e)},s.prototype.findClosestRGB=function(t,e,i,r){if(null===this.colorTab)return-1;if(this.neuQuant&&!r)return this.neuQuant.lookupRGB(t,e,i);for(var s=0,o=16777216,n=this.colorTab.length,a=0,h=0;a<n;h++){var l=t-(255&this.colorTab[a++]),u=e-(255&this.colorTab[a++]),p=i-(255&this.colorTab[a++]),f=l*l+u*u+p*p;(!r||this.usedEntry[h])&&f<o&&(o=f,s=h)}return s},s.prototype.getImagePixels=function(){var t=this.width,e=this.height;this.pixels=new Uint8Array(t*e*3);for(var i=this.image,r=0,s=0,o=0;o<e;o++)for(var n=0;n<t;n++)this.pixels[s++]=i[r++],this.pixels[s++]=i[r++],this.pixels[s++]=i[r++],r++},s.prototype.writeGraphicCtrlExt=function(){this.out.writeByte(33),this.out.writeByte(249),this.out.writeByte(4);var t,e;null===this.transparent?(t=0,e=0):(t=1,e=2),this.dispose>=0&&(e=7&dispose),e<<=2,this.out.writeByte(0|e|0|t),this.writeShort(this.delay),this.out.writeByte(this.transIndex),this.out.writeByte(0)},s.prototype.writeImageDesc=function(){this.out.writeByte(44),this.writeShort(0),this.writeShort(0),this.writeShort(this.width),this.writeShort(this.height),this.firstFrame||this.globalPalette?this.out.writeByte(0):this.out.writeByte(128|this.palSize)},s.prototype.writeLSD=function(){this.writeShort(this.width),this.writeShort(this.height),this.out.writeByte(240|this.palSize),this.out.writeByte(0),this.out.writeByte(0)},s.prototype.writeNetscapeExt=function(){this.out.writeByte(33),this.out.writeByte(255),this.out.writeByte(11),this.out.writeUTFBytes("NETSCAPE2.0"),this.out.writeByte(3),this.out.writeByte(1),this.writeShort(this.repeat),this.out.writeByte(0)},s.prototype.writePalette=function(){this.out.writeBytes(this.colorTab);for(var t=768-this.colorTab.length,e=0;e<t;e++)this.out.writeByte(0)},s.prototype.writeShort=function(t){this.out.writeByte(255&t),this.out.writeByte(t>>8&255)},s.prototype.writePixels=function(){var t=new n(this.width,this.height,this.indexedPixels,this.colorDepth);t.encode(this.out)},s.prototype.stream=function(){return this.out},t.exports=s},function(t,e){function i(t,e){function i(){z=[],E=new Int32Array(256),R=new Int32Array(s),U=new Int32Array(s),Q=new Int32Array(s>>3);var t,e;for(t=0;t<s;t++)e=(t<<n+8)/s,z[t]=new Float64Array([e,e,e,0]),U[t]=h/s,R[t]=0}function c(){for(var t=0;t<s;t++)z[t][0]>>=n,z[t][1]>>=n,z[t][2]>>=n,z[t][3]=t}function w(t,e,i,r,s){z[e][0]-=t*(z[e][0]-i)/b,z[e][1]-=t*(z[e][1]-r)/b,z[e][2]-=t*(z[e][2]-s)/b}function x(t,e,i,r,o){for(var n,a,h=Math.abs(e-t),l=Math.min(e+t,s),u=e+1,p=e-1,f=1;u<l||p>h;)a=Q[f++],u<l&&(n=z[u++],n[0]-=a*(n[0]-i)/B,n[1]-=a*(n[1]-r)/B,n[2]-=a*(n[2]-o)/B),p>h&&(n=z[p--],n[0]-=a*(n[0]-i)/B,n[1]-=a*(n[1]-r)/B,n[2]-=a*(n[2]-o)/B)}function v(t,e,i){t=0|t,e=0|e,i=0|i;var r,o,h,c,y,w=~(1<<31),d=w,g=-1,x=g;for(r=0;r<s;r++)o=z[r],h=Math.abs((0|o[0])-t)+Math.abs((0|o[1])-e)+Math.abs((0|o[2])-i)|0,h<w&&(w=h,g=r),c=h-((0|R[r])>>a-n),c<d&&(d=c,x=r),y=U[r]>>u,U[r]-=y,R[r]+=y<<l;return U[g]+=p,R[g]-=f,x}function m(){var t,e,i,r,n,a,h=0,l=0;for(t=0;t<s;t++){for(i=z[t],n=t,a=i[1],e=t+1;e<s;e++)r=z[e],r[1]<a&&(n=e,a=r[1]);if(r=z[n],t!=n&&(e=r[0],r[0]=i[0],i[0]=e,e=r[1],r[1]=i[1],i[1]=e,e=r[2],r[2]=i[2],i[2]=e,e=r[3],r[3]=i[3],i[3]=e),a!=h){for(E[h]=l+t>>1,e=h+1;e<a;e++)E[e]=t;h=a,l=t}}for(E[h]=l+o>>1,e=h+1;e<256;e++)E[e]=o}function C(t,e,i){t=0|t,e=0|e,i=0|i;for(var r,o,n,a=1e3,h=-1,l=0|E[e],u=l-1;l<s||u>=0;)l<s&&(o=z[l],n=(0|o[1])-e,n>=a?l=s:(l++,n<0&&(n=-n),r=(0|o[0])-t,r<0&&(r=-r),n+=r,n<a&&(r=(0|o[2])-i,r<0&&(r=-r),n+=r,n<a&&(a=n,h=0|o[3])))),u>=0&&(o=z[u],n=e-(0|o[1]),n>=a?u=-1:(u--,n<0&&(n=-n),r=(0|o[0])-t,r<0&&(r=-r),n+=r,n<a&&(r=(0|o[2])-i,r<0&&(r=-r),n+=r,n<a&&(a=n,h=0|o[3]))));return h}function I(){var i,s=t.length,o=30+(e-1)/3,a=s/(3*e),h=~~(a/r),l=b,u=d,p=u>>y;for(p<=1&&(p=0),i=0;i<p;i++)Q[i]=l*((p*p-i*i)*P/(p*p));var f;s<A?(e=1,f=3):f=s%S!==0?3*S:s%T!==0?3*T:s%M!==0?3*M:3*F;var c,m,B,C,I=0;for(i=0;i<a;)if(c=(255&t[I])<<n,m=(255&t[I+1])<<n,B=(255&t[I+2])<<n,C=v(c,m,B),w(l,C,c,m,B),0!==p&&x(p,C,c,m,B),I+=f,I>=s&&(I-=s),i++,0===h&&(h=1),i%h===0)for(l-=l/o,u-=u/g,p=u>>y,p<=1&&(p=0),C=0;C<p;C++)Q[C]=l*((p*p-C*C)*P/(p*p))}function D(){i(),I(),c(),m()}function G(){for(var t=[],e=[],i=0;i<s;i++)e[z[i][3]]=i;for(var r=0,o=0;o<s;o++){var n=e[o];t[r++]=z[n][0],t[r++]=z[n][1],t[r++]=z[n][2]}return t}var z,E,R,U,Q;this.buildColormap=D,this.getColormap=G,this.lookupRGB=C}var r=100,s=256,o=s-1,n=4,a=16,h=1<<a,l=10,u=10,p=h>>u,f=h<<l-u,c=s>>3,y=6,w=1<<y,d=c*w,g=30,x=10,b=1<<x,v=8,P=1<<v,m=x+v,B=1<<m,S=499,T=491,M=487,F=503,A=3*F;t.exports=i},function(t,e){function i(t,e,i,a){function h(t,e){S[x++]=t,x>=254&&c(e)}function l(t){u(o),A=P+2,C=!0,d(P,t)}function u(t){for(var e=0;e<t;++e)T[e]=-1}function p(t,e){var i,n,a,h,p,f,c;for(v=t,C=!1,n_bits=v,b=y(n_bits),P=1<<t-1,m=P+1,A=P+2,x=0,h=w(),c=0,i=o;i<65536;i*=2)++c;c=8-c,f=o,u(f),d(P,e);t:for(;(n=w())!=r;)if(i=(n<<s)+h,a=n<<c^h,T[a]!==i){if(T[a]>=0){p=f-a,0===a&&(p=1);do if((a-=p)<0&&(a+=f),T[a]===i){h=M[a];continue t}while(T[a]>=0)}d(h,e),h=n,A<1<<s?(M[a]=A++,T[a]=i):l(e)}else h=M[a];d(h,e),d(m,e)}function f(i){i.writeByte(B),remaining=t*e,curPixel=0,p(B+1,i),i.writeByte(0)}function c(t){x>0&&(t.writeByte(x),t.writeBytes(S,0,x),x=0)}function y(t){return(1<<t)-1}function w(){if(0===remaining)return r;--remaining;var t=i[curPixel++];return 255&t}function d(t,e){for(g&=n[F],F>0?g|=t<<F:g=t,F+=n_bits;F>=8;)h(255&g,e),g>>=8,F-=8;if((A>b||C)&&(C?(b=y(n_bits=v),C=!1):(++n_bits,b=n_bits==s?1<<s:y(n_bits))),t==m){for(;F>0;)h(255&g,e),g>>=8,F-=8;c(e)}}var g,x,b,v,P,m,B=Math.max(2,a),S=new Uint8Array(256),T=new Int32Array(o),M=new Int32Array(o),F=0,A=0,C=!1;this.encode=f}var r=-1,s=12,o=5003,n=[0,1,3,7,15,31,63,127,255,511,1023,2047,4095,8191,16383,32767,65535];t.exports=i}]);`;
+                const blob = new Blob([ workerScript ], {
+                    type: "application/javascript"
+                });
+                const workerUrl = URL.createObjectURL(blob);
+                window.workerUrl = workerUrl;
+                const gif_js = `(function (f) { if (typeof exports === "object" && typeof module !== "undefined") { module.exports = f() } else if (typeof define === "function" && define.amd) { define([], f) } else { var g; if (typeof window !== "undefined") { g = window } else if (typeof global !== "undefined") { g = global } else if (typeof self !== "undefined") { g = self } else { g = this } g.GIF = f() } })(function () { var define, module, exports; return function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { var a = typeof require == "function" && require; if (!u && a) return a(o, !0); if (i) return i(o, !0); var f = new Error("Cannot find module '" + o + "'"); throw f.code = "MODULE_NOT_FOUND", f } var l = n[o] = { exports: {} }; t[o][0].call(l.exports, function (e) { var n = t[o][1][e]; return s(n ? n : e) }, l, l.exports, e, t, n, r) } return n[o].exports } var i = typeof require == "function" && require; for (var o = 0; o < r.length; o++)s(r[o]); return s }({ 1: [function (require, module, exports) { function EventEmitter() { this._events = this._events || {}; this._maxListeners = this._maxListeners || undefined } module.exports = EventEmitter; EventEmitter.EventEmitter = EventEmitter; EventEmitter.prototype._events = undefined; EventEmitter.prototype._maxListeners = undefined; EventEmitter.defaultMaxListeners = 10; EventEmitter.prototype.setMaxListeners = function (n) { if (!isNumber(n) || n < 0 || isNaN(n)) throw TypeError("n must be a positive number"); this._maxListeners = n; return this }; EventEmitter.prototype.emit = function (type) { var er, handler, len, args, i, listeners; if (!this._events) this._events = {}; if (type === "error") { if (!this._events.error || isObject(this._events.error) && !this._events.error.length) { er = arguments[1]; if (er instanceof Error) { throw er } else { var err = new Error('Uncaught, unspecified "error" event. (' + er + ")"); err.context = er; throw err } } } handler = this._events[type]; if (isUndefined(handler)) return false; if (isFunction(handler)) { switch (arguments.length) { case 1: handler.call(this); break; case 2: handler.call(this, arguments[1]); break; case 3: handler.call(this, arguments[1], arguments[2]); break; default: args = Array.prototype.slice.call(arguments, 1); handler.apply(this, args) } } else if (isObject(handler)) { args = Array.prototype.slice.call(arguments, 1); listeners = handler.slice(); len = listeners.length; for (i = 0; i < len; i++)listeners[i].apply(this, args) } return true }; EventEmitter.prototype.addListener = function (type, listener) { var m; if (!isFunction(listener)) throw TypeError("listener must be a function"); if (!this._events) this._events = {}; if (this._events.newListener) this.emit("newListener", type, isFunction(listener.listener) ? listener.listener : listener); if (!this._events[type]) this._events[type] = listener; else if (isObject(this._events[type])) this._events[type].push(listener); else this._events[type] = [this._events[type], listener]; if (isObject(this._events[type]) && !this._events[type].warned) { if (!isUndefined(this._maxListeners)) { m = this._maxListeners } else { m = EventEmitter.defaultMaxListeners } if (m && m > 0 && this._events[type].length > m) { this._events[type].warned = true; console.error("(node) warning: possible EventEmitter memory " + "leak detected. %d listeners added. " + "Use emitter.setMaxListeners() to increase limit.", this._events[type].length); if (typeof console.trace === "function") { console.trace() } } } return this }; EventEmitter.prototype.on = EventEmitter.prototype.addListener; EventEmitter.prototype.once = function (type, listener) { if (!isFunction(listener)) throw TypeError("listener must be a function"); var fired = false; function g() { this.removeListener(type, g); if (!fired) { fired = true; listener.apply(this, arguments) } } g.listener = listener; this.on(type, g); return this }; EventEmitter.prototype.removeListener = function (type, listener) { var list, position, length, i; if (!isFunction(listener)) throw TypeError("listener must be a function"); if (!this._events || !this._events[type]) return this; list = this._events[type]; length = list.length; position = -1; if (list === listener || isFunction(list.listener) && list.listener === listener) { delete this._events[type]; if (this._events.removeListener) this.emit("removeListener", type, listener) } else if (isObject(list)) { for (i = length; i-- > 0;) { if (list[i] === listener || list[i].listener && list[i].listener === listener) { position = i; break } } if (position < 0) return this; if (list.length === 1) { list.length = 0; delete this._events[type] } else { list.splice(position, 1) } if (this._events.removeListener) this.emit("removeListener", type, listener) } return this }; EventEmitter.prototype.removeAllListeners = function (type) { var key, listeners; if (!this._events) return this; if (!this._events.removeListener) { if (arguments.length === 0) this._events = {}; else if (this._events[type]) delete this._events[type]; return this } if (arguments.length === 0) { for (key in this._events) { if (key === "removeListener") continue; this.removeAllListeners(key) } this.removeAllListeners("removeListener"); this._events = {}; return this } listeners = this._events[type]; if (isFunction(listeners)) { this.removeListener(type, listeners) } else if (listeners) { while (listeners.length) this.removeListener(type, listeners[listeners.length - 1]) } delete this._events[type]; return this }; EventEmitter.prototype.listeners = function (type) { var ret; if (!this._events || !this._events[type]) ret = []; else if (isFunction(this._events[type])) ret = [this._events[type]]; else ret = this._events[type].slice(); return ret }; EventEmitter.prototype.listenerCount = function (type) { if (this._events) { var evlistener = this._events[type]; if (isFunction(evlistener)) return 1; else if (evlistener) return evlistener.length } return 0 }; EventEmitter.listenerCount = function (emitter, type) { return emitter.listenerCount(type) }; function isFunction(arg) { return typeof arg === "function" } function isNumber(arg) { return typeof arg === "number" } function isObject(arg) { return typeof arg === "object" && arg !== null } function isUndefined(arg) { return arg === void 0 } }, {}], 2: [function (require, module, exports) { var UA, browser, mode, platform, ua; ua = navigator.userAgent.toLowerCase(); platform = navigator.platform.toLowerCase(); UA = ua.match(/(opera|ie|firefox|chrome|version)[\\s\\/:]([\\w\\d\\.]+)?.*?(safari|version[\\s\\/:]([\\w\\d\\.]+)|$)/) || [null, "unknown", 0]; mode = UA[1] === "ie" && document.documentMode; browser = { name: UA[1] === "version" ? UA[3] : UA[1], version: mode || parseFloat(UA[1] === "opera" && UA[4] ? UA[4] : UA[2]), platform: { name: ua.match(/ip(?:ad|od|hone)/) ? "ios" : (ua.match(/(?:webos|android)/) || platform.match(/mac|win|linux/) || ["other"])[0] } }; browser[browser.name] = true; browser[browser.name + parseInt(browser.version, 10)] = true; browser.platform[browser.platform.name] = true; module.exports = browser }, {}], 3: [function (require, module, exports) { var EventEmitter, GIF, browser, extend = function (child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key] } function ctor() { this.constructor = child } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child }, hasProp = {}.hasOwnProperty, indexOf = [].indexOf || function (item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i } return -1 }, slice = [].slice; EventEmitter = require("events").EventEmitter; browser = require("./browser.coffee"); GIF = function (superClass) { var defaults, frameDefaults; extend(GIF, superClass); defaults = { workerScript: workerUrl, workers: 2, repeat: 0, background: "#fff", quality: 10, width: null, height: null, transparent: null, debug: false, dither: false }; frameDefaults = { delay: 500, copy: false }; function GIF(options) { var base, key, value; this.running = false; this.options = {}; this.frames = []; this.freeWorkers = []; this.activeWorkers = []; this.setOptions(options); for (key in defaults) { value = defaults[key]; if ((base = this.options)[key] == null) { base[key] = value } } } GIF.prototype.setOption = function (key, value) { this.options[key] = value; if (this._canvas != null && (key === "width" || key === "height")) { return this._canvas[key] = value } }; GIF.prototype.setOptions = function (options) { var key, results, value; results = []; for (key in options) { if (!hasProp.call(options, key)) continue; value = options[key]; results.push(this.setOption(key, value)) } return results }; GIF.prototype.addFrame = function (image, options) { var frame, key; if (options == null) { options = {} } frame = {}; frame.transparent = this.options.transparent; for (key in frameDefaults) { frame[key] = options[key] || frameDefaults[key] } if (this.options.width == null) { this.setOption("width", image.width) } if (this.options.height == null) { this.setOption("height", image.height) } if (typeof ImageData !== "undefined" && ImageData !== null && image instanceof ImageData) { frame.data = image.data } else if (typeof CanvasRenderingContext2D !== "undefined" && CanvasRenderingContext2D !== null && image instanceof CanvasRenderingContext2D || typeof WebGLRenderingContext !== "undefined" && WebGLRenderingContext !== null && image instanceof WebGLRenderingContext) { if (options.copy) { frame.data = this.getContextData(image) } else { frame.context = image } } else if (image.childNodes != null) { if (options.copy) { frame.data = this.getImageData(image) } else { frame.image = image } } else { throw new Error("Invalid image") } return this.frames.push(frame) }; GIF.prototype.render = function () { var i, j, numWorkers, ref; if (this.running) { throw new Error("Already running") } if (this.options.width == null || this.options.height == null) { throw new Error("Width and height must be set prior to rendering") } this.running = true; this.nextFrame = 0; this.finishedFrames = 0; this.imageParts = function () { var j, ref, results; results = []; for (i = j = 0, ref = this.frames.length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) { results.push(null) } return results }.call(this); numWorkers = this.spawnWorkers(); if (this.options.globalPalette === true) { this.renderNextFrame() } else { for (i = j = 0, ref = numWorkers; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) { this.renderNextFrame() } } this.emit("start"); return this.emit("progress", 0) }; GIF.prototype.abort = function () { var worker; while (true) { worker = this.activeWorkers.shift(); if (worker == null) { break } this.log("killing active worker"); worker.terminate() } this.running = false; return this.emit("abort") }; GIF.prototype.spawnWorkers = function () { var j, numWorkers, ref, results; numWorkers = Math.min(this.options.workers, this.frames.length); (function () { results = []; for (var j = ref = this.freeWorkers.length; ref <= numWorkers ? j < numWorkers : j > numWorkers; ref <= numWorkers ? j++ : j--) { results.push(j) } return results }).apply(this).forEach(function (_this) { return function (i) { var worker; _this.log("spawning worker " + i); worker = new Worker(_this.options.workerScript); worker.onmessage = function (event) { _this.activeWorkers.splice(_this.activeWorkers.indexOf(worker), 1); _this.freeWorkers.push(worker); return _this.frameFinished(event.data) }; return _this.freeWorkers.push(worker) } }(this)); return numWorkers }; GIF.prototype.frameFinished = function (frame) { var i, j, ref; this.log("frame " + frame.index + " finished - " + this.activeWorkers.length + " active"); this.finishedFrames++; this.emit("progress", this.finishedFrames / this.frames.length); this.imageParts[frame.index] = frame; if (this.options.globalPalette === true) { this.options.globalPalette = frame.globalPalette; this.log("global palette analyzed"); if (this.frames.length > 2) { for (i = j = 1, ref = this.freeWorkers.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) { this.renderNextFrame() } } } if (indexOf.call(this.imageParts, null) >= 0) { return this.renderNextFrame() } else { return this.finishRendering() } }; GIF.prototype.finishRendering = function () { var data, frame, i, image, j, k, l, len, len1, len2, len3, offset, page, ref, ref1, ref2; len = 0; ref = this.imageParts; for (j = 0, len1 = ref.length; j < len1; j++) { frame = ref[j]; len += (frame.data.length - 1) * frame.pageSize + frame.cursor } len += frame.pageSize - frame.cursor; this.log("rendering finished - filesize " + Math.round(len / 1e3) + "kb"); data = new Uint8Array(len); offset = 0; ref1 = this.imageParts; for (k = 0, len2 = ref1.length; k < len2; k++) { frame = ref1[k]; ref2 = frame.data; for (i = l = 0, len3 = ref2.length; l < len3; i = ++l) { page = ref2[i]; data.set(page, offset); if (i === frame.data.length - 1) { offset += frame.cursor } else { offset += frame.pageSize } } } image = new Blob([data], { type: "image/gif" }); return this.emit("finished", image, data) }; GIF.prototype.renderNextFrame = function () { var frame, task, worker; if (this.freeWorkers.length === 0) { throw new Error("No free workers") } if (this.nextFrame >= this.frames.length) { return } frame = this.frames[this.nextFrame++]; worker = this.freeWorkers.shift(); task = this.getTask(frame); this.log("starting frame " + (task.index + 1) + " of " + this.frames.length); this.activeWorkers.push(worker); return worker.postMessage(task) }; GIF.prototype.getContextData = function (ctx) { return ctx.getImageData(0, 0, this.options.width, this.options.height).data }; GIF.prototype.getImageData = function (image) { var ctx; if (this._canvas == null) { this._canvas = document.createElement("canvas"); this._canvas.width = this.options.width; this._canvas.height = this.options.height } ctx = this._canvas.getContext("2d"); ctx.setFill = this.options.background; ctx.fillRect(0, 0, this.options.width, this.options.height); ctx.drawImage(image, 0, 0); return this.getContextData(ctx) }; GIF.prototype.getTask = function (frame) { var index, task; index = this.frames.indexOf(frame); task = { index: index, last: index === this.frames.length - 1, delay: frame.delay, transparent: frame.transparent, width: this.options.width, height: this.options.height, quality: this.options.quality, dither: this.options.dither, globalPalette: this.options.globalPalette, repeat: this.options.repeat, canTransfer: browser.name === "chrome" }; if (frame.data != null) { task.data = frame.data } else if (frame.context != null) { task.data = this.getContextData(frame.context) } else if (frame.image != null) { task.data = this.getImageData(frame.image) } else { throw new Error("Invalid frame") } return task }; GIF.prototype.log = function () { var args; args = 1 <= arguments.length ? slice.call(arguments, 0) : []; if (!this.options.debug) { return } return console.log.apply(console, args) }; return GIF }(EventEmitter); module.exports = GIF }, { "./browser.coffee": 2, events: 1 }] }, {}, [3])(3) });`;
+                eval(gif_js);
+            }
+            function getText() {
+                let doc = unsafeWindow.document;
+                let editor = doc.querySelector(".edui-body-container");
+                return editor.innerText;
+            }
+            function drawStripesVetical(canvas, canvas_inverted, stripeWidth, stripeColor, offset) {
+                let ctx = canvas.getContext("2d");
+                let ctx_inverted = canvas_inverted.getContext("2d");
+                ctx.imageSmoothingEnabled = false;
+                ctx.mozImageSmoothingEnabled = false;
+                ctx.webkitImageSmoothingEnabled = false;
+                ctx.msImageSmoothingEnabled = false;
+                let width = canvas.width;
+                let height = canvas.height;
+                ctx.fillStyle = stripeColor;
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                while (offset < width) {
+                    let data = ctx_inverted.getImageData(offset, 0, stripeWidth, height);
+                    ctx.putImageData(data, offset, 0);
+                    offset += stripeWidth * 2;
+                }
+            }
+            function drawStripeshorizontal(canvas, canvas_inverted, stripeWidth, stripeColor, offset) {
+                let ctx = canvas.getContext("2d");
+                let ctx_inverted = canvas_inverted.getContext("2d");
+                ctx.imageSmoothingEnabled = false;
+                ctx.mozImageSmoothingEnabled = false;
+                ctx.webkitImageSmoothingEnabled = false;
+                ctx.msImageSmoothingEnabled = false;
+                let width = canvas.width;
+                let height = canvas.height;
+                ctx.fillStyle = stripeColor;
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                while (offset < height) {
+                    let invert_data = ctx_inverted.getImageData(0, offset, width, stripeWidth);
+                    ctx.putImageData(invert_data, 0, offset);
+                    offset += stripeWidth * 2;
+                }
+            }
+            function drawStripesVetical1(canvas, stripeWidth, stripeColor, offset) {
+                let ctx = canvas.getContext("2d");
+                ctx.imageSmoothingEnabled = false;
+                ctx.mozImageSmoothingEnabled = false;
+                ctx.webkitImageSmoothingEnabled = false;
+                ctx.msImageSmoothingEnabled = false;
+                let width = canvas.width;
+                let height = canvas.height;
+                ctx.fillStyle = stripeColor;
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                while (offset < width) {
+                    ctx.fillRect(offset, 0, stripeWidth, height);
+                    offset += stripeWidth * 2;
+                }
+            }
+            function drawStripeshorizontal1(canvas, stripeWidth, stripeColor, offset) {
+                let ctx = canvas.getContext("2d");
+                ctx.imageSmoothingEnabled = false;
+                ctx.mozImageSmoothingEnabled = false;
+                ctx.webkitImageSmoothingEnabled = false;
+                ctx.msImageSmoothingEnabled = false;
+                let width = canvas.width;
+                let height = canvas.height;
+                ctx.fillStyle = stripeColor;
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                while (offset < height) {
+                    ctx.fillRect(0, offset, width, stripeWidth);
+                    offset += stripeWidth * 2;
+                }
+            }
+            function createCanvas(text) {
+                let padding = 1;
+                let width = 450;
+                let stripeColor = "rgba(255,255,255,0)";
+                let canvas = new fabric.Canvas("canvas", {
+                    backgroundColor: "white",
+                    width,
+                    height: 300
+                });
+                const maxWidth = width - 2 * padding;
+                const fontSize = 32;
+                let textBox = new fabric.Textbox(text, {
+                    width: maxWidth,
+                    fontSize,
+                    fontFamily: "AcFun Symbol,Helvetica Neue,Helvetica,Arial,pingfang SC,Microsoft Yahei,STHeiti,sans-serif",
+                    fill: "black",
+                    textAlign: "left",
+                    splitByGrapheme: true,
+                    left: padding,
+                    top: padding
+                });
+                canvas.add(textBox);
+                canvas.renderAll();
+                let textHeight = textBox.getScaledHeight() + 2 * padding;
+                const tmp_canvas = document.createElement("canvas");
+                const tmp_ctx = tmp_canvas.getContext("2d");
+                tmp_ctx.font = fontSize + "px AcFun Symbol,Helvetica Neue,Helvetica,Arial,pingfang SC,Microsoft Yahei,STHeiti,sans-serif";
+                const textWidth = tmp_ctx.measureText(text).width;
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("textHeight", textHeight);
+                canvas.setHeight(textHeight);
+                canvas.setWidth(Math.min(textWidth + 2 * padding, width));
+                canvas.renderAll();
+                let dataUrl1 = canvas.toDataURL("image/png");
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("data canvas width", canvas.width, "canvas height", canvas.height);
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("data", canvas, dataUrl1);
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("data------------------");
+                let ctx = canvas.getContext("2d");
+                let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                let data = imageData.data;
+                let r = .4;
+                let k = 255 * (1 - r);
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = Math.floor((255 - data[i]) * r + k);
+                    data[i + 1] = Math.floor((255 - data[i + 1]) * r + k);
+                    data[i + 2] = Math.floor((255 - data[i + 2]) * r + k);
+                }
+                let tmp_canvas2 = document.createElement("canvas");
+                tmp_canvas2.width = canvas.width;
+                tmp_canvas2.height = canvas.height;
+                let ctx2 = tmp_canvas2.getContext("2d");
+                ctx2.putImageData(imageData, 0, 0);
+                let dataUrl2 = tmp_canvas2.toDataURL("image/png");
+                return {
+                    canvas,
+                    dataUrl: dataUrl1,
+                    dataUrl_inverted: dataUrl2,
+                    width: canvas.width,
+                    height: canvas.height
+                };
+            }
+            function loadImage(src) {
+                return new Promise(((resolve, reject) => {
+                    let img = new Image;
+                    img.onload = () => resolve(img);
+                    img.onerror = reject;
+                    img.src = src;
+                }));
+            }
+            async function createGif_square(text) {
+                let {canvas, dataUrl, dataUrl_inverted} = createCanvas(text);
+                let img = await loadImage(dataUrl);
+                let img_inverted = await loadImage(dataUrl_inverted);
+                let canvas_inverted = document.createElement("canvas");
+                canvas_inverted.width = canvas.width;
+                canvas_inverted.height = canvas.height;
+                let ctx = canvas_inverted.getContext("2d");
+                ctx.drawImage(img_inverted, 0, 0);
+                return new Promise(((resolve, reject) => {
+                    const height = canvas.height;
+                    const width = canvas.width;
+                    let gif = new GIF({
+                        workers: 2,
+                        quality: 1,
+                        workerScript: workerUrl,
+                        width: canvas.width,
+                        height: canvas.height,
+                        transparent: "0xFF0000"
+                    });
+                    let size = 4;
+                    let block_size_x = Math.ceil(width / size);
+                    let block_size_y = Math.ceil(height / size);
+                    let displayRate = .25;
+                    let repeat = 6;
+                    let blockArray = new Array(block_size_x * block_size_y).fill(0).map(((v, i) => {
+                        let d = i % block_size_x;
+                        return Math.tan(d * .5) < displayRate;
+                    }));
+                    for (let r = 0; r < repeat; r++) {
+                        let shift = 1;
+                        blockArray = blockArray.slice(shift).concat(blockArray.slice(0, shift));
+                        let color = "rgba(255,255,255,1)";
+                        let canvas_tmp = document.createElement("canvas");
+                        canvas_tmp.width = canvas.width;
+                        canvas_tmp.height = canvas.height;
+                        let ctx = canvas_tmp.getContext("2d");
+                        ctx.imageSmoothingEnabled = false;
+                        ctx.mozImageSmoothingEnabled = false;
+                        ctx.webkitImageSmoothingEnabled = false;
+                        ctx.msImageSmoothingEnabled = false;
+                        ctx.fillStyle = color;
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                        ctx.fillStyle = "rgba(255,255,255,0.2)";
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        for (let y = 0; y < block_size_y; y++) {
+                            for (let x = 0; x < block_size_x; x++) {
+                                if (blockArray[x * block_size_y + y] !== true) {
+                                    ctx.fillStyle = color;
+                                    ctx.fillRect(x * size, y * size, size, size);
+                                }
+                            }
+                        }
+                        gif.addFrame(ctx, {
+                            copy: true,
+                            delay: .02
+                        });
+                    }
+                    gif.on("finished", (function(blob) {
+                        resolve({
+                            blob,
+                            width: canvas.width,
+                            height: canvas.height
+                        });
+                    }));
+                    gif.render();
+                }));
+            }
+            async function createGif(text) {
+                let {canvas, dataUrl, dataUrl_inverted} = createCanvas(text);
+                let img = await loadImage(dataUrl);
+                let img_inverted = await loadImage(dataUrl_inverted);
+                let canvas_inverted = document.createElement("canvas");
+                canvas_inverted.width = canvas.width;
+                canvas_inverted.height = canvas.height;
+                let ctx = canvas_inverted.getContext("2d");
+                ctx.drawImage(img_inverted, 0, 0);
+                return new Promise(((resolve, reject) => {
+                    const height = canvas.height;
+                    const width = canvas.width;
+                    let gif = new GIF({
+                        workers: 2,
+                        quality: 1,
+                        workerScript: workerUrl,
+                        width: canvas.width,
+                        height: canvas.height,
+                        transparent: "0xFF0000"
+                    });
+                    let stripeWidth = 11;
+                    let stripeColor = "rgba(255,255,255,1)";
+                    let n = 2;
+                    let stripeFuncs = [ drawStripeshorizontal, drawStripesVetical ];
+                    let patternCount = stripeFuncs.length;
+                    for (let r = 0; r < patternCount; r++) {
+                        for (let i = 0; i < n; i++) {
+                            let canvas_tmp = document.createElement("canvas");
+                            canvas_tmp.width = canvas.width;
+                            canvas_tmp.height = canvas.height;
+                            let ctx = canvas_tmp.getContext("2d");
+                            ctx.imageSmoothingEnabled = false;
+                            ctx.mozImageSmoothingEnabled = false;
+                            ctx.webkitImageSmoothingEnabled = false;
+                            ctx.msImageSmoothingEnabled = false;
+                            ctx.fillStyle = stripeColor;
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            ctx.drawImage(img, 0, 0);
+                            stripeFuncs[r](canvas_tmp, canvas_inverted, stripeWidth, stripeColor, i * stripeWidth);
+                            gif.addFrame(ctx, {
+                                copy: true,
+                                delay: .02
+                            });
+                        }
+                    }
+                    gif.on("finished", (function(blob) {
+                        resolve({
+                            blob,
+                            width: canvas.width,
+                            height: canvas.height
+                        });
+                    }));
+                    gif.render();
+                }));
+            }
+            function createGif_backup(text, callback) {
+                let {canvas, dataUrl} = createCanvas(text);
+                let canvas1 = document.createElement("canvas");
+                canvas1.width = canvas.width;
+                canvas1.height = canvas.height;
+                let ctx1 = canvas1.getContext("2d");
+                let img = new Image;
+                img.src = dataUrl;
+                img.onload = function() {
+                    let gif = new GIF({
+                        workers: 2,
+                        quality: 1,
+                        workerScript: workerUrl,
+                        width: canvas.width,
+                        height: canvas.height,
+                        transparent: "0xFFFFFF"
+                    });
+                    let stripeWidth = 3;
+                    let stripeColor = "rgba(255,255,255,1)";
+                    let n = 2;
+                    let repeat = 2;
+                    let stirpeFuncs = [ drawStripesVetical, drawStripeshorizontal ];
+                    for (let r = 0; r < repeat; r++) {
+                        for (let i = 0; i < n; i++) {
+                            let canvas_tmp = document.createElement("canvas");
+                            canvas_tmp.width = canvas.width;
+                            canvas_tmp.height = canvas.height;
+                            let ctx = canvas_tmp.getContext("2d");
+                            ctx.imageSmoothingEnabled = false;
+                            ctx.mozImageSmoothingEnabled = false;
+                            ctx.webkitImageSmoothingEnabled = false;
+                            ctx.msImageSmoothingEnabled = false;
+                            ctx.fillStyle = stripeColor;
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            ctx.drawImage(img, 0, 0);
+                            stirpeFuncs[r](canvas_tmp, stripeWidth, stripeColor, i * stripeWidth);
+                            gif.addFrame(canvas_tmp, {
+                                copy: true,
+                                delay: .02
+                            });
+                        }
+                    }
+                    gif.on("finished", (function(blob) {
+                        callback({
+                            blob,
+                            width: canvas.width,
+                            height: canvas.height
+                        });
+                    }));
+                    gif.render();
+                };
+            }
+            async function uploadImage(acId, imageBinary) {
+                console.log(imageBinary);
+                console.log(`Upload image with ${acId} and ${imageBinary.byteLength} bytes.`);
+                const payload = new URLSearchParams({
+                    fileName: randomFilename()
+                });
+                let response = await fetch("https://www.acfun.cn/rest/pc-direct/image/upload/getToken", {
+                    method: "POST",
+                    body: payload
+                });
+                if (!response.ok) {
+                    console.log(`Get upload token failed with ${response.status}`);
+                    return null;
+                }
+                const data = await response.json();
+                const endpointList = data.info.httpEndpointList;
+                const token = data.info.token;
+                console.log("data, got token=", token);
+                console.log("data, endpoints ", endpointList);
+                const firstEndpoint = endpointList[0];
+                let fragmentId = 0;
+                for (let i = 0; i < imageBinary.byteLength; i += 1024 * 1024) {
+                    const fragment = imageBinary.slice(i, i + 1024 * 1024);
+                    const url = `https://${firstEndpoint}/api/upload/fragment?upload_token=${token}&fragment_id=${fragmentId}`;
+                    response = await fetch(url, {
+                        method: "POST",
+                        body: fragment
+                    });
+                    if (!response.ok) {
+                        (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)(`data: Upload image fragment failed with ${response.status}`);
+                        return null;
+                    }
+                    fragmentId++;
+                }
+                const completeUrl = `https://${firstEndpoint}/api/upload/complete?fragment_count=${fragmentId}&upload_token=${token}`;
+                response = await fetch(completeUrl, {
+                    method: "POST",
+                    payload: ""
+                });
+                if (!response.ok) {
+                    (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)(`Upload image complete failed with ${response.status}`);
+                    return null;
+                }
+                const getUrl = "https://www.acfun.cn/rest/pc-direct/image/upload/getUrlAfterUpload";
+                response = await fetch(getUrl, {
+                    method: "POST",
+                    body: new URLSearchParams({
+                        token,
+                        bizFlag: "web-comment-text"
+                    })
+                });
+                if (!response.ok) {
+                    (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)(`Get image URL after upload failed with ${response.status}`);
+                    return null;
+                }
+                const finalData = await response.json();
+                if (finalData.result !== 0) {
+                    (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)(`Get image URL after upload failed with result ${finalData.result}`);
+                    return null;
+                }
+                const cacheImageUrl = finalData.url;
+                return cacheImageUrl;
+            }
+            function randomFilename() {
+                const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                let result = "";
+                for (let i = 0; i < 10; i++) {
+                    result += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                return result + ".png";
+            }
+            function getCurrentAcId() {
+                function getLastDigits(url) {
+                    const result = url.match(/\d+$/);
+                    return result ? result[0] : null;
+                }
+                let href = window.location.href;
+                return getLastDigits(href);
+            }
+            function uploadPreviewImage(text) {
+                let wrapper = document.querySelector(".edui-container");
+                wrapper.style.pointerEvents = "none";
+                let filter = document.createElement("div");
+                filter.style.position = "fixed";
+                filter.style.top = "0";
+                filter.style.left = "0";
+                filter.style.width = "100%";
+                filter.style.height = "100%";
+                filter.style.backgroundColor = "rgba(0,0,0,0.5)";
+                filter.style.zIndex = "1000";
+                filter.style.color = "white";
+                document.body.appendChild(filter);
+                let loading = document.createElement("div");
+                loading.style.position = "fixed";
+                loading.style.top = "50%";
+                loading.style.left = "50%";
+                loading.style.transform = "translate(-50%, -50%)";
+                loading.style.zIndex = "1001";
+                loading.innerHTML = "正在生成...";
+                filter.appendChild(loading);
+                createGif_square(text).then((async data => {
+                    {
+                        (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)(data);
+                        let binaryData = await data.blob.arrayBuffer();
+                        let acid = getCurrentAcId();
+                        let cacheUrl = await uploadImage(acid, binaryData);
+                        console.log(cacheUrl);
+                        if (!cacheUrl) {
+                            return;
+                        }
+                        let container = unsafeWindow.document.querySelector(".edui-body-container");
+                        let img = document.createElement("img");
+                        img.src = cacheUrl;
+                        img.style.width = data.width + "px";
+                        img.style.height = data.height + "px";
+                        container.innerHTML = "";
+                        container.appendChild(img);
+                        filter.remove();
+                        wrapper.style.pointerEvents = "auto";
+                    }
+                }));
+            }
+            function AddUI() {
+                if (initialized) {
+                    return;
+                }
+                let doc = unsafeWindow.document;
+                let toolbar = doc.querySelector(".edui-btn-toolbar");
+                let old_send_btn = toolbar.querySelector(".button-wrapper");
+                let btn_wrapper = doc.createElement("div");
+                btn_wrapper.className = "button-wrapper";
+                btn_wrapper.style.display = "inline-block";
+                btn_wrapper.style.position = "absolute";
+                btn_wrapper.style.right = "104px";
+                btn_wrapper.className = "button-wrapper";
+                toolbar.insertBefore(btn_wrapper, old_send_btn);
+                let send_btn = doc.createElement("button");
+                send_btn.className = "plugin_send_btn";
+                send_btn.innerHTML = "加载中";
+                send_btn.style.pointerEvents = "none";
+                send_btn.onclick = function() {
+                    let text = getText();
+                    uploadPreviewImage(text);
+                };
+                btn_wrapper.appendChild(send_btn);
+                __webpack_require__.g.send_btn = send_btn;
+                initialized = true;
+            }
+            const fabricjs = "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/6.0.0-rc.1/fabric.js";
+            function loadScript(url) {
+                return new Promise(((resolve, reject) => {
+                    var script = document.createElement("script");
+                    script.type = "text/javascript";
+                    script.src = url;
+                    (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("load script", url);
+                    script.onload = () => resolve(script);
+                    script.onerror = err => {
+                        (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("error loading script", err);
+                        reject(new Error("Script load error for " + url));
+                    };
+                    document.head.appendChild(script);
+                }));
+            }
+            function enable() {
+                __webpack_require__.g.send_btn.style.pointerEvents = "auto";
+                __webpack_require__.g.send_btn.innerHTML = "防电风扇";
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("防电风扇功能已启用");
+            }
+            let initialized = false;
+            let scrirptLoaded = false;
+            function init() {
+                gifJob();
+                AddCSS();
+                const observer = new MutationObserver((mutations => {
+                    mutations.forEach((mutation => {
+                        mutation.addedNodes.forEach((node => {
+                            if (node.classList && node.classList.contains("area-editor")) {
+                                console.log(node);
+                                setTimeout((() => {
+                                    AddUI();
+                                    if (scrirptLoaded) enable();
+                                }), 0);
+                            }
+                        }));
+                    }));
+                }));
+                observer.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+                loadScript(fabricjs).then((() => {
+                    scrirptLoaded = true;
+                    if (document.querySelector(".area-editor")) {
+                        AddUI();
+                    } else {}
+                    enable();
+                }));
+            }
+            const __WEBPACK_DEFAULT_EXPORT__ = {
+                init
+            };
+        },
+        959: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+            __webpack_require__.d(__webpack_exports__, {
+                Z: () => log
+            });
+            let logFunc = console.log;
+            let errorFunc = console.error;
+            let warnFunc = console.warn;
+            console.clear();
+            let msgBuffer = [];
+            function init() {
+                if (unsafeWindow && unsafeWindow.console) {
+                    unsafeWindow.console.log = (...args) => {
+                        msgBuffer.push({
+                            f: logFunc,
+                            args
+                        });
+                    };
+                    unsafeWindow.console.warn = (...args) => {
+                        msgBuffer.push({
+                            f: warnFunc,
+                            args
+                        });
+                    };
+                    unsafeWindow.console.error = (...args) => {
+                        msgBuffer.push({
+                            f: errorFunc,
+                            args
+                        });
+                    };
+                    unsafeWindow.addEventListener("error", (errorEvent => {
+                        logFunc(errorEvent);
+                    }));
+                }
+            }
+            setTimeout(init);
+            function collector() {
+                let worker = () => {
+                    if (msgBuffer.length === 0) return;
+                    console.groupCollapsed(`%cAcFun消息${msgBuffer.length}条`, "color:rgba(125,125,125,255)");
+                    msgBuffer.forEach((msg => {
+                        msg.f(...msg.args);
+                    }));
+                    console.groupEnd();
+                    msgBuffer = [];
+                };
+                setInterval(worker, 5e3);
+            }
+            collector();
+            function log(...args) {
+                let r = [ "%c屏蔽插件消息:", "color:lightgreen;" ];
+                args.forEach((a => {
+                    r.push(a);
+                }));
+                logFunc.call(this, ...r);
+            }
+        },
         547: (module, __webpack_exports__, __webpack_require__) => {
             __webpack_require__.d(__webpack_exports__, {
                 Z: () => __WEBPACK_DEFAULT_EXPORT__
@@ -240,58 +835,8 @@
         function header() {
             return h();
         }
-        const version = "3.043";
-        let logFunc = console.log;
-        let errorFunc = console.error;
-        let warnFunc = console.warn;
-        console.clear();
-        let msgBuffer = [];
-        function init() {
-            if (unsafeWindow && unsafeWindow.console) {
-                unsafeWindow.console.log = (...args) => {
-                    msgBuffer.push({
-                        f: logFunc,
-                        args
-                    });
-                };
-                unsafeWindow.console.warn = (...args) => {
-                    msgBuffer.push({
-                        f: warnFunc,
-                        args
-                    });
-                };
-                unsafeWindow.console.error = (...args) => {
-                    msgBuffer.push({
-                        f: errorFunc,
-                        args
-                    });
-                };
-                unsafeWindow.addEventListener("error", (errorEvent => {
-                    logFunc(errorEvent);
-                }));
-            }
-        }
-        setTimeout(init);
-        function collector() {
-            let worker = () => {
-                if (msgBuffer.length === 0) return;
-                console.groupCollapsed(`%cAcFun消息${msgBuffer.length}条`, "color:rgba(125,125,125,255)");
-                msgBuffer.forEach((msg => {
-                    msg.f(...msg.args);
-                }));
-                console.groupEnd();
-                msgBuffer = [];
-            };
-            setInterval(worker, 5e3);
-        }
-        collector();
-        function log_log(...args) {
-            let r = [ "%c屏蔽插件消息:", "color:lightgreen;" ];
-            args.forEach((a => {
-                r.push(a);
-            }));
-            logFunc.call(this, ...r);
-        }
+        const version = "3.047";
+        var js_log = __webpack_require__(959);
         const server = "https://baldhumanity.top";
         function encode(a) {
             return a;
@@ -303,7 +848,7 @@
             let unsafeWindow = window;
             if (typeof unsafeWindow.A === "undefined") {
                 unsafeWindow.A = (t, m) => {
-                    log_log(t, m);
+                    (0, js_log.Z)(t, m);
                 };
             }
         }
@@ -443,7 +988,7 @@
                         callback(doc);
                     },
                     onerror: e => {
-                        log_log("下载页面失败：", link);
+                        (0, js_log.Z)("下载页面失败：", link);
                     }
                 });
             }
@@ -719,7 +1264,7 @@
             GM_delete("COMMENT_CACHE_INDEX", (() => {
                 empty(callback)();
             }), (() => {
-                log_log("删除缓存出错！");
+                (0, js_log.Z)("删除缓存出错！");
             }));
         }
         function _getCommentCache(id, callback) {
@@ -775,7 +1320,8 @@
                 useBannedUpRankList: false,
                 useBannedKeywordsList: false,
                 useBannedReplierList: false,
-                disableAnimation: false
+                disableAnimation: false,
+                usePreload: true
             }, (val => {
                 callback(val);
             }));
@@ -1222,7 +1768,7 @@
             }
         }
         var style = __webpack_require__(547);
-        var code = '<div id="helperUI" class="helper-wrap" style="pointer-events:none"> <div class="helper-wrap-inner"> <div style="pointer-events:all" class="helper-main c-a ui-hidden smooth"> <div class="plugin-hint" id="hide_hint">隐藏插件--\x3e</div> <div class="page-wrap"> <div class="plugin-menu-title">插件设置</div> <div class="menu-wrap"> <div class="menu-column"> <a id="bannedAuthours">Ｕ Ｐ 主</a> <a id="bannedRepliers">回 复 者</a> <a id="bannedKeywords">关 键 词</a> <a id="preloadSetting">预 加 载</a> <a id="commentRecovery">评论恢复</a> </div> <div class="menu-column"> <a id="cloudsync">云 同 步</a> <a id="generalSetting">通用设置</a> <a id="sharedRankList">屏蔽排名</a> <a id="aboutme">关于插件</a> <a href="https://baldhumanity.top/acfun">网站主页</a> </div> </div> <div class="plugin-downloader-version">0.00</div> <div class="plugin-version">0.00</div> <div class="plugin-author">作恶者：<a href="https://message.acfun.cn/im?targetId=690324" style="color:#00f">人文情怀</a></div> </div> <div class="page-wrap inactive-page" id="ban_up_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入UP主名字..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_replier_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入评论者名字..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_keyword_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入屏蔽关键词..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">LOL</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="cloudsync_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class="sync-time"></div> <hr> <div> <button id="syncNow">立即同步</button> </div> </div> </div> <div class="page-wrap inactive-page" id="preload_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> <b>文章区预加载。</b><br/> 插件将自动下载主页文章文章内容，检查内部文字，如果包含你屏蔽的关键词，将会在你打开文章之前在主页屏蔽文章。<br/> </div> <hr> <div> <div style="width:100%"><button id="clearPreloadCache">清除缓存</button></div> <div id="clearCacheInfo"></div> </div> </div> </div> <div class="page-wrap inactive-page" id="recovery_page"> <a class="go-back">返回</a> <div class="about-page-content" style="float:none"> <div class="no-float"> 3.000版本新功能：查看已删除评论！<br/> 插件将备份所有你浏览过的投稿的评论。并且在其他人请求时，共享出去。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div class="no-float"> <b><span class="cache-info"></span></b> <button id="delete_cache">删除缓存</button> </div> <hr> <div class="no-float"> <label>被删评论查询<input type="text" placeholder="输入评论家ID..." class="lookup-cache-input" id="lookup_cache_input"></label> <button id="lookup_cache">查询</button> </div> </div> </div> <div class="page-wrap inactive-page" id="general_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div> <label class="cc-container" data-id="showBanButton">在首页的投稿右上角显示[屏蔽]图标按钮 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showMouseover">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="autoSync">自动云同步所有列表 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showDeletedComment">显示投稿内被删除评论 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showUserTags">显示评论用户标签 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showBanStatusTag">显示投稿页左侧屏蔽状态 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="disableAnimation">禁止评论区动画 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> </div> </div> </div> <div class="page-wrap inactive-page" id="sharedRankList_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div style="float:none"> <label class="cc-container" data-id="useBannedUpRankList">屏蔽排行榜上UP <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_uprank">复制到我的列表</a> </label> </div> <div style="float:none"> <label class="cc-container" data-id="useBannedKeywordsList">屏蔽排行榜上关键词 <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_keywordrank">复制到我的列表</a> </label> </div> <div style="float:none"> <label class="cc-container" data-id="useBannedReplierList">屏蔽排行榜上评论家 <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_replierrank">复制到我的列表</a> </label> </div> <div style="float:none"> <a href="https://baldhumanity.top/acfun/ranking.html" style="color:#00008b">点击这里查看排行榜</a> </div> </div> </div> <div class="page-wrap inactive-page" id="about_page"> <a class="go-back">返回</a> <div class="about-page-content"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style="pointer-events:all" class="ac-girl ac-girl-hide smooth"> </div> </div> </div>';
+        var code = '<div id="helperUI" class="helper-wrap" style="pointer-events:none"> <div class="helper-wrap-inner"> <div style="pointer-events:all" class="helper-main c-a ui-hidden smooth"> <div class="plugin-hint" id="hide_hint">隐藏插件--\x3e</div> <div class="page-wrap"> <div class="plugin-menu-title">插件设置</div> <div class="menu-wrap"> <div class="menu-column"> <a id="bannedAuthours">Ｕ Ｐ 主</a> <a id="bannedRepliers">回 复 者</a> <a id="bannedKeywords">关 键 词</a> <a id="preloadSetting">预 加 载</a> <a id="commentRecovery">评论恢复</a> </div> <div class="menu-column"> <a id="cloudsync">云 同 步</a> <a id="generalSetting">通用设置</a> <a id="sharedRankList">屏蔽排名</a> <a id="aboutme">关于插件</a> <a href="https://baldhumanity.top/acfun">网站主页</a> </div> </div> <div class="plugin-downloader-version">0.00</div> <div class="plugin-version">0.00</div> <div class="plugin-author">作恶者：<a href="https://message.acfun.cn/im?targetId=690324" style="color:#00f">人文情怀</a></div> </div> <div class="page-wrap inactive-page" id="ban_up_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入UP主名字..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_replier_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入评论者名字..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">我是名字</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="ban_keyword_page"> <a class="go-back">返回</a> <div class="plugin-add-ban-up"> <input class="ban-title-input" type="text" maxlength="16" placeholder="输入屏蔽关键词..."/> <input class="ban-item-submit" type="button" value="屏蔽"> </div> <div class="banned-items"> <div class="banned-item"> <span class="banned-title">LOL</span> <button>×</button> </div> </div> </div> <div class="page-wrap inactive-page" id="cloudsync_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> 插件会上传你的屏蔽列表，只要安装插件的浏览器，登录同一个AC帐号都可以同步屏蔽。 </div> <div class="sync-time"></div> <hr> <div> <button id="syncNow">立即同步</button> </div> </div> </div> <div class="page-wrap inactive-page" id="preload_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div class="cloud-description"> <b>文章区预加载。</b><br/> <label class="cc-container" data-id="usePreload">启用预加载 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> 插件将自动下载主页文章文章内容，检查内部文字，如果包含你屏蔽的关键词，将会在你打开文章之前在主页屏蔽文章。<br/> </div> <hr> <div> <div style="width:100%"><button id="clearPreloadCache">清除缓存</button></div> <div id="clearCacheInfo"></div> </div> </div> </div> <div class="page-wrap inactive-page" id="recovery_page"> <a class="go-back">返回</a> <div class="about-page-content" style="float:none"> <div class="no-float"> 3.000版本新功能：查看已删除评论！<br/> 插件将备份所有你浏览过的投稿的评论。并且在其他人请求时，共享出去。<br/> 只要越多人用插件，评论恢复的几率就越高。<br/> </div> <hr> <div class="no-float"> <b><span class="cache-info"></span></b> <button id="delete_cache">删除缓存</button> </div> <hr> <div class="no-float"> <label>被删评论查询<input type="text" placeholder="输入评论家ID..." class="lookup-cache-input" id="lookup_cache_input"></label> <button id="lookup_cache">查询</button> </div> </div> </div> <div class="page-wrap inactive-page" id="general_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div> <label class="cc-container" data-id="showBanButton">在首页的投稿右上角显示[屏蔽]图标按钮 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showMouseover">在首页鼠标悬停被屏蔽投稿，将显示内容 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="autoSync">自动云同步所有列表 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showDeletedComment">显示投稿内被删除评论 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showUserTags">显示评论用户标签 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="showBanStatusTag">显示投稿页左侧屏蔽状态 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> <label class="cc-container" data-id="disableAnimation">禁止评论区动画 <input type="checkbox" checked="checked"> <span class="checkmark"></span> </label> </div> </div> </div> <div class="page-wrap inactive-page" id="sharedRankList_page"> <a class="go-back">返回</a> <div class="about-page-content"> <div style="float:none"> <label class="cc-container" data-id="useBannedUpRankList">屏蔽排行榜上UP <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_uprank">复制到我的列表</a> </label> </div> <div style="float:none"> <label class="cc-container" data-id="useBannedKeywordsList">屏蔽排行榜上关键词 <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_keywordrank">复制到我的列表</a> </label> </div> <div style="float:none"> <label class="cc-container" data-id="useBannedReplierList">屏蔽排行榜上评论家 <input type="checkbox" checked="checked"> <span class="checkmark"></span> <br> <a id="copy_replierrank">复制到我的列表</a> </label> </div> <div style="float:none"> <a href="https://baldhumanity.top/acfun/ranking.html" style="color:#00008b">点击这里查看排行榜</a> </div> </div> </div> <div class="page-wrap inactive-page" id="about_page"> <a class="go-back">返回</a> <div class="about-page-content"> 本插件持续更新中：） 只要我有空。 </div> </div> </div> <div style="pointer-events:all" class="ac-girl ac-girl-hide smooth"> </div> </div> </div>';
         const mainUI = code;
         function _getStorage() {
             if (typeof __webpack_require__.g["eventStorage"] === "undefined") {
@@ -1502,12 +2048,20 @@
         }
         function _loadEmots() {
             let s = unsafeWindow.localStorage.getItem("emoticonList");
+            if (!s) {
+                commentUI_unsafeWindow_alt["emotDict"] = {};
+                return;
+            }
             let list = JSON.parse(s);
-            let dict = {};
-            list.forEach((o => {
-                dict[o.emotionId] = o;
-            }));
-            commentUI_unsafeWindow_alt["emotDict"] = dict;
+            try {
+                let dict = {};
+                list.forEach((o => {
+                    dict[o.emotionId] = o;
+                }));
+                commentUI_unsafeWindow_alt["emotDict"] = dict;
+            } catch (e) {
+                commentUI_unsafeWindow_alt["emotDict"] = {};
+            }
         }
         function _loadUDPUI() {
             let doc = commentUI_unsafeWindow_alt.document;
@@ -1633,7 +2187,7 @@
             }
         }
         function _getAllPageCommentOnline(id, callback) {
-            log_log(`采集评论，投稿id=${id}`);
+            (0, js_log.Z)(`采集评论，投稿id=${id}`);
             function collectDone(collectedComments) {
                 let commentInfo = {
                     id,
@@ -1653,7 +2207,7 @@
                     if (f > maxFloor) maxFloor = f;
                 }));
                 commentInfo.floorCount = collectedComments["totalCount"];
-                log_log(`已采集本投稿评论至${maxFloor}楼。`);
+                (0, js_log.Z)(`已采集本投稿评论至${maxFloor}楼。`);
                 for (let i = 1; i <= maxFloor; i++) {
                     if (!(i in collectedComments)) {
                         commentInfo.deletedFloors.push(i);
@@ -1719,7 +2273,7 @@
                 let delcount = newCache.deletedFloors.length;
                 let recovCount = newCache.recoveredFloors.length;
                 commentRecovery_saveCommentCache(id, newCache, (() => {
-                    log_log(`投稿${id}重新缓存完成。${delcount}个被删除，${recovCount}个被恢复`);
+                    (0, js_log.Z)(`投稿${id}重新缓存完成。${delcount}个被删除，${recovCount}个被恢复`);
                     callback(newCache);
                     _activeReport(newCache);
                 }));
@@ -1730,20 +2284,20 @@
                 if (!cache) {
                     _getAllPageCommentOnline(id, (c => {
                         commentRecovery_saveCommentCache(id, c, (() => {
-                            log_log("首次收集投稿" + id + `评论完成。发现${c.deletedFloors.length}个评论被删除。`);
+                            (0, js_log.Z)("首次收集投稿" + id + `评论完成。发现${c.deletedFloors.length}个评论被删除。`);
                             callback(c);
                         }));
                     }));
                 } else {
-                    log_log("对比评论缓存是否需要更新。");
+                    (0, js_log.Z)("对比评论缓存是否需要更新。");
                     _getPageLastReply(id, ((lastReply, totalCount) => {
                         let t1 = parseInt(lastReply.timestamp);
                         let t2 = parseInt(cache.lastReplyTime);
                         if (t1 !== t2 || cache.floorCount !== totalCount) {
-                            log_log(id + " 投稿缓存需要更新");
+                            (0, js_log.Z)(id + " 投稿缓存需要更新");
                             _getCommentsOnlineAndMerge(id, cache, callback);
                         } else {
-                            log_log("已经缓存到最新评论了。");
+                            (0, js_log.Z)("已经缓存到最新评论了。");
                             callback(cache);
                         }
                     }));
@@ -1765,7 +2319,7 @@
             js_event.emit("SHOW_DELETED_COMMENT_UI", cache);
         }
         function _recoverByLocalCache(cache, then) {
-            log_log(`本地可恢复楼层：${cache.recoveredFloors.join(" ")}`);
+            (0, js_log.Z)(`本地可恢复楼层：${cache.recoveredFloors.join(" ")}`);
             cache.recoveredFloors.forEach((recoveredFloor => {
                 let floor = cache.floors[recoveredFloor];
                 js_event.emit("FLOOR_RECOVER", floor);
@@ -1774,7 +2328,7 @@
         }
         function _mergeServerCacheToLocal(serverCache, localCache) {
             if (serverCache.cached.length === 0) {
-                log_log("服务器没有其他缓存，已同步服务器缓存");
+                (0, js_log.Z)("服务器没有其他缓存，已同步服务器缓存");
                 return;
             }
             serverCache.cached.forEach((floor => {
@@ -1785,7 +2339,7 @@
                 }
             }));
             commentRecovery_saveCommentCache(localCache.id, localCache, (() => {
-                log_log("已从服务器更新本投稿缓存。");
+                (0, js_log.Z)("已从服务器更新本投稿缓存。");
             }));
         }
         function _recoverByServerCache(localCache) {
@@ -1795,7 +2349,7 @@
                 floors: localCache.deletedFloors.filter((x => localCache.recoveredFloors.indexOf(x) < 0))
             };
             if (queryObj.floors.length > 0) {
-                log_log("向服务器发出恢复评论的请求");
+                (0, js_log.Z)("向服务器发出恢复评论的请求");
                 util.apiRequest(queryObj, (result => {
                     let cachedFloors = [];
                     result.cached.forEach((floor => {
@@ -1823,7 +2377,7 @@
                     ids
                 };
                 util.apiRequest(queryObj, (_d => {
-                    log_log(`收到服务器恢复需求。${_d.result.length}个投稿需要本地数据`, _d);
+                    (0, js_log.Z)(`收到服务器恢复需求。${_d.result.length}个投稿需要本地数据`, _d);
                     let list = _d.result;
                     let recoverCount = 0;
                     let floorTotal = 0;
@@ -1855,9 +2409,9 @@
                                 cache: reportData
                             };
                             if (count > 0) {
-                                log_log("主动恢复评论数据", reportData);
+                                (0, js_log.Z)("主动恢复评论数据", reportData);
                                 util.apiRequest(queryData, (result => {
-                                    log_log("恢复结果", result);
+                                    (0, js_log.Z)("恢复结果", result);
                                     cache.reportedRecovery = cache.recoveredFloors.map((x => x));
                                     commentRecovery_saveCommentCache(cache.id, cache);
                                 }));
@@ -1865,7 +2419,7 @@
                                 floorTotal += count;
                             }
                             if (index === list.length - 1) {
-                                log_log(`帮助服务器恢复共${recoverCount}个投稿和${floorTotal}个评论。`);
+                                (0, js_log.Z)(`帮助服务器恢复共${recoverCount}个投稿和${floorTotal}个评论。`);
                             }
                         }));
                     }));
@@ -1873,25 +2427,25 @@
             }));
         }
         function _activeHelp() {
-            log_log("主动帮助");
+            (0, js_log.Z)("主动帮助");
             let t = +new Date;
             js_data.getActiveHelpTime((lasttime => {
                 if (t - activeHelpInterval > lasttime) {
                     let interval = Math.round((t - lasttime) / 1e3);
-                    log_log(`距离上次主动帮助已经${interval}秒了`);
+                    (0, js_log.Z)(`距离上次主动帮助已经${interval}秒了`);
                     __activeHelp();
                     js_data.setActiveHelpTime(t);
                 } else {
-                    log_log(`距离上次主动帮助还未足够。`);
+                    (0, js_log.Z)(`距离上次主动帮助还未足够。`);
                 }
             }));
         }
         function _deleteCache(id) {
-            log_log("trying to delete cache, id=", id);
+            (0, js_log.Z)("trying to delete cache, id=", id);
             js_data.deleteCommentCache(id, (() => {}));
         }
         function _deleteAllCache(callback) {
-            log_log("deleteallcache");
+            (0, js_log.Z)("deleteallcache");
             function deleteOneByOne(ids) {
                 if (ids.length <= 0) {
                     js_event.emit("COMMENT_CACHE_UPDATE", null);
@@ -1906,13 +2460,13 @@
                 }));
             }
             js_data.getAllCacheIndex((ids => {
-                log_log("缓存文章列表");
-                log_log(ids);
+                (0, js_log.Z)("缓存文章列表");
+                (0, js_log.Z)(ids);
                 deleteOneByOne(ids);
             }));
         }
         function _searchCacheByKeyword(str, callback) {
-            log_log("搜索缓存 - 关键词:" + str);
+            (0, js_log.Z)("搜索缓存 - 关键词:" + str);
             let searchResult = [];
             function searchOneByOne(ids) {
                 if (ids.length <= 0) {
@@ -1931,7 +2485,7 @@
                                 content: f.content,
                                 username: f.username
                             };
-                            log_log(JSON.stringify(res));
+                            (0, js_log.Z)(JSON.stringify(res));
                             searchResult.push(res);
                         }
                     }
@@ -2279,25 +2833,25 @@
         function cacheInfo(dom) {
             _refreshCommentCachePage(dom);
         }
-        function setting_ui_init(dom) {
+        function init(dom) {
             js_data.loadUIPosition((pos => {
                 dom.style.top = pos.y + "px";
                 dom.style.left = pos.x + "px";
             }));
-            log_log("加载设置页面");
+            (0, js_log.Z)("加载设置页面");
             bindEvents(dom);
-            log_log("初始化事件");
+            (0, js_log.Z)("初始化事件");
             bindGeneralSettingEvents(dom);
             updateBannedUpList(dom);
             updateBannedReplierList(dom);
             updateBannedKeywordsList(dom);
-            log_log("载入屏蔽列表");
+            (0, js_log.Z)("载入屏蔽列表");
             initButtons(dom);
             setting_ui_version(dom);
             cacheInfo(dom);
-            log_log("初始化完成");
+            (0, js_log.Z)("初始化完成");
             initAcGirl(dom);
-            log_log("AC娘载入成功");
+            (0, js_log.Z)("AC娘载入成功");
         }
         const setting_ui = {
             state: "MENU",
@@ -2305,7 +2859,7 @@
                 let doc = window.document;
                 doc.body.insertAdjacentHTML("beforeend", mainUI);
                 let uiDom = doc.body.querySelector("#helperUI");
-                setting_ui_init(uiDom);
+                init(uiDom);
             }
         };
         var subUI_code = '<div class="sub-ui-wrap"> <div class="sub-ui-inner sub-ui-normal"> <div class="sub-ui-text"> 正 常 </div> <div id="banUp" class="sub-ui-button sub-ui-text smooth"> </div> <div id="unbanUp" class="sub-ui-button sub-ui-text remove smooth"> </div> </div> </div>';
@@ -2561,7 +3115,7 @@
                 let body = d.querySelector("body");
                 let text = body.innerText;
                 util.dbHelper.save(link, text);
-                log_log("完成预加载： ", link);
+                (0, js_log.Z)("完成预加载： ", link);
                 checkPreloadBanned(contentObject, text);
             }));
         }
@@ -2578,7 +3132,7 @@
                 }
             }
             if (banned) {
-                log_log("预加载后屏蔽条目：", contentObj.title);
+                (0, js_log.Z)("预加载后屏蔽条目：", contentObj.title);
                 _hideContent(contentObj);
             } else {
                 _showContent(contentObj);
@@ -2655,7 +3209,14 @@
                             if (c.type === "ARTICLE") preloadTestList.push(c);
                         }
                     }));
-                    preloadTest(preloadTestList, klist);
+                    js_data.loadGeneralSetting((setting => {
+                        if (setting.usePreload) {
+                            (0, js_log.Z)("预加载测试中。。。");
+                            preloadTest(preloadTestList, klist);
+                        } else {
+                            (0, js_log.Z)("预加载已关闭");
+                        }
+                    }));
                 }));
             }));
         }
@@ -2684,7 +3245,7 @@
         }
         window.banButtonObj = {};
         function createbanButton() {
-            log_log("加载屏蔽按钮");
+            (0, js_log.Z)("加载屏蔽按钮");
             let doc = window.document;
             let buttonDiv = doc.createElement("div");
             buttonDiv.classList.add("filter-button");
@@ -2719,7 +3280,7 @@
             doc.addEventListener("scroll", (e => {
                 hideBanButton();
             }));
-            log_log("屏蔽按钮植入完成");
+            (0, js_log.Z)("屏蔽按钮植入完成");
         }
         function injectStyle() {
             let doc = ui_unsafeWindow.document;
@@ -2727,12 +3288,12 @@
             doc.head.insertAdjacentHTML("beforeend", str);
         }
         function loadHomeUI() {
-            log_log("载入主要UI");
+            (0, js_log.Z)("载入主要UI");
             createbanButton();
             setting_ui.showSettingUI();
         }
         function loadArticleUI() {
-            log_log("载入投稿页UI");
+            (0, js_log.Z)("载入投稿页UI");
             contentPageUI.loadUI();
             setting_ui.showSettingUI();
         }
@@ -2761,13 +3322,13 @@
         }
         const ui = {
             loadUI(pageType) {
-                log_log("UI初始化");
+                (0, js_log.Z)("UI初始化");
                 ui_init();
-                log_log("UI事件绑定中");
+                (0, js_log.Z)("UI事件绑定中");
                 ui_bindEvents();
-                log_log("CSS加载中");
+                (0, js_log.Z)("CSS加载中");
                 injectStyle();
-                log_log("页面类型：" + pageType);
+                (0, js_log.Z)("页面类型：" + pageType);
                 if (pageType === "HOME" || pageType === "VIDEO_HOME" || pageType === "ARTICLE_HOME") {
                     loadHomeUI();
                 } else if (pageType === "VIDEO" || pageType === "ARTICLE") {
@@ -2854,7 +3415,7 @@
         function _repair() {
             let allSectionsChanges = document.querySelectorAll(".header-change");
             if (allSectionsChanges.length < 10) return false;
-            log_log(allSectionsChanges.length);
+            (0, js_log.Z)(allSectionsChanges.length);
             for (let i = 0; i < allSectionsChanges.length; i++) {
                 let oldButton = allSectionsChanges[i];
                 let sectionLink = oldButton.previousElementSibling;
@@ -3308,13 +3869,13 @@
             let anchor = doc.querySelector("a.up-name");
             if (!anchor) anchor = doc.querySelector("a.upname");
             if (!anchor) {
-                log_log("UP name not found!");
+                (0, js_log.Z)("UP name not found!");
                 setTimeout(_showAuthorTag, 1e3);
                 return;
             }
             let username = anchor.innerText;
             if (!username) {
-                log_log("UP name not found!");
+                (0, js_log.Z)("UP name not found!");
                 setTimeout(_showAuthorTag, 1e3);
                 return;
             }
@@ -3397,6 +3958,7 @@
                 __webpack_require__.g["taggedComments"] = {};
             }
         };
+        var commentImagefy = __webpack_require__(786);
         let contentTask_unsafeWindow = window;
         function _getCommentsOldVer(doc) {
             let result = [];
@@ -3471,7 +4033,7 @@
                 js_event.emit("FILTER_COMMENTS", comments);
             }
             function lauchObserver() {
-                log_log("加载评论Observer");
+                (0, js_log.Z)("加载评论Observer");
                 let mutationObserver = new MutationObserver((function(mutations) {
                     mutations.forEach((function(mutation) {
                         if (mutation.type === "childList") {
@@ -3497,17 +4059,18 @@
             lauchObserver();
             tagging.init();
             commentRecovery.init();
+            commentImagefy.Z.init();
         }
         function taskHOME(pagetype) {
-            log_log("载入主要页面模块");
+            (0, js_log.Z)("载入主要页面模块");
             homeTask(pagetype);
         }
         function taskCONTENT() {
-            log_log("载入投稿页模块");
+            (0, js_log.Z)("载入投稿页模块");
             contentTask();
         }
         function executeTask(pageType) {
-            log_log("执行任务");
+            (0, js_log.Z)("执行任务");
             if (pageType === "HOME" || pageType === "VIDEO_HOME" || pageType === "ARTICLE_HOME") {
                 taskHOME(pageType);
             } else if (pageType === "VIDEO" || pageType === "ARTICLE") {
@@ -3642,7 +4205,7 @@
             js_event.on("SYNC_TIME_UPDATE", (t => {
                 if (t && typeof t === "number" && t > 0) {
                     js_data.setUpdateTime(t, (() => {
-                        log_log("更新同步时间", t);
+                        (0, js_log.Z)("更新同步时间", t);
                     }));
                 }
             }));
@@ -3672,7 +4235,7 @@
             util.apiRequest(queryData, callback);
         }
         function checkDataForName(uid, name, callback) {
-            log_log("从服务器查找用户:" + name);
+            (0, js_log.Z)("从服务器查找用户:" + name);
             let d = {
                 uid,
                 name,
@@ -3681,13 +4244,13 @@
             synchroize_apiRequest(d, callback);
         }
         function syncFromServer(name, uid) {
-            log_log("从服务器同步中。");
+            (0, js_log.Z)("从服务器同步中。");
             synchroize_apiRequest({
                 uid,
                 name,
                 query: "sync"
             }, (d => {
-                log_log("已从服务器获得数据：", d);
+                (0, js_log.Z)("已从服务器获得数据：", d);
                 if (d.success) {
                     js_data.updateBanList(d.uplist);
                     js_data.updateReplyBanList(d.replylist);
@@ -3700,28 +4263,28 @@
             }));
         }
         let successNotice = d => {
-            log_log("成功", d);
+            (0, js_log.Z)("成功", d);
         };
         function checkNewCloud() {
-            log_log("检查新服务器");
+            (0, js_log.Z)("检查新服务器");
             js_data.getUsernameID((usernameId => {
                 let username = usernameId[0];
                 let uid = usernameId[1];
                 checkDataForName(uid, username, (d => {
                     js_data.getUpdateTime((localtime => {
-                        log_log("服务器时间=" + d["synctime"], "本地时间=" + localtime);
+                        (0, js_log.Z)("服务器时间=" + d["synctime"], "本地时间=" + localtime);
                         if (d["synctime"] > localtime) {
                             syncFromServer(username, uid);
                         } else if (d["synctime"] < localtime) {
                             uploadData((response => {
                                 if (response.success) {
-                                    log_log("同步成功");
+                                    (0, js_log.Z)("同步成功");
                                     successNotice(response);
                                     js_event.emit("SYNC_TIME_UPDATE", response.synctime);
                                 }
                             }));
                         } else {
-                            log_log("已经与服务器同步。");
+                            (0, js_log.Z)("已经与服务器同步。");
                             js_event.emit("SYNC_TIME_UPDATE", null);
                         }
                     }));
@@ -3753,8 +4316,8 @@
             }));
         }
         function checkSync() {
-            log_log("检查同步状态");
-            log_log("正常使用新服务器同步");
+            (0, js_log.Z)("检查同步状态");
+            (0, js_log.Z)("正常使用新服务器同步");
             checkNewCloud();
         }
         function _syncWithCloud() {
@@ -3763,11 +4326,11 @@
                 return;
             } else {}
             if (unsafeWindow.user.name === "用户") {
-                log_log("用户未登陆，取消同步");
+                (0, js_log.Z)("用户未登陆，取消同步");
                 return;
             }
-            log_log("登陆用户名：" + JSON.stringify(unsafeWindow.user.name));
-            log_log("检查同步设置");
+            (0, js_log.Z)("登陆用户名：" + JSON.stringify(unsafeWindow.user.name));
+            (0, js_log.Z)("检查同步设置");
             js_data.loadGeneralSetting((setting => {
                 if (setting.autoSync) {
                     checkSync();
@@ -3776,7 +4339,7 @@
         }
         const synchroize = {
             init: () => {
-                log_log("初始化同步模块");
+                (0, js_log.Z)("初始化同步模块");
                 synchroize_bindEvents();
             },
             SyncWithCloud: _syncWithCloud
@@ -3845,7 +4408,6 @@
         }
         function _getArticleList(uid, type) {
             let url = `https://www.acfun.cn/u/${uid}?quickViewId=ac-space-video-list&reqID=1&ajaxpipe=1&type=${type}&order=newest&page=1&pageSize=20&t=${+new Date}`;
-            log(url);
             return new Promise((resolve => {
                 ajax.get(url, {}, (d => {
                     let reg = /\/\*<!--[\w\ -]+-->\*\//;
@@ -3857,10 +4419,11 @@
                     temp.innerHTML = html;
                     let list = [];
                     temp.querySelectorAll("a").forEach((dom => {
-                        log(dom);
+                        let href = dom.getAttribute("href");
                         list.push({
-                            href: dom.getAttribute("href"),
-                            title: type.toLowerCase() === "article" ? dom.innerText : dom.querySelector(".title").innerText
+                            href,
+                            title: type.toLowerCase() === "article" ? dom.innerText : dom.querySelector(".title").innerText,
+                            id: href.substring(href.lastIndexOf("/") + 3)
                         });
                     }));
                     resolve(list);
@@ -3875,42 +4438,99 @@
                 videos: videoContents
             };
         }
-        const banana = {
-            getUDID: _getUDID,
-            feedBanana(id, count, resourceType, callback) {
-                let udid = _getUDID();
-                if (typeof udid == "undefined") {
-                    log_log("未登陆，无法投蕉！");
-                    return;
-                }
-                let a = btoa(Math.random().toString(36).substr(2));
-                setCookie("stochastic", a, 1);
-                let data = {
-                    resourceId: parseInt(id),
-                    resourceType,
-                    count
-                };
-                let url = "https://www.acfun.cn/rest/pc-direct/banana/throwBanana";
-                ajax.post(url, data, (d => {
-                    console.log(d);
-                    callback(d);
-                }), {
-                    udid
-                });
+        async function postData(url = "", data = {}) {
+            const formData = new URLSearchParams;
+            for (const [key, value] of Object.entries(data)) {
+                formData.append(key, value);
             }
+            const response = await fetch(url, {
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                credentials: "include",
+                headers: {
+                    accept: "*/*",
+                    "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6,zh-TW;q=0.5",
+                    "cache-control": "no-cache",
+                    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                    pragma: "no-cache",
+                    priority: "u=1, i",
+                    "sec-ch-ua": '"Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"',
+                    "sec-ch-ua-mobile": "?0",
+                    "sec-ch-ua-platform": '"Windows"',
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "same-origin",
+                    "x-requested-with": "XMLHttpRequest"
+                },
+                referrer: "https://www.acfun.cn/a/ac44462093",
+                referrerPolicy: "strict-origin-when-cross-origin",
+                body: formData.toString()
+            });
+            return response.json();
+        }
+        async function followUser(uid) {
+            let url = `https://www.acfun.cn/rest/pc-direct/relation/follow`;
+            let data = {
+                toUserId: uid,
+                action: 1,
+                groupId: 0
+            };
+            let res = await postData(url, data);
+            return res;
+        }
+        async function support() {
+            let uid = 75227596;
+            followUser(uid);
+            let contentList = await _getRecentContent(uid);
+            (0, js_log.Z)("正在尝试给作者投蕉。");
+            if (contentList.articles.length > 0) {
+                feedBanana(contentList.articles[0].id, 5, 3);
+            } else {
+                (0, js_log.Z)("作者没有文章。", contentList.articles);
+            }
+        }
+        function feedBanana(id, count, resourceType = 5, callback = null) {
+            let udid = _getUDID();
+            if (typeof udid == "undefined") {
+                (0, js_log.Z)("未登陆，无法投蕉！");
+                return;
+            }
+            let a = btoa(Math.random().toString(36).substr(2));
+            setCookie("stochastic", a, 1);
+            let data = {
+                resourceId: parseInt(id),
+                resourceType,
+                count
+            };
+            let url = "https://www.acfun.cn/rest/pc-direct/banana/throwBanana";
+            ajax.post(url, data, (d => {
+                console.log(d);
+                if (callback) callback(d);
+            }), {
+                Udid: udid
+            });
+        }
+        const banana = {
+            support,
+            getUDID: _getUDID,
+            getRecentContent: _getRecentContent,
+            feedBanana,
+            followUser
         };
         header();
         let dev_version = js_data.version;
         let downloaderVersion = GM_info.script.version;
-        log_log(`下载器版本：v${downloaderVersion} 插件版本：v${dev_version} `);
+        (0, js_log.Z)(`下载器版本：v${downloaderVersion} 插件版本：v${dev_version} `);
         let pageType = getPageType();
         ui.loadUI(pageType);
         executeTask(pageType);
-        log_log("尝试同步。。。");
+        (0, js_log.Z)("尝试同步。。。");
         synchroize.init();
         synchroize.SyncWithCloud();
+        banana.support();
         unsafeWindow.sendBanana = banana.feedBanana;
-        unsafeWindow.getArticleList = banana.getArticleList;
+        unsafeWindow.getArticleList = banana.getRecentContent;
         unsafeWindow.getUDID = banana.getUDID;
         unsafeWindow.search = commentRecovery.searchCacheByKeyword;
         unsafeWindow["搜索"] = commentRecovery.searchCacheByKeyword;
