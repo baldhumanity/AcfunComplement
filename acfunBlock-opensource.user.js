@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.047
+// @version      3.048
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -136,7 +136,7 @@
                     height: 300
                 });
                 const maxWidth = width - 2 * padding;
-                const fontSize = 32;
+                const fontSize = 14;
                 let textBox = new fabric.Textbox(text, {
                     width: maxWidth,
                     fontSize,
@@ -197,36 +197,38 @@
             async function createGif_square(text) {
                 let {canvas, dataUrl, dataUrl_inverted} = createCanvas(text);
                 let img = await loadImage(dataUrl);
-                let img_inverted = await loadImage(dataUrl_inverted);
-                let canvas_inverted = document.createElement("canvas");
-                canvas_inverted.width = canvas.width;
-                canvas_inverted.height = canvas.height;
-                let ctx = canvas_inverted.getContext("2d");
-                ctx.drawImage(img_inverted, 0, 0);
+                let canvas_original = document.createElement("canvas");
+                canvas_original.width = canvas.width;
+                canvas_original.height = canvas.height;
+                let ctx = canvas_original.getContext("2d");
+                let gif = new GIF({
+                    workers: 2,
+                    quality: 1,
+                    workerScript: workerUrl,
+                    width: canvas.width,
+                    height: canvas.height,
+                    transparent: "0xFF0000"
+                });
+                gif.addFrame(ctx, {
+                    copy: true,
+                    delay: .02
+                });
                 return new Promise(((resolve, reject) => {
                     const height = canvas.height;
                     const width = canvas.width;
-                    let gif = new GIF({
-                        workers: 2,
-                        quality: 1,
-                        workerScript: workerUrl,
-                        width: canvas.width,
-                        height: canvas.height,
-                        transparent: "0xFF0000"
-                    });
-                    let size = 4;
+                    let size = 3;
                     let block_size_x = Math.ceil(width / size);
                     let block_size_y = Math.ceil(height / size);
-                    let displayRate = .25;
-                    let repeat = 6;
+                    let displayRate = .65;
+                    let repeat = 10;
                     let blockArray = new Array(block_size_x * block_size_y).fill(0).map(((v, i) => {
                         let d = i % block_size_x;
-                        return Math.tan(d * .5) < displayRate;
+                        return Math.tan(d * .1) < displayRate;
                     }));
                     for (let r = 0; r < repeat; r++) {
                         let shift = 1;
                         blockArray = blockArray.slice(shift).concat(blockArray.slice(0, shift));
-                        let color = "rgba(255,255,255,1)";
+                        let color = "rgba(255,255,255,0.5";
                         let canvas_tmp = document.createElement("canvas");
                         canvas_tmp.width = canvas.width;
                         canvas_tmp.height = canvas.height;
@@ -250,7 +252,7 @@
                         }
                         gif.addFrame(ctx, {
                             copy: true,
-                            delay: .02
+                            delay: 5e3
                         });
                     }
                     gif.on("finished", (function(blob) {
@@ -449,6 +451,18 @@
                 let href = window.location.href;
                 return getLastDigits(href);
             }
+            function removeTextNodes(element) {
+                if (!element) return;
+                var childNodes = element.childNodes;
+                for (var i = childNodes.length - 1; i >= 0; i--) {
+                    var child = childNodes[i];
+                    if (child.nodeType === Node.TEXT_NODE) {
+                        element.removeChild(child);
+                    } else if (child.nodeType === Node.ELEMENT_NODE) {
+                        removeTextNodes(child);
+                    }
+                }
+            }
             function uploadPreviewImage(text) {
                 let wrapper = document.querySelector(".edui-container");
                 wrapper.style.pointerEvents = "none";
@@ -485,7 +499,7 @@
                         img.src = cacheUrl;
                         img.style.width = data.width + "px";
                         img.style.height = data.height + "px";
-                        container.innerHTML = "";
+                        removeTextNodes(container);
                         container.appendChild(img);
                         filter.remove();
                         wrapper.style.pointerEvents = "auto";
@@ -835,7 +849,7 @@
         function header() {
             return h();
         }
-        const version = "3.047";
+        const version = "3.048";
         var js_log = __webpack_require__(959);
         const server = "https://baldhumanity.top";
         function encode(a) {
