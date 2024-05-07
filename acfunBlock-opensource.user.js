@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.049
+// @version      3.050
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -43,7 +43,7 @@
             var _log__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(959);
             var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(349);
             const EdgeDetector = _util__WEBPACK_IMPORTED_MODULE_1__.Z.EdgeDetector;
-            const debug = 1;
+            const debug = 0;
             function AddCSS() {
                 const style = document.createElement("style");
                 document.head.appendChild(style);
@@ -312,7 +312,7 @@
                         let b = background_data[i + 2];
                         let a = background_data[i + 3];
                         let f = -30;
-                        if ((x + y) % 2 === 0) {
+                        if ((x + y) % 4 === 1 || (x + y) % 4 === 0 || (x + y) % 4 === 2) {
                             r = 255;
                             g = 255;
                             b = 255;
@@ -329,7 +329,7 @@
                         let b = background_data[i + 2];
                         let a = background_data[i + 3];
                         let c = b;
-                        if ((x + y) % 2 === 1) {
+                        if (true) {
                             c = 50;
                             r = c;
                             g = c;
@@ -1297,7 +1297,7 @@
         function header() {
             return h();
         }
-        const version = "3.049";
+        const version = "3.050";
         var util = __webpack_require__(349);
         var js_log = __webpack_require__(959);
         let unsafeWindow_alt = window;
