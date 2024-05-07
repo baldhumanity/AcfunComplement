@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.050
+// @version      3.051
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -132,7 +132,7 @@
             function createCanvas(text) {
                 text = text.trim();
                 let padding = 1;
-                let width = 450;
+                let width = 600;
                 let stripeColor = "rgba(255,255,255,0)";
                 let canvas = new fabric.Canvas("canvas", {
                     backgroundColor: "white",
@@ -140,11 +140,12 @@
                     height: 300
                 });
                 const maxWidth = width - 2 * padding;
-                const fontSize = 14;
+                const fontSize = 24;
                 let textBox = new fabric.Textbox(text, {
                     width: maxWidth,
                     fontSize,
-                    fontFamily: "AcFun Symbol,Helvetica Neue,Helvetica,Arial,pingfang SC,Microsoft Yahei,STHeiti,sans-serif",
+                    fontFamily: "AcFun Symbol,Helvetica Neue,Helvetica,Arial,SimSun,sans-serif",
+                    fontStyle: "italic",
                     fill: "black",
                     textAlign: "left",
                     splitByGrapheme: true,
@@ -157,8 +158,8 @@
                 let textHeight = Math.ceil(textBox.height + 2 * padding);
                 const tmp_canvas = document.createElement("canvas");
                 const tmp_ctx = tmp_canvas.getContext("2d");
-                tmp_ctx.font = fontSize + "px 楷体,AcFun Symbol,Helvetica Neue,Helvetica,Arial,pingfang SC,Microsoft Yahei,STHeiti,sans-serif";
-                let zoom = unsafeWindow.devicePixelRatio;
+                tmp_ctx.font = `italic ${fontSize}px 'AcFun Symbol,Helvetica Neue,Helvetica,Arial,SimSun,sans-serif'`;
+                let zoom = unsafeWindow.devicePixelRatio || 1;
                 const textWidth = Math.ceil(tmp_ctx.measureText(text).width * zoom);
                 (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("textHeight", textHeight);
                 canvas.setWidth(Math.min(textWidth + 2 * padding, width));
@@ -271,6 +272,9 @@
                 let edge_detector_right = new EdgeDetector(copy_canvas, [ "right" ]);
                 let edge_canvas_right = edge_detector_right.detectEdges();
                 let edge_ctx_right = edge_canvas_right.getContext("2d");
+                let c1 = 255;
+                let c2 = 45;
+                let c3 = 0;
                 (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("create bg");
                 let background_canvas = document.createElement("canvas");
                 background_canvas.width = canvas.width;
@@ -290,13 +294,13 @@
                 let edge_image_data_right = edge_ctx_right.getImageData(0, 0, canvas.width, canvas.height);
                 let edge_data_right = edge_image_data_right.data;
                 for (let i = 0; i < text_data.length; i += 4) {
-                    if (text_data[i + 0] < 250) {
+                    if (text_data[i] < 250) {
                         let r = background_data[i];
                         let g = background_data[i + 1];
                         let b = background_data[i + 2];
                         let a = background_data[i + 3];
-                        let f = 10;
-                        let c = Math.min(255, Math.max(0, r + (Math.random() - .5) * f * 2));
+                        let f = 100;
+                        let c = 255;
                         background_data[i] = Math.floor(c);
                         background_data[i + 1] = Math.floor(c);
                         background_data[i + 2] = Math.floor(c);
@@ -312,51 +316,76 @@
                         let b = background_data[i + 2];
                         let a = background_data[i + 3];
                         let f = -30;
-                        if ((x + y) % 4 === 1 || (x + y) % 4 === 0 || (x + y) % 4 === 2) {
-                            r = 255;
-                            g = 255;
-                            b = 255;
-                            a = 255;
+                        let c = 185;
+                        if (y % 3 === 1) {
+                            c = 255;
                         }
+                        if (x % 3 === 1) {
+                            c = 255;
+                        }
+                        r = c;
+                        g = c;
+                        b = c;
                         background_data[i] = Math.floor(r);
                         background_data[i + 1] = Math.floor(g);
                         background_data[i + 2] = Math.floor(b);
                         background_data[i + 3] = a;
-                    }
-                    if (edge_data_bottom[i] > 250) {
+                    } else if (edge_data_bottom[i] > 50) {
+                        let r = background_data[i];
+                        let g = background_data[i + 1];
+                        let b = background_data[i + 2];
+                        let a = background_data[i + 3];
+                        let c = c2;
+                        if (x % 2 === 1) {
+                            c = 100;
+                        } else if (y % 2 === 0) {
+                            c = 100;
+                        } else if (y % 2 === 1) {
+                            c = 255;
+                        }
+                        r = c;
+                        b = c * .85;
+                        g = c * .75;
+                        background_data[i] = Math.floor(r);
+                        background_data[i + 1] = Math.floor(g);
+                        background_data[i + 2] = Math.floor(b);
+                        background_data[i + 3] = 255;
+                    } else if (edge_data_right[i] > 200) {
                         let r = background_data[i];
                         let g = background_data[i + 1];
                         let b = background_data[i + 2];
                         let a = background_data[i + 3];
                         let c = b;
-                        if (true) {
-                            c = 50;
-                            r = c;
-                            g = c;
-                            b = c;
+                        if (y % 2 === 1 && x % 2 === 0) {
+                            c = c2;
                         }
+                        r = c;
+                        g = c;
+                        b = c;
+                        background_data[i] = Math.floor(r);
+                        background_data[i + 1] = Math.floor(g);
+                        background_data[i + 2] = Math.floor(b);
+                        background_data[i + 3] = 255;
+                    } else {
+                        let c = c1;
+                        if (y % 3 === 1 || y % 3 === 2) {
+                            c = c3 / 2;
+                        }
+                        if (x % 3 === 1 || x % 3 === 2) {
+                            c = c3;
+                        }
+                        let r = c;
+                        let g = c;
+                        let b = c;
                         background_data[i] = Math.floor(r);
                         background_data[i + 1] = Math.floor(g);
                         background_data[i + 2] = Math.floor(b);
                         background_data[i + 3] = 255;
                     }
-                    if (edge_data_right[i] > 250) {
-                        let r = background_data[i];
-                        let g = background_data[i + 1];
-                        let b = background_data[i + 2];
-                        let a = background_data[i + 3];
-                        let c = 0;
-                        if ((x + y) % 4 === 1) {
-                            c = 0;
-                            r = c;
-                            g = c;
-                            b = c;
-                        }
-                        background_data[i] = Math.floor(r);
-                        background_data[i + 1] = Math.floor(g);
-                        background_data[i + 2] = Math.floor(b);
-                        background_data[i + 3] = 255;
-                    }
+                    background_data[i] = 255 - background_data[i];
+                    background_data[i + 1] = 255 - background_data[i + 1];
+                    background_data[i + 2] = 255 - background_data[i + 2];
+                    background_data[i + 3] = 255;
                 }
                 background_ctx.putImageData(background_image_data, 0, 0);
                 let blob = await new Promise(((resolve, reject) => {
@@ -638,9 +667,7 @@
                     }
                 }
             }
-            function uploadPreviewImage(text) {
-                let wrapper = document.querySelector(".edui-container");
-                wrapper.style.pointerEvents = "none";
+            function appendFilter() {
                 let filter = document.createElement("div");
                 filter.style.position = "fixed";
                 filter.style.top = "0";
@@ -659,6 +686,11 @@
                 loading.style.zIndex = "1001";
                 loading.innerHTML = "正在生成...";
                 filter.appendChild(loading);
+                __webpack_require__.g.filter = filter;
+            }
+            function uploadPreviewImage(text) {
+                let wrapper = document.querySelector(".edui-container");
+                wrapper.style.pointerEvents = "none";
                 createCaptcha(text).then((async data => {
                     {
                         (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)(data);
@@ -711,8 +743,11 @@
                 send_btn.innerHTML = "加载中";
                 send_btn.style.pointerEvents = "none";
                 send_btn.onclick = function() {
-                    let text = getText();
-                    uploadPreviewImage(text);
+                    appendFilter();
+                    setTimeout((() => {
+                        let text = getText();
+                        uploadPreviewImage(text);
+                    }));
                 };
                 btn_wrapper.appendChild(send_btn);
                 __webpack_require__.g.send_btn = send_btn;
@@ -848,7 +883,7 @@
                     this.data = this.imageData.data;
                     this.grayscaleData = this.rgbaToGrayscale();
                     this.setDirections(directions);
-                    this.threshold = 254;
+                    this.threshold = 150;
                     this.reverse = reversed;
                 }
                 rgbaToGrayscale() {
@@ -1297,7 +1332,7 @@
         function header() {
             return h();
         }
-        const version = "3.050";
+        const version = "3.051";
         var util = __webpack_require__(349);
         var js_log = __webpack_require__(959);
         let unsafeWindow_alt = window;
