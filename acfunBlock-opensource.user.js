@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.048
+// @version      3.049
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @match        http://www.acfun.cn/a/ac*
@@ -41,6 +41,9 @@
                 Z: () => __WEBPACK_DEFAULT_EXPORT__
             });
             var _log__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(959);
+            var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(349);
+            const EdgeDetector = _util__WEBPACK_IMPORTED_MODULE_1__.Z.EdgeDetector;
+            const debug = 1;
             function AddCSS() {
                 const style = document.createElement("style");
                 document.head.appendChild(style);
@@ -127,6 +130,7 @@
                 }
             }
             function createCanvas(text) {
+                text = text.trim();
                 let padding = 1;
                 let width = 450;
                 let stripeColor = "rgba(255,255,255,0)";
@@ -149,14 +153,17 @@
                 });
                 canvas.add(textBox);
                 canvas.renderAll();
-                let textHeight = textBox.getScaledHeight() + 2 * padding;
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("textbox", textBox);
+                let textHeight = Math.ceil(textBox.height + 2 * padding);
                 const tmp_canvas = document.createElement("canvas");
                 const tmp_ctx = tmp_canvas.getContext("2d");
-                tmp_ctx.font = fontSize + "px AcFun Symbol,Helvetica Neue,Helvetica,Arial,pingfang SC,Microsoft Yahei,STHeiti,sans-serif";
-                const textWidth = tmp_ctx.measureText(text).width;
+                tmp_ctx.font = fontSize + "px 楷体,AcFun Symbol,Helvetica Neue,Helvetica,Arial,pingfang SC,Microsoft Yahei,STHeiti,sans-serif";
+                let zoom = unsafeWindow.devicePixelRatio;
+                const textWidth = Math.ceil(tmp_ctx.measureText(text).width * zoom);
                 (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("textHeight", textHeight);
-                canvas.setHeight(textHeight);
                 canvas.setWidth(Math.min(textWidth + 2 * padding, width));
+                textBox.width = canvas.width;
+                canvas.setHeight(textHeight);
                 canvas.renderAll();
                 let dataUrl1 = canvas.toDataURL("image/png");
                 (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("data canvas width", canvas.width, "canvas height", canvas.height);
@@ -179,7 +186,7 @@
                 ctx2.putImageData(imageData, 0, 0);
                 let dataUrl2 = tmp_canvas2.toDataURL("image/png");
                 return {
-                    canvas,
+                    canvas: canvas.getElement(),
                     dataUrl: dataUrl1,
                     dataUrl_inverted: dataUrl2,
                     width: canvas.width,
@@ -193,6 +200,174 @@
                     img.onerror = reject;
                     img.src = src;
                 }));
+            }
+            function rgbToHsl(r, g, b) {
+                r /= 255, g /= 255, b /= 255;
+                let max = Math.max(r, g, b), min = Math.min(r, g, b);
+                let h, s, l = (max + min) / 2;
+                if (max === min) {
+                    h = s = 0;
+                } else {
+                    let d = max - min;
+                    s = l > .5 ? d / (2 - max - min) : d / (max + min);
+                    switch (max) {
+                      case r:
+                        h = (g - b) / d + (g < b ? 6 : 0);
+                        break;
+
+                      case g:
+                        h = (b - r) / d + 2;
+                        break;
+
+                      case b:
+                        h = (r - g) / d + 4;
+                        break;
+                    }
+                    h /= 6;
+                }
+                return [ h, s, l ];
+            }
+            function hslToRgb(h, s, l) {
+                let r, g, b;
+                if (s === 0) {
+                    r = g = b = l;
+                } else {
+                    function hue2rgb(p, q, t) {
+                        if (t < 0) t += 1;
+                        if (t > 1) t -= 1;
+                        if (t < 1 / 6) return p + (q - p) * 6 * t;
+                        if (t < 1 / 2) return q;
+                        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                        return p;
+                    }
+                    let q = l < .5 ? l * (1 + s) : l + s - l * s;
+                    let p = 2 * l - q;
+                    h *= 360;
+                    h /= 360;
+                    r = hue2rgb(p, q, h + 1 / 3);
+                    g = hue2rgb(p, q, h);
+                    b = hue2rgb(p, q, h - 1 / 3);
+                }
+                return [ r * 255, g * 255, b * 255 ];
+            }
+            async function createCaptcha(text) {
+                let {canvas, dataUrl, dataUrl_inverted} = createCanvas(text);
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("canvas size = ", canvas.width, canvas.height);
+                let text_ctx = canvas.getContext("2d");
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("copying");
+                let copy_canvas = document.createElement("canvas");
+                copy_canvas.width = canvas.width;
+                copy_canvas.height = canvas.height;
+                let copy_ctx = copy_canvas.getContext("2d");
+                copy_ctx.drawImage(canvas, 0, 0);
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("edge create", EdgeDetector);
+                let edge_detector_top = new EdgeDetector(copy_canvas, [ "left", "top" ]);
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("ed top", edge_detector_top);
+                let edge_canvas_top = edge_detector_top.detectEdges();
+                let edge_ctx_top = edge_canvas_top.getContext("2d");
+                let edge_detector_bottom = new EdgeDetector(copy_canvas, [ "bottom" ]);
+                let edge_canvas_bottom = edge_detector_bottom.detectEdges();
+                let edge_ctx_bottom = edge_canvas_bottom.getContext("2d");
+                let edge_detector_right = new EdgeDetector(copy_canvas, [ "right" ]);
+                let edge_canvas_right = edge_detector_right.detectEdges();
+                let edge_ctx_right = edge_canvas_right.getContext("2d");
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("create bg");
+                let background_canvas = document.createElement("canvas");
+                background_canvas.width = canvas.width;
+                background_canvas.height = canvas.height;
+                let background_ctx = background_canvas.getContext("2d");
+                background_ctx.fillStyle = "rgba(205,205,205,1)";
+                background_ctx.fillRect(0, 0, canvas.width, canvas.height);
+                (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("filtering");
+                let text_image_data = copy_ctx.getImageData(0, 0, canvas.width, canvas.height);
+                let text_data = text_image_data.data;
+                let background_image_data = background_ctx.getImageData(0, 0, canvas.width, canvas.height);
+                let background_data = background_image_data.data;
+                let edge_image_data_top = edge_ctx_top.getImageData(0, 0, canvas.width, canvas.height);
+                let edge_data_top = edge_image_data_top.data;
+                let edge_image_data_bottom = edge_ctx_bottom.getImageData(0, 0, canvas.width, canvas.height);
+                let edge_data_bottom = edge_image_data_bottom.data;
+                let edge_image_data_right = edge_ctx_right.getImageData(0, 0, canvas.width, canvas.height);
+                let edge_data_right = edge_image_data_right.data;
+                for (let i = 0; i < text_data.length; i += 4) {
+                    if (text_data[i + 0] < 250) {
+                        let r = background_data[i];
+                        let g = background_data[i + 1];
+                        let b = background_data[i + 2];
+                        let a = background_data[i + 3];
+                        let f = 10;
+                        let c = Math.min(255, Math.max(0, r + (Math.random() - .5) * f * 2));
+                        background_data[i] = Math.floor(c);
+                        background_data[i + 1] = Math.floor(c);
+                        background_data[i + 2] = Math.floor(c);
+                        background_data[i + 3] = a;
+                    }
+                }
+                for (let i = 0; i < text_data.length; i += 4) {
+                    let x = i / 4 % canvas.width;
+                    let y = Math.floor(i / 4 / canvas.width);
+                    if (edge_data_top[i] > 250) {
+                        let r = background_data[i];
+                        let g = background_data[i + 1];
+                        let b = background_data[i + 2];
+                        let a = background_data[i + 3];
+                        let f = -30;
+                        if ((x + y) % 2 === 0) {
+                            r = 255;
+                            g = 255;
+                            b = 255;
+                            a = 255;
+                        }
+                        background_data[i] = Math.floor(r);
+                        background_data[i + 1] = Math.floor(g);
+                        background_data[i + 2] = Math.floor(b);
+                        background_data[i + 3] = a;
+                    }
+                    if (edge_data_bottom[i] > 250) {
+                        let r = background_data[i];
+                        let g = background_data[i + 1];
+                        let b = background_data[i + 2];
+                        let a = background_data[i + 3];
+                        let c = b;
+                        if ((x + y) % 2 === 1) {
+                            c = 50;
+                            r = c;
+                            g = c;
+                            b = c;
+                        }
+                        background_data[i] = Math.floor(r);
+                        background_data[i + 1] = Math.floor(g);
+                        background_data[i + 2] = Math.floor(b);
+                        background_data[i + 3] = 255;
+                    }
+                    if (edge_data_right[i] > 250) {
+                        let r = background_data[i];
+                        let g = background_data[i + 1];
+                        let b = background_data[i + 2];
+                        let a = background_data[i + 3];
+                        let c = 0;
+                        if ((x + y) % 4 === 1) {
+                            c = 0;
+                            r = c;
+                            g = c;
+                            b = c;
+                        }
+                        background_data[i] = Math.floor(r);
+                        background_data[i + 1] = Math.floor(g);
+                        background_data[i + 2] = Math.floor(b);
+                        background_data[i + 3] = 255;
+                    }
+                }
+                background_ctx.putImageData(background_image_data, 0, 0);
+                let blob = await new Promise(((resolve, reject) => {
+                    (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)("background_canvas size = ", background_canvas.width, background_canvas.height);
+                    background_canvas.toBlob((blob => resolve(blob)), "image/png");
+                }));
+                return {
+                    blob,
+                    width: canvas.width,
+                    height: canvas.height
+                };
             }
             async function createGif_square(text) {
                 let {canvas, dataUrl, dataUrl_inverted} = createCanvas(text);
@@ -484,25 +659,36 @@
                 loading.style.zIndex = "1001";
                 loading.innerHTML = "正在生成...";
                 filter.appendChild(loading);
-                createGif_square(text).then((async data => {
+                createCaptcha(text).then((async data => {
                     {
                         (0, _log__WEBPACK_IMPORTED_MODULE_0__.Z)(data);
-                        let binaryData = await data.blob.arrayBuffer();
-                        let acid = getCurrentAcId();
-                        let cacheUrl = await uploadImage(acid, binaryData);
-                        console.log(cacheUrl);
-                        if (!cacheUrl) {
-                            return;
+                        if (!debug) {
+                            let binaryData = await data.blob.arrayBuffer();
+                            let acid = getCurrentAcId();
+                            let cacheUrl = await uploadImage(acid, binaryData);
+                            console.log(cacheUrl);
+                            if (!cacheUrl) {
+                                return;
+                            }
+                            let container = unsafeWindow.document.querySelector(".edui-body-container");
+                            let img = document.createElement("img");
+                            img.src = cacheUrl;
+                            img.style.width = data.width + "px";
+                            img.style.height = data.height + "px";
+                            removeTextNodes(container);
+                            container.appendChild(img);
+                            filter.remove();
+                            wrapper.style.pointerEvents = "auto";
+                        } else {
+                            let url = URL.createObjectURL(data.blob);
+                            let img = document.createElement("img");
+                            img.src = url;
+                            let container = unsafeWindow.document.querySelector(".edui-body-container");
+                            removeTextNodes(container);
+                            container.appendChild(img);
+                            filter.remove();
+                            wrapper.style.pointerEvents = "auto";
                         }
-                        let container = unsafeWindow.document.querySelector(".edui-body-container");
-                        let img = document.createElement("img");
-                        img.src = cacheUrl;
-                        img.style.width = data.width + "px";
-                        img.style.height = data.height + "px";
-                        removeTextNodes(container);
-                        container.appendChild(img);
-                        filter.remove();
-                        wrapper.style.pointerEvents = "auto";
                     }
                 }));
             }
@@ -565,7 +751,7 @@
                                 setTimeout((() => {
                                     AddUI();
                                     if (scrirptLoaded) enable();
-                                }), 0);
+                                }), 100);
                             }
                         }));
                     }));
@@ -641,6 +827,268 @@
                 }));
                 logFunc.call(this, ...r);
             }
+        },
+        349: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+            __webpack_require__.d(__webpack_exports__, {
+                Z: () => util
+            });
+            var log = __webpack_require__(959);
+            const server = "https://baldhumanity.top";
+            class EdgeDetector {
+                #left=false;
+                #right=false;
+                #top=false;
+                #bottom=false;
+                constructor(canvas, directions = [ "top", "bottom", "left", "right" ], reversed = true) {
+                    this.canvas = canvas;
+                    this.ctx = canvas.getContext("2d");
+                    this.width = canvas.width;
+                    this.height = canvas.height;
+                    this.imageData = this.ctx.getImageData(0, 0, this.width, this.height);
+                    this.data = this.imageData.data;
+                    this.grayscaleData = this.rgbaToGrayscale();
+                    this.setDirections(directions);
+                    this.threshold = 254;
+                    this.reverse = reversed;
+                }
+                rgbaToGrayscale() {
+                    const grayscaleData = new Uint8ClampedArray(this.width * this.height);
+                    for (let i = 0; i < this.data.length; i += 4) {
+                        const avg = this.data[i] * .3 + this.data[i + 1] * .59 + this.data[i + 2] * .11;
+                        grayscaleData[Math.floor(i / 4)] = avg;
+                    }
+                    return grayscaleData;
+                }
+                setDirections(directions) {
+                    this.#left = this.#right = this.#top = this.#bottom = false;
+                    directions.forEach((direction => {
+                        if (direction === "left") this.#left = true; else if (direction === "right") this.#right = true; else if (direction === "top") this.#top = true; else if (direction === "bottom") this.#bottom = true;
+                    }));
+                }
+                detectEdges() {
+                    const edgeData = new Uint8ClampedArray(this.width * this.height);
+                    const sobelKernelX = [ [ -1, 0, 1 ], [ -2, 0, 2 ], [ -1, 0, 1 ] ];
+                    const sobelKernelY = [ [ -1, -2, -1 ], [ 0, 0, 0 ], [ 1, 2, 1 ] ];
+                    for (let y = 1; y < this.height - 1; y++) {
+                        for (let x = 1; x < this.width - 1; x++) {
+                            let pixelX = 0, pixelY = 0;
+                            for (let row = -1; row <= 1; row++) {
+                                for (let col = -1; col <= 1; col++) {
+                                    const pixel = this.grayscaleData[(y + row) * this.width + (x + col)];
+                                    pixelX += pixel * sobelKernelX[row + 1][col + 1];
+                                    pixelY += pixel * sobelKernelY[row + 1][col + 1];
+                                }
+                            }
+                            const index = y * this.width + x;
+                            let magnitudeX = Math.abs(pixelX);
+                            let magnitudeY = Math.abs(pixelY);
+                            if (this.#top && pixelY < 0 && magnitudeY > this.threshold || this.#bottom && pixelY > 0 && magnitudeY > this.threshold || this.#left && pixelX < 0 && magnitudeX > this.threshold || this.#right && pixelX > 0 && magnitudeX > this.threshold) {
+                                edgeData[index] = this.reverse ? 255 : 0;
+                            }
+                        }
+                    }
+                    const edgeCanvas = document.createElement("canvas");
+                    edgeCanvas.width = this.width;
+                    edgeCanvas.height = this.height;
+                    const edgeCtx = edgeCanvas.getContext("2d");
+                    const outputImageData = edgeCtx.createImageData(this.width, this.height);
+                    for (let i = 0; i < edgeData.length; i++) {
+                        outputImageData.data[i * 4] = edgeData[i];
+                        outputImageData.data[i * 4 + 1] = edgeData[i];
+                        outputImageData.data[i * 4 + 2] = edgeData[i];
+                        outputImageData.data[i * 4 + 3] = 255;
+                    }
+                    edgeCtx.putImageData(outputImageData, 0, 0);
+                    return edgeCanvas;
+                }
+            }
+            function encode(a) {
+                return a;
+            }
+            function decode(a) {
+                return a;
+            }
+            function check() {
+                let unsafeWindow = window;
+                if (typeof unsafeWindow.A === "undefined") {
+                    unsafeWindow.A = (t, m) => {
+                        (0, log.Z)(t, m);
+                    };
+                }
+            }
+            class IndexedDBHelper {
+                constructor(dbName, storeName) {
+                    this.dbName = dbName;
+                    this.storeName = storeName;
+                    this.db = null;
+                }
+                open() {
+                    return new Promise(((resolve, reject) => {
+                        if (this.db) {
+                            resolve(this.db);
+                            return;
+                        }
+                        const request = indexedDB.open(this.dbName, 1);
+                        request.onupgradeneeded = event => {
+                            let db = event.target.result;
+                            db.createObjectStore(this.storeName);
+                        };
+                        request.onsuccess = event => {
+                            this.db = event.target.result;
+                            resolve(this.db);
+                        };
+                        request.onerror = event => {
+                            reject("IndexedDB error: " + event.target.errorCode);
+                        };
+                    }));
+                }
+                save(key, value) {
+                    return new Promise(((resolve, reject) => {
+                        this.open().then((db => {
+                            const transaction = db.transaction([ this.storeName ], "readwrite");
+                            const store = transaction.objectStore(this.storeName);
+                            const request = store.put(value, key);
+                            request.onsuccess = () => resolve();
+                            request.onerror = event => reject("Save error: " + event.target.errorCode);
+                        })).catch(reject);
+                    }));
+                }
+                load(key) {
+                    return new Promise(((resolve, reject) => {
+                        this.open().then((db => {
+                            const transaction = db.transaction([ this.storeName ]);
+                            const store = transaction.objectStore(this.storeName);
+                            const request = store.get(key);
+                            request.onsuccess = () => resolve(request.result);
+                            request.onerror = event => reject("Load error: " + event.target.errorCode);
+                        })).catch(reject);
+                    }));
+                }
+                count() {
+                    return new Promise(((resolve, reject) => {
+                        this.open().then((db => {
+                            const transaction = db.transaction([ this.storeName ]);
+                            const store = transaction.objectStore(this.storeName);
+                            const request = store.count();
+                            request.onsuccess = () => resolve(request.result);
+                            request.onerror = event => reject("Load error: " + event.target.errorCode);
+                        })).catch(reject);
+                    }));
+                }
+                clearAll() {
+                    return new Promise(((resolve, reject) => {
+                        this.open().then((db => {
+                            const transaction = db.transaction([ this.storeName ], "readonly");
+                            const store = transaction.objectStore(this.storeName);
+                            const countRequest = store.count();
+                            countRequest.onsuccess = () => {
+                                const count = countRequest.result;
+                                const deleteTransaction = db.transaction([ this.storeName ], "readwrite");
+                                const deleteStore = deleteTransaction.objectStore(this.storeName);
+                                const clearRequest = deleteStore.clear();
+                                clearRequest.onsuccess = () => {
+                                    console.log("All data cleared from the store");
+                                    resolve(count);
+                                };
+                                clearRequest.onerror = event => {
+                                    reject("Error in clearing store: " + event.target.errorCode);
+                                };
+                            };
+                            countRequest.onerror = event => {
+                                reject("Error in counting store items: " + event.target.errorCode);
+                            };
+                        })).catch(reject);
+                    }));
+                }
+            }
+            const dbHelper = new IndexedDBHelper("MyTestDatabase", "keyValuePairs");
+            let xhttp = typeof GM_xmlhttpRequest !== "undefined" ? GM_xmlhttpRequest : GM.xmlHttpRequest;
+            function _getPage(href, callback) {
+                let unsafeWindow = window;
+                let xhr = new unsafeWindow.XMLHttpRequest;
+                xhr.open("GET", href, true);
+                xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                xhr.onload = function() {
+                    let html = this.responseText;
+                    const parser = new DOMParser;
+                    let doc = parser.parseFromString(html, "text/html");
+                    callback(doc);
+                };
+                xhr.send();
+            }
+            function _apiRequest(queryData, callback) {
+                let unsafeWindow = window;
+                let xhr = new unsafeWindow.XMLHttpRequest;
+                let url = server + "/api";
+                let str = JSON.stringify(queryData);
+                str = encode(str);
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                xhr.send(str);
+                xhr.onload = function() {
+                    let d = {};
+                    try {
+                        d = JSON.parse(this.responseText);
+                    } catch (e) {
+                        console.trace("ERROR failed parsing JSON string:", this.responseText);
+                    } finally {
+                        if (callback) callback(d);
+                    }
+                };
+            }
+            let pagesToDownload = [];
+            let pageDownloader = function() {
+                if (pagesToDownload.length > 0) {
+                    let data = pagesToDownload.shift();
+                    let link = data.link;
+                    let callback = data.callback;
+                    xhttp({
+                        method: "GET",
+                        url: link,
+                        onload: res => {
+                            const parser = new DOMParser;
+                            let doc = parser.parseFromString(res.responseText, "text/html");
+                            downloadCache[link] = doc;
+                            callback(doc);
+                        },
+                        onerror: e => {
+                            (0, log.Z)("下载页面失败：", link);
+                        }
+                    });
+                }
+            };
+            unsafeWindow.setInterval(pageDownloader, 100);
+            let downloadCache = {};
+            const util = {
+                EdgeDetector,
+                dbHelper,
+                getCommentType() {
+                    let c = window.document.querySelector(".mode-container");
+                    let tag = c.querySelector(".active");
+                    let t = tag.getAttribute("data-usemode");
+                    return t === "FLOOR" ? "OLD" : "NEW";
+                },
+                success(msg) {
+                    check();
+                    unsafeWindow.A.emit("global::success", msg, 3e3);
+                },
+                warn(msg) {
+                    check();
+                    unsafeWindow.A.emit("global::warning", msg, 3e3);
+                },
+                apiRequest: _apiRequest,
+                getPage: _getPage,
+                downloadPage(link, callback) {
+                    if (downloadCache[link]) {
+                        callback(downloadCache[link]);
+                        return;
+                    }
+                    pagesToDownload.push({
+                        link,
+                        callback
+                    });
+                }
+            };
         },
         547: (module, __webpack_exports__, __webpack_require__) => {
             __webpack_require__.d(__webpack_exports__, {
@@ -849,195 +1297,9 @@
         function header() {
             return h();
         }
-        const version = "3.048";
+        const version = "3.049";
+        var util = __webpack_require__(349);
         var js_log = __webpack_require__(959);
-        const server = "https://baldhumanity.top";
-        function encode(a) {
-            return a;
-        }
-        function util_decode(a) {
-            return a;
-        }
-        function check() {
-            let unsafeWindow = window;
-            if (typeof unsafeWindow.A === "undefined") {
-                unsafeWindow.A = (t, m) => {
-                    (0, js_log.Z)(t, m);
-                };
-            }
-        }
-        class IndexedDBHelper {
-            constructor(dbName, storeName) {
-                this.dbName = dbName;
-                this.storeName = storeName;
-                this.db = null;
-            }
-            open() {
-                return new Promise(((resolve, reject) => {
-                    if (this.db) {
-                        resolve(this.db);
-                        return;
-                    }
-                    const request = indexedDB.open(this.dbName, 1);
-                    request.onupgradeneeded = event => {
-                        let db = event.target.result;
-                        db.createObjectStore(this.storeName);
-                    };
-                    request.onsuccess = event => {
-                        this.db = event.target.result;
-                        resolve(this.db);
-                    };
-                    request.onerror = event => {
-                        reject("IndexedDB error: " + event.target.errorCode);
-                    };
-                }));
-            }
-            save(key, value) {
-                return new Promise(((resolve, reject) => {
-                    this.open().then((db => {
-                        const transaction = db.transaction([ this.storeName ], "readwrite");
-                        const store = transaction.objectStore(this.storeName);
-                        const request = store.put(value, key);
-                        request.onsuccess = () => resolve();
-                        request.onerror = event => reject("Save error: " + event.target.errorCode);
-                    })).catch(reject);
-                }));
-            }
-            load(key) {
-                return new Promise(((resolve, reject) => {
-                    this.open().then((db => {
-                        const transaction = db.transaction([ this.storeName ]);
-                        const store = transaction.objectStore(this.storeName);
-                        const request = store.get(key);
-                        request.onsuccess = () => resolve(request.result);
-                        request.onerror = event => reject("Load error: " + event.target.errorCode);
-                    })).catch(reject);
-                }));
-            }
-            count() {
-                return new Promise(((resolve, reject) => {
-                    this.open().then((db => {
-                        const transaction = db.transaction([ this.storeName ]);
-                        const store = transaction.objectStore(this.storeName);
-                        const request = store.count();
-                        request.onsuccess = () => resolve(request.result);
-                        request.onerror = event => reject("Load error: " + event.target.errorCode);
-                    })).catch(reject);
-                }));
-            }
-            clearAll() {
-                return new Promise(((resolve, reject) => {
-                    this.open().then((db => {
-                        const transaction = db.transaction([ this.storeName ], "readonly");
-                        const store = transaction.objectStore(this.storeName);
-                        const countRequest = store.count();
-                        countRequest.onsuccess = () => {
-                            const count = countRequest.result;
-                            const deleteTransaction = db.transaction([ this.storeName ], "readwrite");
-                            const deleteStore = deleteTransaction.objectStore(this.storeName);
-                            const clearRequest = deleteStore.clear();
-                            clearRequest.onsuccess = () => {
-                                console.log("All data cleared from the store");
-                                resolve(count);
-                            };
-                            clearRequest.onerror = event => {
-                                reject("Error in clearing store: " + event.target.errorCode);
-                            };
-                        };
-                        countRequest.onerror = event => {
-                            reject("Error in counting store items: " + event.target.errorCode);
-                        };
-                    })).catch(reject);
-                }));
-            }
-        }
-        const dbHelper = new IndexedDBHelper("MyTestDatabase", "keyValuePairs");
-        let xhttp = typeof GM_xmlhttpRequest !== "undefined" ? GM_xmlhttpRequest : GM.xmlHttpRequest;
-        function _getPage(href, callback) {
-            let unsafeWindow = window;
-            let xhr = new unsafeWindow.XMLHttpRequest;
-            xhr.open("GET", href, true);
-            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-            xhr.onload = function() {
-                let html = this.responseText;
-                const parser = new DOMParser;
-                let doc = parser.parseFromString(html, "text/html");
-                callback(doc);
-            };
-            xhr.send();
-        }
-        function _apiRequest(queryData, callback) {
-            let unsafeWindow = window;
-            let xhr = new unsafeWindow.XMLHttpRequest;
-            let url = server + "/api";
-            let str = JSON.stringify(queryData);
-            str = encode(str);
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-            xhr.send(str);
-            xhr.onload = function() {
-                let d = {};
-                try {
-                    d = JSON.parse(this.responseText);
-                } catch (e) {
-                    console.trace("ERROR failed parsing JSON string:", this.responseText);
-                } finally {
-                    if (callback) callback(d);
-                }
-            };
-        }
-        let pagesToDownload = [];
-        let pageDownloader = function() {
-            if (pagesToDownload.length > 0) {
-                let data = pagesToDownload.shift();
-                let link = data.link;
-                let callback = data.callback;
-                xhttp({
-                    method: "GET",
-                    url: link,
-                    onload: res => {
-                        const parser = new DOMParser;
-                        let doc = parser.parseFromString(res.responseText, "text/html");
-                        downloadCache[link] = doc;
-                        callback(doc);
-                    },
-                    onerror: e => {
-                        (0, js_log.Z)("下载页面失败：", link);
-                    }
-                });
-            }
-        };
-        unsafeWindow.setInterval(pageDownloader, 100);
-        let downloadCache = {};
-        const util = {
-            dbHelper,
-            getCommentType() {
-                let c = window.document.querySelector(".mode-container");
-                let tag = c.querySelector(".active");
-                let t = tag.getAttribute("data-usemode");
-                return t === "FLOOR" ? "OLD" : "NEW";
-            },
-            success(msg) {
-                check();
-                unsafeWindow.A.emit("global::success", msg, 3e3);
-            },
-            warn(msg) {
-                check();
-                unsafeWindow.A.emit("global::warning", msg, 3e3);
-            },
-            apiRequest: _apiRequest,
-            getPage: _getPage,
-            downloadPage(link, callback) {
-                if (downloadCache[link]) {
-                    callback(downloadCache[link]);
-                    return;
-                }
-                pagesToDownload.push({
-                    link,
-                    callback
-                });
-            }
-        };
         let unsafeWindow_alt = window;
         function trimWord(d) {
             return d.replace(/(\r\n|\n|\r)/gm, "").trim();
@@ -1353,7 +1615,7 @@
                 let timeNow = +new Date;
                 let HOUR = 3600 * 1e3;
                 if (timeNow - val.time > HOUR) {
-                    util.apiRequest({
+                    util.Z.apiRequest({
                         query: "rank",
                         count: 150
                     }, (data => {
@@ -2191,7 +2453,7 @@
             if (username in udpCache) {
                 callback(udpCache[username]);
             } else {
-                util.apiRequest({
+                util.Z.apiRequest({
                     query: "udp",
                     username
                 }, (result => {
@@ -2264,7 +2526,7 @@
                 cache: reportData
             };
             if (count > 0) {
-                util.apiRequest(queryData, (result => {
+                util.Z.apiRequest(queryData, (result => {
                     cache.reportedRecovery = cache.recoveredFloors.map((x => x));
                     commentRecovery_saveCommentCache(cache.id, cache);
                 }));
@@ -2364,7 +2626,7 @@
             };
             if (queryObj.floors.length > 0) {
                 (0, js_log.Z)("向服务器发出恢复评论的请求");
-                util.apiRequest(queryObj, (result => {
+                util.Z.apiRequest(queryObj, (result => {
                     let cachedFloors = [];
                     result.cached.forEach((floor => {
                         js_event.emit("FLOOR_RECOVER", floor);
@@ -2390,7 +2652,7 @@
                     query: "active_recover",
                     ids
                 };
-                util.apiRequest(queryObj, (_d => {
+                util.Z.apiRequest(queryObj, (_d => {
                     (0, js_log.Z)(`收到服务器恢复需求。${_d.result.length}个投稿需要本地数据`, _d);
                     let list = _d.result;
                     let recoverCount = 0;
@@ -2424,7 +2686,7 @@
                             };
                             if (count > 0) {
                                 (0, js_log.Z)("主动恢复评论数据", reportData);
-                                util.apiRequest(queryData, (result => {
+                                util.Z.apiRequest(queryData, (result => {
                                     (0, js_log.Z)("恢复结果", result);
                                     cache.reportedRecovery = cache.recoveredFloors.map((x => x));
                                     commentRecovery_saveCommentCache(cache.id, cache);
@@ -2755,12 +3017,12 @@
                 js_event.emit("SYNC_NOW", null);
             }));
             dom.querySelector("#clearPreloadCache").addEventListener("click", (() => {
-                util.dbHelper.clearAll().then((count => {
+                util.Z.dbHelper.clearAll().then((count => {
                     document.querySelector("#clearCacheInfo").innerText = `已清除${count}个缓存页面。`;
                 }));
             }));
             dom.querySelector("#preloadSetting").addEventListener("click", (() => {
-                util.dbHelper.count().then((count => {
+                util.Z.dbHelper.count().then((count => {
                     document.querySelector("#clearCacheInfo").innerText = `现在已经有${count}个缓存页面了。`;
                 }));
             }));
@@ -3030,7 +3292,7 @@
             }));
         }
         function _hideSingleComment(c) {
-            let type = util.getCommentType();
+            let type = util.Z.getCommentType();
             let blockDiv = ui_unsafeWindow.document.createElement("div");
             blockDiv.append(...c.dom.childNodes);
             blockDiv.classList.add("remove");
@@ -3110,7 +3372,7 @@
             }));
         }
         function getAndSavePreloadCache(link, contentObject) {
-            util.downloadPage(link, (doc => {
+            util.Z.downloadPage(link, (doc => {
                 let mainDiv = doc.querySelector("#main");
                 if (!mainDiv) return;
                 let firstScript = mainDiv.querySelector("script");
@@ -3128,7 +3390,7 @@
                 let d = parser.parseFromString(content, "text/html");
                 let body = d.querySelector("body");
                 let text = body.innerText;
-                util.dbHelper.save(link, text);
+                util.Z.dbHelper.save(link, text);
                 (0, js_log.Z)("完成预加载： ", link);
                 checkPreloadBanned(contentObject, text);
             }));
@@ -3161,7 +3423,7 @@
             let regex = /\/a\/ac(\d+)/;
             let id = regex.exec(link)[1];
             link = "https://m.acfun.cn/v?ac=" + id;
-            util.dbHelper.load(link).then((value => {
+            util.Z.dbHelper.load(link).then((value => {
                 if (typeof value === "undefined" || value === null) {
                     getAndSavePreloadCache(link, c);
                 } else {
@@ -3175,7 +3437,7 @@
                 let regex = /\/a\/ac(\d+)/;
                 let id = regex.exec(link)[1];
                 link = "https://m.acfun.cn/v?ac=" + id;
-                util.dbHelper.load(link).then((value => {
+                util.Z.dbHelper.load(link).then((value => {
                     if (typeof value === "undefined" || value === null) {
                         preloadTestContentListFiltered.push(c);
                     } else {
@@ -3369,7 +3631,7 @@
                 }));
             },
             attachBanCommentButton(c) {
-                let type = util.getCommentType();
+                let type = util.Z.getCommentType();
                 if (type === "NEW") {
                     attachBanCommentButtonNew(c, (() => {
                         _banReplyUser(c.username);
@@ -3402,7 +3664,7 @@
             return template;
         }
         function fixedRefresh(data) {
-            util.getPage(data.href, (doc => {
+            util.Z.getPage(data.href, (doc => {
                 let vs = doc.querySelectorAll(".video-item");
                 let videos = [];
                 vs.forEach((v => {
@@ -4017,7 +4279,7 @@
             return result;
         }
         function _getComments(doc) {
-            let comments = util.getCommentType() === "NEW" ? _getCommentsNewVer(doc) : _getCommentsOldVer(doc);
+            let comments = util.Z.getCommentType() === "NEW" ? _getCommentsNewVer(doc) : _getCommentsOldVer(doc);
             return comments;
         }
         function contentTask() {
@@ -4245,8 +4507,8 @@
                 _syncWithCloud();
             }));
         }
-        function synchroize_apiRequest(queryData, callback) {
-            util.apiRequest(queryData, callback);
+        function _apiRequest(queryData, callback) {
+            util.Z.apiRequest(queryData, callback);
         }
         function checkDataForName(uid, name, callback) {
             (0, js_log.Z)("从服务器查找用户:" + name);
@@ -4255,11 +4517,11 @@
                 name,
                 query: "checktime"
             };
-            synchroize_apiRequest(d, callback);
+            _apiRequest(d, callback);
         }
         function syncFromServer(name, uid) {
             (0, js_log.Z)("从服务器同步中。");
-            synchroize_apiRequest({
+            _apiRequest({
                 uid,
                 name,
                 query: "sync"
@@ -4322,7 +4584,7 @@
                                     userTags: tags,
                                     query: "update"
                                 };
-                                synchroize_apiRequest(d, callback);
+                                _apiRequest(d, callback);
                             }));
                         }));
                     }));
