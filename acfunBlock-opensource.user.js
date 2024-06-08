@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.053
+// @version      3.054
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @exclude      https://www.acfun.cn/login/*
@@ -245,7 +245,7 @@
         function header() {
             return h();
         }
-        const version = "3.053";
+        const version = "3.054";
         let logFunc = console.log;
         let errorFunc = console.error;
         let warnFunc = console.warn;
@@ -555,8 +555,6 @@
             const data = await response.json();
             const endpointList = data.info.httpEndpointList;
             const token = data.info.token;
-            console.log("data, got token=", token);
-            console.log("data, endpoints ", endpointList);
             const firstEndpoint = endpointList[0];
             let fragmentId = 0;
             let dataUploaded = 0;
@@ -4213,7 +4211,6 @@
                 chunkSizes.push(chunkSize);
                 i++;
             }
-            log_log("chunkSizes", chunkSizes);
             offset = 0;
             while (offset < bytes.byteLength) {
                 let chunkSize = getMaxChunkSize(chunks.length) - headerLength - 4;
@@ -4226,13 +4223,11 @@
                     chunk = new Uint8Array([ ...imageCache.maskImageBytes, ...chunk ]);
                     chunks.push(chunk);
                 }
-                log_log("chunk", chunk_count, "size", chunk.byteLength);
                 let chunkBuffer = chunk.buffer;
                 let url = await util.uploadImage(acId, chunkBuffer, ((i, total_count) => {
                     let currentChunkSize = chunkSizes[chunk_count];
                     let currentChunkOffset = i / total_count * currentChunkSize;
                     let progress = Math.ceil((currentChunkOffset + offset) / totalSize * 100);
-                    log_log(currentChunkSize, currentChunkOffset, progress);
                     setUploadProgress(progress);
                 }));
                 offset += chunkSize;
@@ -4595,13 +4590,17 @@
             footer.innerText = "为了保护发布者的安全和你的合法权益，如果这是违规内容，请点击1.举报删帖;2.找UP主删帖。被删除的里区内容不会被插件恢复。\n插件作者不负责任何因使用插件而引起的法律问题。";
             let contentType = info.type;
             if (contentType.includes("image")) {
+                let a = document.createElement("a");
                 let url = URL.createObjectURL(new Blob([ data ], {
                     type: info.type
                 }));
+                a.href = url;
+                a.target = "_blank";
                 let img = document.createElement("img");
+                a.appendChild(img);
                 img.onload = () => {
                     commentContent.removeChild(loading);
-                    wrapper.appendChild(img);
+                    wrapper.appendChild(a);
                     wrapper.appendChild(footer);
                 };
                 img.src = url;
