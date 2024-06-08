@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.054
+// @version      3.056
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @exclude      https://www.acfun.cn/login/*
@@ -245,7 +245,7 @@
         function header() {
             return h();
         }
-        const version = "3.054";
+        const version = "3.056";
         let logFunc = console.log;
         let errorFunc = console.error;
         let warnFunc = console.warn;
@@ -1921,7 +1921,6 @@
                 } else {
                     log_log("对比评论缓存是否需要更新。");
                     _getPageLastReply(id, ((lastReply, totalCount) => {
-                        log_log("lastreply", lastReply, cache);
                         if (!lastReply) return;
                         let t1 = parseInt(lastReply.timestamp);
                         let t2 = parseInt(cache.lastReplyTime);
@@ -4008,7 +4007,6 @@
                         height: img.height
                     };
                 };
-                log_log(imageCache);
             }
         }
         function innerACFun_AddCSS() {
@@ -4465,10 +4463,7 @@
         async function extractFileFromImages(imageUrlList) {
             let imageList = [];
             for (let i = 0; i < imageUrlList.length; i++) {
-                let start = performance.now();
                 let blob = await fetchImage(imageUrlList[i]);
-                let end = performance.now();
-                log_log(i, "fetch time", end - start);
                 imageList.push(await fileToByteArray(blob));
             }
             let result = [];
@@ -4573,12 +4568,14 @@
         }
         async function _innerSingleTask(c, urls) {
             let commentContent = c.dom.querySelector(".comment-content");
+            if (!commentContent) {
+                commentContent = c.dom.querySelector(".area-comment-des-content");
+            }
             commentContent.innerHTML = "";
             let loading = document.createElement("div");
             loading.innerText = "里区内容加载中...";
             commentContent.appendChild(loading);
             let {info, data} = await innerACFun.extractFileFromImages(urls);
-            log_log("里区内容加载完成", info);
             let wrapper = document.createElement("div");
             wrapper.classList.add("inner-content-wrapper");
             wrapper.innerHTML = `<p><b>里区内容</b><span style="margin-left: 3px; color: #9a9a9a">仅屏蔽插件用户可见:</span></p>`;
@@ -4639,7 +4636,7 @@
             for (let i = 0; i < comments.length; i++) {
                 let c = comments[i];
                 if (c.dom.hasOwnProperty("commentData")) {
-                    let imgs = c.dom.querySelectorAll("img");
+                    let imgs = c.dom.querySelectorAll("img[alt='点击以浏览图像']");
                     if (imgs.length === 0) continue;
                     let firstImg = imgs[0];
                     let src = firstImg.src;
@@ -4655,13 +4652,10 @@
                     });
                 }
             }
-            log_log("需要加载里区内容:", todo);
             for (let i = 0; i < todo.length; i++) {
                 let c = todo[i].c;
                 let urls = todo[i].list;
-                _innerSingleTask(c, urls).then((data => {
-                    log_log("成功加载里区内容:", data);
-                }));
+                _innerSingleTask(c, urls).then((data => {}));
             }
         }
         function contentTask() {
