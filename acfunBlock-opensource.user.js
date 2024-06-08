@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.052
+// @version      3.053
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @exclude      https://www.acfun.cn/login/*
@@ -245,7 +245,7 @@
         function header() {
             return h();
         }
-        const version = "3.052";
+        const version = "3.053";
         let logFunc = console.log;
         let errorFunc = console.error;
         let warnFunc = console.warn;
@@ -1923,6 +1923,8 @@
                 } else {
                     log_log("对比评论缓存是否需要更新。");
                     _getPageLastReply(id, ((lastReply, totalCount) => {
+                        log_log("lastreply", lastReply, cache);
+                        if (!lastReply) return;
                         let t1 = parseInt(lastReply.timestamp);
                         let t2 = parseInt(cache.lastReplyTime);
                         if (t1 !== t2 || cache.floorCount !== totalCount) {
@@ -4502,12 +4504,8 @@
                 data: merged
             };
         }
-        unsafeWindow.testExtract = extractFileFromImages;
         function innerACFun_init() {
-            if (innerACFun_initialized) {
-                return;
-            }
-            innerACFun_initialized = true;
+            log_log("Initializing innerACFun");
             const observer = new MutationObserver((mutations => {
                 mutations.forEach((mutation => {
                     mutation.addedNodes.forEach((node => {
@@ -4718,12 +4716,24 @@
                     childList: true
                 });
             }
-            bindEvents();
-            lauchObserver();
-            tagging.init();
-            commentRecovery.init();
-            commentImagefy.init();
-            innerACFun.init();
+            setTimeout((() => {
+                bindEvents();
+            }));
+            setTimeout((() => {
+                lauchObserver();
+            }));
+            setTimeout((() => {
+                tagging.init();
+            }));
+            setTimeout((() => {
+                commentRecovery.init();
+            }));
+            setTimeout((() => {
+                commentImagefy.init();
+            }));
+            setTimeout((() => {
+                innerACFun.init();
+            }));
         }
         function taskHOME(pagetype) {
             log_log("载入主要页面模块");
