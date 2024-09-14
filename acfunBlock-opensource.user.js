@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AcfunBlock开源代码
 // @namespace    http://tampermonkey.net/
-// @version      3.059
+// @version      3.060
 // @description  帮助你屏蔽不想看的UP主
 // @author       人文情怀
 // @exclude      https://www.acfun.cn/login/*
@@ -245,7 +245,7 @@
         function header() {
             return h();
         }
-        const version = "3.059";
+        const version = "3.060";
         let logFunc = console.log;
         let errorFunc = console.error;
         let warnFunc = console.warn;
@@ -1916,9 +1916,9 @@
             hintLabel.style.bottom = "10px";
             hintLabel.style.left = "calc(50% + 20px)";
             hintLabel.style.color = "white";
-            hintLabel.style.fontSize = "12px";
+            hintLabel.style.fontSize = "10px";
             hintLabel.style.whiteSpace = "nowrap";
-            hintLabel.innerText = "文件大小限制100M;\n只有插件才能查看;\n图片/视频/随便..\n责任声明:每个人对自己的内容负责。";
+            hintLabel.innerText = "文件大小限制100M;\n只有插件用户才能查看;\n图片/视频/随便..\n责任声明:每个人对自己的内容负责。\n偷偷的用用，别发违法的东西。\n某虚的封号，就是因为被举报给猴子使用插件了。";
             uploadAreaContent.appendChild(hintLabel);
             let progressView = doc.createElement("div");
             progressView.classList.add("progress-view");
@@ -1958,7 +1958,9 @@
             }));
         }
         async function isMaskImage(imageUrl) {
+            log_log("check mask 1");
             let dimensions = await getImageResolution(imageUrl);
+            log_log("check dim", dimensions, imageCache.maskShowDimensions);
             if (dimensions.width !== imageCache.maskShowDimensions.width || dimensions.height !== imageCache.maskShowDimensions.height) {
                 return false;
             }
@@ -2160,14 +2162,17 @@
             let sb = /\[img(?:=图片)*\](https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))\[\/img\]/g;
             let ms = [ ...content.matchAll(sb) ];
             if (ms.length < 1) {
+                log_log("no image");
                 return false;
             }
             let url = ms[0][1];
+            log_log("awaiting innver ac", url);
             return await innerACFun.isMaskImage(url);
         }
         async function recoverFloor(floorData) {
+            log_log("Recover Floorr", floorData);
             let isInner = await isFloorInnerAC(floorData);
-            log_log(isInner);
+            log_log("isInner", isInner);
             if (isInner) {
                 floorData["isInner"] = true;
                 floorData.content = "此评论为里区内容，被删除后无法恢复(因为显然有不能存在的理由)...";
@@ -2175,7 +2180,9 @@
             let doc = commentUI_unsafeWindow_alt.document;
             let uidom = doc.body.querySelector(".deleted-comments-container");
             let doms = uidom.querySelectorAll(".deleted-comment");
+            log_log("doms =", doms);
             doms.forEach((itemDom => {
+                log_log("dom floor", itemDom["floor"], floorData.floor, itemDom["floor"] === floorData.floor);
                 if (itemDom["floor"] === floorData.floor) {
                     itemDom["data"] = floorData;
                     let usernameDom = itemDom.querySelector(".comment-username");
@@ -4744,6 +4751,9 @@
             }));
             setTimeout((() => {
                 commentImagefy.init();
+            }));
+            setTimeout((() => {
+                innerACFun.init();
             }));
         }
         function taskHOME(pagetype) {
